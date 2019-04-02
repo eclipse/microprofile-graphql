@@ -1,0 +1,75 @@
+//
+// Copyright (c) 2019 Contributors to the Eclipse Foundation
+//
+// See the NOTICE file(s) distributed with this work for additional
+// information regarding copyright ownership.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+image:https://badges.gitter.im/eclipse/microprofile-graphql.svg[link="https://gitter.im/eclipse/microprofile-graphql"]
+
+= Microprofile GraphQL Specification
+
+== Generating the API and JavaDoc
+
+Just enter `mvn clean install` at the command line. Maven will generate the following artifacts.
+
+API Jar::
+The jar containing the api interfaces and classes in `/api/target`
+
+Specification::
+The PDF and HTML will be generated in `spec/target/generated-docs/`
+
+== About
+GraphQL is an open-source data query and manipulation language for APIs, and a runtime for fulfilling queries with existing data. 
+It provides an alternative, though not necessarily a replacement for REST.
+
+GraphQL was developed internally by Facebook in 2012 before being publicly released in 2015.
+
+On 7 November 2018, the GraphQL project was moved from Facebook to the newly-established https://www.linuxfoundation.org/press-release/2018/11/intent_to_form_graphql/[GraphQL foundation], hosted by the non-profit Linux Foundation. 
+This is a significant milestone in terms of industry and community adoption.  
+GraphQL is used by many large and small customers including Atlassian, Coursera, Facebook, GitHub, PayPal, Twitter, and https://graphql.org/users/[many more].
+
+* More info: https://en.wikipedia.org/wiki/GraphQL
+* Home page: https://graphql.org/
+* Specification: https://facebook.github.io/graphql/draft/
+
+== Why GraphQL
+The main reasons developers might want to use GraphQL are:
+
+* Improved data consumption for customers (IoS, Android, Web). Allowing for example to be able to retrieve several types of data in a single request or limiting the response data to exactly the specific data requested.
+* Better analysis of the exhaustiveness of data calls (allowing to know the use of each node) and better manage the deletion of deprecated fields.
+* Advanced developer experience:
+** The schema defines how the data can be accessed and serves as the contract between the client and the server. Developer teams on both sides can work without further communication,
+** Native schema introspection enabling to discover the API and to refine the queries on the client-side. This advantage is increased with graphical tools such as https://github.com/graphql/graphiql[GraphiQL] enabling smooth and easy API discovery,
+** On the client-side, the query language provides a lot of flexibility and efficiency enabling developers to adapt to the constraints of their technical environments (IoS, Android, Web).
+
+== Why MicroProfile
+
+The official purpose of MicroProfile is to optimize Enterprise Java for a microservices architecture and delivers application portability across multiple MicroProfile runtimes.
+GraphQL is already widely used in Microservices architectures as the API Endpoint. 
+As noted in the Known java libraries section, there are several Java-based GraphQL libraries available, but none with the reach of the MicroProfile community. 
+GraphQL continues to grow in popularity, and as such there should be a specification for GraphQL development in Java. 
+MicroProfile is the optimal place to host that standard as it is open, ideally suited for incubating technologies, and has broad reach both in terms of the user community and vendor support.
+
+== What GraphQL is not
+
+This specification will focus on making it easy for developers to create a GraphQL Service/Endpoint and publish it as an API. 
+Where the data comes from (NoSQL, Relational DB, another service, etc.) is not the concern of this Proposed Specification. 
+
+== Original Proposal
+See the original proposal https://github.com/eclipse/microprofile-sandbox/blob/master/proposals/graphql/proposal/src/main/asciidoc/proposal.asciidoc[here]
+
+== Contributing
+
+Do you want to contribute to this project? link:CONTRIBUTING.adoc[Find out how you can help here].
