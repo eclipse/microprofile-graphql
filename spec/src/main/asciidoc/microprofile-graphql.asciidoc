@@ -18,7 +18,7 @@
 //
 
 = GraphQL for MicroProfile
-:authors: Jean-Francois James, Phillip Krüger, Andy McCright, Jean-Baptiste Roux, Bojan Tomic
+:authors: Jean-Francois James, Phillip Krüger, Andy McCright, Jean-Baptiste Roux, Bojan Tomic, Adam Anderson
 :email: j.andrew.mccright@gmail.com
 :version-label!:
 :sectanchors:
