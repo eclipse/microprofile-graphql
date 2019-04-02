@@ -27,11 +27,12 @@
     <artifactId>microprofile-graphql-api</artifactId>
     <name>MicroProfile GraphQL :: API</name>
     <description>Code-first GraphQL APIs for MicroProfile :: API</description>
+    
     <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.annotation.versioning</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -55,11 +56,11 @@
                     </execution>
                 </executions>
             </plugin>
+            
             <plugin>
                 <groupId>biz.aQute.bnd</groupId>
                 <artifactId>bnd-maven-plugin</artifactId>
-                <version>2.4.1</version>
-
+                <version>4.2.0</version>
                 <executions>
                     <execution>
                         <goals>
