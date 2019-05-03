@@ -34,6 +34,14 @@ TODO: info on how to create mutations
 
 TODO: info on how the schema should look based on annotations in component classes
 
+=== Deprecation
+
+TODO: info on how to use the `@Deprecated` annotation appropriately
+
+==== Default Values
+
+TODO: info on how to use the `@DefaultValue` annotation appropriately
+
 === Lifecycle
 
 TODO: info on the components' lifecycle - based on CDI scoping
