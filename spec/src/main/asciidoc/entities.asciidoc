@@ -18,17 +18,48 @@
 
 == GraphQL Entities
 
+Entities are the objects used in GraphQL. The can be simple objects ("scalars" in GraphQL terminology) or more complex objects
+that are composed of scalars.
+According to the https://graphql.org/learn/schema/#scalar-types[GraphQL documentation] a scalar has no sub-fields, and all
+GraphQL implementations are expected to handle, the following scalar types:
+- `Int` - which maps to a Java `int`/`Integer` or `long`/`Long`.
+- `Float` - which maps to a Java `float`/`Float` or `double`/`Double`.
+- `String` - which maps to a Java `char`, `char[]`, `String`, etc.
+- `Boolean` - which maps to a Java `boolean`/`Boolean`.
+- `ID` - which is a specialized type serialized like a `String`.
+
+In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
+- It must be the return type or parameter of a query or mutation method,
+- It must be annotated with `@Type`,
+- It must be annotated with `@InputType`
+
 === POJOs
 
-TODO: info about basic entities based on JSON-B
+Any Plain Old Java Object (POJO) can be an entity.  No special annotations are required. Implementations of MicroProfile
+GraphQL must use JSON-B to serialize and deserialize entities to JSON, so it is possible to further define entities using
+JSON-B annotations.
+
+If the entity cannot be serialized by JSON-B, the implementation must return in an internal server error to the client.
 
 === Types vs InputTypes
 
-TODO: info on types and input types
+GraphQL differentiates types from input types.  Input types are entities that are sent by the client as arguments to queries or
+mutations. Types are entities that are sent from the server to the client as return types from queries or mutations.
+
+In many cases the same Java type can be used for input (sent _from_ client) and output (sent _to_ the client), but there are
+cases where an application may need two different Java types to handle input and output.
+
+The `@Type` annotation is used for output entities while the `@InputType` annotation is used for input entities.
+
+Normally these annotations are unnecessary if the type can be serialized and/or deserialized by JSON-B, and if the type is
+specified in a query or mutation method. These annotations can be used to specify the name of the type in the GraphQL schema;
+by default, the entity name in the schema will be the same as the simple class name of the entity type.  These annotations can
+also be used to add a description to the entity in the schema.
 
 === Interfaces as GraphQL entity types
 
-TODO: info on how to use interfaces as types/inputtypes
+It is possible for entities (types and input types) to be defined as a Java interfaces. In order for JSON-B to deserialize an
+interface, the interface may need a `JsonbDeserializer` in order to instantiate a concrete type.
 
 === Limitations
 
@@ -36,19 +67,24 @@ TODO: info on how to use interfaces as types/inputtypes
 
 TODO: info on limitations to generic types (collections only?)
 
-=== Deprecation
-
-TODO: info on how to use the `@Deprecated` annotation appropriately
-
 === Fields
 
 ==== Scalars
 
 TODO: info on scalars/primitives
 
+=== Deprecation
+
+Application developers can mark entity fields as deprecated in the GraphQL schema with the `@Deprecated` annotation -
+either the annotation that comes from the JDK in the `java.lang` package or the MicroProfile GraphQL annotation in the
+`org.eclipse.microprofile.graphql` package.  The latter annotation allows the developer to specify additional text that
+might provide more information to the consumers of the schema.
+
 ==== Default Values
 
-TODO: info on how to use the `@DefaultValue` annotation appropriately
+The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
+a value. Default values may only be specified on input types (and also as `@Argument` parameters) and will have no
+effect if specified on output types.  The value specified in this annotation may be
 
 ==== FieldsOrder / InputFieldsOrder
 
@@ -56,4 +92,6 @@ TODO: info on fields ordering
 
 ==== Ignorable fields
 
-TODO: info on how to use the `@Ignore` annotation appropriately
+There may be cases where a developer wants to use a class as a GraphQL type or input type, but use fields that should
+not be part of the exposed schema. The `@Ignore` annotation can be placed on the field to prevent it from being part of
+the schema. 

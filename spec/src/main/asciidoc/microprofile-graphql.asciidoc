@@ -19,7 +19,7 @@
 
 = GraphQL for MicroProfile
 :authors: Jean-Francois James, Phillip Krüger, Andy McCright, Jean-Baptiste Roux, Bojan Tomic, Adam Anderson
-:email: j.andrew.mccright@gmail.com
+:email: microprofile@googlegroups.com
 :version-label!:
 :sectanchors:
 :doctype: book
