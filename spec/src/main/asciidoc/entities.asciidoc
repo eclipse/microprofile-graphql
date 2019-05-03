@@ -18,7 +18,7 @@
 
 == GraphQL Entities
 
-Entities are the objects used in GraphQL. The can be simple objects ("scalars" in GraphQL terminology) or more complex objects
+Entities are the objects used in GraphQL. They can be simple objects ("scalars" in GraphQL terminology) or more complex objects
 that are composed of scalars.
 According to the https://graphql.org/learn/schema/#scalar-types[GraphQL documentation] a scalar has no sub-fields, and all
 GraphQL implementations are expected to handle, the following scalar types:
@@ -29,7 +29,7 @@ GraphQL implementations are expected to handle, the following scalar types:
 - `ID` - which is a specialized type serialized like a `String`.
 
 In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
-- It must be the return type or parameter of a query or mutation method,
+- It must be the return type or parameter (annotated with `@Argument`) of a query or mutation method,
 - It must be annotated with `@Type`,
 - It must be annotated with `@InputType`
 
@@ -56,10 +56,12 @@ specified in a query or mutation method. These annotations can be used to specif
 by default, the entity name in the schema will be the same as the simple class name of the entity type.  These annotations can
 also be used to add a description to the entity in the schema.
 
-=== Interfaces as GraphQL entity types
+=== Java interfaces as GraphQL entity types
 
 It is possible for entities (types and input types) to be defined as a Java interfaces. In order for JSON-B to deserialize an
 interface, the interface may need a `JsonbDeserializer` in order to instantiate a concrete type.
+
+=== GraphQL interfaces
 
 === Limitations
 
@@ -94,4 +96,4 @@ TODO: info on fields ordering
 
 There may be cases where a developer wants to use a class as a GraphQL type or input type, but use fields that should
 not be part of the exposed schema. The `@Ignore` annotation can be placed on the field to prevent it from being part of
-the schema. 
+the schema.
