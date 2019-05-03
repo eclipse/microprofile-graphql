@@ -16,6 +16,6 @@
  * limitations under the License.
  */
  /*
-  * This package is for the applications to test the @Interface annotation
+  * This package is for testing the @Enum annotation
   */
-package org.eclipse.microprofile.graphql.tck.annotations.interface;
+package org.eclipse.microprofile.graphql.tck.annotations.enumeration;

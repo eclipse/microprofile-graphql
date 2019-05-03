@@ -16,6 +16,6 @@
  * limitations under the License.
  */
  /*
-  * This package is for testing the @Interface annotation
+  * This package is for the applications to test the @Interface annotation
   */
-package org.eclipse.microprofile.graphql.tck.annotations.interface;
+package org.eclipse.microprofile.graphql.tck.annotations.intf;
