@@ -18,9 +18,8 @@
 //
 
 = Microprofile GraphQL TCK
-// https://raw.githubusercontent.com/eclipse/microprofile-graphql
 
-image:/master/tck/high-level.png[link="/master/tck/high-level.png"]
+image:/tck/high-level.png[link="/master/tck/high-level.png"]
 
 == Dynamic tests
 
