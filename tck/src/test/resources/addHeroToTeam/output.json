@@ -1,0 +1,16 @@
+{
+    "data": {
+        "addHeroToTeam": {
+            "name": "Avengers",
+            "members": [{
+                    "name": "Iron Man"
+                }, {
+                    "name": "Spider Man"
+                }, {
+                    "name": "Starlord"
+                }, {
+                    "name": "Wolverine"
+                }]
+        }
+    }
+}

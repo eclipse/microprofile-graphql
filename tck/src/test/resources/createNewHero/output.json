@@ -1,0 +1,10 @@
+{
+    "data": {
+        "createNewHero": {
+            "name": "Captain America",
+            "primaryLocation": "New York, NY",
+            "superPowers": ["Super strength", "Vibranium Shield"],
+            "realName": "Steven Rogers"
+        }
+    }
+}

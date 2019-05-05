@@ -16,25 +16,16 @@
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data @AllArgsConstructor @NoArgsConstructor
 public class Team {
-
 
     String name;
     List<SuperHero> members;
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public List<SuperHero> getMembers() {
-        return members;
-    }
-    public void setMembers(List<SuperHero> members) {
-        this.members = members;
-    }
     public Team addMembers(SuperHero...heroes) {
         for (SuperHero hero : heroes) {
             members.add(hero);

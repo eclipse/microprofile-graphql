@@ -1,0 +1,10 @@
+{
+    "data": {
+        "createNewHero": {
+            "name": "Batman",
+            "primaryLocation": "Gotham City",
+            "superPowers": [],
+            "realName": "Bruce Wayne"
+        }
+    }
+}
