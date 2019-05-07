@@ -24,8 +24,11 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Initialized;
+import javax.enterprise.event.Observes;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbException;
 
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
@@ -33,20 +36,20 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 @ApplicationScoped
 public class HeroDatabase {
 
-    Map<String,SuperHero> allHeroes = new HashMap<>();
-    Map<String,Team> allTeams = new HashMap<>();
+    final Map<String,SuperHero> allHeroes = new HashMap<>();
+    final Map<String,Team> allTeams = new HashMap<>();
 
-    @SuppressWarnings("serial")
-    public HeroDatabase() {
+    private HeroDatabase(){}
+    
+    private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         try {
             Jsonb jsonb = JsonbBuilder.create();
             InputStream mapJson = getClass().getClassLoader()
                                             .getResourceAsStream("/superheroes.json");
             addHeroes(jsonb.fromJson(mapJson,
                       new ArrayList<SuperHero>(){}.getClass().getGenericSuperclass()));
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (JsonbException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -76,8 +79,7 @@ public class HeroDatabase {
             try {
                 addHero(hero);
                 count++;
-            }
-            catch (DuplicateSuperHeroException ex) {
+            } catch (DuplicateSuperHeroException ex) {
                 System.out.println("Already added : " + hero.getName());
             }
         }

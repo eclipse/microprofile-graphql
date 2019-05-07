@@ -1,0 +1,17 @@
+{
+    "data": {
+        "allHeroesInTeam": [{
+                "name": "Iron Man",
+                "primaryLocation": "Los Angeles, CA",
+                "superPowers": ["wealth", "engineering"]
+            }, {
+                "name": "Spider Man",
+                "primaryLocation": "New York, NY",
+                "superPowers": ["Spidey Sense", "Wall-Crawling", "Super Strength", "Web-shooting"]
+            }, {
+                "name": "Wolverine",
+                "primaryLocation": "Unknown",
+                "superPowers": ["Regeneritive Healing", "Enhanced Reflexes", "Adamantium-infused skeleton", "Retractable claws"]
+            }]
+    }
+}
