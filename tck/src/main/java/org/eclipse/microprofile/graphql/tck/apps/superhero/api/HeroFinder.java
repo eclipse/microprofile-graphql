@@ -33,6 +33,9 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownTeamExcepti
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
+import lombok.extern.java.Log;
+
+@Log
 @GraphQLApi
 public class HeroFinder {
     @Inject
@@ -40,32 +43,38 @@ public class HeroFinder {
 
     @Query
     public Collection<SuperHero> allHeroes() {
+        log.info("allHeroes invoked");
         return heroDB.getAllHeroes();
     }
 
     @Query
     public Collection<SuperHero> allHeroesIn(@Argument("city") String city) {
+        log.info("allHeroesIn invoked");
         return allHeroesByFilter(hero -> {
             return city.equals(hero.getPrimaryLocation());});
     }
 
     @Query
     public Collection<SuperHero> allHeroesWithPower(@Argument("power") String power) {
+        log.info("allHeroesWithPower invoked");
         return allHeroesByFilter(hero -> {
             return hero.getSuperPowers().contains(power);});
     }
 
     @Query
     public Collection<SuperHero> allHeroesInTeam(@Argument("team") String teamName) throws UnknownTeamException {
+        log.info("allHeroesInTeam invoked");
         return heroDB.getTeam(teamName).getMembers();
     }
 
     @Query
     public Collection<Team> allTeams() {
+        log.info("allTeams invoked");
         return heroDB.getAllTeams();
     }
     @Mutation
     public SuperHero createNewHero(@Argument("hero") SuperHero newHero) throws DuplicateSuperHeroException {
+        log.info("createNewHero invoked");
         heroDB.addHero(newHero);
         return heroDB.getHero(newHero.getName());
     }
@@ -74,7 +83,7 @@ public class HeroFinder {
     public Team addHeroToTeam(@Argument("hero") String heroName,
                               @Argument("team") String teamName)
                               throws UnknownTeamException {
-
+        log.info("addHeroToTeam invoked");
         return heroDB.getTeam(teamName)
                      .addMembers( heroDB.getHero(heroName) );
     }
@@ -83,9 +92,14 @@ public class HeroFinder {
     public Team removeHeroFromTeam(@Argument("hero") String heroName,
                                    @Argument("team") String teamName)
                                    throws UnknownTeamException {
-
+        log.info("removeHeroFromTeam invoked");
         return heroDB.getTeam(teamName)
                      .removeMembers( heroDB.getHero(heroName) );
+    }
+
+    @Mutation(description="Removes a hero... permanently...")
+    public SuperHero removeHero(@Argument("hero") String heroName) {
+        return heroDB.removeHero(heroName);
     }
 
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {

@@ -290,7 +290,8 @@
                         <exclude>.editorconfig</exclude>
                         <exclude>src/test/resources/*/*.json</exclude> 
                         <exclude>*.drawio</exclude>
-                        
+                        <exclude>.vscode/*</exclude>
+                        <exclude>**/*.json</exclude>
                     </excludes>
                 </configuration>
             </plugin>
