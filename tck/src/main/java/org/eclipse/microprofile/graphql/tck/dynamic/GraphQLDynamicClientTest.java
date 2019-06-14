@@ -108,7 +108,7 @@ public class GraphQLDynamicClientTest extends Arquillian {
             .addAsLibrary(new File(JSONException.class.getProtectionDomain().getCodeSource().getLocation().toURI()))
             .addAsLibrary(new File(JSONAssert.class.getProtectionDomain().getCodeSource().getLocation().toURI()));
             
-            archive.as(ZipExporter.class).exportTo(new File("/Users/andymc/tmp/" + archive.getName()), true);
+            //archive.as(ZipExporter.class).exportTo(new File("/Users/andymc/tmp/" + archive.getName()), true);
             log.info("Creating SuperHeroDatabase.war file for deployment");
             return archive;
     }
