@@ -48,7 +48,6 @@ import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.jboss.shrinkwrap.api.exporter.ZipExporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -107,8 +106,7 @@ public class GraphQLDynamicClientTest extends Arquillian {
             .addAsLibrary(new File(IOUtils.class.getProtectionDomain().getCodeSource().getLocation().toURI()))
             .addAsLibrary(new File(JSONException.class.getProtectionDomain().getCodeSource().getLocation().toURI()))
             .addAsLibrary(new File(JSONAssert.class.getProtectionDomain().getCodeSource().getLocation().toURI()));
-            
-            //archive.as(ZipExporter.class).exportTo(new File("/Users/andymc/tmp/" + archive.getName()), true);
+
             log.info("Creating SuperHeroDatabase.war file for deployment");
             return archive;
     }
