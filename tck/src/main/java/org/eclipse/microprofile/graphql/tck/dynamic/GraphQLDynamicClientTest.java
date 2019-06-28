@@ -18,43 +18,116 @@
 package org.eclipse.microprofile.graphql.tck.dynamic;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.net.URL;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import javax.json.Json;
 import javax.json.JsonObject;
+import lombok.extern.java.Log;
 import org.eclipse.microprofile.graphql.tck.dynamic.init.GraphQLTestDataProvider;
 import org.eclipse.microprofile.graphql.tck.dynamic.init.PrintUtil;
 import org.eclipse.microprofile.graphql.tck.dynamic.init.TestData;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.apache.commons.io.IOUtils;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.api.HeroFinder;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 
 /**
  * This test runs all test defined in 'src/test/resources'
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
+@Log
 public class GraphQLDynamicClientTest {
-    private URL graphqlEndpoint;
-    private final Properties config = new Properties();
+    
+    private static class GetSysPropAction implements PrivilegedAction<String> {
+        private final String propertyName;
+        private final String defaultValue;
 
-    @BeforeClass
-    public void beforeClass() throws MalformedURLException, IOException {
-        // TODO: Use TestNG.xml for this ?
-        //config.load(GraphQLDynamicClientTest.class.getClassLoader().getResourceAsStream("graphql-config.properties"));
+        GetSysPropAction(String propertyName, String defaultValue) {
+            this.propertyName = propertyName;
+            this.defaultValue = defaultValue;
+        }
+
+        @Override
+        public String run() {
+            return System.getProperty(propertyName, defaultValue);
+        }
         
-        
-        graphqlEndpoint = new URL("http://localhost:8080/graphql");
     }
+
+    private static final String UTF8 = "utf-8";
+    private static final String MEDIATYPE_JSON = "application/json";
+    private static final String HEADER_CONTENT_TYPE = "Content-Type";
+    private static final String HEADER_ACCEPT = "Accept";
+    private static final String QUERY = "query";
+    private static final String VARIABLES = "variables";
+    private static final String ENDPOINT_URL = "http://localhost:" + 
+            AccessController.doPrivileged(new GetSysPropAction("mp.graphql.tck.endpoint.port", "8080")) + "/SuperHeroDatabase/graphql";
+    private static final String CONNECT_TIMEOUT = AccessController.doPrivileged(new GetSysPropAction("mp.graphql.tck.connect.timeout", "30000"));
+    private static final String READ_TIMEOUT = AccessController.doPrivileged(new GetSysPropAction("mp.graphql.tck.read.timeout", "30000"));
+    private static File testDataDir;
+    
+
+    @Deployment
+    public static Archive<?> createDeployment() throws Exception {
+        
+        Archive<?> archive = ShrinkWrap.create(WebArchive.class, "SuperHeroDatabase.war")
+            .addPackage(HeroFinder.class.getPackage())
+            .addPackage(HeroDatabase.class.getPackage())
+            .addPackage(SuperHero.class.getPackage())
+            .addPackage(GraphQLDynamicClientTest.class.getPackage()) // ??
+            .addPackage(TestData.class.getPackage())
+            //.add(new StringAsset(testDataDir.getAbsolutePath()), "testDataDir.txt")
+            .addAsLibrary(new File(IOUtils.class.getProtectionDomain().getCodeSource().getLocation().toURI()))
+            .addAsLibrary(new File(JSONException.class.getProtectionDomain().getCodeSource().getLocation().toURI()))
+            .addAsLibrary(new File(JSONAssert.class.getProtectionDomain().getCodeSource().getLocation().toURI()));
+
+            log.info("Creating SuperHeroDatabase.war file for deployment");
+            return archive;
+}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @Test(dataProvider="GraphQLTestDataProvider", dataProviderClass = GraphQLTestDataProvider.class)
     public void testDynamicQueries(TestData testData) throws IOException {
@@ -95,6 +168,7 @@ public class GraphQLDynamicClientTest {
     
     private String postHTTPRequest(String graphQL, JsonObject variables, Map<String, String> httpHeaders){
         try {
+            URL graphqlEndpoint = new URL(ENDPOINT_URL);
             HttpURLConnection connection = (HttpURLConnection) graphqlEndpoint.openConnection();
             connection.setRequestMethod("POST"); // TODO: Also test with GET and query string ? Are we allowing it ?
             
@@ -132,10 +206,8 @@ public class GraphQLDynamicClientTest {
     
     private void setTimeouts(HttpURLConnection connection){
         // Set timeouts
-//        connection.setConnectTimeout(Integer.valueOf(config.getProperty(CONFIG_KEY_CONNECT_TIMEOUT)));
-//        connection.setReadTimeout(Integer.valueOf(config.getProperty(CONFIG_KEY_READ_TIMEOUT)));
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
+        connection.setConnectTimeout(Integer.valueOf(CONNECT_TIMEOUT));
+        connection.setReadTimeout(Integer.valueOf(READ_TIMEOUT));
     }
     
     private JsonObject createRequestBody(String graphQL, JsonObject variables){
@@ -172,15 +244,5 @@ public class GraphQLDynamicClientTest {
             throw new RuntimeException("Status " + status + " - " + connection.getResponseMessage());
         }
     }
-    
-    private static final String UTF8 = "utf-8";
-    private static final String MEDIATYPE_JSON = "application/json";
-    private static final String HEADER_CONTENT_TYPE = "Content-Type";
-    private static final String HEADER_ACCEPT = "Accept";
-    private static final String QUERY = "query";
-    private static final String VARIABLES = "variables";
-    
-//    private static final String CONFIG_KEY_ENDPOINT = "endpoint";
-//    private static final String CONFIG_KEY_CONNECT_TIMEOUT = "timeout.connect";
-//    private static final String CONFIG_KEY_READ_TIMEOUT = "timeout.read";
+
 }
