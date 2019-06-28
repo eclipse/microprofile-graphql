@@ -47,6 +47,7 @@ import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.api.HeroFinder;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
+import org.jboss.arquillian.container.test.api.RunAsClient;
 
 /**
  * This test runs all test defined in 'src/test/resources'
@@ -128,7 +129,7 @@ public class GraphQLDynamicClientTest {
     
     
     
-
+    @RunAsClient
     @Test(dataProvider="GraphQLTestDataProvider", dataProviderClass = GraphQLTestDataProvider.class)
     public void testDynamicQueries(TestData testData) throws IOException {
         if(testData!=null && isValidInput(testData.getInput())) {
