@@ -17,121 +17,80 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic;
 
+import org.eclipse.microprofile.graphql.tck.dynamic.init.PrintUtil;
+import org.eclipse.microprofile.graphql.tck.dynamic.init.TestData;
 import java.io.BufferedReader;
-import java.io.File;
 import java.net.URL;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
-import lombok.extern.java.Log;
-import org.eclipse.microprofile.graphql.tck.dynamic.init.GraphQLTestDataProvider;
-import org.eclipse.microprofile.graphql.tck.dynamic.init.PrintUtil;
-import org.eclipse.microprofile.graphql.tck.dynamic.init.TestData;
-import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.testng.Assert;
-import org.testng.annotations.Test;
-import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.api.HeroFinder;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
+import org.eclipse.microprofile.graphql.tck.dynamic.init.GraphQLTestDataProvider;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.testng.annotations.Test;
 
 /**
- * This test runs all test defined in 'src/test/resources'
+ * This test runs all test defined in the implementation 'src/test/resources' folder 
+ * and all test included here in the archive's /tests folder
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-@Log
-public class GraphQLDynamicClientTest {
+public class GraphQLDynamicClientTest extends Arquillian {
+    private static final Logger LOG = Logger.getLogger(GraphQLDynamicClientTest.class.getName());   
     
-    private static class GetSysPropAction implements PrivilegedAction<String> {
-        private final String propertyName;
-        private final String defaultValue;
-
-        GetSysPropAction(String propertyName, String defaultValue) {
-            this.propertyName = propertyName;
-            this.defaultValue = defaultValue;
-        }
-
-        @Override
-        public String run() {
-            return System.getProperty(propertyName, defaultValue);
-        }
-        
-    }
-
+    private static final String PATH = "graphql"; // Default. TODO: Test when configured
+    
     private static final String UTF8 = "utf-8";
     private static final String MEDIATYPE_JSON = "application/json";
     private static final String HEADER_CONTENT_TYPE = "Content-Type";
     private static final String HEADER_ACCEPT = "Accept";
     private static final String QUERY = "query";
     private static final String VARIABLES = "variables";
-    private static final String ENDPOINT_URL = "http://localhost:" + 
-            AccessController.doPrivileged(new GetSysPropAction("mp.graphql.tck.endpoint.port", "8080")) + "/SuperHeroDatabase/graphql";
-    private static final String CONNECT_TIMEOUT = AccessController.doPrivileged(new GetSysPropAction("mp.graphql.tck.connect.timeout", "30000"));
-    private static final String READ_TIMEOUT = AccessController.doPrivileged(new GetSysPropAction("mp.graphql.tck.read.timeout", "30000"));
-    private static File testDataDir;
     
-
+    @ArquillianResource
+    private URI uri;
+    
     @Deployment
-    public static Archive<?> createDeployment() throws Exception {
-        
-        Archive<?> archive = ShrinkWrap.create(WebArchive.class, "SuperHeroDatabase.war")
-            .addPackage(HeroFinder.class.getPackage())
-            .addPackage(HeroDatabase.class.getPackage())
-            .addPackage(SuperHero.class.getPackage())
-            .addPackage(GraphQLDynamicClientTest.class.getPackage()) // ??
-            .addPackage(TestData.class.getPackage())
-            //.add(new StringAsset(testDataDir.getAbsolutePath()), "testDataDir.txt")
-            .addAsLibrary(new File(IOUtils.class.getProtectionDomain().getCodeSource().getLocation().toURI()))
-            .addAsLibrary(new File(JSONException.class.getProtectionDomain().getCodeSource().getLocation().toURI()))
-            .addAsLibrary(new File(JSONAssert.class.getProtectionDomain().getCodeSource().getLocation().toURI()));
-
-            log.info("Creating SuperHeroDatabase.war file for deployment");
-            return archive;
-}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public static Archive getDeployment() throws Exception {
+        return ShrinkWrap.create(WebArchive.class, "tck.war")
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addPackage(HeroFinder.class.getPackage())
+                .addPackage(HeroDatabase.class.getPackage())
+                .addPackage(SuperHero.class.getPackage());
+    }
     
     @RunAsClient
-    @Test(dataProvider="GraphQLTestDataProvider", dataProviderClass = GraphQLTestDataProvider.class)
-    public void testDynamicQueries(TestData testData) throws IOException {
+    @Test(dataProvider="specification", dataProviderClass = GraphQLTestDataProvider.class)
+    public void testSpecification(TestData testData){
+        runTest(testData);
+    }
+    
+    @RunAsClient
+    @Test(dataProvider="implementation", dataProviderClass = GraphQLTestDataProvider.class)
+    public void testImplementationSpecific(TestData testData) throws IOException {
+        runTest(testData);
+    }
+
+    private void runTest(TestData testData){
         if(testData!=null && isValidInput(testData.getInput())) {
             Map<String, String> httpHeaders = new HashMap<>();
             if(testData.getHttpHeaders()!=null && !testData.getHttpHeaders().isEmpty()){
@@ -147,7 +106,6 @@ public class GraphQLDynamicClientTest {
 
             // Run the actual test and get the response
             String json = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
-            PrintUtil.print(testData,json);
             
             // Cleanup if needed
             if(isValidInput(testData.getCleanup())){
@@ -156,10 +114,13 @@ public class GraphQLDynamicClientTest {
 
             // Compare to expected output
             try{
-                JSONAssert.assertEquals(testData.getOutput(), json, false);
+                JSONAssert.assertEquals(PrintUtil.toString(testData,json),testData.getOutput(), json, false);
             } catch (JSONException ex) {
+                ex.printStackTrace();
                 Assert.fail(ex.getMessage());
             }
+        }else{
+            LOG.warning("Could not find any tests to run...");
         }
     }
     
@@ -169,8 +130,8 @@ public class GraphQLDynamicClientTest {
     
     private String postHTTPRequest(String graphQL, JsonObject variables, Map<String, String> httpHeaders){
         try {
-            URL graphqlEndpoint = new URL(ENDPOINT_URL);
-            HttpURLConnection connection = (HttpURLConnection) graphqlEndpoint.openConnection();
+            URL url = new URL(this.uri + PATH);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST"); // TODO: Also test with GET and query string ? Are we allowing it ?
             
             setTimeouts(connection);
@@ -207,8 +168,10 @@ public class GraphQLDynamicClientTest {
     
     private void setTimeouts(HttpURLConnection connection){
         // Set timeouts
-        connection.setConnectTimeout(Integer.valueOf(CONNECT_TIMEOUT));
-        connection.setReadTimeout(Integer.valueOf(READ_TIMEOUT));
+//        connection.setConnectTimeout(Integer.valueOf(CONNECT_TIMEOUT));
+//        connection.setReadTimeout(Integer.valueOf(READ_TIMEOUT));
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
     }
     
     private JsonObject createRequestBody(String graphQL, JsonObject variables){
@@ -232,7 +195,7 @@ public class GraphQLDynamicClientTest {
             // Read the response
             try(BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), UTF8))) {
                 StringBuilder response = new StringBuilder();
-                String responseLine = null;
+                String responseLine;
                 while ((responseLine = br.readLine()) != null) {
                     response.append(responseLine.trim());
                 }
