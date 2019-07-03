@@ -30,10 +30,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import lombok.extern.java.Log;
 import org.apache.commons.io.IOUtils;
 import org.testng.annotations.DataProvider;
 
@@ -41,8 +41,8 @@ import org.testng.annotations.DataProvider;
  * Provide test data for GraphQL Endpoint
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-@Log
 public class GraphQLTestDataProvider {
+    private static final Logger LOG = Logger.getLogger(GraphQLTestDataProvider.class.getName());
     
     private GraphQLTestDataProvider(){
     }
@@ -63,7 +63,7 @@ public class GraphQLTestDataProvider {
                 try {
                     testDataList.add(getTestData(folder));
                 } catch (IOException ioe) {
-                    log.log(Level.SEVERE, "Could not add test case {0} - {1}", new Object[]{folder.getName(), ioe.getMessage()});
+                    LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", new Object[]{folder.getName(), ioe.getMessage()});
                 }
             }
         }
@@ -77,7 +77,7 @@ public class GraphQLTestDataProvider {
             if(!testData.shouldIgnore()){
                 testParameters[row][0] = testData;
             } else {
-                log.log(Level.SEVERE, "Ignoring test [{0}]", testData.getName());
+                LOG.log(Level.SEVERE, "Ignoring test [{0}]", testData.getName());
             }
             
         }
@@ -145,7 +145,7 @@ public class GraphQLTestDataProvider {
                         break;
                     }    
                 default:
-                    log.log(Level.WARNING, "Ignoring unknown file {0}", file.getName());
+                    LOG.log(Level.WARNING, "Ignoring unknown file {0}", file.getName());
                     break;
             }
         }

@@ -16,16 +16,102 @@
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
-@Data @NoArgsConstructor @AllArgsConstructor
 public class SuperHero {
+    private List<Team> teamAffiliations;
+    private List<String> superPowers;
+    private String primaryLocation;
+    private String name;
+    private String realName;
+
+    public SuperHero(){
+    }
     
-    List<Team> teamAffiliations;
-    List<String> superPowers;
-    String primaryLocation;
-    String name;
-    String realName;
+    public SuperHero(List<Team> teamAffiliations, 
+                        List<String> superPowers, 
+                        String primaryLocation, 
+                        String name, 
+                        String realName) {
+        
+        this.teamAffiliations = teamAffiliations;
+        this.superPowers = superPowers;
+        this.primaryLocation = primaryLocation;
+        this.name = name;
+        this.realName = realName;
+    }
+
+    public List<Team> getTeamAffiliations() {
+        return teamAffiliations;
+    }
+
+    public List<String> getSuperPowers() {
+        return superPowers;
+    }
+
+    public String getPrimaryLocation() {
+        return primaryLocation;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setTeamAffiliations(List<Team> teamAffiliations) {
+        this.teamAffiliations = teamAffiliations;
+    }
+
+    public void setSuperPowers(List<String> superPowers) {
+        this.superPowers = superPowers;
+    }
+
+    public void setPrimaryLocation(String primaryLocation) {
+        this.primaryLocation = primaryLocation;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.teamAffiliations);
+        hash = 53 * hash + Objects.hashCode(this.superPowers);
+        hash = 53 * hash + Objects.hashCode(this.primaryLocation);
+        hash = 53 * hash + Objects.hashCode(this.realName);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final SuperHero other = (SuperHero) obj;
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "SuperHero{" + "teamAffiliations=" + teamAffiliations 
+                + ", superPowers=" + superPowers 
+                + ", primaryLocation=" + primaryLocation 
+                + ", name=" + name 
+                + ", realName=" + realName + '}';
+    }
 }

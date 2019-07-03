@@ -21,20 +21,21 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
-import lombok.extern.java.Log;
+import org.eclipse.microprofile.graphql.tck.dynamic.GraphQLDynamicClientTest;
 
 /**
  * Print the Test data to output
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-@Log
 public class PrintUtil {
+    private static final Logger LOG = Logger.getLogger(GraphQLDynamicClientTest.class.getName());
     
     private PrintUtil(){
     }
@@ -53,7 +54,7 @@ public class PrintUtil {
         sw.write("\n\n");
         sw.write("received output = " +  prettyJson(output));
         sw.write("\n\n");
-        log.info(sw.toString());
+        LOG.info(sw.toString());
     }
     
     private static String prettyJson(String json) {

@@ -16,15 +16,37 @@
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Objects;
 
-@Data @AllArgsConstructor @NoArgsConstructor
 public class Team {
 
-    String name;
-    List<SuperHero> members;
+    private String name;
+    private List<SuperHero> members;
+
+    public Team(){
+    
+    }
+    
+    public Team(String name, List<SuperHero> members) {
+        this.name = name;
+        this.members = members;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<SuperHero> getMembers() {
+        return members;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMembers(List<SuperHero> members) {
+        this.members = members;
+    }
 
     public Team addMembers(SuperHero...heroes) {
         for (SuperHero hero : heroes) {
@@ -38,4 +60,38 @@ public class Team {
         }
         return this;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Team other = (Team) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.members, other.members)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" + "name=" + name + ", members=" + members + '}';
+    }
+    
+    
 }
