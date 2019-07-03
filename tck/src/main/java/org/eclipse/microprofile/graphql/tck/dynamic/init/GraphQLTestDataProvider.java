@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.tck.data;
+package org.eclipse.microprofile.graphql.tck.dynamic.init;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -47,10 +47,10 @@ import org.testng.annotations.DataProvider;
  * and the specification's jar file (in /tests)
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-public class GraphQLDataProvider {
-    private static final Logger LOG = Logger.getLogger(GraphQLDataProvider.class.getName());
+public class GraphQLTestDataProvider {
+    private static final Logger LOG = Logger.getLogger(GraphQLTestDataProvider.class.getName());
     
-    private GraphQLDataProvider(){
+    private GraphQLTestDataProvider(){
     }
     
     @DataProvider(name="specification")
@@ -207,7 +207,7 @@ public class GraphQLDataProvider {
     
     private static List<Path> getAllFoldersForSpecification(String resourcesDirectoryName){
         try {
-            URL jar = GraphQLDataProvider.class.getProtectionDomain().getCodeSource().getLocation();
+            URL jar = GraphQLTestDataProvider.class.getProtectionDomain().getCodeSource().getLocation();
             Path jarFile = Paths.get(jar.toString().substring("file:".length()));
             FileSystem fs = FileSystems.newFileSystem(jarFile, null);
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(fs.getPath(resourcesDirectoryName));

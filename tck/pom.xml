@@ -115,20 +115,6 @@
             <version>${jsonp-api.version}</version>
         </dependency>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <!-- actually only referenced in JavaDoc -->
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>

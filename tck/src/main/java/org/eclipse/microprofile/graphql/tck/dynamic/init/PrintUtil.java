@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.tck.data;
+package org.eclipse.microprofile.graphql.tck.dynamic.init;
 
 import java.io.IOException;
 import java.io.StringReader;

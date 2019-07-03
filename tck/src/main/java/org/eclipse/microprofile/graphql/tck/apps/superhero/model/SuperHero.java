@@ -79,37 +79,4 @@ public class SuperHero {
     public void setRealName(String realName) {
         this.realName = realName;
     }
-
-//    @Override
-//    public int hashCode() {
-//        int hash = 7;
-//        hash = 53 * hash + Objects.hashCode(this.superPowers);
-//        hash = 53 * hash + Objects.hashCode(this.primaryLocation);
-//        hash = 53 * hash + Objects.hashCode(this.realName);
-//        return hash;
-//    }
-//
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) {
-//            return true;
-//        }
-//        if (obj == null) {
-//            return false;
-//        }
-//        if (getClass() != obj.getClass()) {
-//            return false;
-//        }
-//        final SuperHero other = (SuperHero) obj;
-//        return true;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "SuperHero{" 
-//                + ", superPowers=" + superPowers 
-//                + ", primaryLocation=" + primaryLocation 
-//                + ", name=" + name 
-//                + ", realName=" + realName + '}';
-//    }
 }
