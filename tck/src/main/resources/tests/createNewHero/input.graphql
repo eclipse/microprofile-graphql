@@ -1,0 +1,14 @@
+mutation createNewHero {
+    createNewHero(hero:{
+            name: "Captain America"
+            realName: "Steven Rogers"
+            superPowers: ["Super strength", "Vibranium Shield"]
+            primaryLocation: "New York, NY"
+            teamAffiliations: [{name: "Avengers"}]
+        }) {
+            name
+            primaryLocation
+            superPowers
+            realName
+        }
+}

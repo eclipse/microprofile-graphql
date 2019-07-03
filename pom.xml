@@ -285,6 +285,8 @@
                         <exclude>*.drawio</exclude>
                         <exclude>.vscode/*</exclude>
                         <exclude>**/*.json</exclude>
+                        <exclude>**/*.graphql</exclude>
+                        <exclude>**/*.properties</exclude>
                     </excludes>
                 </configuration>
             </plugin>

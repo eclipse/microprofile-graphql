@@ -1,0 +1,7 @@
+query allAvengers {
+    allHeroesInTeam(team: "Avengers") {
+        name
+        primaryLocation
+        superPowers
+    }
+}

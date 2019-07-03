@@ -23,7 +23,8 @@ image:/tck/high-level.png[link="/master/tck/high-level.png"]
 
 == Dynamic tests
 
-Tests can be added by creating a new test group (folder) in `src/test/resources`.
+Tests can be added by creating a new test group (folder) in `src/main/resources/tests`.
+(You can also do this in the implementation, the use `src/test/resources/tests`)
 
 The folder name will be the name of the test. You can then add the following:
 

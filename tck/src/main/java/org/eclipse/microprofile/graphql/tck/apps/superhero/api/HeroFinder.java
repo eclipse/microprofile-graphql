@@ -83,6 +83,7 @@ public class HeroFinder {
     public Team addHeroToTeam(@Argument("hero") String heroName,
                               @Argument("team") String teamName)
                               throws UnknownTeamException {
+                      
         LOG.info("addHeroToTeam invoked");
         return heroDB.getTeam(teamName)
                      .addMembers( heroDB.getHero(heroName) );
@@ -94,7 +95,7 @@ public class HeroFinder {
                                    throws UnknownTeamException {
         LOG.info("removeHeroFromTeam invoked");
         return heroDB.getTeam(teamName)
-                     .removeMembers( heroDB.getHero(heroName) );
+                .removeMembers( heroDB.getHero(heroName) );
     }
 
     @Mutation(description="Removes a hero... permanently...")

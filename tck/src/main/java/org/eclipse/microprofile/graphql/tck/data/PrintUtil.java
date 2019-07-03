@@ -15,46 +15,47 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.tck.dynamic.init;
+package org.eclipse.microprofile.graphql.tck.data;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
-import org.eclipse.microprofile.graphql.tck.dynamic.GraphQLDynamicClientTest;
 
 /**
  * Print the Test data to output
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class PrintUtil {
-    private static final Logger LOG = Logger.getLogger(GraphQLDynamicClientTest.class.getName());
     
     private PrintUtil(){
     }
     
-    public static void print(TestData testData,String output){
-        StringWriter sw = new StringWriter();
-        sw.write("============= " + testData.getName() + " =============");
-        sw.write("\n\n");
-        sw.write("given input = " + testData.getInput());
-        sw.write("\n\n");
-        sw.write("variables input = " + prettyJson(testData.getVariables()));
-        sw.write("\n\n");
-        sw.write("http headers input = " + testData.getHttpHeaders());
-        sw.write("\n\n");
-        sw.write("expected output = " + prettyJson(testData.getOutput()));
-        sw.write("\n\n");
-        sw.write("received output = " +  prettyJson(output));
-        sw.write("\n\n");
-        LOG.info(sw.toString());
+    public static String toString(TestData testData,String output){
+        try(StringWriter sw = new StringWriter()){
+            sw.write("============= " + testData.getName() + " =============");
+            sw.write("\n\n");
+            sw.write("given input = " + testData.getInput());
+            sw.write("\n\n");
+            sw.write("variables input = " + prettyJson(testData.getVariables()));
+            sw.write("\n\n");
+            sw.write("http headers input = " + testData.getHttpHeaders());
+            sw.write("\n\n");
+            sw.write("expected output = " + prettyJson(testData.getOutput()));
+            sw.write("\n\n");
+            sw.write("received output = " +  prettyJson(output));
+            sw.write("\n\n");
+            return sw.toString();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
     
     private static String prettyJson(String json) {
