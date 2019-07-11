@@ -1,0 +1,8 @@
+mutation removeHeroFromTeam($heroName:String, $teamName:String) {
+    removeHeroFromTeam(hero: $heroName, team: $teamName) {
+        name
+        members {
+            name
+        }
+    }
+}

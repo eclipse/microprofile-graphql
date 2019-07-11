@@ -17,6 +17,7 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic.init;
 
+import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -27,33 +28,34 @@ import javax.json.JsonReader;
 import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
-import lombok.extern.java.Log;
 
 /**
  * Print the Test data to output
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-@Log
 public class PrintUtil {
     
     private PrintUtil(){
     }
     
-    public static void print(TestData testData,String output){
-        StringWriter sw = new StringWriter();
-        sw.write("============= " + testData.getName() + " =============");
-        sw.write("\n\n");
-        sw.write("given input = " + testData.getInput());
-        sw.write("\n\n");
-        sw.write("variables input = " + prettyJson(testData.getVariables()));
-        sw.write("\n\n");
-        sw.write("http headers input = " + testData.getHttpHeaders());
-        sw.write("\n\n");
-        sw.write("expected output = " + prettyJson(testData.getOutput()));
-        sw.write("\n\n");
-        sw.write("received output = " +  prettyJson(output));
-        sw.write("\n\n");
-        log.info(sw.toString());
+    public static String toString(TestData testData,String output){
+        try(StringWriter sw = new StringWriter()){
+            sw.write("============= " + testData.getName() + " =============");
+            sw.write("\n\n");
+            sw.write("given input = " + testData.getInput());
+            sw.write("\n\n");
+            sw.write("variables input = " + prettyJson(testData.getVariables()));
+            sw.write("\n\n");
+            sw.write("http headers input = " + testData.getHttpHeaders());
+            sw.write("\n\n");
+            sw.write("expected output = " + prettyJson(testData.getOutput()));
+            sw.write("\n\n");
+            sw.write("received output = " +  prettyJson(output));
+            sw.write("\n\n");
+            return sw.toString();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
     
     private static String prettyJson(String json) {

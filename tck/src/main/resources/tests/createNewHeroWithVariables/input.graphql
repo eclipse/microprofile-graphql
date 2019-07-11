@@ -1,0 +1,14 @@
+mutation createNewHeroWithVariables($name: String, $realName: String, $primaryLocation: String, $superPowers: [String], $teamAffiliations: [TeamInput]){
+    createNewHero(hero:{
+        name: $name
+        realName: $realName
+        superPowers: $superPowers
+        primaryLocation: $primaryLocation
+        teamAffiliations: $teamAffiliations
+    }) {
+        name
+        primaryLocation
+        superPowers
+        realName
+    }
+}

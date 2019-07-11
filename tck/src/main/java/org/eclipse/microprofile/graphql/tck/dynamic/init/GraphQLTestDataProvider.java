@@ -17,113 +17,89 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic.init;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
-import java.io.StringWriter;
+import java.net.URL;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import lombok.extern.java.Log;
-import org.apache.commons.io.IOUtils;
+import org.testng.annotations.DataProvider;
 
 /**
- * Provide test data for GraphQL Endpoint
- * 
+ * Provide test data for GraphQL Endpoint from the implementation's /src/test/resources/tests directory
+ * and the specification's jar file (in /tests)
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-@Log
 public class GraphQLTestDataProvider {
-
-    private static final String[] RESOURCE_FILE_NAMES = new String[]{
-        "cleanup.graphql",
-        "httpHeader.properties",
-        "input.graphql",
-        "output.json",
-        "prepare.graphql",
-        "test.properties",
-        "variables.json"
-    };
-    private GraphQLTestDataProvider() {
+    private static final Logger LOG = Logger.getLogger(GraphQLTestDataProvider.class.getName());
+    
+    private GraphQLTestDataProvider(){
     }
-
-    public static File setupTestDataDir() {
-        File testDataDir;
-        try {
-            Path result = Files.createTempDirectory("graphQL-TCK");
-            testDataDir = result.toFile();
-            log.info("testDataDir = " + testDataDir.getAbsolutePath());
-            testDataDir.deleteOnExit();
-
-            // TODO: see if there is a more dynamic approach to discover and copy these resource dirs
-            copyResourcesTo("addHeroToTeam", result);
-            copyResourcesTo("addHeroToTeamWithVariables", result);
-            copyResourcesTo("allAvengers", result);
-            copyResourcesTo("allAvengersWithVariables", result);
-            copyResourcesTo("allHeroes", result);
-            copyResourcesTo("createNewHero", result);
-            copyResourcesTo("createNewHeroWithVariables", result);
-
-            return testDataDir;
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Unable to extract GraphQL TCK test data files to disk");
-        }
-    }
-
-    public static Object[][] getGraphQLTestDataProvider(File testDataDir) {
-        File[] testFolders = getAllFolders(testDataDir);
-        log.log(Level.INFO, "getGraphQLTestDataProvider testFolders = {0}", testFolders);
-        List<TestData> testDataList = toList(testFolders);
+    
+    @DataProvider(name="specification")
+    public static Object[][] getSpecificationTestData(){
+        List<Path> testFolders = getAllFoldersForSpecification("/tests/");
+        List<TestData> testDataList = toListOfTestData(testFolders);
         sort(testDataList);
         return toObjectArray(testDataList);
     }
-
-    private static List<TestData> toList(File[] testFolders) {
+    
+    @DataProvider(name="implementation")
+    public static Object[][] getImplementationTestData(){
+        List<Path> testFolders = getAllFoldersForImplentation("src/test/resources/tests");
+        List<TestData> testDataList = toListOfTestData(testFolders);
+        sort(testDataList);
+        return toObjectArray(testDataList);
+        
+    }
+    
+    private static List<TestData> toListOfTestData(List<Path> testFolders){
         List<TestData> testDataList = new ArrayList<>();
-        for (int row = 0; row < testFolders.length; row++) {
-            File folder = testFolders[row];
-            try {
-                testDataList.add(getTestData(folder));
-            } catch (IOException ioe) {
-                log.log(Level.SEVERE, "Could not add test case {0} - {1}",
-                        new Object[] { folder.getName(), ioe.getMessage() });
+        for (Path testFolder : testFolders) {
+            if(!testFolder.getFileName().toString().startsWith("META-INF")){// Ignore META-INF
+                try {
+                    testDataList.add(toTestData(testFolder));
+                } catch (IOException ioe) {
+                    LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", new Object[]{testFolder.getFileName().toString(), ioe.getMessage()});
+                }
             }
+            
         }
         return testDataList;
     }
-
-    private static Object[][] toObjectArray(List<TestData> testDataList) {
+   
+    private static Object[][] toObjectArray(List<TestData> testDataList){
         Object[][] testParameters = new Object[testDataList.size()][1];
-        try {
-            for (int row = 0; row < testDataList.size(); row++) {
-                TestData testData = testDataList.get(row);
-                //if (!testData.shouldIgnore()) {
-                    testParameters[row][0] = testData;
-                    log.info("Including test: " + testData.getName());
-                //} else {
-                //    log.log(Level.SEVERE, "Ignoring test [{0}]", testData.getName());
-                //}
+        for (int row = 0; row < testDataList.size(); row++) {
+            TestData testData = testDataList.get(row);
+            if(!testData.shouldIgnore()){
+                testParameters[row][0] = testData;
+            } else {
+                LOG.log(Level.SEVERE, "Ignoring test [{0}]", testData.getName());
             }
-        } catch (Throwable t) {
-            t.printStackTrace();
+            
         }
         return testParameters;
     }
-
-    private static void sort(List<TestData> testDataList) {
+    
+    private static void sort(List<TestData> testDataList){
         Collections.sort(testDataList, new Comparator<TestData>() {
             @Override
             public int compare(TestData u1, TestData u2) {
@@ -131,114 +107,135 @@ public class GraphQLTestDataProvider {
             }
         });
     }
-
-    private static TestData getTestData(File folder) throws IOException {
-        TestData testData = new TestData(folder.getName());
-
-        File[] files = folder.listFiles();
-        for (File file : files) {
-            String filename = file.getName();
-            switch (filename) {
-            case "input.graphql": {
-                String content = getFileContent(file);
-                testData.setInput(content);
-                break;
-            }
-            case "httpHeader.properties": {
-                Properties properties = new Properties();
-                properties.load(new FileReader(file));
-                testData.setHttpHeaders(properties);
-                break;
-            }
-            case "output.json": {
-                String content = getFileContent(file);
-                testData.setOutput(content);
-                break;
-            }
-            case "variables.json": {
-                String content = getFileContent(file);
-                testData.setVariables(toJsonObject(content));
-                break;
-            }
-            case "test.properties": {
-                Properties properties = new Properties();
-                properties.load(new FileReader(file));
-                testData.setProperties(properties);
-                break;
-            }
-            case "cleanup.graphql": {
-                String content = getFileContent(file);
-                testData.setCleanup(content);
-                break;
-            }
-            case "prepare.graphql": {
-                String content = getFileContent(file);
-                testData.setPrepare(content);
-                break;
-            }
-            default:
-                log.log(Level.WARNING, "Ignoring unknown file: {0}", file.getAbsolutePath());
-                break;
-            }
-        }
-        return testData;
-    }
-
-    private static String getFileContent(File file) throws FileNotFoundException, IOException {
-        try (FileReader fr = new FileReader(file); StringWriter sw = new StringWriter()) {
-            IOUtils.copy(fr, sw);
-            return sw.toString();
-        }
-    }
-
-    private static File[] getAllFolders(File testDataDir) {
-        File[] folders = testDataDir.listFiles(new FileFilter() {
+    
+    private static TestData toTestData(Path folder) throws IOException {
+        TestData testData = new TestData(folder.getFileName().toString().replace("/", ""));
+        Files.walkFileTree(folder,new HashSet<>(), 1, new FileVisitor<Path>() {
+        
             @Override
-            public boolean accept(File file) {
-                return file.isDirectory();
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                    throws IOException {
+                
+                String filename = file.getFileName().toString();
+                
+                switch (filename) {
+                    case "input.graphql":
+                        {
+                            String content = getFileContent(file);
+                            testData.setInput(content);
+                            break;
+                        }
+                    case "httpHeader.properties":
+                        {
+                            Properties properties = new Properties();
+                            properties.load(Files.newInputStream(file));
+                            testData.setHttpHeaders(properties);
+                            break;
+                        }    
+                    case "output.json":
+                        {
+                            String content = getFileContent(file);
+                            testData.setOutput(content);
+                            break;
+                        }
+                    case "variables.json":
+                        {
+                            String content = getFileContent(file);
+                            testData.setVariables(toJsonObject(content));
+                            break;
+                        }
+                    case "test.properties":
+                        {
+                            Properties properties = new Properties();
+                            properties.load(Files.newInputStream(file));
+                            testData.setProperties(properties);
+                            break;
+                        }
+                    case "cleanup.graphql":
+                        {
+                            String content = getFileContent(file);
+                            testData.setCleanup(content);
+                            break;
+                        }    
+                    case "prepare.graphql":
+                        {
+                            String content = getFileContent(file);
+                            testData.setPrepare(content);
+                            break;
+                        }    
+                    default:
+                        LOG.log(Level.WARNING, "Ignoring unknown file {0}", filename);
+                        break;
+                }
+                
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc)
+                    throws IOException {
+                LOG.log(Level.SEVERE, "Could not load file {0}[{1}]", new Object[]{file, exc.getMessage()});
+                return FileVisitResult.CONTINUE;
+            }
+            
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+            
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
             }
         });
-        return folders;
+        
+        return testData;
     }
-
-    private static String[] getResourceFileNames(String resourceDir) {
-        String[] fileNames = new String[RESOURCE_FILE_NAMES.length];
-        for (int i=0; i<RESOURCE_FILE_NAMES.length; i++) {
-            fileNames[i] = resourceDir + "/" + RESOURCE_FILE_NAMES[i];
+    
+    private static String getFileContent(Path file) throws IOException {
+        return new String(Files.readAllBytes(file));
+    }
+    
+    private static List<Path> getAllFoldersForImplentation(String resourcesDirectoryName) {
+        try {
+            Path folderPath = Paths.get(resourcesDirectoryName);
+            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(folderPath);
+            return toListOfPaths(directoryStream);
+        } catch (IOException ex) {
+            LOG.log(Level.INFO, "No implementation specific tests found [{0}]", ex.getMessage());
+            return new ArrayList<>();
+        }   
+    }
+    
+    private static List<Path> getAllFoldersForSpecification(String resourcesDirectoryName){
+        try {
+            URL jar = GraphQLTestDataProvider.class.getProtectionDomain().getCodeSource().getLocation();
+            Path jarFile = Paths.get(jar.toString().substring("file:".length()));
+            FileSystem fs = FileSystems.newFileSystem(jarFile, null);
+            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(fs.getPath(resourcesDirectoryName));
+            return toListOfPaths(directoryStream);
+        } catch (IOException ex) {
+            LOG.log(Level.WARNING, "No specification tests found [{0}]", ex.getMessage());
+            return new ArrayList<>();
         }
-        return fileNames;
-    }
-
-    private static void copyResourcesTo(String resourceDir, Path directory) {
-        for (String resource : getResourceFileNames(resourceDir)) {
-            String resourceLocation = "/" + resource;
-            Path diskLocation = directory.resolve(resource);
-            Path parentDir = diskLocation.getParent();
-
-            try (InputStream input = GraphQLTestDataProvider.class.getResourceAsStream(resourceLocation)) {
-                if (input == null) {
-                    log.info("File not found (could be expected): " + resource);
-                    continue;
-                }
-                File parentDirFile = parentDir.toFile();
-                if (!parentDirFile.exists() && !parentDirFile.mkdirs()) {
-                    throw new IOException("Failed to create directory " + parentDir.toFile().getAbsolutePath());
-                }
-                Files.copy(input, diskLocation);
-                diskLocation.toFile().deleteOnExit();
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Failed to copy " + resource + " to " + directory.toAbsolutePath(), e);
+    }  
+    
+    private static List<Path> toListOfPaths(DirectoryStream<Path> directoryStream){
+        List<Path> files = new ArrayList<>();
+        for(Path p: directoryStream){
+            if(Files.isDirectory(p)){
+                files.add(p);
             }
         }
+        return files;
     }
-
-    private static JsonObject toJsonObject(String jsonString) {
-        if (jsonString == null || jsonString.isEmpty()) {
+    
+    private static JsonObject toJsonObject(String jsonString){
+        if(jsonString==null || jsonString.isEmpty()) {
             return null;
         }
         try (JsonReader jsonReader = Json.createReader(new StringReader(jsonString))) {
             return jsonReader.readObject();
         }
-    }
+    } 
 }
