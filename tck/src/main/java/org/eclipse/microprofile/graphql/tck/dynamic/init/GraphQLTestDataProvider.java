@@ -67,6 +67,7 @@ public class GraphQLTestDataProvider {
         List<TestData> testDataList = toListOfTestData(testFolders);
         sort(testDataList);
         return toObjectArray(testDataList);
+        
     }
     
     private static List<TestData> toListOfTestData(List<Path> testFolders){
@@ -201,7 +202,8 @@ public class GraphQLTestDataProvider {
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(folderPath);
             return toListOfPaths(directoryStream);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            LOG.log(Level.INFO, "No implementation specific tests found [{0}]", ex.getMessage());
+            return new ArrayList<>();
         }   
     }
     
@@ -213,7 +215,8 @@ public class GraphQLTestDataProvider {
             DirectoryStream<Path> directoryStream = Files.newDirectoryStream(fs.getPath(resourcesDirectoryName));
             return toListOfPaths(directoryStream);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            LOG.log(Level.WARNING, "No specification tests found [{0}]", ex.getMessage());
+            return new ArrayList<>();
         }
     }  
     
