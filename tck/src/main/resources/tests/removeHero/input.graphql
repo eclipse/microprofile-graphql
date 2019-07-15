@@ -1,0 +1,5 @@
+mutation removeStarlord {
+  removeHero(hero:"Starlord") {
+    name
+  }
+}

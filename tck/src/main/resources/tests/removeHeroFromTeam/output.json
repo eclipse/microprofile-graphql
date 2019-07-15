@@ -1,0 +1,19 @@
+{
+  "data": {
+    "removeHeroFromTeam": {
+      "name": "Avengers",
+      "members": [
+        {
+          "name": "Iron Man",
+          "primaryLocation": "Los Angeles, CA",
+          "realName": "Tony Stark"
+        },
+        {
+          "name": "Spider Man",
+          "primaryLocation": "New York, NY",
+          "realName": "Peter Parker"
+        }
+      ]
+    }
+  }
+}

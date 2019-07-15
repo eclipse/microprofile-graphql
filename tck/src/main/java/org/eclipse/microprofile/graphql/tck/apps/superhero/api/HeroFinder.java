@@ -30,6 +30,7 @@ import org.eclipse.microprofile.graphql.Query;
 
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.DuplicateSuperHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownTeamException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
@@ -99,8 +100,11 @@ public class HeroFinder {
     }
 
     @Mutation(description="Removes a hero... permanently...")
-    public SuperHero removeHero(@Argument("hero") String heroName) {
-        return heroDB.removeHero(heroName);
+    public Collection<SuperHero> removeHero(@Argument("hero") String heroName) throws UnknownHeroException {
+        if (heroDB.removeHero(heroName) == null) {
+            throw new UnknownHeroException(heroName);
+        }
+        return allHeroes();
     }
 
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
