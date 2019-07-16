@@ -43,11 +43,17 @@ public class HeroFinder {
     HeroDatabase heroDB;
 
     @Query
+    public SuperHero superHero(@Argument("name") String name) {
+        LOG.info("superHero invoked");
+        return heroDB.getHero(name);
+    }
+
+    @Query
     public Collection<SuperHero> allHeroes() {
         LOG.info("allHeroes invoked");
         return heroDB.getAllHeroes();
     }
-
+    
     @Query
     public Collection<SuperHero> allHeroesIn(@Argument("city") String city) {
         LOG.info("allHeroesIn invoked");

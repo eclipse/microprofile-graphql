@@ -24,7 +24,7 @@ TODO: info on annotating components with `@GraphQLApi`
 
 === Queries
 
-TODO: info on how to create queries
+include::queries.asciidoc[]
 
 === Mutations
 
