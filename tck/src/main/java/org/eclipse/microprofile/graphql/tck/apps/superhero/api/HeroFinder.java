@@ -32,6 +32,7 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.db.DuplicateSuperHero
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownTeamException;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Item;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
@@ -107,10 +108,38 @@ public class HeroFinder {
 
     @Mutation(description="Removes a hero... permanently...")
     public Collection<SuperHero> removeHero(@Argument("hero") String heroName) throws UnknownHeroException {
+        LOG.info("removeHero invoked");
         if (heroDB.removeHero(heroName) == null) {
             throw new UnknownHeroException(heroName);
         }
         return allHeroes();
+    }
+
+    @Mutation(description="Gives a hero new equipment")
+    public SuperHero provisionHero(@Argument("hero") String heroName,
+                                   @Argument("item") Item item) 
+                                   throws UnknownHeroException {
+        LOG.info("provisionHero invoked");
+        SuperHero hero = heroDB.getHero(heroName);
+        if (hero == null) {
+            throw new UnknownHeroException(heroName);
+        }
+        hero.getEquipment().add(item);
+        return hero;
+    }
+
+    @Mutation(description="Removes equipment from a hero")
+    public SuperHero removeItemFromHero(@Argument("hero") String heroName,
+                                        @Argument("itemID") long itemID) 
+                                        throws UnknownHeroException {
+        LOG.info("removeItemFromHero invoked");
+        SuperHero hero = heroDB.getHero(heroName);
+        if (hero == null) {
+            throw new UnknownHeroException(heroName);
+        }
+        hero.getEquipment().removeIf( i -> { 
+            return i.getId() == itemID;} );
+        return hero;
     }
 
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
