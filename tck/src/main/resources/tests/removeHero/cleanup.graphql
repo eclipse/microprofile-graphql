@@ -1,0 +1,14 @@
+mutation reCreateStarlord {
+    createNewHero(hero:{
+            name: "Starlord"
+            realName: "Peter Quill"
+            superPowers: ["Ingenuity","Humor","Dance moves"]
+            primaryLocation: "Outer Space"
+            teamAffiliations: [{name: "Guardians of the Galaxy"}]
+        }) {
+            name
+            primaryLocation
+            superPowers
+            realName
+        }
+}
