@@ -15,6 +15,7 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SuperHero {
@@ -23,16 +24,17 @@ public class SuperHero {
     private String primaryLocation;
     private String name;
     private String realName;
+    private final List<Item> equipment = new ArrayList<>();
 
     public SuperHero(){
     }
     
     public SuperHero(List<Team> teamAffiliations, 
-                        List<String> superPowers, 
-                        String primaryLocation, 
-                        String name, 
-                        String realName) {
-        
+                     List<String> superPowers, 
+                     String primaryLocation, 
+                     String name, 
+                     String realName) {
+
         this.teamAffiliations = teamAffiliations;
         this.superPowers = superPowers;
         this.primaryLocation = primaryLocation;
@@ -78,5 +80,9 @@ public class SuperHero {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public List<Item> getEquipment() {
+        return equipment;
     }
 }

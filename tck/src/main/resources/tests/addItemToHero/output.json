@@ -1,0 +1,17 @@
+{
+  "data": {
+    "provisionHero": {
+      "name": "Starlord",
+      "equipment": [
+        {
+          "id": 12345,
+          "name": "Power Infinity Stone",
+          "height": 0.001,
+          "weight": 0.2,
+          "powerLevel": 99,
+          "supernatural": true
+        }
+      ]
+    }
+  }
+}
