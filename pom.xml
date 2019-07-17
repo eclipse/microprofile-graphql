@@ -92,6 +92,7 @@
         <module>spec</module>
         <module>api</module>
         <module>tck</module>
+        <module>spqr</module> <!-- Only here until mp sqpr is available in maven central -->
         <module>runner</module>
     </modules>
 
