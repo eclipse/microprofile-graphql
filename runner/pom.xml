@@ -90,14 +90,13 @@
             <scope>provided</scope>
         </dependency>
 
-
         <!-- The GraphQL Libraries we are wrapping for the implementation -->
-        <!-- TODO: Once release use the version from io.leangen.graphql and add excludes -->
         <dependency>
             <groupId>io.leangen.graphql</groupId>
             <artifactId>spqr</artifactId>
             <version>${spqr.version}</version>
         </dependency>
+        
         <dependency>
             <groupId>com.graphql-java-kickstart</groupId>
             <artifactId>graphql-java-servlet</artifactId>
@@ -118,27 +117,6 @@
     
     <build>
         <plugins>
-            <!-- This will create spqr-1.0.0-SNAPSHOT.jar until it's released -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-scm-plugin</artifactId>
-                <version>1.11.2</version>
-                
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>bootstrap</goal>
-                        </goals>
-                        <configuration>
-                            <connectionType>developerConnection</connectionType>
-                            <scmVersion>microprofile-proto</scmVersion>
-                            <scmVersionType>branch</scmVersionType>
-                            <goals>clean install</goals>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             
             <!-- This will get the app part of the tck so that we can deploy it, ignoring all the test stuff -->
             <plugin>
