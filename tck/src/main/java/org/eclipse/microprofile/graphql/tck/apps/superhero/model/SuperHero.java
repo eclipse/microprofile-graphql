@@ -15,17 +15,74 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor @AllArgsConstructor
 public class SuperHero {
+    private List<Team> teamAffiliations;
+    private List<String> superPowers;
+    private String primaryLocation;
+    private String name;
+    private String realName;
+    private final List<Item> equipment = new ArrayList<>();
+
+    public SuperHero(){
+    }
     
-    List<Team> teamAffiliations;
-    List<String> superPowers;
-    String primaryLocation;
-    String name;
-    String realName;
+    public SuperHero(List<Team> teamAffiliations, 
+                     List<String> superPowers, 
+                     String primaryLocation, 
+                     String name, 
+                     String realName) {
+
+        this.teamAffiliations = teamAffiliations;
+        this.superPowers = superPowers;
+        this.primaryLocation = primaryLocation;
+        this.name = name;
+        this.realName = realName;
+    }
+
+    public List<Team> getTeamAffiliations() {
+        return teamAffiliations;
+    }
+
+    public List<String> getSuperPowers() {
+        return superPowers;
+    }
+
+    public String getPrimaryLocation() {
+        return primaryLocation;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setTeamAffiliations(List<Team> teamAffiliations) {
+        this.teamAffiliations = teamAffiliations;
+    }
+
+    public void setSuperPowers(List<String> superPowers) {
+        this.superPowers = superPowers;
+    }
+
+    public void setPrimaryLocation(String primaryLocation) {
+        this.primaryLocation = primaryLocation;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public List<Item> getEquipment() {
+        return equipment;
+    }
 }

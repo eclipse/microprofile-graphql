@@ -1,0 +1,9 @@
+mutation removeInfinityStone {
+  removeItemFromHero(hero:"Starlord", itemID:12345){
+    name,
+    equipment {
+      id,
+      name
+    }
+  }
+}

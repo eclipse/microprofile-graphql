@@ -1,1 +1,8 @@
 /target/
+.project
+.settings/
+.vscode/
+.classpath
+.factorypath
+/runner/target/
+/spqr/target/

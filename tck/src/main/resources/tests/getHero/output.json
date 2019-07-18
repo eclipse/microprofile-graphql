@@ -1,0 +1,29 @@
+{
+  "data": {
+    "superHero": {
+      "name": "Iron Man",
+      "primaryLocation": "Los Angeles, CA",
+      "realName": "Tony Stark",
+      "superPowers": [
+        "wealth",
+        "engineering"
+      ],
+      "teamAffiliations": [
+        {
+          "name": "Avengers",
+          "members": [
+            {
+              "name": "Iron Man"
+            },
+            {
+              "name": "Spider Man"
+            },
+            {
+              "name": "Wolverine"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

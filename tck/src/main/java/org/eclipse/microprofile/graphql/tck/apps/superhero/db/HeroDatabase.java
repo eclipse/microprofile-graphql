@@ -15,7 +15,6 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -35,17 +34,14 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
 @ApplicationScoped
 public class HeroDatabase {
-
     final Map<String,SuperHero> allHeroes = new HashMap<>();
     final Map<String,Team> allTeams = new HashMap<>();
 
-    private HeroDatabase(){}
-    
     private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
+        
         try {
             Jsonb jsonb = JsonbBuilder.create();
-            InputStream mapJson = getClass().getClassLoader()
-                                            .getResourceAsStream("/superheroes.json");
+            String mapJson = getInitalJson();
             addHeroes(jsonb.fromJson(mapJson,
                       new ArrayList<SuperHero>(){}.getClass().getGenericSuperclass()));
         } catch (JsonbException ex) {
@@ -108,5 +104,49 @@ public class HeroDatabase {
                 members.add(hero);
             }
         }
+    }
+
+    public SuperHero removeHero(String heroName) {
+        SuperHero hero = allHeroes.remove(heroName);
+        if (hero == null) {
+            return null;
+        }
+        for (Team team : getAllTeams()) {
+            team.removeMembers(hero);
+        }
+        return hero;
+    }
+
+    private static String getInitalJson() {
+        return "[" +
+            "{" +
+             "\"name\":\"Iron Man\"," +
+             "\"realName\":\"Tony Stark\"," +
+             "\"primaryLocation\":\"Los Angeles, CA\"," +
+             "\"superPowers\":[\"wealth\",\"engineering\"]," +
+             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]" +
+            "}," +
+            "{" +
+             "\"name\":\"Spider Man\"," +
+             "\"realName\":\"Peter Parker\"," +
+             "\"primaryLocation\":\"New York, NY\"," +
+             "\"superPowers\":[\"Spidey Sense\",\"Wall-Crawling\",\"Super Strength\",\"Web-shooting\"]," +
+             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]" +
+            "}," +
+            "{" +
+             "\"name\":\"Starlord\"," +
+             "\"realName\":\"Peter Quill\"," +
+             "\"primaryLocation\":\"Outer Space\"," +
+             "\"superPowers\":[\"Ingenuity\",\"Humor\",\"Dance moves\"]," +
+             "\"teamAffiliations\":[{\"name\":\"Guardians of the Galaxy\"}]" +
+            "}," +
+            "{" +
+             "\"name\":\"Wolverine\"," +
+             "\"realName\":\"James Howlett, aka Logan\"," +
+             "\"primaryLocation\":\"Unknown\"," +
+             "\"superPowers\":[\"Regeneritive Healing\",\"Enhanced Reflexes\",\"Adamantium-infused skeleton\",\"Retractable claws\"]," +
+             "\"teamAffiliations\":[{\"name\":\"Avengers\"},{\"name\":\"X-Men\"}]" +
+            "}" +
+           "]";
     }
 }

@@ -1,0 +1,8 @@
+mutation removeHeroFromTeam {
+    removeHeroFromTeam(hero: "Starlord", team: "Avengers") {
+        name
+        members {
+            name
+        }
+    }
+}

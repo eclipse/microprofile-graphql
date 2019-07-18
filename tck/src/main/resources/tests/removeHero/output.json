@@ -1,0 +1,15 @@
+{
+  "data": {
+    "removeHero": [
+      {
+        "name": "Iron Man"
+      },
+      {
+        "name": "Wolverine"
+      },
+      {
+        "name": "Spider Man"
+      }
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+mutation removeWolverineFromAvengers {
+  removeHeroFromTeam(hero:"Wolverine", team:"Avengers") {
+    name,
+    members {
+      name
+      primaryLocation
+      realName
+    }
+  }
+}

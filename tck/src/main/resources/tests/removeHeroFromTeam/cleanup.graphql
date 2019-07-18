@@ -1,0 +1,8 @@
+mutation addWolverineBackToAvengers {
+  addHeroToTeam(hero:"Wolverine", team:"Avengers") {
+    name,
+    members {
+      name
+    }
+  }
+}
