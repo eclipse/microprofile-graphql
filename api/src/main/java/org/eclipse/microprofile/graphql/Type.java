@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * <br><br>
  * For example, a user might annotate a class as such:
  * <pre>
- * {@literal @}Type(name = "Starship", description = "A starship in StarWars")
+ * {@literal @}Type(value = "Starship", description = "A starship in StarWars")
  * public class Starship {
  *     private String id;
  *     private String name;
