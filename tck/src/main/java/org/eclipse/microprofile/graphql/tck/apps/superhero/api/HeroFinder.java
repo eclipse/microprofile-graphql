@@ -27,9 +27,10 @@ import org.eclipse.microprofile.graphql.Argument;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
-
+import org.eclipse.microprofile.graphql.Source;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.DuplicateSuperHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroLocator;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownTeamException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Item;
@@ -42,6 +43,9 @@ public class HeroFinder {
     
     @Inject
     HeroDatabase heroDB;
+
+    @Inject
+    HeroLocator heroLocator;
 
     @Query
     public SuperHero superHero(@Argument("name") String name) {
@@ -140,6 +144,12 @@ public class HeroFinder {
         hero.getEquipment().removeIf( i -> { 
             return i.getId() == itemID;} );
         return hero;
+    }
+
+    @Query
+    public String currentLocation(@Source SuperHero hero) {
+        LOG.info("checking current location for: " + hero.getName());
+        return heroLocator.getHeroLocation(hero.getName());
     }
 
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
