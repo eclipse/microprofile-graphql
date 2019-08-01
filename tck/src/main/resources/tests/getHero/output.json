@@ -1,6 +1,6 @@
 {
   "data": {
-    "superHero": {
+    "IronMan": {
       "name": "Iron Man",
       "primaryLocation": "Los Angeles, CA",
       "realName": "Tony Stark",
@@ -24,6 +24,9 @@
           ]
         }
       ]
+    },
+    "IronWoman": {
+      "errorCode": 101
     }
   }
 }
