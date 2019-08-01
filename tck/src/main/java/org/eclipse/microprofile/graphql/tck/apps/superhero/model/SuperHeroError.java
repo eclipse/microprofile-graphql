@@ -13,13 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
+package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
-@SuppressWarnings("serial")
-public class UnknownHeroException extends Exception {
+public class SuperHeroError implements SuperHeroOrError {
+    private int errorCode = 0; // No error by default
 
-    public UnknownHeroException(String message) {
-        super(message);
+    public SuperHeroError(int errorCode) {
+        this.setErrorCode(errorCode);
     }
 
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
+    }
 }

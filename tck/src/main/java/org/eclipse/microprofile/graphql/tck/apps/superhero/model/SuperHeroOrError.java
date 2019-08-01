@@ -13,13 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
+package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
-@SuppressWarnings("serial")
-public class UnknownHeroException extends Exception {
+import io.leangen.graphql.annotations.types.GraphQLUnion;
 
-    public UnknownHeroException(String message) {
-        super(message);
-    }
-
+@GraphQLUnion(name = "SuperHeroOrError", description = "Either good or bad", possibleTypes = {SuperHero.class, SuperHeroError.class})
+public interface SuperHeroOrError {
 }

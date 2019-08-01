@@ -18,7 +18,7 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperHero {
+public class SuperHero implements SuperHeroOrError {
     private List<Team> teamAffiliations;
     private List<String> superPowers;
     private String primaryLocation;
@@ -26,13 +26,13 @@ public class SuperHero {
     private String realName;
     private final List<Item> equipment = new ArrayList<>();
 
-    public SuperHero(){
+    public SuperHero() {
     }
-    
-    public SuperHero(List<Team> teamAffiliations, 
-                     List<String> superPowers, 
-                     String primaryLocation, 
-                     String name, 
+
+    public SuperHero(List<Team> teamAffiliations,
+                     List<String> superPowers,
+                     String primaryLocation,
+                     String name,
                      String realName) {
 
         this.teamAffiliations = teamAffiliations;

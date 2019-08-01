@@ -15,12 +15,8 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
@@ -28,14 +24,17 @@ import javax.enterprise.event.Observes;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbException;
-
-import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
-import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 
 @ApplicationScoped
 public class HeroDatabase {
-    final Map<String,SuperHero> allHeroes = new HashMap<>();
-    final Map<String,Team> allTeams = new HashMap<>();
+    private final Map<String,SuperHero> allHeroes = new HashMap<>();
+    private final Map<String,Team> allTeams = new HashMap<>();
 
     private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         
@@ -49,8 +48,14 @@ public class HeroDatabase {
         }
     }
 
-    public SuperHero getHero(String name) {
-        return allHeroes.get(name);
+    public SuperHero getHero(String name) throws UnknownHeroException {
+        SuperHero superHero = allHeroes.get(name);
+
+        if (superHero == null) {
+            throw new UnknownHeroException(name);
+        }
+
+        return superHero;
     }
 
     public Team getTeam(String name) throws UnknownTeamException {
