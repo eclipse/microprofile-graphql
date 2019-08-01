@@ -1,0 +1,6 @@
+query allHeroes {
+    allHeroes {
+        name
+        currentLocation
+    }
+}
