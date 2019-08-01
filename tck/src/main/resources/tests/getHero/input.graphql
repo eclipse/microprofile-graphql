@@ -1,15 +1,39 @@
 {
-  superHero(name:"Iron Man") {
-    
-    name
-    primaryLocation
-    realName
-    superPowers
-    teamAffiliations {
-      name
-      members{
-        name
-      }
+    IronMan: superHero(name: "Iron Man") {
+        ... on SuperHero {
+            name
+            primaryLocation
+            realName
+            superPowers
+            teamAffiliations {
+                name
+                members {
+                    name
+                }
+            }
+        }
+
+        ... on SuperHeroError {
+            errorCode
+        }
     }
-  }
+
+    IronWoman: superHero(name: "Iron Woman") {
+        ... on SuperHero {
+            name
+            primaryLocation
+            realName
+            superPowers
+            teamAffiliations {
+                name
+                members {
+                    name
+                }
+            }
+        }
+
+        ... on SuperHeroError {
+            errorCode
+        }
+    }
 }
