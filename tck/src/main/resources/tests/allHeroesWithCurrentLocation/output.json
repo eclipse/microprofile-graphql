@@ -1,0 +1,22 @@
+{
+  "data": {
+    "allHeroes": [
+      {
+        "name": "Iron Man",
+        "currentLocation": "Wachovia"
+      },
+      {
+        "name": "Starlord",
+        "currentLocation": "Xandar"
+      },
+      {
+        "name": "Wolverine",
+        "currentLocation": "New Orleans"
+      },
+      {
+        "name": "Spider Man",
+        "currentLocation": "Brooklyn"
+      }
+    ]
+  }
+}
