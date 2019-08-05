@@ -21,6 +21,7 @@ public class Team {
 
     private String name;
     private List<SuperHero> members;
+    private Team rivalTeam;
 
     public Team(){
     
@@ -58,5 +59,13 @@ public class Team {
             members.remove(hero);
         }
         return this;
+    }
+
+    public Team getRivalTeam() {
+        return rivalTeam;
+    }
+
+    public void setRivalTeam(Team rivalTeam) {
+        this.rivalTeam = rivalTeam;
     }
 }

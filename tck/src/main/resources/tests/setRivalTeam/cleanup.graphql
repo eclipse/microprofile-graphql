@@ -1,0 +1,8 @@
+mutation unsetXMenRivalTeam {
+  setRivalTeam (teamName:"X-Men", rivalTeam:null) {
+    name,
+    rivalTeam {
+      name
+    }
+  }
+}

@@ -158,4 +158,14 @@ public class HeroFinder {
                      .filter(predicate)
                      .collect(Collectors.toCollection(ArrayList::new));
     }
+
+    @Mutation
+    public Team setRivalTeam(@Argument("teamName") String teamName, @Argument("rivalTeam") Team rivalTeam) 
+        throws UnknownTeamException {
+
+        LOG.info("setRivalTeam: " + teamName + "'s new rival is: " + rivalTeam == null ? "null" : rivalTeam.getName());
+        Team team = heroDB.getTeam(teamName);
+        team.setRivalTeam(rivalTeam);
+        return team;
+    }
 }
