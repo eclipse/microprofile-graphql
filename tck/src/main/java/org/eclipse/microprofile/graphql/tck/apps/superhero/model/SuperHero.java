@@ -18,6 +18,11 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.microprofile.graphql.FieldsOrder;
+import org.eclipse.microprofile.graphql.InputFieldsOrder;
+
+@FieldsOrder({"name", "realName", "superPowers", "cuurentLocation", "primaryLocation", "teamAffiliations", "equipment"})
+@InputFieldsOrder({"primaryLocation", "teamAffiliations", "name", "equipment", "realName", "superPowers"})
 public class SuperHero {
     private List<Team> teamAffiliations;
     private List<String> superPowers;

@@ -73,7 +73,7 @@ TODO: info on limitations to generic types (collections only?)
 
 === Fields
 
-=== Deprecation
+==== Deprecation
 
 Application developers can mark entity fields as deprecated in the GraphQL schema with the `@Deprecated` annotation -
 either the annotation that comes from the JDK in the `java.lang` package or the MicroProfile GraphQL annotation in the
@@ -88,7 +88,34 @@ effect if specified on output types.  The value specified in this annotation may
 
 ==== FieldsOrder / InputFieldsOrder
 
-TODO: info on fields ordering
+It is possible to control the order that entity type fields and input type fields are ordered in the schema using the 
+`@FieldsOrder` and `@InputFieldsOrder` annotations, respectively.  The value of these annotations is a String array that
+determines the order of the fields for the specified type or input type.  If a field name is specified, that does not 
+exist, the implementation should ignore that field and it _should_ log a warning.  If a field name exists on the type or
+input type, but is not specified, it's location in the schema is undefined, but will not be displayed before any of the
+fields listed in the annotation.  Consider the following example:
+
+```
+@FieldsOrder({"foo", "oops", "cat", "baz"})
+public class MyType {
+    private String cat;
+    private String baz;
+    private String bar;
+    private String foo;
+    private String dog;
+}
+```
+
+In this example, `MyType` has five fields: `cat`, `baz`, `bar`, `foo`, and `dog`.  The `@FieldsOrder` annotation 
+specifies three of these fields and another field that does not exist.  The order in the schema should be:
+
+- foo
+- cat
+- baz
+- bar or dog - this order is non-deterministic
+- dog or bar - this order is non-deterministic
+
+The implementation should also log a warning that indicates that `oops` is not a valid field.
 
 ==== Ignorable fields
 
