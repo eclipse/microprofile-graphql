@@ -73,6 +73,42 @@ TODO: info on limitations to generic types (collections only?)
 
 === Fields
 
+Fields in GraphQL are similar to fields in Java in that they are a child of a single entity.  Thus, Java fields on entity 
+classes are, by default, GraphQL fields of that entity. It is also possible for GraphQL fields that are not part of the 
+Java entity object to be represented as a field of the GraphQL entity.  This is because all GraphQL fields are also 
+queries.
+
+Consider the following example:
+
+```
+public class SuperHero {
+    private String name;
+    private String realName;
+    private List<String> superPowers;
+    // ...
+}
+```
+
+The Java fields, `name`, `realName` and `superPowers` are all GraphQL fields of the `SuperHero` entity type. Now consider 
+this example:
+
+```
+@GraphQLApi
+public class MyQueries {
+
+    @Query
+    public Location currentLocation(@Source SuperHero hero) {
+        return getLocationForHero(hero.getName());
+    }
+    // ...
+}
+```
+
+The above query adds a new field to the `SuperHero` GraphQL entity type, called `currentLocation`.  This field is not 
+part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This association is made by using the `@Source`
+annotation. Also note that the `currentLocation` method will only be invoked if the client requests the `currentLocation`
+field in the query. This is a useful way to prevent looking up data on the server that the client is not interested in.
+
 === Deprecation
 
 Application developers can mark entity fields as deprecated in the GraphQL schema with the `@Deprecated` annotation -
