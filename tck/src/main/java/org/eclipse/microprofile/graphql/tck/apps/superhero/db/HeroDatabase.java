@@ -124,7 +124,9 @@ public class HeroDatabase {
              "\"realName\":\"Tony Stark\"," +
              "\"primaryLocation\":\"Los Angeles, CA\"," +
              "\"superPowers\":[\"wealth\",\"engineering\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]" +
+             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
+             "\"equipment\":[{\"id\": 1001, \"name\": \"Iron Man Suit\", \"powerLevel\": 18, " +
+                             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false}]" +
             "}," +
             "{" +
              "\"name\":\"Spider Man\"," +

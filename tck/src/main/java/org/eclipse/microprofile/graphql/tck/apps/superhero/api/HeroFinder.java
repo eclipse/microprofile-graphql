@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import org.eclipse.microprofile.graphql.Argument;
+import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
@@ -60,8 +61,8 @@ public class HeroFinder {
     }
     
     @Query
-    public Collection<SuperHero> allHeroesIn(@Argument("city") String city) {
-        LOG.info("allHeroesIn invoked");
+    public Collection<SuperHero> allHeroesIn(@DefaultValue("New York, NY") @Argument("city") String city) {
+        LOG.info("allHeroesIn " + city + " invoked");
         return allHeroesByFilter(hero -> {
             return city.equals(hero.getPrimaryLocation());});
     }
@@ -121,7 +122,7 @@ public class HeroFinder {
 
     @Mutation(description="Gives a hero new equipment")
     public SuperHero provisionHero(@Argument("hero") String heroName,
-                                   @Argument("item") Item item) 
+                                   @DefaultValue(Item.CAPE) @Argument("item") Item item) 
                                    throws UnknownHeroException {
         LOG.info("provisionHero invoked");
         SuperHero hero = heroDB.getHero(heroName);
@@ -144,6 +145,22 @@ public class HeroFinder {
         hero.getEquipment().removeIf( i -> { 
             return i.getId() == itemID;} );
         return hero;
+    }
+
+    @Mutation(description="Update an item's powerLevel") 
+    public Item updateItemPowerLevel(@Argument("itemID") long itemID,
+                                     @DefaultValue("5") @Argument("powerLevel") int newLevel) {
+
+        Item item = null;
+        for (SuperHero hero : allHeroes()) {
+            for (Item i : hero.getEquipment()) {
+                if (i.getId() == itemID) {
+                    item = i;
+                    item.setPowerLevel(newLevel);
+                }
+            }
+        }
+        return item;
     }
 
     @Query

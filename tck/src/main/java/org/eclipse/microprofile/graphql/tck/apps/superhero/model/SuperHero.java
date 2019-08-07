@@ -24,7 +24,7 @@ public class SuperHero {
     private String primaryLocation;
     private String name;
     private String realName;
-    private final List<Item> equipment = new ArrayList<>();
+    private List<Item> equipment = new ArrayList<>();
 
     public SuperHero(){
     }
@@ -84,5 +84,9 @@ public class SuperHero {
 
     public List<Item> getEquipment() {
         return equipment;
+    }
+
+    public void setEquipment(List<Item> equipment) {
+        this.equipment = equipment;
     }
 }

@@ -1,0 +1,7 @@
+mutation resetIronManSuitPower {
+  updateItemPowerLevel(itemID:1001, powerLevel:18) {
+    id
+    name
+    powerLevel
+  }
+}

@@ -1,0 +1,8 @@
+query allHeroesInNYC {
+    allHeroesIn {
+        name
+        primaryLocation
+        superPowers
+        realName
+    }
+}

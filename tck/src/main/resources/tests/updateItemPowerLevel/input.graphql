@@ -1,0 +1,8 @@
+# Tests that the implementation can handle a default value on a primitive scalar (int) - powerLevel defaults to 5.
+mutation alterIronManSuitPower {
+  updateItemPowerLevel(itemID:1001) {
+    id
+    name
+    powerLevel
+  }
+}

@@ -84,7 +84,8 @@ might provide more information to the consumers of the schema.
 
 The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
 a value. Default values may only be specified on input types (and also as `@Argument` parameters) and will have no
-effect if specified on output types.  The value specified in this annotation may be
+effect if specified on output types.  The value specified in this annotation may be plain text for Java primitives and 
+`String` types or JSON for complex types.
 
 ==== FieldsOrder / InputFieldsOrder
 

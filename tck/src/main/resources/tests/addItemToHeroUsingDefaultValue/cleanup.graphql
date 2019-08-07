@@ -1,0 +1,9 @@
+mutation removeCape {
+  removeItemFromHero(hero:"Spider Man", itemID:1000){
+    name,
+    equipment {
+      id,
+      name
+    }
+  }
+}

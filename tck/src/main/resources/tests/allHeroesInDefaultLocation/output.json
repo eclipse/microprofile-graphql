@@ -1,0 +1,10 @@
+{
+    "data": {
+        "allHeroesIn": [{
+                "name": "Spider Man",
+                "primaryLocation": "New York, NY",
+                "superPowers": ["Spidey Sense", "Wall-Crawling", "Super Strength", "Web-shooting"],
+                "realName": "Peter Parker"
+            }]
+    }
+}
