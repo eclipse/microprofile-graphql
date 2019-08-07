@@ -1,0 +1,17 @@
+{
+  "data": {
+    "provisionHero": {
+      "name": "Spider Man",
+      "equipment": [
+        {
+          "id": 1000,
+          "name": "Cape",
+          "height": 1.2,
+          "weight": 0.3,
+          "powerLevel": 3,
+          "supernatural": false
+        }
+      ]
+    }
+  }
+}

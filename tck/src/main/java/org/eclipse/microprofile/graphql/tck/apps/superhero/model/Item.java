@@ -27,6 +27,16 @@ public class Item {
     private float weight;
     private boolean supernatural;
 
+    public final static String CAPE =
+        "{" +
+        "   \"id\": 1000," +
+        "   \"name\": \"Cape\","+
+        "   \"powerLevel\": 3," +
+        "   \"height\": 1.2," +
+        "   \"weight\": 0.3," +
+        "   \"supernatural\": false" +
+        "}";
+
     public Item(){
     }
     

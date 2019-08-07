@@ -1,0 +1,14 @@
+# Tests that the implementation can a default value on a POJO in a mutation
+mutation giveSpiderManACape {
+  provisionHero(hero:"Spider Man") {
+    name,
+    equipment {
+      id,
+      name,
+      height,
+      weight,
+      powerLevel,
+      supernatural
+    }
+  }
+}
