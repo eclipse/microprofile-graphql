@@ -1,0 +1,10 @@
+{
+  "data": {
+    "setRivalTeam": {
+      "name": "X-Men",
+      "rivalTeam": {
+        "name": "Brotherhood of Evil Mutants"
+      }
+    }
+  }
+}

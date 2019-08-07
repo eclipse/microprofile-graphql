@@ -1,0 +1,10 @@
+mutation setXMenRivalTeam {
+  setRivalTeam (teamName:"X-Men", rivalTeam:{
+    name:"Brotherhood of Evil Mutants"
+  }) {
+    name,
+    rivalTeam {
+      name
+    }
+  }
+}
