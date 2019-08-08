@@ -16,17 +16,21 @@
 
 [[queries]]
 
-Queries allows an user to ask for all or specific fields on an object.
+Queries allows a user to ask for all or specific fields on an object.
 
 ==== API Annotation
-In any bean that is annotated with `GraphQLApi` you can mark a method with `@Query` and the implementation must make sure that the 
-method is exposed as a GraphQL Query.
+For classes that are annotated with `@GraphQLApi`, implementations must create a query in the schema for every method
+that is annotated with `@Query`.
 
 The `@Query` annotation is defined in the API:
 
 .QueryAnnotation
 [source,java,numbered]
 ----
+package org.eclipse.microprofile.graphql;
+
+//...
+
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -50,12 +54,16 @@ public @interface Query {
 ----
 @Query
 public SuperHero superHero(@Argument("name") String name) {
-    LOG.info("superHero invoked");
     return heroDB.getHero(name);
 }
 ----
 
+==== Entity fields are also queries
 
+In the previous example, an explicitly defined query named "superHero" returns a `SuperHero` entity. The fields on that
+entity class are also implicitly defined as queries. It is possible to define fields as queries explicitly by using the
+`@Source` annotation on a parameter to the query method. More information on this is available in the
+<<entities.asciidoc#fields,Entity Fields>> section. 
 
 ==== Unnamed queries
 

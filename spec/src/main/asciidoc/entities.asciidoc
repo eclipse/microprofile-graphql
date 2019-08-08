@@ -18,16 +18,17 @@
 
 == GraphQL Entities
 
-Entities are the objects used in GraphQL. They can be simple objects ("scalars" in GraphQL terminology) or more complex objects
-that are composed of scalars.
-According to the https://graphql.org/learn/schema/#scalar-types[GraphQL documentation] a scalar has no sub-fields, and all
-GraphQL implementations are expected to handle, the following scalar types:
+Entities are the objects used in GraphQL. They can be simple objects ("scalars" in GraphQL terminology) or more complex
+objects that are composed of scalars.
+According to the https://graphql.org/learn/schema/#scalar-types[GraphQL documentation] a scalar has no sub-fields, and
+all GraphQL implementations are expected to handle, the following scalar types:
 
 - `Int` - which maps to a Java `int`/`Integer` or `long`/`Long`.
 - `Float` - which maps to a Java `float`/`Float` or `double`/`Double`.
 - `String` - which maps to a Java `char`, `char[]`, `String`, etc.
 - `Boolean` - which maps to a Java `boolean`/`Boolean`.
-- `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
+- `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be
+human-readable.
 
 In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
 
@@ -38,30 +39,33 @@ In order for an entity class to be defined in the GraphQL schema, it must meet a
 === POJOs
 
 Any Plain Old Java Object (POJO) can be an entity.  No special annotations are required. Implementations of MicroProfile
-GraphQL must use JSON-B to serialize and deserialize entities to JSON, so it is possible to further define entities using
-JSON-B annotations.
+GraphQL must use JSON-B to serialize and deserialize entities to JSON, so it is possible to further define entities
+using JSON-B annotations.
 
 If the entity cannot be serialized by JSON-B, the implementation must return in an internal server error to the client.
 
 === Types vs InputTypes
 
-GraphQL differentiates types from input types.  Input types are entities that are sent by the client as arguments to queries or
-mutations. Types are entities that are sent from the server to the client as return types from queries or mutations.
+GraphQL differentiates types from input types.  Input types are entities that are sent by the client as arguments to
+queries or mutations. Types are entities that are sent from the server to the client as return types from queries or
+mutations.
 
-In many cases the same Java type can be used for input (sent _from_ client) and output (sent _to_ the client), but there are
-cases where an application may need two different Java types to handle input and output.
+In many cases the same Java type can be used for input (sent _from_ the client) and output (sent _to_ the client), but
+there are cases where an application may need two different Java types to handle input and output.
 
 The `@Type` annotation is used for output entities while the `@InputType` annotation is used for input entities.
 
-Normally these annotations are unnecessary if the type can be serialized and/or deserialized by JSON-B, and if the type is
-specified in a query or mutation method. These annotations can be used to specify the name of the type in the GraphQL schema;
-by default, the entity name in the schema will be the same as the simple class name of the entity type.  These annotations can
-also be used to add a description to the entity in the schema.
+Normally these annotations are unnecessary if the type can be serialized and/or deserialized by JSON-B, and if the type
+is specified in a query or mutation method. These annotations can be used to specify the name of the type in the GraphQL
+schema; by default, the entity name in the schema will be the same as the simple class name of the entity type for
+output types; for input types, the simple class name is used with "Input" appended. Thus, an entity class named 
+`com.mypkg.Tree` would create a GraphQL schema type called "Tree" and an input type called "TreeInput". These
+annotations can also be used to add a description to the entity in the schema.
 
 === Java interfaces as GraphQL entity types
 
-It is possible for entities (types and input types) to be defined as a Java interfaces. In order for JSON-B to deserialize an
-interface, the interface may need a `JsonbDeserializer` in order to instantiate a concrete type.
+It is possible for entities (types and input types) to be defined as a Java interfaces. In order for JSON-B to
+deserialize an interface, the interface may need a `JsonbDeserializer` in order to instantiate a concrete type.
 
 === GraphQL interfaces
 
@@ -71,12 +75,13 @@ interface, the interface may need a `JsonbDeserializer` in order to instantiate 
 
 TODO: info on limitations to generic types (collections only?)
 
+[[fields]]
 === Fields
 
-Fields in GraphQL are similar to fields in Java in that they are a child of a single entity.  Thus, Java fields on entity 
-classes are, by default, GraphQL fields of that entity. It is also possible for GraphQL fields that are not part of the 
-Java entity object to be represented as a field of the GraphQL entity.  This is because all GraphQL fields are also 
-queries.
+Fields in GraphQL are similar to fields in Java in that they are a child of a single entity.  Thus, Java fields on
+entity classes are, by default, GraphQL fields of that entity. It is also possible for GraphQL fields that are not part
+of the Java entity object to be represented as a field of the GraphQL entity.  This is because all GraphQL fields are
+also queries.
 
 Consider the following example:
 
@@ -89,8 +94,8 @@ public class SuperHero {
 }
 ```
 
-The Java fields, `name`, `realName` and `superPowers` are all GraphQL fields of the `SuperHero` entity type. Now consider 
-this example:
+The Java fields, `name`, `realName` and `superPowers` are all GraphQL fields of the `SuperHero` entity type. Now
+consider this example:
 
 ```
 @GraphQLApi
@@ -105,9 +110,10 @@ public class MyQueries {
 ```
 
 The above query adds a new field to the `SuperHero` GraphQL entity type, called `currentLocation`.  This field is not 
-part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This association is made by using the `@Source`
-annotation. Also note that the `currentLocation` method will only be invoked if the client requests the `currentLocation`
-field in the query. This is a useful way to prevent looking up data on the server that the client is not interested in.
+part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This association is made by using the
+`@Source` annotation. Also note that the `currentLocation` method will only be invoked if the client requests the
+`currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
+not interested in.
 
 === Deprecation
 
