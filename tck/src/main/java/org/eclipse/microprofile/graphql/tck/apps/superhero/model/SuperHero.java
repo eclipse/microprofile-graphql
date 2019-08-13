@@ -18,7 +18,7 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperHero {
+public class SuperHero implements Character {
     private List<Team> teamAffiliations;
     private List<String> superPowers;
     private String primaryLocation;
