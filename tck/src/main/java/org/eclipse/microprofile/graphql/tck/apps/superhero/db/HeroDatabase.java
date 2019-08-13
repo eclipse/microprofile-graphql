@@ -35,11 +35,11 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
 @ApplicationScoped
 public class HeroDatabase {
-    final Map<String,SuperHero> allHeroes = new HashMap<>();
-    final Map<String,Team> allTeams = new HashMap<>();
+    final Map<String, SuperHero> allHeroes = new HashMap<>();
+    final Map<String, Team> allTeams = new HashMap<>();
 
     private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        
+
         try {
             Jsonb jsonb = JsonbBuilder.create();
             String mapJson = getInitalJson();
@@ -51,8 +51,14 @@ public class HeroDatabase {
         }
     }
 
-    public SuperHero getHero(String name) {
-        return allHeroes.get(name);
+    public SuperHero getHero(String name) throws UnknownHeroException {
+        SuperHero superHero = allHeroes.get(name);
+
+        if (superHero == null) {
+            throw new UnknownHeroException(name);
+        }
+
+        return superHero;
     }
 
     public Team getTeam(String name) throws UnknownTeamException {
