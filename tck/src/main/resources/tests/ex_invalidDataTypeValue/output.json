@@ -1,0 +1,23 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type WrongType: argument 'powerLevel' with value 'StringValue{value='Unlimited'}' is not a valid 'Int' @ 'updateItemPowerLevel'",
+      "locations": [
+        {
+          "line": 2,
+          "column": 37,
+          "sourceName": null
+        }
+      ],
+      "description": "argument 'powerLevel' with value 'StringValue{value='Unlimited'}' is not a valid 'Int'",
+      "validationErrorType": "WrongType",
+      "queryPath": [
+        "updateItemPowerLevel"
+      ],
+      "errorType": "ValidationError",
+      "path": null,
+      "extensions": null
+    }
+  ]
+}

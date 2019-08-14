@@ -1,0 +1,23 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type FieldUndefined: Field 'allHeroesWhoLikeIceCream' in type 'Query' is undefined @ 'allHeroesWhoLikeIceCream'",
+      "locations": [
+        {
+          "line": 2,
+          "column": 3,
+          "sourceName": null
+        }
+      ],
+      "description": "Field 'allHeroesWhoLikeIceCream' in type 'Query' is undefined",
+      "validationErrorType": "FieldUndefined",
+      "queryPath": [
+        "allHeroesWhoLikeIceCream"
+      ],
+      "errorType": "ValidationError",
+      "path": null,
+      "extensions": null
+    }
+  ]
+}

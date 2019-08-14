@@ -1,0 +1,13 @@
+mutation unknownMutation {
+    createNewHeroCat(hero:{
+            name: "Super Cat"
+            realName: "Squeaky"
+            superPowers: ["Super strength", "Flying", "Laser eyes"]
+            primaryLocation: "Fortress of Solitude"
+        }) {
+            name
+            primaryLocation
+            superPowers
+            realName
+        }
+}
