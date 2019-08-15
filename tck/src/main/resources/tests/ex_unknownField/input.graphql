@@ -1,0 +1,6 @@
+query heroWeakness {
+  allHeroes {
+    name
+    weaknesses
+  }
+}

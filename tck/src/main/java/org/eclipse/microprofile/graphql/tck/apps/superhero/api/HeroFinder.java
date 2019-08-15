@@ -17,6 +17,7 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.graphql.Argument;
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.GraphQLException;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.graphql.Source;
@@ -49,9 +51,9 @@ public class HeroFinder {
     HeroLocator heroLocator;
 
     @Query
-    public SuperHero superHero(@Argument("name") String name) {
-        LOG.info("superHero invoked");
-        return heroDB.getHero(name);
+    public SuperHero superHero(@Argument("name") String name) throws UnknownHeroException {
+        LOG.info("superHero invoked " + name);
+        return Optional.ofNullable(heroDB.getHero(name)).orElseThrow(() -> new UnknownHeroException(name));
     }
 
     @Query
@@ -164,9 +166,13 @@ public class HeroFinder {
     }
 
     @Query
-    public String currentLocation(@Source SuperHero hero) {
-        LOG.info("checking current location for: " + hero.getName());
-        return heroLocator.getHeroLocation(hero.getName());
+    public String currentLocation(@Source SuperHero hero) throws GraphQLException {
+        final String heroName = hero.getName();
+        LOG.info("checking current location for: " + heroName);
+        return heroLocator.getHeroLocation(heroName)
+                          .orElseThrow(()-> { 
+                              return new GraphQLException("Cannot find location for " + heroName, 
+                                                          GraphQLException.ExceptionType.DataFetchingException);});
     }
 
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
@@ -180,7 +186,7 @@ public class HeroFinder {
     public Team setRivalTeam(@Argument("teamName") String teamName, @Argument("rivalTeam") Team rivalTeam) 
         throws UnknownTeamException {
 
-        LOG.info("setRivalTeam: " + teamName + "'s new rival is: " + rivalTeam == null ? "null" : rivalTeam.getName());
+        LOG.info("setRivalTeam: " + teamName + "'s new rival is: " + (rivalTeam == null ? "null" : rivalTeam.getName()));
         Team team = heroDB.getTeam(teamName);
         team.setRivalTeam(rivalTeam);
         return team;

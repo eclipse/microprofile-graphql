@@ -17,6 +17,7 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
@@ -33,7 +34,7 @@ public class HeroLocator {
         heroLocations.put("Wolverine", "New Orleans");
     }
 
-    public String getHeroLocation(String name) {
-        return heroLocations.getOrDefault(name, "Whereabouts unknown...");
+    public Optional<String> getHeroLocation(String name) {
+        return Optional.ofNullable(heroLocations.get(name));
     }
 }

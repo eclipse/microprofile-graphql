@@ -1,0 +1,7 @@
+mutation increaseIronManSuitPowerTooHigh {
+  updateItemPowerLevel(itemID:1001, powerLevel:"Unlimited") {
+    id
+    name
+    powerLevel
+  }
+}

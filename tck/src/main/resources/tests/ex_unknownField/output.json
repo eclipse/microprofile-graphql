@@ -1,0 +1,24 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type FieldUndefined: Field 'weaknesses' in type 'SuperHero' is undefined @ 'allHeroes/weaknesses'",
+      "locations": [
+        {
+          "line": 4,
+          "column": 5,
+          "sourceName": null
+        }
+      ],
+      "description": "Field 'weaknesses' in type 'SuperHero' is undefined",
+      "validationErrorType": "FieldUndefined",
+      "queryPath": [
+        "allHeroes",
+        "weaknesses"
+      ],
+      "errorType": "ValidationError",
+      "path": null,
+      "extensions": null
+    }
+  ]
+}

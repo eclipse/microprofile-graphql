@@ -1,0 +1,7 @@
+query funnyGuy {
+  superHero(name:"Funny Guy") {
+    name
+    realName
+    superPowers
+  }
+}

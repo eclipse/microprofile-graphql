@@ -47,6 +47,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.testng.annotations.Test;
 
 /**
@@ -73,6 +74,10 @@ public class GraphQLDynamicClientTest extends Arquillian {
     public static Archive getDeployment() throws Exception {
         return ShrinkWrap.create(WebArchive.class, "tck.war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addAsManifestResource(
+                        new StringAsset("mp.graphql.defaultErrorMessage=" + 
+                                        "Unexpected failure in the system. Jarvis is working to fix it."),
+                        "microprofile-config.properties")
                 .addPackage(HeroFinder.class.getPackage())
                 .addPackage(HeroDatabase.class.getPackage())
                 .addPackage(SuperHero.class.getPackage());
