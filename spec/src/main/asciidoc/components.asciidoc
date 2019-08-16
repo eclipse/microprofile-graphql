@@ -20,7 +20,7 @@
 
 === Component Definition
 
-TODO: info on annotating components with `@GraphQLApi`
+include::graphqlapi.asciidoc[]
 
 === Queries
 
