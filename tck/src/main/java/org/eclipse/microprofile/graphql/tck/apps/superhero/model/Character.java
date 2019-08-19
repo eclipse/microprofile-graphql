@@ -19,4 +19,6 @@ import org.eclipse.microprofile.graphql.Union;
 
 @Union(name = "Character", description = "Any character known", possibleTypes = {SuperHero.class, Sidekick.class})
 public interface Character {
+    String getName();
+    void setName(String name);
 }
