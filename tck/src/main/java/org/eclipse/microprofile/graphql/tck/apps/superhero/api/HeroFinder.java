@@ -49,6 +49,7 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.UnknownCharacte
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -223,7 +224,7 @@ public class HeroFinder {
     public Team setRivalTeam(@Argument("teamName") String teamName, @Argument("rivalTeam") Team rivalTeam)
             throws UnknownTeamException {
 
-        LOG.info("setRivalTeam: " + teamName + "'s new rival is: " + (rivalTeam == null ? "null" : rivalTeam.getName()));
+        LOG.info("setRivalTeam: " + teamName + "'s new rival is: " + (Optional.ofNullable(rivalTeam).map(Team::getName).orElse("null")));
         Team team = heroDB.getTeam(teamName);
         team.setRivalTeam(rivalTeam);
         return team;
