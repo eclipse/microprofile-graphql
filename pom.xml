@@ -103,6 +103,12 @@
                 <artifactId>cdi-api</artifactId>
                 <version>${cdi-api.version}</version>
                 <scope>provided</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>javax.el</groupId>
+                        <artifactId>javax.el-api</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             
             <!-- Testing -->
