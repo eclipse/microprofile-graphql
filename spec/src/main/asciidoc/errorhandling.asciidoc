@@ -56,8 +56,38 @@ using the MicroProfile Config property, `mp.graphql.defaultErrorMessage`.
 
 === Partial Results
 
-It is possible in GraphQL to send back some results even though the overall request may have failed. This is possible
-when using multiple methods and the `@Source` annotation. Here is an example:
+It is possible in GraphQL to send back some results even though the overall request may have failed. 
+This is possible by passing the partial results to the `GraphQLException` (or subclass of `GraphQLException`) that is
+thrown by the query or mutation method.  For example:
+
+```
+@Query
+public Collection<SuperHero> allHeroesFromCalifornia() throws GraphQLException {
+    List<SuperHero> westCoastHeroes = new ArrayList<>();
+    try {
+        for (SuperHero hero : database.getAllHeroes()) {
+            if (hero.getPrimaryLocation().contains("California")) {
+                westCoastHeroes.add(hero);
+            }
+        }
+    } catch (Exception ex) {
+        throw new GraphQLException(ex, westCoastHeroes);
+    }
+    return westCoastHeroes;
+}
+```
+
+If an exception is thrown while iterating over of the database collection of heroes or while checking a hero's location,
+all previously-processed heroes will still be in the list and will be displayed to the client along with the error
+data.
+
+Note that the `partialResults` object passed to the `GraphQLException` must match the return type of the query/mutation
+method from which it is thrown. Otherwise the implementation must throw a `ClassCastException` internally resulting in
+a much less usable result returned to the client.
+
+It is also possible to send partial results when using multiple methods and the `@Source` annotation. Here is an
+example:
+
 ```
 @Query
 public Collection<SuperHero> allHeroes() {

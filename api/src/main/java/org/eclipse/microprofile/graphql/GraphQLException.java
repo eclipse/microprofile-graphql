@@ -33,6 +33,8 @@ public class GraphQLException extends Exception {
 
     private ExceptionType type; 
 
+    private Object partialResults;
+
     public GraphQLException() {
         super();
     }
@@ -67,6 +69,34 @@ public class GraphQLException extends Exception {
     public GraphQLException(String message, Throwable cause, ExceptionType type) {
         super(message, cause);
         this.type = type;
+    }
+
+    public GraphQLException(Object partialResults) {
+        super();
+        this.partialResults = partialResults;
+    }
+
+    public GraphQLException(String message, Object partialResults) {
+        super(message);
+        this.partialResults = partialResults;
+    }
+
+    public GraphQLException(Throwable cause, Object partialResults) {
+        super(cause);
+        this.partialResults = partialResults;
+    }
+
+    public GraphQLException(String message, Throwable cause, Object partialResults) {
+        super(message, cause);
+        this.partialResults = partialResults;
+    }
+
+    public java.lang.Object getPartialResults() {
+        return partialResults;
+    }
+
+    public void setPartialResults(Object partialResults) {
+        this.partialResults = partialResults;
     }
 
     public ExceptionType getExceptionType() {

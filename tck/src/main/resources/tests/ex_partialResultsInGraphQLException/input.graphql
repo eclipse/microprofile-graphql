@@ -1,0 +1,6 @@
+query allHeroesWithError {
+    allHeroesWithError {
+        name
+        primaryLocation
+    }
+}

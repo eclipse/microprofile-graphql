@@ -1,19 +1,18 @@
 {
-  "data": {
-    "superHero": null
-  },
-  "errors": [
-    {
-      "message": "Unexpected failure in the system. Jarvis is working to fix it.",
-      "locations": [
+    "data": {
+        "superHero": null
+    },
+    "errors": [
         {
-          "line": 2,
-          "column": 3,
-          "sourceName": null
+            "message": "Unexpected failure in the system. Jarvis is working to fix it.",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3,
+                    "sourceName": null
+                }
+            ],
+            "path": null
         }
-      ],
-      "path": null,
-      "extensions": null
-    }
-  ]
+    ]
 }
