@@ -35,7 +35,6 @@ import org.eclipse.microprofile.graphql.Source;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.DuplicateSuperHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroLocator;
-import org.eclipse.microprofile.graphql.tck.apps.superhero.db.SuperHeroLookupException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownTeamException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Item;
