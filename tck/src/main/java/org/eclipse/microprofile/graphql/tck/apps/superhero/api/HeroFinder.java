@@ -17,6 +17,7 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -34,6 +35,7 @@ import org.eclipse.microprofile.graphql.Source;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.DuplicateSuperHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroLocator;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.db.SuperHeroLookupException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownHeroException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.UnknownTeamException;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Item;
@@ -190,5 +192,31 @@ public class HeroFinder {
         Team team = heroDB.getTeam(teamName);
         team.setRivalTeam(rivalTeam);
         return team;
+    }
+
+    @Query
+    public Collection<SuperHero> allHeroesWithError() throws GraphQLException {
+        LOG.info("allHeroesWithError invoked");
+        List<SuperHero> partialHeroes = new ArrayList<>();
+        for (SuperHero hero : heroDB.getAllHeroes()) {
+            if ("Starlord".equals(hero.getName())) {
+                partialHeroes.add(null);
+            } else {
+                partialHeroes.add(hero);
+            }
+        }
+        throw new GraphQLException("Failed to find one or more heroes", partialHeroes);
+    }
+
+    @Query
+    public Collection<SuperHero> allHeroesWithSpecificError() throws SuperHeroLookupException {
+        LOG.info("allHeroesWithError invoked");
+        List<SuperHero> partialHeroes = new ArrayList<>();
+        for (SuperHero hero : heroDB.getAllHeroes()) {
+            if (!"Spider Man".equals(hero.getName())) {
+                partialHeroes.add(hero);
+            }
+        }
+        throw new SuperHeroLookupException("Failed to find one or more heroes", partialHeroes);
     }
 }

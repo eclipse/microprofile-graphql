@@ -43,8 +43,7 @@
         }
       ],
       "errorType": "DataFetchingException",
-      "path": null,
-      "extensions": null
+      "path": null
     }
   ]
 }
