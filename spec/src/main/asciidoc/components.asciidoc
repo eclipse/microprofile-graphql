@@ -28,7 +28,7 @@ include::queries.asciidoc[]
 
 === Mutations
 
-TODO: info on how to create mutations
+include::mutations.asciidoc[]
 
 === Generated Schema
 
@@ -38,10 +38,53 @@ TODO: info on how the schema should look based on annotations in component class
 
 TODO: info on how to use the `@Deprecated` annotation appropriately
 
-==== Default Values
+=== Default Values
 
-TODO: info on how to use the `@DefaultValue` annotation appropriately
+It is possible to specify a default value for query or mutation arguments so that the client does not need to specify a
+value. This is done via the `@DefaultValue` annotation and it is placed on the method parameter for the query/mutation
+method. The value of the annotation is used as the default value. For scalars, the value is taken as-is (i.e. a value of
+"foo" for a String would be "foo", a value of "25" for an Int would be 25, etc.).  For complex types, the value of the
+annotation must represent the object as JSON.
+
+.DefaultValue Example
+[source,java,numbered]
+----
+@Query
+public Collection<SuperHero> allHeroesIn(
+    @DefaultValue("New York, NY") @Argument("city") String city) {
+
+    return allHeroesByFilter(hero -> {
+        return city.equals(hero.getPrimaryLocation());});
+    }
+}
+
+public final static String CAPE =
+        "{" +
+        "   \"id\": 1000," +
+        "   \"name\": \"Cape\","+
+        "   \"powerLevel\": 3," +
+        "   \"height\": 1.2," +
+        "   \"weight\": 0.3," +
+        "   \"supernatural\": false" +
+        "}";
+
+@Mutation(description="Gives a hero new equipment")
+public SuperHero provisionHero(@Argument("hero") String heroName,
+                               @DefaultValue(CAPE) @Argument("item") Item item) 
+                               throws UnknownHeroException {
+
+        SuperHero hero = heroDB.getHero(heroName);
+        if (hero == null) {
+            throw new UnknownHeroException(heroName);
+        }
+        hero.getEquipment().add(item);
+        return hero;
+    }
+----
 
 === Lifecycle
 
-TODO: info on the components' lifecycle - based on CDI scoping
+MicroProfile GraphQL components (POJOs annotated with `@GraphQLApi`) are CDI beans. As such, their lifecycle is managed
+by CDI. Request-scoped components should be constructed per-request, and application-scoped components should exist for
+the lifetime of the application.  One exception to the normal scoping is `@Dependent` - this scope is treated as if it
+were a singleton.

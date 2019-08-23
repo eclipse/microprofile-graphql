@@ -43,7 +43,7 @@ GraphQL must use JSON-B to serialize and deserialize entities to JSON, so it is 
 using JSON-B annotations.
 
 If the entity cannot be serialized by JSON-B, the implementation must return in an internal server error to the client.
-
+[[types]]
 === Types vs InputTypes
 
 GraphQL differentiates types from input types.  Input types are entities that are sent by the client as arguments to
