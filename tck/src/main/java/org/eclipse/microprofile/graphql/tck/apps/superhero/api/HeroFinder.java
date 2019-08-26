@@ -15,16 +15,6 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
 import org.eclipse.microprofile.graphql.Argument;
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.GraphQLApi;
@@ -49,6 +39,7 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.UnknownCharacte
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -208,9 +199,10 @@ public class HeroFinder {
         final String heroName = hero.getName();
         LOG.info("checking current location for: " + heroName);
         return heroLocator.getHeroLocation(heroName)
-                          .orElseThrow(()-> { 
-                              return new GraphQLException("Cannot find location for " + heroName, 
-                                                          GraphQLException.ExceptionType.DataFetchingException);});
+                .orElseThrow(() -> {
+                    return new GraphQLException("Cannot find location for " + heroName,
+                            GraphQLException.ExceptionType.DataFetchingException);
+                });
     }
 
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
