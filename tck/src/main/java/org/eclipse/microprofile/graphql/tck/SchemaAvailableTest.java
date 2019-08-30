@@ -61,23 +61,75 @@ public class SchemaAvailableTest extends Arquillian {
     @Test
     @RunAsClient
     public void testResponse() throws Exception {
-        URL url = new URL(this.uri + PATH);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Content-Type", "plain/text");
-        
-        // Check the response code
-        int responseCode = connection.getResponseCode();
-        Assert.assertEquals(responseCode, 200, "While testing [" + url.toString() + "]");
-        
-        // Check the content
-        String content = getContent(connection);
-        Assert.assertTrue(content.length() > 0 , "While testing [" + url.toString() + "]");
-        
-        connection.disconnect();
+        // Check that there is some content
+        String content = getSchemaContent();
+        LOG.info("Schema: " + System.lineSeparator() + content);
+        Assert.assertTrue(content.length() > 0);
+    }
+
+    @Test
+    @RunAsClient
+    public void testIgnoreOnFieldExcludedFromInputAndOutputTypes() throws Exception {
+        String schema = getSchemaContent();
+        int index = schema.indexOf("type Item ");
+        Assert.assertTrue(index > -1, "Cannot find \"type Item\" in schema"); 
+        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        Assert.assertTrue(snippet.contains("powerLevel"), "Missing expected, un-ignored field, \"powerLevel\"");
+        Assert.assertFalse(snippet.contains("invisible"), "Found field \"invisible\" that should be ignored");
+
+        index = schema.indexOf("input ItemInput ");
+        Assert.assertTrue(index > -1, "Cannot find \"input ItemInput\" in schema");
+        snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        Assert.assertTrue(snippet.contains("powerLevel"), "Missing expected, un-ignored field, \"powerLevel\"");
+        Assert.assertFalse(snippet.contains("invisible"), 
+                "Found field \"invisible\" that should be ignored in input type");
     }
     
+    @Test
+    @RunAsClient
+    public void testIgnoreOnGetterExcludedOnOutputType() throws Exception {
+        String schema = getSchemaContent();
+        int index = schema.indexOf("type Item ");
+        Assert.assertTrue(index > -1, "Cannot find \"type Item\" in schema");
+        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        Assert.assertTrue(snippet.contains("artificialIntelligenceRating"), 
+                "Missing expected, un-ignored field, \"artificialIntelligenceRating\"");
+        Assert.assertFalse(snippet.contains("canWield"), "Found field \"canWield\" that should be ignored");
+    }
+
+    @Test
+    @RunAsClient
+    public void testIgnoreOnSetterExcludedOnInputType() throws Exception {
+        String schema = getSchemaContent();
+        int index = schema.indexOf("input ItemInput ");
+        Assert.assertTrue(index > -1, "Cannot find \"input ItemInput\" in schema");
+        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        Assert.assertTrue(snippet.contains("canWield"), "Missing expected, un-ignored field, \"canWield\"");
+        Assert.assertFalse(snippet.contains("artificialIntelligenceRating"),
+                "Found field \"artificialIntelligenceRating\" that should be ignored in input type");
+    }
+
+    private String getSchemaContent() throws Exception {
+        URL url = new URL(this.uri + PATH);
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) url.openConnection();
+
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "plain/text");
+
+            // Check the response code
+            int responseCode = connection.getResponseCode();
+            Assert.assertEquals(responseCode, 200, "While testing [" + url.toString() + "]");
+
+            return getContent(connection);
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
     private String getContent(HttpURLConnection connection) throws IOException{
         try (StringWriter sw = new StringWriter();
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {

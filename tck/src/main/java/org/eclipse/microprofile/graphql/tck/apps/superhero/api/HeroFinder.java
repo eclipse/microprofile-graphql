@@ -218,4 +218,16 @@ public class HeroFinder {
         }
         throw new SuperHeroLookupException("Failed to find one or more heroes", partialHeroes);
     }
+
+    @Query
+    public Item getItemById(@Argument("id") long id) {
+        for (SuperHero hero : allHeroes()) {
+            for (Item item : hero.getEquipment()) {
+                if (id == item.getId()) {
+                    return item;
+                }
+            }
+        }
+        return null;
+    }
 }
