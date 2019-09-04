@@ -15,10 +15,11 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
-import org.eclipse.microprofile.graphql.Union;
+import io.leangen.graphql.annotations.types.Interface;
 
-@Union(name = "Character", description = "Any character known", possibleTypes = {SuperHero.class, Sidekick.class})
+@Interface(implementationAutoDiscovery = true)
 public interface Character {
     String getName();
+
     void setName(String name);
 }
