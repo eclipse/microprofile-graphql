@@ -15,7 +15,10 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.util.Collection;
+
 import org.eclipse.microprofile.graphql.Id;
+import org.eclipse.microprofile.graphql.Ignore;
 
 public class Item {
 
@@ -26,6 +29,10 @@ public class Item {
     private double height;
     private float weight;
     private boolean supernatural;
+    @Ignore
+    private boolean invisible;
+    private Collection<SuperHero> canWield;
+    private boolean artificialIntelligenceRating;
 
     public final static String CAPE =
         "{" +
@@ -95,5 +102,31 @@ public class Item {
 
     public void setSupernatural(boolean supernatural) {
         this.supernatural = supernatural;
+    }
+
+    public boolean isInvisible() {
+        return invisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        this.invisible = invisible;
+    }
+
+    @Ignore
+    public Collection<SuperHero> getCanWield() {
+        return canWield;
+    }
+
+    public void setCanWield(Collection<SuperHero> canWield) {
+        this.canWield = canWield;
+    }
+
+    public boolean isArtificialIntelligenceRating() {
+        return artificialIntelligenceRating;
+    }
+
+    @Ignore
+    public void setArtificialIntelligenceRating(boolean artificialIntelligenceRating) {
+        this.artificialIntelligenceRating = artificialIntelligenceRating;
     }
 }
