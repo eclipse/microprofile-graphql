@@ -71,7 +71,6 @@ public SuperHero createNewHero(@Argument("hero") SuperHero newHero)
 [source,java,numbered]
 ----
 @Mutation
-@Mutation
 public SuperHero removeHero(@Argument("hero") String heroName)
     throws UnknownHeroException {
 
