@@ -80,7 +80,8 @@ public class GraphQLDynamicClientTest extends Arquillian {
                         "microprofile-config.properties")
                 .addPackage(HeroFinder.class.getPackage())
                 .addPackage(HeroDatabase.class.getPackage())
-                .addPackage(SuperHero.class.getPackage());
+                .addPackage(SuperHero.class.getPackage())
+                .addPackage(TestData.class.getPackage());
     }
     
     @RunAsClient
