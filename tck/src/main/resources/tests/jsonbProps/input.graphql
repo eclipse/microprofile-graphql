@@ -1,0 +1,9 @@
+query allHeroesJSONBProps {
+    allHeroes {
+        name
+        colorOfCostume
+        knownEnemies
+        dateOfLastCheckin
+        idNumber
+    }
+}

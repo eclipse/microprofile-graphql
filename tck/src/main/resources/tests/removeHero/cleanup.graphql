@@ -5,6 +5,9 @@ mutation reCreateStarlord {
             superPowers: ["Ingenuity","Humor","Dance moves"]
             primaryLocation: "Outer Space"
             teamAffiliations: [{name: "Guardians of the Galaxy"}]
+            colorOfCostume: "Brown"
+            idNumber: "23409876"
+            dateOfLastCheckin: "2019-08-27"
         }) {
             name
             primaryLocation

@@ -1,0 +1,37 @@
+{
+  "data": {
+    "allHeroes": [
+      {
+        "name": "Iron Man",
+        "colorOfCostume": "Red",
+        "knownEnemies": [
+          "Whiplash",
+          "Mandarin"
+        ],
+        "dateOfLastCheckin": "2019-09-09",
+        "idNumber": 12345678
+      },
+      {
+        "name": "Starlord",
+        "colorOfCostume": "Brown",
+        "knownEnemies": null,
+        "dateOfLastCheckin": "2019-08-27",
+        "idNumber": 23409876
+      },
+      {
+        "name": "Wolverine",
+        "colorOfCostume": "Yellow",
+        "knownEnemies": null,
+        "dateOfLastCheckin": "2014-12-01",
+        "idNumber": 65430987
+      },
+      {
+        "name": "Spider Man",
+        "colorOfCostume": "Red",
+        "knownEnemies": null,
+        "dateOfLastCheckin": "2019-09-01",
+        "idNumber": 78904321
+      }
+    ]
+  }
+}

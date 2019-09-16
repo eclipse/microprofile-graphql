@@ -109,6 +109,25 @@ public class SchemaAvailableTest extends Arquillian {
                 "Found field \"artificialIntelligenceRating\" that should be ignored in input type");
     }
 
+    @Test
+    @RunAsClient
+    public void testJsonbTransientOnSetterExcludedOnInputType() throws Exception {
+        String schema = getSchemaContent();
+        int index = schema.indexOf("input SuperHeroInput ");
+        Assert.assertTrue(index > -1, "Cannot find \"input SuperHeroInput\" in schema");
+        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        Assert.assertTrue(snippet.contains("colorOfCostume"), "Missing expected, un-ignored field, \"colorOfCostume\"");
+        Assert.assertFalse(snippet.contains("knownEnemies"),
+                "Found field \"knownEnemies\" that should be ignored in input type");
+
+        //now verify that the field is still in the output type section of the schema:
+        index = schema.indexOf("type SuperHero ");
+        Assert.assertTrue(index > -1, "Cannot find \"input SuperHeroInput\" in schema");
+        snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        Assert.assertTrue(snippet.contains("knownEnemies"),
+                "Did not find field \"knownEnemies\" that should be present (only ignored in input type)");
+    }
+
     private String getSchemaContent() throws Exception {
         URL url = new URL(this.uri + PATH);
         HttpURLConnection connection = null;

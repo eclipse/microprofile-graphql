@@ -1,0 +1,148 @@
+//
+// Copyright (c) 2019 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[jsonb]]
+
+== JSON-B Integration
+
+The MicroProfile GraphQL project depends on JSON-B 1.0 APIs. Implementations of MP GraphQL are encouraged to use JSON-B
+implementations for consistency.
+
+JSON-B annotations can be used to help determine schema information as well as data transformation at runtime. In all
+cases, annotations in the `org.eclipse.microprofile.graphql` package will trump JSON-B annotations if there is a
+conflict.
+
+=== Schema Definition
+
+The `@JsonbProperty` annotation's `value` attribute can be used to modify the field name of a type, input type or both
+- depending on whether the annotation is placed on the getter method, setter method, or Java field, respectively.
+
+For example, suppose you have the following Java code (with properties conforming to the JavaBean spec for `name`,
+`weight`, and `quantity`):
+
+.JsonbProperty Java Code Example
+[source,java,numbered]
+----
+public class Widget {
+    @JsonbProperty("widgetName")
+    private String name;
+    private double weight;
+    private int quantity;
+    //...
+
+    @JsonbProperty("shippingWeight")
+    public double getWeight() {
+        return weight;
+    }
+    //...
+
+    @JsonbProperty("qty")
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+}
+----
+
+That would create a schema like this:
+
+.JsonbProperty Schema Example
+[source,graphql,numbered]
+----
+type Widget @_mappedType(type : "__internal__") {
+  widgetName: String @_mappedOperation(operation : "__internal__")
+  quantity: Int! @_mappedOperation(operation : "__internal__")
+  shippingWeight: Float! @_mappedOperation(operation : "__internal__")
+}
+
+input WidgetInput @_mappedType(type : "__internal__") {
+  widgetName: String @_mappedInputField(inputField : "__internal__")
+  qty: Int! @_mappedInputField(inputField : "__internal__")
+  weight: Float! @_mappedInputField(inputField : "__internal__")
+}
+----
+
+
+Similarly, the `@JsonbTransient` annotation can be used to ignore certain fields from the type or input type in the 
+schema. The same rules apply: if the annotation is on the getter, then the field is ignored in the type; if the
+annotation is on the setter, then the field is ingored in the input type; if the annotation is on the Java field, it
+is ignored in both.
+
+Here is an example, similar to the previous example:
+
+.JsonbTransient Java Code Example
+[source,java,numbered]
+----
+public class Widget {
+    @JsonbTransient
+    private String name;
+    private double weight;
+    private int quantity;
+    //...
+
+    @JsonbTransient
+    public double getWeight() {
+        return weight;
+    }
+    //...
+
+    @JsonbTransient
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+}
+----
+
+That would create a schema like this:
+
+.JsonbTransient Schema Example
+[source,graphql,numbered]
+----
+type Widget @_mappedType(type : "__internal__") {
+  quantity: Int! @_mappedOperation(operation : "__internal__")
+}
+
+input WidgetInput @_mappedType(type : "__internal__") {
+  weight: Float! @_mappedInputField(inputField : "__internal__")
+}
+----
+
+=== Runtime Data Transformation
+
+JSON-B annotations like `@JsonbDateFormat` and `@JsonbNumberFormat` can be used to transform data at runtime.
+
+For example, suppose you have a Java entity like this:
+
+.JsonbDateFormat Java Code Example
+[source,java,numbered]
+----
+public class Widget {
+    @JsonbDateFormat("yyyy-MM-dd")
+    private LocalDate constructionDate;
+}
+----
+
+A query that requests a Widget's construction date would get a result like this:
+
+.JsonbTransient Schema Example
+[source,json,numbered]
+----
+{
+    "constructionDate": "2019-09-16"
+}
+----
+
+Note that this information is not automatically added to the schema, so it is considered a best practice to document
+formatting intricacies in the field's description comment.
