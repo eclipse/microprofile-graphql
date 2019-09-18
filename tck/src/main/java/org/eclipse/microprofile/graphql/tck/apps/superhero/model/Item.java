@@ -17,16 +17,20 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
 import java.util.Collection;
 
+import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.Id;
 import org.eclipse.microprofile.graphql.Ignore;
+import org.eclipse.microprofile.graphql.NonNull;
 
 @Description("Something of use to a super hero")
 public class Item {
 
     @Id
     private long id;
+    @NonNull
     private String name;
+    private String description;
     private int powerLevel;
     private double height;
     private float weight;
@@ -130,5 +134,15 @@ public class Item {
     @Ignore
     public void setArtificialIntelligenceRating(boolean artificialIntelligenceRating) {
         this.artificialIntelligenceRating = artificialIntelligenceRating;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @NonNull
+    @DefaultValue("An unidentified item")
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

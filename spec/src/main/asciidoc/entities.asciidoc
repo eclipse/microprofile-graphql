@@ -154,3 +154,25 @@ If the `@Ignore` annotation is placed on the field itself, then the field will b
 output types in the generated schema.  If the annotation is only placed on the "getter" method, then it will only be
 excluded from the input type.  If the annotation is only placed on the "setter" method, then it will only be excluded
 from the output type.
+
+=== Non-nullable fields
+
+The GraphQL specification states that fields may be marked as non-nullable - usually the field's type is marked with an
+exclamation point to indicate that null values are not allowed.  Non-nullable fields may be present on types and input
+types, providing the client with the proper expectations for providing an input type and that they can expect a non-null
+value on the return type. If the client sends a null value for a required (non-nullable) field or sends an entity with
+the required (non-nullable) field unspecified, the implementation should respond with a validation error. Likewise, the
+implementation should return an error if a null is returned for a required (non-nullable) field from the application
+code.
+
+By default all GraphQL fields generated from Java primitive properties (`boolean`, `int`, `double`, etc.) will
+automatically be marked as required.  If a Java primitive property has a `@DefaultValue` annotation value, then null is
+allowed, but the implementation is expected to convert the value to be the default value specified in the annotation.
+
+By default, all GraphQL fields generated from non-primitive properties will be considered nullable. A user may specify
+that a field is required/non-nullable by adding the `@NotNull` annotation. This annotation may be applied to an entity's
+getter method, setter method or field. The placement will determine whether it applies to the type, input type or both,
+respectively.
+
+The implementation should ignore a `@NotNull` annotation when it is on the same field or setter method that also
+contains `@DefaultValue` annotation, as the "null" value would result in the default value being used.

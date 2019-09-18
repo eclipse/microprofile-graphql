@@ -1,0 +1,17 @@
+{
+  "data": {
+    "createNewTeam": null
+  },
+  "errors": [
+    {
+      "message": "Cannot return null for non-nullable type: 'String' within parent 'Team' (/createNewTeam/name)",
+      "path": [
+        "createNewTeam",
+        "name"
+      ],
+      "locations": null,
+      "errorType": "DataFetchingException",
+      "extensions": null
+    }
+  ]
+}

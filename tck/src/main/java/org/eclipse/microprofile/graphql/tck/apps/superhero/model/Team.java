@@ -15,7 +15,10 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.eclipse.microprofile.graphql.NonNull;
 
 public class Team {
 
@@ -32,6 +35,7 @@ public class Team {
         this.members = members;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
@@ -49,14 +53,19 @@ public class Team {
     }
 
     public Team addMembers(SuperHero...heroes) {
+        if (members == null) {
+            members = new ArrayList<>();
+        }
         for (SuperHero hero : heroes) {
             members.add(hero);
         }
         return this;
     }
     public Team removeMembers(SuperHero...heroes) {
-        for (SuperHero hero : heroes) {
-            members.remove(hero);
+        if (members != null) {
+            for (SuperHero hero : heroes) {
+                members.remove(hero);
+            }
         }
         return this;
     }

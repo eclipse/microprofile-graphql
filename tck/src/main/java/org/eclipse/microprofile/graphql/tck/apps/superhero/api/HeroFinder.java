@@ -114,8 +114,7 @@ public class HeroFinder {
                                    @Argument("team") String teamName)
                                    throws UnknownTeamException {
         LOG.info("removeHeroFromTeam invoked");
-        return heroDB.getTeam(teamName)
-                .removeMembers( heroDB.getHero(heroName) );
+        return heroDB.removeHeroesFromTeam(heroDB.getTeam(teamName), heroDB.getHero(heroName));
     }
 
     @Mutation
@@ -237,5 +236,21 @@ public class HeroFinder {
             }
         }
         return null;
+    }
+
+    @Mutation
+    public Team createNewTeam(@Argument("newTeam") Team newTeam) {
+        List<SuperHero> members = newTeam.getMembers();
+        Team team = heroDB.createNewTeam(newTeam.getName());
+        if (members != null && members.size() > 0) {
+            team.setMembers(members);
+        }
+        team.setRivalTeam(newTeam.getRivalTeam());
+        return team;
+    }
+
+    @Mutation
+    public Team removeTeam(@Argument("teamName") String teamName) throws UnknownTeamException {
+        return heroDB.removeTeam(teamName);
     }
 }

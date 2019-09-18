@@ -226,22 +226,54 @@ public class SchemaAvailableTest extends Arquillian {
         Assert.assertTrue(snippet.contains("#HH:mm:ss dd-MM-yyyy"));
     }
 
-    private String getSchemaSnippet(String schema, String section) throws Exception {
-        int index = schema.indexOf(section);
-        Assert.assertTrue(index > -1, "Cannot find " + section + " in schema");
-        char[] schemaChars = schema.toCharArray();
-        int closePos = schema.indexOf("{", index) + 1;
-        int counter = 1;
-        while (counter > 0 && closePos < schemaChars.length - 1) {
-            char c = schemaChars[++closePos];
-            if (c == '{') {
-                counter++;
-            } else if (c == '}') {
-                counter--;
-            }
-        }
+    @Test
+    @RunAsClient
+    public void testNonNullOnSetterOnlyMakesInputTypeNonNull() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
+        Assert.assertTrue(snippet.contains("name: String!"), "Missing expected, non-null field, \"name\"");
 
-        return schema.substring(index, closePos);
+        snippet = getSchemaSnippet(schema, "type SuperHero ");
+        Assert.assertFalse(snippet.contains("name: String!"), "Found \"name\" as non-null field, expected nullable");
+    }
+
+    @Test
+    @RunAsClient
+    public void testNonNullOnGetterOnlyMakesOutputTypeNonNull() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input TeamInput ");
+        Assert.assertFalse(snippet.contains("name: String!"), "Found \"name\" as non-null field, expected nullable");
+
+        snippet = getSchemaSnippet(schema, "type Team ");
+        Assert.assertTrue(snippet.contains("name: String!"), "Missing expected, non-null field, \"name\"");
+    }
+
+    @Test
+    @RunAsClient
+    public void testNonNullOnFieldMakesBothNonNull() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input ItemInput ");
+        Assert.assertTrue(snippet.contains("name: String!"), "Missing expected, non-null field, \"name\" on input");
+
+        snippet = getSchemaSnippet(schema, "type Item ");
+        Assert.assertTrue(snippet.contains("name: String!"), "Missing expected, non-null field, \"name\"");
+    }
+
+    @Test
+    @RunAsClient
+    public void testNonNullOnFieldWithDefaultValueIsNullable() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input ItemInput ");
+        Assert.assertFalse(snippet.contains("description: String!"), 
+            "Field with default value is unexpectedly marked as required/non-nullable");
+        Assert.assertTrue(snippet.contains("description: String = \"An unidentified item\""),
+            "Field's default value is missing");
+
+        snippet = getSchemaSnippet(schema, "type Item ");
+        Assert.assertFalse(snippet.contains("description: String!"), 
+            "Field with default value is unexpectedly marked as required/non-nullable");
+        Assert.assertTrue(snippet.contains("description: String"),
+            "Field with default value and nonnull is missing");
     }
 
     private String getSchemaContent() throws Exception {
@@ -263,6 +295,24 @@ public class SchemaAvailableTest extends Arquillian {
                 connection.disconnect();
             }
         }
+    }
+
+    private String getSchemaSnippet(String schema, String section) throws Exception {
+        int index = schema.indexOf(section);
+        Assert.assertTrue(index > -1, "Cannot find " + section + " in schema");
+        char[] schemaChars = schema.toCharArray();
+        int closePos = schema.indexOf("{", index) + 1;
+        int counter = 1;
+        while (counter > 0 && closePos < schemaChars.length - 1) {
+            char c = schemaChars[++closePos];
+            if (c == '{') {
+                counter++;
+            } else if (c == '}') {
+                counter--;
+            }
+        }
+
+        return schema.substring(index, closePos);
     }
 
     private String getContent(HttpURLConnection connection) throws IOException{
