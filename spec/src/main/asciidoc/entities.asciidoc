@@ -176,3 +176,8 @@ respectively.
 
 The implementation should ignore a `@NotNull` annotation when it is on the same field or setter method that also
 contains `@DefaultValue` annotation, as the "null" value would result in the default value being used.
+
+One drawback to using non-nullable fields is that if there is an error loading a child field, that error could propagate
+itself up causing the field to be null - and since this is itself an error condition, the implementation must return
+the non-null field error, which means that the implementation would not be able to send partial results for other child
+fields.
