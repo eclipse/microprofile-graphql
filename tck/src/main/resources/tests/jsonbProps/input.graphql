@@ -4,6 +4,8 @@ query allHeroesJSONBProps {
         colorOfCostume
         knownEnemies
         dateOfLastCheckin
+        timeOfLastBattle
+        patrolStartTime
         idNumber
     }
 }

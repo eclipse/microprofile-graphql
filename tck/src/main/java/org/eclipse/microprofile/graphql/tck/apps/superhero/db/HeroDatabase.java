@@ -131,7 +131,9 @@ public class HeroDatabase {
              "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false}]," +
              "\"colorOfCostume\":\"Red\"," +
              "\"idNumber\":\"1234,5678\"," +
-             "\"dateOfLastCheckin\":\"2019-09-09\"" +
+             "\"dateOfLastCheckin\":\"09/09/2019\"," +
+             "\"timeOfLastBattle\":\"08:30:01 06-09-2019\"," +
+             "\"patrolStartTime\":\"08:00\"" +
             "}," +
             "{" +
              "\"name\":\"Spider Man\"," +
@@ -141,7 +143,9 @@ public class HeroDatabase {
              "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
              "\"colorOfCostume\":\"Red\"," +
              "\"idNumber\":\"7890,4321\"," +
-             "\"dateOfLastCheckin\":\"2019-09-01\"" +
+             "\"dateOfLastCheckin\":\"09/01/2019\"," +
+             "\"timeOfLastBattle\":\"11:12:45 30-08-2019\"," +
+             "\"patrolStartTime\":\"16:00\"" +
             "}," +
             "{" +
              "\"name\":\"Starlord\"," +
@@ -151,7 +155,9 @@ public class HeroDatabase {
              "\"teamAffiliations\":[{\"name\":\"Guardians of the Galaxy\"}]," +
              "\"colorOfCostume\":\"Brown\"," +
              "\"idNumber\":\"2340,9876\"," +
-             "\"dateOfLastCheckin\":\"2019-08-27\"" +
+             "\"dateOfLastCheckin\":\"08/27/2019\"," +
+             "\"timeOfLastBattle\":\"05:17:33 26-08-2019\"," +
+             "\"patrolStartTime\":\"12:30\"" +
             "}," +
             "{" +
              "\"name\":\"Wolverine\"," +
@@ -161,7 +167,9 @@ public class HeroDatabase {
              "\"teamAffiliations\":[{\"name\":\"Avengers\"},{\"name\":\"X-Men\"}]," +
              "\"colorOfCostume\":\"Yellow\"," +
              "\"idNumber\":\"6543,0987\"," +
-             "\"dateOfLastCheckin\":\"2014-12-01\"" +
+             "\"dateOfLastCheckin\":\"12/01/2014\"," +
+             "\"timeOfLastBattle\":\"09:43:23 21-08-2019\"," +
+             "\"patrolStartTime\":\"20:00\"" +
             "}" +
            "]";
     }

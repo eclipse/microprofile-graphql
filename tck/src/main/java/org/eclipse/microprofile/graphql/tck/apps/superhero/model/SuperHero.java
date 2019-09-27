@@ -16,6 +16,8 @@
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +36,14 @@ public class SuperHero {
     private String realName;
     private List<Item> equipment = new ArrayList<>();
 
-    @JsonbDateFormat("yyyy-MM-dd")
+    @JsonbDateFormat("MM/dd/yyyy")
     private LocalDate dateOfLastCheckin;
+
+    @JsonbDateFormat("HH:mm")
+    private LocalTime patrolStartTime = LocalTime.NOON;
+
+    @JsonbDateFormat("HH:mm:ss dd-MM-yyyy")
+    private LocalDateTime timeOfLastBattle;
 
     @JsonbProperty("colorOfCostume")
     private String costumeColor;
@@ -141,5 +149,21 @@ public class SuperHero {
 
     public void setIdNumber(Long idNumber) {
         this.idNumber = idNumber;
+    }
+
+    public LocalTime getPatrolStartTime() {
+        return patrolStartTime;
+    }
+
+    public void setPatrolStartTime(LocalTime patrolStartTime) {
+        this.patrolStartTime = patrolStartTime;
+    }
+
+    public LocalDateTime getTimeOfLastBattle() {
+        return timeOfLastBattle;
+    }
+
+    public void setTimeOfLastBattle(LocalDateTime timeOfLastBattle) {
+        this.timeOfLastBattle = timeOfLastBattle;
     }
 }

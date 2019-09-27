@@ -7,7 +7,7 @@ mutation reCreateStarlord {
             teamAffiliations: [{name: "Guardians of the Galaxy"}]
             colorOfCostume: "Brown"
             idNumber: "23409876"
-            dateOfLastCheckin: "2019-08-27"
+            dateOfLastCheckin: "08/27/2019"
         }) {
             name
             primaryLocation

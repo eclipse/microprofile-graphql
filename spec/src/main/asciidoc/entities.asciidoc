@@ -20,6 +20,9 @@
 
 Entities are the objects used in GraphQL. They can be simple objects ("scalars" in GraphQL terminology) or more complex
 objects that are composed of scalars.
+
+=== Scalars
+
 According to the https://graphql.org/learn/schema/#scalar-types[GraphQL documentation] a scalar has no sub-fields, and
 all GraphQL implementations are expected to handle, the following scalar types:
 
@@ -30,13 +33,21 @@ all GraphQL implementations are expected to handle, the following scalar types:
 - `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be
 human-readable.
 
+The GraphQL specification also allows for users to define custom scalars. MP GraphQL implementations must define the
+following custom scalars:
+- `Date` - which maps to a Java `java.time.LocalDate`.
+- `Time` - which maps to a Java `java.time.LocalTime`.
+- `DateTime` - which maps to a Java `java.time.LocalDateTime`.
+
+MP GraphQL implementations may use these or other custom scalars for similar common Java types.
+
+=== POJOs
+
 In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
 
 - It must be the return type or parameter (annotated with `@Argument`) of a query or mutation method,
 - It must be annotated with `@Type`,
 - It must be annotated with `@InputType`
-
-=== POJOs
 
 Any Plain Old Java Object (POJO) can be an entity.  No special annotations are required. Implementations of MicroProfile
 GraphQL must use JSON-B to serialize and deserialize entities to JSON, so it is possible to further define entities

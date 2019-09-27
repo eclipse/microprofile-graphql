@@ -39,7 +39,8 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.testng.Assert;
 
 /**
- * This really just test if there is a schema available on graphql/schema.graphql
+ * Tests that the schema is available at graphql/schema.graphql and that it contains the proper content.
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class SchemaAvailableTest extends Arquillian {
@@ -50,7 +51,7 @@ public class SchemaAvailableTest extends Arquillian {
     private URI uri;
     
     @Deployment
-    public static Archive getDeployment() throws Exception {
+    public static Archive<?> getDeployment() throws Exception {
         return ShrinkWrap.create(WebArchive.class, "tck.war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addPackage(HeroFinder.class.getPackage())
@@ -71,15 +72,11 @@ public class SchemaAvailableTest extends Arquillian {
     @RunAsClient
     public void testIgnoreOnFieldExcludedFromInputAndOutputTypes() throws Exception {
         String schema = getSchemaContent();
-        int index = schema.indexOf("type Item ");
-        Assert.assertTrue(index > -1, "Cannot find \"type Item\" in schema"); 
-        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        String snippet = getSchemaSnippet(schema, "type Item ");
         Assert.assertTrue(snippet.contains("powerLevel"), "Missing expected, un-ignored field, \"powerLevel\"");
         Assert.assertFalse(snippet.contains("invisible"), "Found field \"invisible\" that should be ignored");
 
-        index = schema.indexOf("input ItemInput ");
-        Assert.assertTrue(index > -1, "Cannot find \"input ItemInput\" in schema");
-        snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        snippet = getSchemaSnippet(schema, "input ItemInput ");
         Assert.assertTrue(snippet.contains("powerLevel"), "Missing expected, un-ignored field, \"powerLevel\"");
         Assert.assertFalse(snippet.contains("invisible"), 
                 "Found field \"invisible\" that should be ignored in input type");
@@ -89,9 +86,7 @@ public class SchemaAvailableTest extends Arquillian {
     @RunAsClient
     public void testIgnoreOnGetterExcludedOnOutputType() throws Exception {
         String schema = getSchemaContent();
-        int index = schema.indexOf("type Item ");
-        Assert.assertTrue(index > -1, "Cannot find \"type Item\" in schema");
-        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        String snippet = getSchemaSnippet(schema, "type Item ");
         Assert.assertTrue(snippet.contains("artificialIntelligenceRating"), 
                 "Missing expected, un-ignored field, \"artificialIntelligenceRating\"");
         Assert.assertFalse(snippet.contains("canWield"), "Found field \"canWield\" that should be ignored");
@@ -101,9 +96,7 @@ public class SchemaAvailableTest extends Arquillian {
     @RunAsClient
     public void testIgnoreOnSetterExcludedOnInputType() throws Exception {
         String schema = getSchemaContent();
-        int index = schema.indexOf("input ItemInput ");
-        Assert.assertTrue(index > -1, "Cannot find \"input ItemInput\" in schema");
-        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        String snippet = getSchemaSnippet(schema, "input ItemInput ");
         Assert.assertTrue(snippet.contains("canWield"), "Missing expected, un-ignored field, \"canWield\"");
         Assert.assertFalse(snippet.contains("artificialIntelligenceRating"),
                 "Found field \"artificialIntelligenceRating\" that should be ignored in input type");
@@ -113,19 +106,54 @@ public class SchemaAvailableTest extends Arquillian {
     @RunAsClient
     public void testJsonbTransientOnSetterExcludedOnInputType() throws Exception {
         String schema = getSchemaContent();
-        int index = schema.indexOf("input SuperHeroInput ");
-        Assert.assertTrue(index > -1, "Cannot find \"input SuperHeroInput\" in schema");
-        String snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
         Assert.assertTrue(snippet.contains("colorOfCostume"), "Missing expected, un-ignored field, \"colorOfCostume\"");
         Assert.assertFalse(snippet.contains("knownEnemies"),
                 "Found field \"knownEnemies\" that should be ignored in input type");
 
         //now verify that the field is still in the output type section of the schema:
-        index = schema.indexOf("type SuperHero ");
-        Assert.assertTrue(index > -1, "Cannot find \"input SuperHeroInput\" in schema");
-        snippet = schema.substring(index, schema.indexOf("}", index + 1));
+        snippet = getSchemaSnippet(schema, "type SuperHero ");
         Assert.assertTrue(snippet.contains("knownEnemies"),
                 "Did not find field \"knownEnemies\" that should be present (only ignored in input type)");
+    }
+
+    @Test
+    @RunAsClient
+    public void testDateScalarUsedForLocalDate() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
+        Assert.assertTrue(snippet.contains("dateOfLastCheckin: Date"));
+
+        snippet = getSchemaSnippet(schema, "type SuperHero ");
+        Assert.assertTrue(snippet.contains("dateOfLastCheckin: Date"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testTimeScalarUsedForLocalTime() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
+        Assert.assertTrue(snippet.contains("patrolStartTime: Time"));
+
+        snippet = getSchemaSnippet(schema, "type SuperHero ");
+        Assert.assertTrue(snippet.contains("patrolStartTime: Time"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testDateTimeScalarUsedForLocalDateTime() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
+        Assert.assertTrue(snippet.contains("timeOfLastBattle: DateTime"));
+
+        snippet = getSchemaSnippet(schema, "type SuperHero ");
+        Assert.assertTrue(snippet.contains("timeOfLastBattle: DateTime"));
+    }
+
+    private String getSchemaSnippet(String schema, String section) throws Exception {
+        int index = schema.indexOf(section);
+        Assert.assertTrue(index > -1, "Cannot find " + section + " in schema");
+        return schema.substring(index, schema.indexOf("}", index + 1));
     }
 
     private String getSchemaContent() throws Exception {
@@ -159,6 +187,4 @@ public class SchemaAvailableTest extends Arquillian {
             return sw.toString();
         }
     }
-    
 }
-
