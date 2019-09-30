@@ -16,6 +16,7 @@
 package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,7 @@ public class HeroDatabase {
             String mapJson = getInitalJson();
             addHeroes(jsonb.fromJson(mapJson,
                       new ArrayList<SuperHero>(){}.getClass().getGenericSuperclass()));
+            getHero("Iron Man").setNamesOfKnownEnemies(Arrays.asList("Whiplash", "Mandarin"));
         } catch (JsonbException ex) {
             throw new RuntimeException(ex);
         }
@@ -126,28 +128,48 @@ public class HeroDatabase {
              "\"superPowers\":[\"wealth\",\"engineering\"]," +
              "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
              "\"equipment\":[{\"id\": 1001, \"name\": \"Iron Man Suit\", \"powerLevel\": 18, " +
-                             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false}]" +
+             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false}]," +
+             "\"colorOfCostume\":\"Red\"," +
+             "\"idNumber\":\"1234,5678\"," +
+             "\"dateOfLastCheckin\":\"09/09/2019\"," +
+             "\"timeOfLastBattle\":\"08:30:01 06-09-2019\"," +
+             "\"patrolStartTime\":\"08:00\"" +
             "}," +
             "{" +
              "\"name\":\"Spider Man\"," +
              "\"realName\":\"Peter Parker\"," +
              "\"primaryLocation\":\"New York, NY\"," +
              "\"superPowers\":[\"Spidey Sense\",\"Wall-Crawling\",\"Super Strength\",\"Web-shooting\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]" +
+             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
+             "\"colorOfCostume\":\"Red\"," +
+             "\"idNumber\":\"7890,4321\"," +
+             "\"dateOfLastCheckin\":\"09/01/2019\"," +
+             "\"timeOfLastBattle\":\"11:12:45 30-08-2019\"," +
+             "\"patrolStartTime\":\"16:00\"" +
             "}," +
             "{" +
              "\"name\":\"Starlord\"," +
              "\"realName\":\"Peter Quill\"," +
              "\"primaryLocation\":\"Outer Space\"," +
              "\"superPowers\":[\"Ingenuity\",\"Humor\",\"Dance moves\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Guardians of the Galaxy\"}]" +
+             "\"teamAffiliations\":[{\"name\":\"Guardians of the Galaxy\"}]," +
+             "\"colorOfCostume\":\"Brown\"," +
+             "\"idNumber\":\"2340,9876\"," +
+             "\"dateOfLastCheckin\":\"08/27/2019\"," +
+             "\"timeOfLastBattle\":\"05:17:33 26-08-2019\"," +
+             "\"patrolStartTime\":\"12:30\"" +
             "}," +
             "{" +
              "\"name\":\"Wolverine\"," +
              "\"realName\":\"James Howlett, aka Logan\"," +
              "\"primaryLocation\":\"Unknown\"," +
              "\"superPowers\":[\"Regeneritive Healing\",\"Enhanced Reflexes\",\"Adamantium-infused skeleton\",\"Retractable claws\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Avengers\"},{\"name\":\"X-Men\"}]" +
+             "\"teamAffiliations\":[{\"name\":\"Avengers\"},{\"name\":\"X-Men\"}]," +
+             "\"colorOfCostume\":\"Yellow\"," +
+             "\"idNumber\":\"6543,0987\"," +
+             "\"dateOfLastCheckin\":\"12/01/2014\"," +
+             "\"timeOfLastBattle\":\"09:43:23 21-08-2019\"," +
+             "\"patrolStartTime\":\"20:00\"" +
             "}" +
            "]";
     }

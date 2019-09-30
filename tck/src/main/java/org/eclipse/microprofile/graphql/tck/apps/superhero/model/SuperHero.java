@@ -15,8 +15,18 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.json.bind.annotation.JsonbDateFormat;
+import javax.json.bind.annotation.JsonbNumberFormat;
+import javax.json.bind.annotation.JsonbProperty;
+import javax.json.bind.annotation.JsonbTransient;
+
+import org.eclipse.microprofile.graphql.Query;
 
 public class SuperHero {
     private List<Team> teamAffiliations;
@@ -25,6 +35,23 @@ public class SuperHero {
     private String name;
     private String realName;
     private List<Item> equipment = new ArrayList<>();
+
+    @JsonbDateFormat("MM/dd/yyyy")
+    private LocalDate dateOfLastCheckin;
+
+    @JsonbDateFormat("HH:mm")
+    private LocalTime patrolStartTime = LocalTime.NOON;
+
+    @JsonbDateFormat("HH:mm:ss dd-MM-yyyy")
+    private LocalDateTime timeOfLastBattle;
+
+    @JsonbProperty("colorOfCostume")
+    private String costumeColor;
+
+    private List<String> namesOfKnownEnemies; //TODO: consider adding a Villain or Enemy class
+
+    @JsonbNumberFormat("0000,0000")
+    private Long idNumber;
 
     public SuperHero(){
     }
@@ -88,5 +115,55 @@ public class SuperHero {
 
     public void setEquipment(List<Item> equipment) {
         this.equipment = equipment;
+    }
+
+    public String getCostumeColor() {
+        return costumeColor;
+    }
+
+    public void setCostumeColor(String costumeColor) {
+        this.costumeColor = costumeColor;
+    }
+
+    @Query("knownEnemies")
+    public List<String> getNamesOfKnownEnemies() {
+        return namesOfKnownEnemies;
+    }
+
+    @JsonbTransient
+    public void setNamesOfKnownEnemies(List<String> namesOfKnownEnemies) {
+        this.namesOfKnownEnemies = namesOfKnownEnemies;
+    }
+
+    public LocalDate getDateOfLastCheckin() {
+        return dateOfLastCheckin;
+    }
+
+    public void setDateOfLastCheckin(LocalDate dateOfLastCheckin) {
+        this.dateOfLastCheckin = dateOfLastCheckin;
+    }
+
+    public Long getIdNumber() {
+        return idNumber;
+    }
+
+    public void setIdNumber(Long idNumber) {
+        this.idNumber = idNumber;
+    }
+
+    public LocalTime getPatrolStartTime() {
+        return patrolStartTime;
+    }
+
+    public void setPatrolStartTime(LocalTime patrolStartTime) {
+        this.patrolStartTime = patrolStartTime;
+    }
+
+    public LocalDateTime getTimeOfLastBattle() {
+        return timeOfLastBattle;
+    }
+
+    public void setTimeOfLastBattle(LocalDateTime timeOfLastBattle) {
+        this.timeOfLastBattle = timeOfLastBattle;
     }
 }

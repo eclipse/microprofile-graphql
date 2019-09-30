@@ -44,4 +44,6 @@ include::components.asciidoc[]
 
 include::errorhandling.asciidoc[]
 
+include::jsonb.asciidoc[]
+
 include::release_notes.asciidoc[]

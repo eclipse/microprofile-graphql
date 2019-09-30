@@ -5,6 +5,7 @@ mutation createNewHeroWithVariables($name: String, $realName: String, $primaryLo
         superPowers: $superPowers
         primaryLocation: $primaryLocation
         teamAffiliations: $teamAffiliations
+        idNumber: "90785634"
     }) {
         name
         primaryLocation
