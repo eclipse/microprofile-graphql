@@ -23,11 +23,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * To customize the appearance's order of fields in documentation. No effect on the actual GraphQL schema.
- * <br><br>
+ * To customize the appearance's order of fields in documentation. No effect on
+ * the actual GraphQL schema. <br>
+ * <br>
  * For example, a user might annotate a class as such:
+ * 
  * <pre>
- * {@literal @}Type(name = "Starship", description = "Type for a starship")
+ * {@literal @}Type("Starship")
+ * {@literal @}Description("Type for a starship")
  * {@literal @}FieldsOrder({"name", "id", "length"})
  * public class Starship {
  *     private String id;
@@ -39,6 +42,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
  * # Type for a starship
  * type Starship {

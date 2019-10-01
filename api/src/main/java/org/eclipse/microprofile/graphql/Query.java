@@ -23,13 +23,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Specifies that the annotated method provides the implementation (ie. the resolver) for a GraphQL query.
- * <br><br>
+ * Specifies that the annotated method provides the implementation (ie. the
+ * resolver) for a GraphQL query. <br>
+ * <br>
  * For example, a user might annotate a method as such:
+ * 
  * <pre>
  * public class CharacterService {
- *     {@literal @}Query(value = "friendsOf",
- *                 description = "Returns all the friends of a character")
+ *     {@literal @}Query("friendsOf")
+ *     {@literal @}Description("Returns all the friends of a character")
  *     public List{@literal <}Character{@literal >} getFriendsOf(Character character) {
  *         //...
  *     }
@@ -37,6 +39,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
  * type Query {
  *    # Returns all the friends of a character
@@ -52,9 +55,4 @@ public @interface Query {
      * @return the name to use for the query. If empty, annotated method's name is used.
      */
     String value() default "";
-
-    /**
-     * @return the textual description of the query to be included as a comment in the schema.
-     */
-    String description() default "";
 }

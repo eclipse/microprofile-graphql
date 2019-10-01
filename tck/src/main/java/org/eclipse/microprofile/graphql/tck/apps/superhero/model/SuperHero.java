@@ -26,12 +26,14 @@ import javax.json.bind.annotation.JsonbNumberFormat;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 
+import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.Query;
 
 public class SuperHero {
     private List<Team> teamAffiliations;
     private List<String> superPowers;
     private String primaryLocation;
+    @Description("Super hero name/nickname")
     private String name;
     private String realName;
     private List<Item> equipment = new ArrayList<>();
@@ -77,6 +79,7 @@ public class SuperHero {
         return superPowers;
     }
 
+    @Description("Location where you are most likely to find this hero")
     public String getPrimaryLocation() {
         return primaryLocation;
     }
@@ -93,6 +96,7 @@ public class SuperHero {
         this.teamAffiliations = teamAffiliations;
     }
 
+    @Description("Powers that make this hero super")
     public void setSuperPowers(List<String> superPowers) {
         this.superPowers = superPowers;
     }

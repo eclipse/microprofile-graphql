@@ -144,5 +144,7 @@ A query that requests a Widget's construction date would get a result like this:
 }
 ----
 
-Note that this information is not automatically added to the schema, so it is considered a best practice to document
-formatting intricacies in the field's description comment.
+The date format string specified in the `@JsonbDateFormat` annotation will be used as the field's description in the
+schema, if no `@Description` annotation is provided for that field. If the same field (or property) contains both 
+`@JsonbDateFormat` and `@Description` annotations, it should be considered a best practice to document the date format
+in the description text so that the format is communicated to clients in the schema.

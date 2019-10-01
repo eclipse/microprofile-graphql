@@ -29,7 +29,8 @@ public class InputFieldTest {
     @InputType()
     private static class Starship {
         private String id;
-        @InputField(value = "theName", description = "Name of the starship in StarshipInput type")
+        @InputField("theName")
+        @Description("Name of the starship in StarshipInput type")
         private String name;
         private float length;
     }
@@ -37,7 +38,8 @@ public class InputFieldTest {
     @Test
     public void testInputFieldAnnotationOnNameField() throws Exception {
         InputField inputField = Starship.class.getDeclaredField("name").getAnnotationsByType(InputField.class)[0];
+        Description description = Starship.class.getDeclaredField("name").getAnnotationsByType(Description.class)[0];
         assertEquals(inputField.value(),"theName");
-        assertEquals(inputField.description(),"Name of the starship in StarshipInput type");
+        assertEquals(description.value(),"Name of the starship in StarshipInput type");
     }
 }

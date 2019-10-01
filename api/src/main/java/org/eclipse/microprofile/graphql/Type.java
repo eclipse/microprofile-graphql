@@ -23,11 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Maps of the annotated Java class to a GraphQL type.
- * <br><br>
+ * Maps of the annotated Java class to a GraphQL type. <br>
+ * <br>
  * For example, a user might annotate a class as such:
+ * 
  * <pre>
- * {@literal @}Type(value = "Starship", description = "A starship in StarWars")
+ * {@literal @}Type("Starship")
+ * {@literal @}Description("A starship in Star Wars")
  * public class Starship {
  *     private String id;
  *     private String name;
@@ -38,8 +40,9 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
- * # A starship in StarWars
+ * # A starship in Star Wars
  * type Starship {
  *   id: String
  *   name: String
@@ -56,9 +59,4 @@ public @interface Type {
      * @return the name of the GraphQL type.
      */
     String value() default "";
-
-    /**
-     * @return the textual description of the GraphQL type to be included as a comment in the schema.
-     */
-    String description() default "";
 }
