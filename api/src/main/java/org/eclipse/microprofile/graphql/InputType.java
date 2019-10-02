@@ -23,11 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Maps the annotated class to a GraphQL input type.
- * <br><br>
+ * Maps the annotated class to a GraphQL input type. <br>
+ * <br>
  * For example, a user might annotate a class as such:
+ * 
  * <pre>
- * {@literal @}InputType(name = "StarshipInput", description = "Input type for a starship")
+ * {@literal @}InputType("StarshipInput")
+ * {@literal @}Description("Input type for a starship")
  * public class Starship {
  *     private String id;
  *     private String name;
@@ -38,9 +40,10 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
  * # Input type for a starship
- * input Starship {
+ * input StarshipInput {
  *   id: String
  *   name: String
  *   length: Float
@@ -56,9 +59,4 @@ public @interface InputType {
      * @return the name of the GraphQL input type.
      */
     String value() default "";
-
-    /**
-     * @return the textual description of the GraphQL input type to be included as a comment in the schema.
-     */
-    String description() default "";
 }

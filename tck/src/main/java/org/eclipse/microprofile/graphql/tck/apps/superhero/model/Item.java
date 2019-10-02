@@ -17,9 +17,11 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
 import java.util.Collection;
 
+import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.Id;
 import org.eclipse.microprofile.graphql.Ignore;
 
+@Description("Something of use to a super hero")
 public class Item {
 
     @Id

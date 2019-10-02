@@ -24,13 +24,17 @@ import java.lang.annotation.Target;
 
 /**
  * Controls the mapping from a class' property to a GraphQL input type's field.
- * <br><br>
+ * <br>
+ * <br>
  * For example, a user might annotate a class' property as such:
+ * 
  * <pre>
- * {@literal @}Type(name = "Starship", description = "A starship in StarWars")
- * {@literal @}InputType(name = "StarshipInput", description = "Input type for a starship")
+ * {@literal @}Type("Starship")
+ * {@literal @}InputType("StarshipInput")
+ * {@literal @}Description("A starship in Star Wars")
  * public class Starship {
- *     {@literal @}InputField(value = "uuid", description = "uuid of a new Starship")
+ *     {@literal @}InputField("uuid")
+ *     {@literal @}Description("uuid of a new Starship")
  *     private String id;
  *     private String name;
  *     private float length;
@@ -40,15 +44,9 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
- * # A starship from Starwars
- * type Starship {
- *   id: String
- *   name: String
- *   length: Float
- * }
- *
- * # Input type for a starship
+ * # A starship in Star Wars
  * input Starship {
  *   # uuid of a new Starship
  *   uuid: String
@@ -66,9 +64,4 @@ public @interface InputField {
      * @return the name to use for the input field.
      */
     String value();
-
-    /**
-     * @return the textual description of the GraphQL input field to be included as a comment in the schema.
-     */
-    String description() default "";
 }

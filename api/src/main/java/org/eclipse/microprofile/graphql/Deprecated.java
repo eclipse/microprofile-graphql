@@ -23,12 +23,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a field/method as being deprecated, with a reason. 
- * You should also be able to use java.lang.Deprecated, but then you can not provide a reason
- * <br><br>
+ * Marks a field/method as being deprecated, with a reason. You should also be
+ * able to use java.lang.Deprecated, but then you can not provide a reason <br>
+ * <br>
  * For example, a user might annotate a method as such:
+ * 
  * <pre>
- * {@literal @}InputType(name = "StarshipInput", description = "Input type for a starship")
+ * {@literal @}InputType("StarshipInput")
  * public class Starship {
  *     private String id;
  *     {@literal @}Deprecated("Field is deprecated!")
@@ -40,6 +41,7 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
  * type Starship {
  *   id: String

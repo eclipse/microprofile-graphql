@@ -36,7 +36,6 @@ package org.eclipse.microprofile.graphql;
 @Documented
 public @interface Query {
     String value() default "";
-    String description() default "";
 }
 ----
 
@@ -44,7 +43,6 @@ public @interface Query {
 [cols="1,1"]
 |===
 |*value*|Overrides the field name in the resulting schema, default will be the method name
-|*description*|Sets a description on the field, default will be null
 |===
 
 ==== Basic POJO Example
@@ -64,6 +62,59 @@ In the previous example, an explicitly defined query named "superHero" returns a
 entity class are also implicitly defined as queries. It is possible to define fields as queries explicitly by using the
 `@Source` annotation on a parameter to the query method. More information on this is available in the
 <<entities.asciidoc#fields,Entity Fields>> section. 
+
+==== Description
+
+Queries may be documented as comments in the schema by adding a `@Description` annotation with documentation text as the
+annoation value to the query method. For example:
+
+.DescriptionExample
+[source,java,numbered]
+----
+@Query
+@Description("Returns the super hero with the specified name")
+public SuperHero superHero(@Argument("name") String name) {
+    return heroDB.getHero(name);
+}
+----
+
+This would generate a schema that would include:
+
+.DescriptionSchemaExample
+[source,numbered]
+type Query {
+  ...
+  #Returns the super hero with the specified name
+  superHero(name: String): [SuperHero] 
+  ...
+----
+
+The `@Description` annotation can also be placed on parameters of a query method to provide documentation for the
+arguments. For example:
+
+.ArgumentDescriptionExample
+[source,java,numbered]
+----
+@Query
+@Description("Returns the super hero with the specified name")
+public SuperHero superHero(@Argument("name") @Description("Super hero name, not real name") String name) {
+    return heroDB.getHero(name);
+}
+----
+
+This would generate a schema that would include:
+
+.ArgumentDescriptionSchemaExample
+[source,numbered]
+type Query {
+  ...
+  #Returns the super hero with the specified name
+  superHero(
+  #Super hero name, not real name
+  name: String
+  ): SuperHero 
+  ...
+----
 
 ==== Unnamed queries
 

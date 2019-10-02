@@ -23,21 +23,25 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Controls the mapping of a method's parameter to an argument of a GraphQL operation (query/mutation/subscription).
- * <br><br>
+ * Controls the mapping of a method's parameter to an argument of a GraphQL
+ * operation (query/mutation/subscription). <br>
+ * <br>
  * For example, a user might annotate a method's parameter as such:
+ * 
  * <pre>
  * public class CharacterService {
- *     {@literal @}Query(value = "searchByName",
- *                 description = "Search characters by name")
+ *     {@literal @}Query("searchByName")
  *     public List{@literal <}Character{@literal >} getByName(
- *                      {@literal @}Argument(value = "name", defaultValue = "Han Solo", description = "Name to search for") String name) {
+ *                      {@literal @}Argument("name")
+ *                      {@literal @}DefaultValue("Han Solo")
+ *                      {@literal @}Description("Name to search for") String name) {
  *         //...
  *     }
  * }
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
  * type Query {
  *         # Search characters by name
@@ -55,10 +59,4 @@ public @interface Argument {
      * @return the name to use for the GraphQL argument.
      */
     String value();
-
-    /**
-     * @return the textual description of the GraphQL argument to be included as a comment in the schema.
-     */
-    String description() default "";
-
 }

@@ -27,6 +27,7 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.graphql.Argument;
 import org.eclipse.microprofile.graphql.DefaultValue;
+import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.GraphQLException;
 import org.eclipse.microprofile.graphql.Mutation;
@@ -52,12 +53,13 @@ public class HeroFinder {
     HeroLocator heroLocator;
 
     @Query
-    public SuperHero superHero(@Argument("name") String name) throws UnknownHeroException {
+    public SuperHero superHero(@Argument("name") @Description("Super hero name, not real name") String name) throws UnknownHeroException {
         LOG.info("superHero invoked " + name);
         return Optional.ofNullable(heroDB.getHero(name)).orElseThrow(() -> new UnknownHeroException(name));
     }
 
     @Query
+    @Description("List all super heroes in the database")
     public Collection<SuperHero> allHeroes() {
         LOG.info("allHeroes invoked");
         return heroDB.getAllHeroes();
@@ -95,7 +97,8 @@ public class HeroFinder {
         return heroDB.getHero(newHero.getName());
     }
 
-    @Mutation(description="Adds a hero to the specified team and returns the updated team.")
+    @Mutation
+    @Description("Adds a hero to the specified team and returns the updated team.")
     public Team addHeroToTeam(@Argument("hero") String heroName,
                               @Argument("team") String teamName)
                               throws UnknownTeamException {
@@ -105,7 +108,8 @@ public class HeroFinder {
                      .addMembers( heroDB.getHero(heroName) );
     }
 
-    @Mutation(description="Removes a hero to the specified team and returns the updated team.")
+    @Mutation
+    @Description("Removes a hero to the specified team and returns the updated team.")
     public Team removeHeroFromTeam(@Argument("hero") String heroName,
                                    @Argument("team") String teamName)
                                    throws UnknownTeamException {
@@ -114,7 +118,8 @@ public class HeroFinder {
                 .removeMembers( heroDB.getHero(heroName) );
     }
 
-    @Mutation(description="Removes a hero... permanently...")
+    @Mutation
+    @Description("Removes a hero... permanently...")
     public Collection<SuperHero> removeHero(@Argument("hero") String heroName) throws UnknownHeroException {
         LOG.info("removeHero invoked");
         if (heroDB.removeHero(heroName) == null) {
@@ -123,7 +128,8 @@ public class HeroFinder {
         return allHeroes();
     }
 
-    @Mutation(description="Gives a hero new equipment")
+    @Mutation
+    @Description("Gives a hero new equipment")
     public SuperHero provisionHero(@Argument("hero") String heroName,
                                    @DefaultValue(Item.CAPE) @Argument("item") Item item) 
                                    throws UnknownHeroException {
@@ -136,7 +142,8 @@ public class HeroFinder {
         return hero;
     }
 
-    @Mutation(description="Removes equipment from a hero")
+    @Mutation
+    @Description("Removes equipment from a hero")
     public SuperHero removeItemFromHero(@Argument("hero") String heroName,
                                         @Argument("itemID") long itemID) 
                                         throws UnknownHeroException {
@@ -150,7 +157,8 @@ public class HeroFinder {
         return hero;
     }
 
-    @Mutation(description="Update an item's powerLevel") 
+    @Mutation
+    @Description("Update an item's powerLevel") 
     public Item updateItemPowerLevel(@Argument("itemID") long itemID,
                                      @DefaultValue("5") @Argument("powerLevel") int newLevel) {
 

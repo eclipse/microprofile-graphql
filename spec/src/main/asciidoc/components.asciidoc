@@ -75,7 +75,7 @@ public final static String CAPE =
         "   \"supernatural\": false" +
         "}";
 
-@Mutation(description="Gives a hero new equipment")
+@Mutation
 public SuperHero provisionHero(@Argument("hero") String heroName,
                                @DefaultValue(CAPE) @Argument("item") Item item) 
                                throws UnknownHeroException {

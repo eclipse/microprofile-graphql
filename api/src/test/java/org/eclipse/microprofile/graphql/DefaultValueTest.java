@@ -38,7 +38,7 @@ public class DefaultValueTest {
             return name;
         }
 
-        @Query(value = "friendsOf", description = "Returns all the friends of a character")
+        @Query("friendsOf")
         public List<Character> getFriendsOf(
                 @DefaultValue("Han Solo")
                         Character character) {

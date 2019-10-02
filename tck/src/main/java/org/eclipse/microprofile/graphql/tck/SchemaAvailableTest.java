@@ -23,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.logging.Logger;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.shrinkwrap.api.Archive;
@@ -150,10 +151,97 @@ public class SchemaAvailableTest extends Arquillian {
         Assert.assertTrue(snippet.contains("timeOfLastBattle: DateTime"));
     }
 
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDescriptionForQueryMethods() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "type Query ");
+        Assert.assertTrue(snippet.contains("#List all super heroes in the database"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDescriptionForMutationMethods() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "type Mutation ");
+        System.out.println("snippet = " + snippet);
+        Assert.assertTrue(snippet.contains("#Removes a hero... permanently..."));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDescriptionForEntityTypes() throws Exception {
+        String schema = getSchemaContent();
+        Assert.assertTrue(schema.contains("#Something of use to a super hero"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDescriptionForInputTypes() throws Exception {
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDescriptionForArguments() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "type Query ");
+        Assert.assertTrue(snippet.contains("#Super hero name, not real name"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDescriptionForOutputTypeFields() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "type SuperHero ");
+        Assert.assertTrue(snippet.contains("#Super hero name/nickname"));
+        Assert.assertTrue(snippet.contains("#Location where you are most likely to find this hero"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDescriptionForInputTypeFields() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
+        Assert.assertTrue(snippet.contains("#Super hero name/nickname"));
+        Assert.assertTrue(snippet.contains("#Powers that make this hero super"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaOutputTypeFieldsContainsDescriptionFromJsonbDateFormat() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "type SuperHero ");
+        Assert.assertTrue(snippet.contains("#MM/dd/yyyy"));
+        Assert.assertTrue(snippet.contains("#HH:mm"));
+        Assert.assertTrue(snippet.contains("#HH:mm:ss dd-MM-yyyy"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaInputTypeFieldsContainsDescriptionFromJsonbDateFormat() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
+        Assert.assertTrue(snippet.contains("#MM/dd/yyyy"));
+        Assert.assertTrue(snippet.contains("#HH:mm"));
+        Assert.assertTrue(snippet.contains("#HH:mm:ss dd-MM-yyyy"));
+    }
+
     private String getSchemaSnippet(String schema, String section) throws Exception {
         int index = schema.indexOf(section);
         Assert.assertTrue(index > -1, "Cannot find " + section + " in schema");
-        return schema.substring(index, schema.indexOf("}", index + 1));
+        char[] schemaChars = schema.toCharArray();
+        int closePos = schema.indexOf("{", index) + 1;
+        int counter = 1;
+        while (counter > 0 && closePos < schemaChars.length - 1) {
+            char c = schemaChars[++closePos];
+            if (c == '{') {
+                counter++;
+            } else if (c == '}') {
+                counter--;
+            }
+        }
+
+        return schema.substring(index, closePos);
     }
 
     private String getSchemaContent() throws Exception {

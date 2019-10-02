@@ -70,8 +70,7 @@ Normally these annotations are unnecessary if the type can be serialized and/or 
 is specified in a query or mutation method. These annotations can be used to specify the name of the type in the GraphQL
 schema; by default, the entity name in the schema will be the same as the simple class name of the entity type for
 output types; for input types, the simple class name is used with "Input" appended. Thus, an entity class named 
-`com.mypkg.Tree` would create a GraphQL schema type called "Tree" and an input type called "TreeInput". These
-annotations can also be used to add a description to the entity in the schema.
+`com.mypkg.Tree` would create a GraphQL schema type called "Tree" and an input type called "TreeInput".
 
 === Java interfaces as GraphQL entity types
 
@@ -125,6 +124,11 @@ part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This a
 `@Source` annotation. Also note that the `currentLocation` method will only be invoked if the client requests the
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
 not interested in.
+
+=== Description
+
+The `@Description` annotation can be used to provide comments in the generated schema for entity types (both input and
+output types) and fields.
 
 === Deprecation
 

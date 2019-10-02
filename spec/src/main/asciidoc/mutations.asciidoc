@@ -36,7 +36,6 @@ package org.eclipse.microprofile.graphql;
 @Documented
 public @interface Mutation {
     String value() default "";
-    String description() default "";
 }
 ----
 
@@ -44,7 +43,6 @@ public @interface Mutation {
 [cols="1,1"]
 |===
 |*value*|Overrides the mutation name in the resulting schema, default will be the method name
-|*description*|Sets a description for the mutation, default will be null (no description)
 |===
 
 Mutations generally require arguments (parameters) in order to determine which entity to modify/delete or the data

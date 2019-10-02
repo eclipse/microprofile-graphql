@@ -23,19 +23,26 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Excludes an otherwise mapped element. Mostly useful to e.g. mark a field as excluded in the GraphQL input type only.
- * <br><br>
- * The behavior is different depending on where <b>@Ignore</b> annotation is placed:
- *  <ul>
- *      <li><b>On field</b>: Field is ignored in both graphql type and input type.</li>
- *      <li><b>On getter</b>: Field is ignored in the graphql type.</li>
- *      <li><b>On setter</b>: Field is ignored in the graphql input type.</li>
- *  </ul>
- * <br><br>
- * For example, a user might annotate a class' properties and/or getters/setters as such:
+ * Excludes an otherwise mapped element. Mostly useful to e.g. mark a field as
+ * excluded in the GraphQL input type only. <br>
+ * <br>
+ * The behavior is different depending on where <b>@Ignore</b> annotation is
+ * placed:
+ * <ul>
+ * <li><b>On field</b>: Field is ignored in both graphql type and input
+ * type.</li>
+ * <li><b>On getter</b>: Field is ignored in the graphql type.</li>
+ * <li><b>On setter</b>: Field is ignored in the graphql input type.</li>
+ * </ul>
+ * <br>
+ * <br>
+ * For example, a user might annotate a class' properties and/or getters/setters
+ * as such:
+ * 
  * <pre>
- * {@literal @}Type(name = "Starship", description = "A starship in StarWars")
- * {@literal @}InputType(name = "StarshipInput", description = "Input object for a starship")
+ * {@literal @}Type("Starship")
+ * {@literal @}InputType("StarshipInput")
+ * {@literal @}Description("A starship in Star Wars")
  * public class Starship {
  *     private String id;
  *     private String name;
@@ -59,19 +66,20 @@ import java.lang.annotation.Target;
  * </pre>
  *
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
- * # A starship from Starwars
+ * # A starship in Star Wars
  * type Starship {
  *   id: String
- *   name: String
  *   length: Float
+ *   name: String
  * }
  *
- * # Input object for a starship
- * input Starship {
+ * # A starship in Star Wars
+ * input StarshipInput {
  *   id: String
- *   name: String
  *   mass: Float
+ *   name: String
  * }
  * </pre>
  */

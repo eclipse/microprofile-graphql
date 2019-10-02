@@ -37,7 +37,8 @@ public class MutationTest {
             return name;
         }    
 
-        @Mutation(value = "save", description = "Save a character")
+        @Mutation("save")
+        @Description("Save a character")
         public Character saveCharacter(Character character) {
 
             return character;
@@ -48,6 +49,8 @@ public class MutationTest {
     public void testMutationAnnotationOnCharacterMethod() throws Exception {
         Mutation mutation = Character.class.getDeclaredMethod("saveCharacter", Character.class).getAnnotation(Mutation.class);
         assertEquals(mutation.value(), "save");
-        assertEquals(mutation.description(), "Save a character");
+        Description description = Character.class.getDeclaredMethod("saveCharacter", Character.class)
+                                                 .getAnnotation(Description.class);
+        assertEquals(description.value(), "Save a character");
     }
 }

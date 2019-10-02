@@ -20,15 +20,17 @@
 
 /**
  * APIs for building a code-first GraphQL endpoint, for example:
+ * 
  * <pre>
  * public class CharacterService {
- *     {@literal @}Query(value = "friendsOf",
- *                 description = "Returns all the friends of a character")
+ *     {@literal @}Query("friendsOf")
+ *     {@literal @}Description("Returns all the friends of a character")
  *     public List{@literal <}Character{@literal >} getFriendsOf(Character character) {
  *         // ... 
  *     }
  * }
  * </pre>
+ * 
  * @since 1.0
  */
 @org.osgi.annotation.versioning.Version("1.0")

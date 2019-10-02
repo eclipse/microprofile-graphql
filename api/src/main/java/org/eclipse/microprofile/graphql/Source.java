@@ -23,39 +23,49 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Extends a GraphQL type by adding an externally defined field, effectively enabling a graph to be assembled.
- * <br><br>
- * The GraphQL type which is extended is the GraphQL type corresponding to the Java type of the annotated method parameter.
- * <br><br>
- * The added field type can be a scalar or another GraphQL type, it's inferred from the method return type.
- * <br><br>
- * At runtime, injects the concerned source object (which type is the extended GraphQL type),
- * thus allowing to use fields from it to resolve the added field.
- * <br><br>
- * Optionally, specifies the name and description of the added field in the extended GraphQL type.
- * By default, the name of the added field is the name of the method.
+ * Extends a GraphQL type by adding an externally defined field, effectively
+ * enabling a graph to be assembled. <br>
+ * <br>
+ * The GraphQL type which is extended is the GraphQL type corresponding to the
+ * Java type of the annotated method parameter. <br>
+ * <br>
+ * The added field type can be a scalar or another GraphQL type, it's inferred
+ * from the method return type. <br>
+ * <br>
+ * At runtime, injects the concerned source object (which type is the extended
+ * GraphQL type), thus allowing to use fields from it to resolve the added
+ * field. <br>
+ * <br>
+ * Optionally, specifies the name and description of the added field in the
+ * extended GraphQL type. By default, the name of the added field is the name of
+ * the method.
  *
- * <br><br>
+ * <br>
+ * <br>
  * For example, a user might annotate a method's parameter as such:
+ * 
  * <pre>
  * public class CharacterService {
  *      {@literal @}Inject TwitterService twitterService;
  *
- *     {@literal @}Query(value = "tweets", description = "Get the last tweets for a character")
+ *     {@literal @}Query(value = "tweets")
+ *     {@literal @}Description = "Get the last tweets for a character")
  *     public List{@literal <}Tweet{@literal >} tweets(
- *                          {@literal @}Source(fieldName = "tweetsForMe", description = "Get the last tweets for the character") Character character,
- *                          {@literal @}Argument(name = "last", description = "Number of last tweets to fetch") int last) {
+ *                          {@literal @}Source("tweetsForMe") {@literal @}Description("Get the last tweets for the character") Character character,
+ *                          {@literal @}Argument("last") {@literal @}Description = "Number of last tweets to fetch") int last) {
  *          return twitterService.search(character.getName(), last);
  *     }
  * }
  * </pre>
  * <p>
  * Schema generation of this would result in a stanza such as:
+ * 
  * <pre>
  * type Character {
  *    # Other fields ...
  *
  *    # Get the last tweets for the character
+ *    # last: Number of last tweets to fetch
  *    tweetsForMe(last: Int): [Tweet]
  * }
  * </pre>
@@ -68,9 +78,4 @@ public @interface Source {
      * @return the name of the added type in the extended GraphQL type.
      */
     String name() default "";
-
-    /**
-     * @return the textual description of the added field to be included as a comment in the schema.
-     */
-    String description() default "";
 }
