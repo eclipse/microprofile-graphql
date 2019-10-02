@@ -28,7 +28,6 @@ public class InputTypeTest {
 
     @InputType("StarshipInput")
     @Description("StarshipInput type")
-    @InputFieldsOrder({"name", "id", "length"})
     private static class Starship {
         private String id;
         private String name;
@@ -41,8 +40,5 @@ public class InputTypeTest {
         assertEquals(inputType.value(), "StarshipInput");
         Description description = Starship.class.getAnnotation(Description.class);
         assertEquals(description.value(), "StarshipInput type");
-
-        InputFieldsOrder inputFieldsOrder = Starship.class.getAnnotation(InputFieldsOrder.class);
-        assertEquals(inputFieldsOrder.value(), new String[] {"name", "id", "length"});
     }
 }
