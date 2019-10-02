@@ -71,8 +71,8 @@ public class GraphQLDynamicClientTest extends Arquillian {
     private URI uri;
     
     @Deployment
-    public static Archive getDeployment() throws Exception {
-        return ShrinkWrap.create(WebArchive.class, "tck.war")
+    public static Archive<?> getDeployment() throws Exception {
+        return ShrinkWrap.create(WebArchive.class, "tck-dynamic.war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource(
                         new StringAsset("mp.graphql.defaultErrorMessage=" + 

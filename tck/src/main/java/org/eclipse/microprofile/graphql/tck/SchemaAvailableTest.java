@@ -53,7 +53,7 @@ public class SchemaAvailableTest extends Arquillian {
     
     @Deployment
     public static Archive<?> getDeployment() throws Exception {
-        return ShrinkWrap.create(WebArchive.class, "tck.war")
+        return ShrinkWrap.create(WebArchive.class, "tck-schematest.war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addPackage(HeroFinder.class.getPackage())
                 .addPackage(HeroDatabase.class.getPackage())
