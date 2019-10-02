@@ -1,0 +1,10 @@
+mutation createUnnamedHero {
+  createNewHero  (hero: {
+    realName: "John Smith"
+  }) {
+    currentLocation
+    name
+    primaryLocation
+    realName
+  }
+}

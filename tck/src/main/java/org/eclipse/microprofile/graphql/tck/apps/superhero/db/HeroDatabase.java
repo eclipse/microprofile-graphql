@@ -93,9 +93,7 @@ public class HeroDatabase {
                 Team team = iter.next();
                 Team existingTeam = allTeams.get(team.getName());
                 if (existingTeam == null) {
-                    existingTeam = new Team();
-                    existingTeam.setName(team.getName());
-                    allTeams.put(team.getName(), existingTeam);
+                    existingTeam = createNewTeam(team.getName());
                 }
                 iter.set(existingTeam);
                 List<SuperHero> members = existingTeam.getMembers();
@@ -117,6 +115,37 @@ public class HeroDatabase {
             team.removeMembers(hero);
         }
         return hero;
+    }
+
+    public Team createNewTeam(String teamName, SuperHero...initialMembers) {
+        Team newTeam = new Team();
+        newTeam.setName(teamName);
+        newTeam.addMembers(initialMembers);
+        allTeams.put(teamName, newTeam);
+        return newTeam;
+    }
+
+    public Team removeHeroesFromTeam(Team team, SuperHero... heroes) {
+        team.removeMembers(heroes);
+        for (SuperHero hero : heroes) {
+            List<Team> teamAffiliations = hero.getTeamAffiliations();
+            if (teamAffiliations != null) {
+                teamAffiliations.remove(team);
+            }
+        }
+        return team;
+    }
+
+    public Team removeHeroesFromTeam(Team team, Collection<SuperHero> heroes) {
+        return removeHeroesFromTeam(team, heroes.toArray(new SuperHero[]{}));
+    }
+
+    public Team removeTeam(String teamName) throws UnknownTeamException {
+        Team team = allTeams.remove(teamName);
+        if (team == null) {
+            throw new UnknownTeamException(teamName);
+        }
+        return removeHeroesFromTeam(team, allHeroes.values());
     }
 
     private static String getInitalJson() {

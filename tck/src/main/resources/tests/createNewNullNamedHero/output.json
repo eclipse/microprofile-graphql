@@ -1,0 +1,23 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type WrongType: argument 'hero.name' with value 'NullValue{}' must not be null @ 'createNewHero'",
+      "locations": [
+        {
+          "line": 2,
+          "column": 19,
+          "sourceName": null
+        }
+      ],
+      "description": "argument 'hero.name' with value 'NullValue{}' must not be null",
+      "validationErrorType": "WrongType",
+      "queryPath": [
+        "createNewHero"
+      ],
+      "errorType": "ValidationError",
+      "path": null,
+      "extensions": null
+    }
+  ]
+}

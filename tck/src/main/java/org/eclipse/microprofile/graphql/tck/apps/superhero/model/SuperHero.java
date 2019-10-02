@@ -27,7 +27,9 @@ import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 
 import org.eclipse.microprofile.graphql.Description;
+import org.eclipse.microprofile.graphql.NonNull;
 import org.eclipse.microprofile.graphql.Query;
+
 
 public class SuperHero {
     private List<Team> teamAffiliations;
@@ -105,6 +107,7 @@ public class SuperHero {
         this.primaryLocation = primaryLocation;
     }
 
+    @NonNull
     public void setName(String name) {
         this.name = name;
     }

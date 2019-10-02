@@ -1,0 +1,7 @@
+mutation removeTeam {
+  removeTeam(teamName: null) {
+    members {
+      name
+    }
+  }
+}
