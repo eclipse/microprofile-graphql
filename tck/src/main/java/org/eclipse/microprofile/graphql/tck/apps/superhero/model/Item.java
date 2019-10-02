@@ -34,6 +34,7 @@ public class Item {
     private int powerLevel;
     private double height;
     private float weight;
+    @DefaultValue("false")
     private boolean supernatural;
     @Ignore
     private boolean invisible;

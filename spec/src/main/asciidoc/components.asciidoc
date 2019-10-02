@@ -89,6 +89,9 @@ public SuperHero provisionHero(@Argument("hero") String heroName,
     }
 ----
 
+The `@DefaultValue` annotation may also be placed on fields and setters on entity classes to specify the default for
+GraphQL fields.
+
 === Lifecycle
 
 MicroProfile GraphQL components (POJOs annotated with `@GraphQLApi`) are CDI beans. As such, their lifecycle is managed
