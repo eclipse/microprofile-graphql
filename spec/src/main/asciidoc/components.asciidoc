@@ -41,10 +41,6 @@ For example, suppose your application was registered at host, "myhost" on TCP po
 "MyApp" (usually the context root is the name of the WAR file but without the file extension), then the schema would be
 available at: `http://myhost:50080/MyApp/graphql/schema.graphql`
 
-=== Deprecation
-
-TODO: info on how to use the `@Deprecated` annotation appropriately
-
 === Default Values
 
 It is possible to specify a default value for query or mutation arguments so that the client does not need to specify a

@@ -130,13 +130,6 @@ not interested in.
 The `@Description` annotation can be used to provide comments in the generated schema for entity types (both input and
 output types) and fields.
 
-=== Deprecation
-
-Application developers can mark entity fields as deprecated in the GraphQL schema with the `@Deprecated` annotation -
-either the annotation that comes from the JDK in the `java.lang` package or the MicroProfile GraphQL annotation in the
-`org.eclipse.microprofile.graphql` package.  The latter annotation allows the developer to specify additional text that
-might provide more information to the consumers of the schema.
-
 === Default Values
 
 The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
