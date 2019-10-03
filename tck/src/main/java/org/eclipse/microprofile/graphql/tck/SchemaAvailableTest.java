@@ -276,6 +276,22 @@ public class SchemaAvailableTest extends Arquillian {
             "Field with default value and nonnull is missing");
     }
 
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDefaultValueOnEntityField() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input ItemInput ");
+        Assert.assertTrue(snippet.contains("supernatural: Boolean = false"));
+    }
+
+    @Test
+    @RunAsClient
+    public void testSchemaContainsDefaultValueOnEntitySetter() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input ItemInput ");
+        Assert.assertTrue(snippet.contains("description: String = \"An unidentified item\""));
+    }
+
     private String getSchemaContent() throws Exception {
         URL url = new URL(this.uri + PATH);
         HttpURLConnection connection = null;
