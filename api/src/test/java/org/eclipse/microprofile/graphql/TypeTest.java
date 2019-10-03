@@ -28,7 +28,6 @@ public class TypeTest {
 
     @Type("Starship")
     @Description("A starship in StarWars")
-    @FieldsOrder({"name", "id", "length"})
     private static class Starship {
         private String id;
         private String name;
@@ -41,8 +40,5 @@ public class TypeTest {
         assertEquals(type.value(), "Starship");
         Description description = Starship.class.getAnnotation(Description.class);
         assertEquals(description.value(), "A starship in StarWars");
-
-       FieldsOrder fieldsOrder = Starship.class.getAnnotation(FieldsOrder.class);
-        assertEquals(fieldsOrder.value(), new String[] {"name", "id", "length"});
     }
 }
