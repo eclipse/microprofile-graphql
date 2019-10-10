@@ -1,0 +1,10 @@
+{
+  "data": {
+    "createNewHero": {
+      "name": "Captain America",
+      "dateOfLastCheckin": "09/25/2019",
+      "patrolStartTime": "13:00",
+      "sizeOfTShirt": "XL"
+    }
+  }
+}
