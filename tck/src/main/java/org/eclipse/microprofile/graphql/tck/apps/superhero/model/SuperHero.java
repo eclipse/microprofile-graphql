@@ -27,6 +27,7 @@ import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 
 import org.eclipse.microprofile.graphql.Description;
+import org.eclipse.microprofile.graphql.InputField;
 import org.eclipse.microprofile.graphql.NonNull;
 import org.eclipse.microprofile.graphql.Query;
 
@@ -56,6 +57,9 @@ public class SuperHero {
 
     @JsonbNumberFormat("0000,0000")
     private Long idNumber;
+
+    @InputField("tshirtSize")
+    private ShirtSize sizeOfTShirt;
 
     public SuperHero(){
     }
@@ -172,5 +176,22 @@ public class SuperHero {
 
     public void setTimeOfLastBattle(LocalDateTime timeOfLastBattle) {
         this.timeOfLastBattle = timeOfLastBattle;
+    }
+
+    public ShirtSize getSizeOfTShirt() {
+        return sizeOfTShirt;
+    }
+
+    public void setSizeOfTShirt(ShirtSize sizeOfTShirt) {
+        this.sizeOfTShirt = sizeOfTShirt;
+    }
+
+    public enum ShirtSize {
+        S,
+        M,
+        L,
+        XL,
+        XXL,
+        HULK
     }
 }

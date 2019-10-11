@@ -125,6 +125,28 @@ part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This a
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
 not interested in.
 
+Users can use the `@InputField` annotation to specify a different field name for the input field in the GraphQL
+schema. For example:
+
+```
+public class Widget {
+
+    @InputField("cost")
+    private float price;
+    // ... public getters/setters
+}
+```
+
+This would result in a schema that looks something like:
+```
+type Widget {
+    price: Float!
+}
+input WidgetInput {
+    cost: Float!
+}
+```
+
 === Description
 
 The `@Description` annotation can be used to provide comments in the generated schema for entity types (both input and
@@ -174,3 +196,46 @@ One drawback to using non-nullable fields is that if there is an error loading a
 itself up causing the field to be null - and since this is itself an error condition, the implementation must return
 the non-null field error, which means that the implementation would not be able to send partial results for other child
 fields.
+
+=== Enumerable types
+
+GraphQL offers enumerable types similar to Java `enum` types. When a Java `enum` type is specified as the return type or
+parameter of a query/mutation method or a field of an entity, the implementation will produce the GraphQL `enum` type in
+the schema. For example:
+
+```
+@Type
+public class SuperHero {
+    private ShirtSize tshirtSize; // public getters/setters, ...
+
+    public enum ShirtSize {
+        S, M, L, XL
+    }
+}
+```
+
+The implementation would generate a schema that would include:
+```
+enum ShirtSize {
+  L
+  M
+  S
+  XL
+}
+
+type SuperHero @_mappedType(type : "__internal__") {
+  #...
+  tshirtSize: ShirtSize @_mappedOperation(operation : "__internal__")
+  #...
+}
+
+input SuperHeroInput @_mappedType(type : "__internal__") {
+  #...
+  tshirtSize: ShirtSize @_mappedInputField(inputField : "__internal__")
+  #...
+}
+#...
+```
+
+When using an enumerated type, it is considered a validation error when the client enters a value that is not included
+in the enumerated type.

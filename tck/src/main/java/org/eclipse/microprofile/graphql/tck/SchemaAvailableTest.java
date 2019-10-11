@@ -120,6 +120,37 @@ public class SchemaAvailableTest extends Arquillian {
 
     @Test
     @RunAsClient
+    public void testInputTypeOnField() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
+        Assert.assertTrue(snippet.contains("tshirtSize: ShirtSize"),
+            "Missing expected field, \"tshirtSize\" specified in @InputField annotation");
+        Assert.assertFalse(snippet.contains("sizeOfTShirt"),
+                "Found field \"sizeOfTShirt\" that should be replaced by \"tshirtSize\" in input type");
+
+        // now verify that the Java field name is in the output type section of the schema,
+        // and that it does not include the input field name:
+        snippet = getSchemaSnippet(schema, "type SuperHero ");
+        Assert.assertFalse(snippet.contains("tshirtSize"), 
+            "Found field \"tshirtSize\" in output type, when it should only be found in the input type");
+        Assert.assertTrue(snippet.contains("sizeOfTShirt: ShirtSize"),
+                "Did not find field \"sizeOfTShirt\" in the output type");
+    }
+
+    @Test
+    @RunAsClient
+    public void testEnumAppearsInSchema() throws Exception {
+        String schema = getSchemaContent();
+        String snippet = getSchemaSnippet(schema, "enum ShirtSize ");
+        Assert.assertNotNull(snippet);
+        Assert.assertTrue(snippet.contains("S"), "Missing expected enum value, \"S\"");
+        Assert.assertTrue(snippet.contains("M"), "Missing expected enum value, \"M\"");
+        Assert.assertTrue(snippet.contains("XL"), "Missing expected enum value, \"XL\"");
+        Assert.assertTrue(snippet.contains("HULK"), "Missing expected enum value, \"HULK\"");
+    }
+
+    @Test
+    @RunAsClient
     public void testDateScalarUsedForLocalDate() throws Exception {
         String schema = getSchemaContent();
         String snippet = getSchemaSnippet(schema, "input SuperHeroInput ");
