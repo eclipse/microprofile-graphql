@@ -15,7 +15,6 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,6 +22,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import javax.inject.Inject;
 
 import org.eclipse.microprofile.graphql.Argument;
 import org.eclipse.microprofile.graphql.DefaultValue;

@@ -28,7 +28,6 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbException;
 
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
@@ -46,7 +45,7 @@ public class HeroDatabase {
             addHeroes(jsonb.fromJson(mapJson,
                       new ArrayList<SuperHero>(){}.getClass().getGenericSuperclass()));
             getHero("Iron Man").setNamesOfKnownEnemies(Arrays.asList("Whiplash", "Mandarin"));
-        } catch (JsonbException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }

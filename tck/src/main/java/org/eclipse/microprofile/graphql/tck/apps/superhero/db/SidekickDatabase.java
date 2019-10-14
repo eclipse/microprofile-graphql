@@ -15,7 +15,10 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
 
-import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Sidekick;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Initialized;
@@ -23,10 +26,8 @@ import javax.enterprise.event.Observes;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import javax.json.bind.JsonbException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Sidekick;
 
 @ApplicationScoped
 public class SidekickDatabase {
