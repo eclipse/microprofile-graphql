@@ -20,34 +20,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.AnnotatedType;
-import java.util.Collections;
-import java.util.List;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Union {
+public @interface Interface {
 
-    String name();
-
-    String description() default "";
-
-    Class<?>[] possibleTypes() default {};
-
-    Class<? extends PossibleTypeFactory> possibleTypeFactory() default Union.DummyPossibleTypeFactory.class;
-
-    boolean possibleTypeAutoDiscovery() default false;
-
-    String[] scanPackages() default {};
-
-    interface PossibleTypeFactory {
-        List<AnnotatedType> getPossibleTypes();
-    }
-
-    class DummyPossibleTypeFactory implements Union.PossibleTypeFactory {
-        @Override
-        public List<AnnotatedType> getPossibleTypes() {
-            return Collections.emptyList();
-        }
-    }
+    String value() default "";
 }

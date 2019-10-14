@@ -15,9 +15,11 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
-import io.leangen.graphql.annotations.types.Interface;
+import org.eclipse.microprofile.graphql.Description;
+import org.eclipse.microprofile.graphql.Interface;
 
-@Interface(implementationAutoDiscovery = true)
+@Interface
+@Description("Basically any sentient being with a name")
 public interface Character {
     String getName();
 

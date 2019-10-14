@@ -79,6 +79,61 @@ deserialize an interface, the interface may need a `JsonbDeserializer` in order 
 
 === GraphQL interfaces
 
+GraphQL interfaces are very similar in concept to Java interfaces, in that other types may implement an interface. This
+allows the GraphQL schema to better align with the Java application's model and allows clients to retrieve the same data
+(fields) on multiple different entity types.  GraphQL interfaces are created with a Java interface type is annotated
+with `@Interface`. The MP GraphQL implementation must then generate a schema where every class in the application that
+implements that Java interface must have a type in the schema that implements the GraphQL interface. For example:
+
+```
+@Interface
+public interface Character {
+    public String getName();
+}
+
+public class SuperHero implements Character {
+
+    private String name;
+
+    @Override
+    @Description("Name of hero")
+    public String getName() { return name; }
+
+    ...
+}
+
+public class Villain implements Character {
+
+    private String name;
+
+    @Override
+    @Description("Name of villain")
+    public String getName() { return name; }
+
+    ...
+}
+```
+
+This should generate a schema like:
+
+```
+interface Character {
+  name: String
+}
+
+type SuperHero implements Character {
+  #Name of hero
+  name: String
+  ...
+}
+
+type Villain implements Character {
+  #Name of villain
+  name: String
+...
+}
+```
+
 === Limitations
 
 ==== Generic types
