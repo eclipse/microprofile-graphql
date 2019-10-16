@@ -32,7 +32,7 @@ import org.eclipse.microprofile.graphql.NonNull;
 import org.eclipse.microprofile.graphql.Query;
 
 
-public class SuperHero {
+public class SuperHero implements Character {
     private List<Team> teamAffiliations;
     private List<String> superPowers;
     private String primaryLocation;
@@ -90,6 +90,7 @@ public class SuperHero {
         return primaryLocation;
     }
 
+    @Override
     public String getName() {
         return name;
     }

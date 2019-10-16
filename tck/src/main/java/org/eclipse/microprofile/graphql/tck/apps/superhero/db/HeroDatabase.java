@@ -28,31 +28,36 @@ import javax.enterprise.context.Initialized;
 import javax.enterprise.event.Observes;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbException;
 
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
 @ApplicationScoped
 public class HeroDatabase {
-    final Map<String,SuperHero> allHeroes = new HashMap<>();
-    final Map<String,Team> allTeams = new HashMap<>();
+    final Map<String, SuperHero> allHeroes = new HashMap<>();
+    final Map<String, Team> allTeams = new HashMap<>();
 
     private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        
+
         try {
             Jsonb jsonb = JsonbBuilder.create();
             String mapJson = getInitalJson();
             addHeroes(jsonb.fromJson(mapJson,
                       new ArrayList<SuperHero>(){}.getClass().getGenericSuperclass()));
             getHero("Iron Man").setNamesOfKnownEnemies(Arrays.asList("Whiplash", "Mandarin"));
-        } catch (JsonbException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    public SuperHero getHero(String name) {
-        return allHeroes.get(name);
+    public SuperHero getHero(String name) throws UnknownHeroException {
+        SuperHero superHero = allHeroes.get(name);
+
+        if (superHero == null) {
+            throw new UnknownHeroException(name);
+        }
+
+        return superHero;
     }
 
     public Team getTeam(String name) throws UnknownTeamException {
