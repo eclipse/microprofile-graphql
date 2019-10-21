@@ -44,8 +44,8 @@ import org.testng.Assert;
  * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-public class SchemaAvailableTest extends Arquillian {
-    private static final Logger LOG = Logger.getLogger(SchemaAvailableTest.class.getName());   
+public class SchemaValidityTest extends Arquillian {
+    private static final Logger LOG = Logger.getLogger(SchemaValidityTest.class.getName());   
     private static final String PATH = "graphql/schema.graphql";
     
     @ArquillianResource
@@ -368,6 +368,7 @@ public class SchemaAvailableTest extends Arquillian {
             String inputLine;
             while ((inputLine = in.readLine()) != null){
                 sw.write(inputLine);
+                sw.write("\n");
             }
             return sw.toString();
         }
