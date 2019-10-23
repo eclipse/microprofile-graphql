@@ -233,7 +233,7 @@
                                     <property name="max" value="250" />
                                 </module>
                                 <module name="ParameterNumber">
-                                    <property name="max" value="11" />
+                                    <property name="max" value="24" />
                                 </module>
                                 <module name="EmptyBlock">
                                     <property name="option" value="text" />
