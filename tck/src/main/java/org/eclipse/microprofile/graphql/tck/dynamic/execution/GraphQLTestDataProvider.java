@@ -54,12 +54,12 @@ public class GraphQLTestDataProvider {
     private GraphQLTestDataProvider(){
     }
     
-    @DataProvider(name="specification",parallel = true)
+    @DataProvider(name="specification")
     public static Object[][] getSpecificationTestData(){
         return getTestData(DataFrom.specification);
     }
     
-    @DataProvider(name="implementation",parallel = true)
+    @DataProvider(name="implementation")
     public static Object[][] getImplementationTestData(){
         return getTestData(DataFrom.implementation);
     }

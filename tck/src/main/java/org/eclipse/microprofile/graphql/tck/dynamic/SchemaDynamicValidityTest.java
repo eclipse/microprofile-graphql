@@ -62,6 +62,8 @@ public class SchemaDynamicValidityTest extends Arquillian {
             LOG.log(Level.INFO, "Fetching schema from {0}", uri);
             this.schema = getSchemaContent();
             // TODO: print to file in target ?
+            
+            
             // LOG.log(Level.INFO, "Schema: {0}{1}", new Object[]{System.lineSeparator(), schema});
         }
     }
@@ -90,7 +92,6 @@ public class SchemaDynamicValidityTest extends Arquillian {
         }else{
             Assert.assertTrue(snippet.contains(input.getContainsString()), input.getErrorMessage());
         }
-        //LOG.info(input.getName() + " successful");
     }
     
     private String getSchemaContent() throws Exception {
