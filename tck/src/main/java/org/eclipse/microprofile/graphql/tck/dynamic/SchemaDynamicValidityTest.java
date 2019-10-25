@@ -16,12 +16,19 @@
 package org.eclipse.microprofile.graphql.tck.dynamic;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.microprofile.graphql.tck.dynamic.schema.SchemaTestDataProvider;
@@ -35,7 +42,7 @@ import org.testng.annotations.Test;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
+import org.testng.Reporter;
 
 /**
  * Tests that the schema is available at graphql/schema.graphql and that it contains the proper content.
@@ -56,45 +63,48 @@ public class SchemaDynamicValidityTest extends Arquillian {
         return DeployableUnit.getDeployment("tck-schematest");
     }
 
-    @BeforeMethod
-    public void getSchemaContentOnce() throws Exception {
-        if(this.schema==null){
-            LOG.log(Level.INFO, "Fetching schema from {0}", uri);
-            this.schema = getSchemaContent();
-            // TODO: print to file in target ?
-            
-            
-            // LOG.log(Level.INFO, "Schema: {0}{1}", new Object[]{System.lineSeparator(), schema});
-        }
-    }
-    
-    @Test
     @RunAsClient
-    public void testResponse() throws Exception {
+    @Test(priority = 1)
+    public void testResponse() throws IOException {
+        LOG.log(Level.INFO, "Fetching schema from {0}", uri);
+        this.schema = getSchemaContent();
+        saveSchemaFile();
+        
         // Check that there is some content
-        Assert.assertTrue(schema.length() > 0);
+        Assert.assertTrue(schema.length() > 0, "No Content in the GraphQL Schema downloaded from [" + uri + "]");
     }
 
     @RunAsClient
-    @Test(dataProvider = "schemaSnippets", dataProviderClass = SchemaTestDataProvider.class)
-    public void testPartsOfSchema(TestData input) throws Exception{
-        Assert.assertNotNull(schema);
+    @Test(priority = 2, dataProvider = "schemaSnippets", dataProviderClass = SchemaTestDataProvider.class)
+    public void testPartsOfSchema(TestData input) {
+        Assert.assertNotNull(schema, "No schema avalailable to test against");
         String snippet = schema; // default search against the whole schema
         if(input.getSnippetSearchTerm()!=null){
             snippet = getSchemaSnippet(schema, input.getSnippetSearchTerm());
         }
-        Assert.assertNotNull(snippet);
-        Assert.assertTrue(snippet.length() > 0);
         
         // Check if this is a negative test
         if(input.getContainsString().startsWith("!")){
             Assert.assertFalse(snippet.contains(input.getContainsString().substring(1)), input.getErrorMessage());
         }else{
-            Assert.assertTrue(snippet.contains(input.getContainsString()), input.getErrorMessage());
+            Assert.assertTrue(snippet.contains(input.getContainsString()), input.getErrorMessage());    
         }
     }
     
-    private String getSchemaContent() throws Exception {
+    private void saveSchemaFile(){
+        try{
+            Path downloadedSchema = Paths.get("target/schema.graphql");
+            Path createFile = Files.createFile(downloadedSchema);
+            try(BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))){
+                writer.write(this.schema);
+            }
+            LOG.log(Level.INFO, "Schema written to {0}", createFile.toUri());
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, "Could not save schema file to target/schema.graphql - {0}", ex.getMessage());
+        }
+    }
+    
+    private String getSchemaContent() throws MalformedURLException, ProtocolException, IOException {
         URL url = new URL(this.uri + PATH);
         HttpURLConnection connection = null;
         try {
@@ -115,7 +125,7 @@ public class SchemaDynamicValidityTest extends Arquillian {
         }
     }
 
-    private String getSchemaSnippet(String schema, String section) throws Exception {
+    private String getSchemaSnippet(String schema, String section) {
         int index = schema.indexOf(section);
         Assert.assertTrue(index > -1, "Cannot find " + section + " in schema");
         char[] schemaChars = schema.toCharArray();

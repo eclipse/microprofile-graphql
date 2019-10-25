@@ -39,7 +39,7 @@ public class SchemaTestDataProvider {
     private SchemaTestDataProvider(){
     }
     
-    @DataProvider(name = "schemaSnippets",parallel = true)
+    @DataProvider(name = "schemaSnippets")
     public static Object[][] getSnippetTestData(){
         List<Path> dataFiles = getDataFiles();
         
