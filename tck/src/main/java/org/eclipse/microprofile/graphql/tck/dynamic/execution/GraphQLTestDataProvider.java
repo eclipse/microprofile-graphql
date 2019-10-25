@@ -15,19 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.tck.dynamic.init;
+package org.eclipse.microprofile.graphql.tck.dynamic.execution;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.net.URL;
 import java.nio.file.DirectoryStream;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +36,7 @@ import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import org.eclipse.microprofile.graphql.tck.dynamic.DynamicPaths;
 import org.testng.annotations.DataProvider;
 
 /**
@@ -50,24 +47,40 @@ import org.testng.annotations.DataProvider;
 public class GraphQLTestDataProvider {
     private static final Logger LOG = Logger.getLogger(GraphQLTestDataProvider.class.getName());
     
+    private static enum DataFrom {
+        implementation,specification
+    }
+    
     private GraphQLTestDataProvider(){
     }
     
-    @DataProvider(name="specification")
+    @DataProvider(name="specification",parallel = true)
     public static Object[][] getSpecificationTestData(){
-        List<Path> testFolders = getAllFoldersForSpecification("/tests/");
-        List<TestData> testDataList = toListOfTestData(testFolders);
-        sort(testDataList);
-        return toObjectArray(testDataList);
+        return getTestData(DataFrom.specification);
     }
     
-    @DataProvider(name="implementation")
+    @DataProvider(name="implementation",parallel = true)
     public static Object[][] getImplementationTestData(){
-        List<Path> testFolders = getAllFoldersForImplentation("src/test/resources/tests");
-        List<TestData> testDataList = toListOfTestData(testFolders);
-        sort(testDataList);
-        return toObjectArray(testDataList);
-        
+        return getTestData(DataFrom.implementation);
+    }
+    
+    private static Object[][] getTestData(DataFrom dataFrom){
+        try {
+            DirectoryStream<Path> directoryStream = null;
+            if(dataFrom.equals(DataFrom.specification)){
+                directoryStream = DynamicPaths.getDataForSpecification();
+            }else{
+                directoryStream = DynamicPaths.getDataForImplementation();
+            }
+            
+            List<Path> testFolders = toListOfPaths(directoryStream);
+            List<TestData> testDataList = toListOfTestData(testFolders);
+            sort(testDataList);
+            return toObjectArray(testDataList);
+        } catch (IOException ex) {
+            LOG.log(Level.INFO, "No " + dataFrom.name() + " specific tests found [{0}]", ex.getMessage());
+            return new Object[][]{};
+        }
     }
     
     private static List<TestData> toListOfTestData(List<Path> testFolders){
@@ -94,7 +107,6 @@ public class GraphQLTestDataProvider {
             } else {
                 LOG.log(Level.SEVERE, "Ignoring test [{0}]", testData.getName());
             }
-            
         }
         return testParameters;
     }
@@ -195,30 +207,6 @@ public class GraphQLTestDataProvider {
     private static String getFileContent(Path file) throws IOException {
         return new String(Files.readAllBytes(file));
     }
-    
-    private static List<Path> getAllFoldersForImplentation(String resourcesDirectoryName) {
-        try {
-            Path folderPath = Paths.get(resourcesDirectoryName);
-            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(folderPath);
-            return toListOfPaths(directoryStream);
-        } catch (IOException ex) {
-            LOG.log(Level.INFO, "No implementation specific tests found [{0}]", ex.getMessage());
-            return new ArrayList<>();
-        }   
-    }
-    
-    private static List<Path> getAllFoldersForSpecification(String resourcesDirectoryName){
-        try {
-            URL jar = GraphQLTestDataProvider.class.getProtectionDomain().getCodeSource().getLocation();
-            Path jarFile = Paths.get(jar.toString().substring("file:".length()));
-            FileSystem fs = FileSystems.newFileSystem(jarFile, null);
-            DirectoryStream<Path> directoryStream = Files.newDirectoryStream(fs.getPath(resourcesDirectoryName));
-            return toListOfPaths(directoryStream);
-        } catch (IOException ex) {
-            LOG.log(Level.WARNING, "No specification tests found [{0}]", ex.getMessage());
-            return new ArrayList<>();
-        }
-    }  
     
     private static List<Path> toListOfPaths(DirectoryStream<Path> directoryStream){
         List<Path> files = new ArrayList<>();

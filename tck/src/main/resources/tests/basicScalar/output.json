@@ -1,0 +1,34 @@
+{
+    "data": {
+        "scalarHolder": {
+            "id": "123",
+            "bigDecimalObject": 123.123,
+            "bigIntegerObject": 123,
+            "booleanObject": false,
+            "booleanPrimitive": false,
+            "byteObject": 123,
+            "bytePrimitive": 123,
+            "charObject": "c",
+            "charPrimitive": "c",
+            "dateObject": "2019-10-23",
+            "dateTimeObject": "2019-10-23T11:46:34.263",
+            "doubleObject": 123.123,
+            "doublePrimitive": 123.123,
+            "floatObject": 123.123,
+            "floatPrimitive": 123.123,
+            "intObject": 123,
+            "intPrimitive": 123,
+            "longObject": 123,
+            "longPrimitive": 123,
+            "shortObject": 123,
+            "shortPrimitive": 123,
+            "stringObject": "123",
+            "stringPrimitive": [
+                "1",
+                "2",
+                "3"
+            ],
+            "timeObject": "11:46:34.263"
+        }
+    }
+}

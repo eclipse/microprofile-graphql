@@ -13,41 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
+package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import org.eclipse.microprofile.graphql.GraphQLApi;
-import org.eclipse.microprofile.graphql.Query;
 
 /**
- * Scalar testing.
- * This allows basic testing of the scalar mapping as defined in GraphQL Entities-Scalars section.
+ * Plain POJO with scalar fields
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-@GraphQLApi
-public class ScalarTestApi {
-    @Query
-    public ScalarHolder getScalarHolder() {
-        return new ScalarHolder(Short.MIN_VALUE, Short.MIN_VALUE, 
-                0, Integer.BYTES, 
-                0, Long.MIN_VALUE, 
-                0, Float.NaN, 
-                0, Double.MAX_VALUE, 
-                true, Boolean.FALSE, 
-                Character.MAX_VALUE, Character.MAX_VALUE, 
-                "stringPrimitive".toCharArray(), "stringObject", 
-                Byte.MIN_VALUE, Byte.MIN_VALUE, 
-                BigInteger.ZERO, BigDecimal.ZERO, 
-                LocalDate.MAX, LocalTime.MIDNIGHT, LocalDateTime.MIN, 
-                "123");
-    }
-
-    class ScalarHolder {
-        private short shortPrimitive;
+public class ScalarHolder {
+    private short shortPrimitive;
         private Short shortObject;
         
         private int intPrimitive;
@@ -85,44 +64,6 @@ public class ScalarTestApi {
         
         public ScalarHolder() {
             
-        }
-
-        public ScalarHolder(short shortPrimitive, Short shortObject, 
-                int intPrimitive, Integer intObject, 
-                long longPrimitive, Long longObject, 
-                float floatPrimitive, Float floatObject, 
-                double doublePrimitive, Double doubleObject, 
-                boolean booleanPrimitive, Boolean booleanObject, 
-                char charPrimitive, Character charObject, 
-                char[] stringPrimitive, String stringObject, 
-                byte bytePrimitive, Byte byteObject, 
-                BigInteger bigIntegerObject, BigDecimal bigDecimalObject, 
-                LocalDate dateObject, LocalTime timeObject, LocalDateTime dateTimeObject, 
-                String id) {
-            this.shortPrimitive = shortPrimitive;
-            this.shortObject = shortObject;
-            this.intPrimitive = intPrimitive;
-            this.intObject = intObject;
-            this.longPrimitive = longPrimitive;
-            this.longObject = longObject;
-            this.floatPrimitive = floatPrimitive;
-            this.floatObject = floatObject;
-            this.doublePrimitive = doublePrimitive;
-            this.doubleObject = doubleObject;
-            this.booleanPrimitive = booleanPrimitive;
-            this.booleanObject = booleanObject;
-            this.charPrimitive = charPrimitive;
-            this.charObject = charObject;
-            this.stringPrimitive = stringPrimitive;
-            this.stringObject = stringObject;
-            this.bytePrimitive = bytePrimitive;
-            this.byteObject = byteObject;
-            this.bigIntegerObject = bigIntegerObject;
-            this.bigDecimalObject = bigDecimalObject;
-            this.dateObject = dateObject;
-            this.timeObject = timeObject;
-            this.dateTimeObject = dateTimeObject;
-            this.id = id;
         }
 
         public short getShortPrimitive() {
@@ -317,7 +258,4 @@ public class ScalarTestApi {
             this.id = id;
         }
 
-    }
-
-    
 }

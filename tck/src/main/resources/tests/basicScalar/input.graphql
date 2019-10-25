@@ -1,0 +1,28 @@
+{
+  scalarHolder {
+    id
+    bigDecimalObject
+    bigIntegerObject
+    booleanObject
+    booleanPrimitive
+    byteObject
+    bytePrimitive
+    charObject
+    charPrimitive
+    dateObject
+    dateTimeObject
+    doubleObject
+    doublePrimitive
+    floatObject
+    floatPrimitive
+    intObject
+    intPrimitive
+    longObject
+    longPrimitive
+    shortObject
+    shortPrimitive
+    stringObject
+    stringPrimitive
+    timeObject
+    }
+}
