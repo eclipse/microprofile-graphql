@@ -42,7 +42,6 @@ import org.testng.annotations.Test;
 import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.testng.Assert;
-import org.testng.Reporter;
 
 /**
  * Tests that the schema is available at graphql/schema.graphql and that it contains the proper content.

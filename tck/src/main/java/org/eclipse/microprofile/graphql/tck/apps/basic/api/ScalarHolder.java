@@ -27,235 +27,235 @@ import java.time.LocalTime;
  */
 public class ScalarHolder {
     private short shortPrimitive;
-        private Short shortObject;
-        
-        private int intPrimitive;
-        private Integer intObject;
-        
-        private long longPrimitive;
-        private Long longObject;
+    private Short shortObject;
 
-        private float floatPrimitive;
-        private Float floatObject;
-        
-        private double doublePrimitive;
-        private Double doubleObject;
-    
-        private boolean booleanPrimitive;
-        private Boolean booleanObject;
-        
-        private char charPrimitive;
-        private Character charObject;
+    private int intPrimitive;
+    private Integer intObject;
 
-        private char[] stringPrimitive;
-        private String stringObject;
-        
-        private byte bytePrimitive;
-        private Byte byteObject;
-    
-        private BigInteger bigIntegerObject;
-        private BigDecimal bigDecimalObject;
-    
-        private LocalDate dateObject;
-        private LocalTime timeObject;
-        private LocalDateTime dateTimeObject;
-    
-        private String id;
-        
-        public ScalarHolder() {
-            
-        }
+    private long longPrimitive;
+    private Long longObject;
 
-        public short getShortPrimitive() {
-            return shortPrimitive;
-        }
+    private float floatPrimitive;
+    private Float floatObject;
 
-        public void setShortPrimitive(short shortPrimitive) {
-            this.shortPrimitive = shortPrimitive;
-        }
+    private double doublePrimitive;
+    private Double doubleObject;
 
-        public Short getShortObject() {
-            return shortObject;
-        }
+    private boolean booleanPrimitive;
+    private Boolean booleanObject;
 
-        public void setShortObject(Short shortObject) {
-            this.shortObject = shortObject;
-        }
+    private char charPrimitive;
+    private Character charObject;
 
-        public int getIntPrimitive() {
-            return intPrimitive;
-        }
+    private char[] stringPrimitive;
+    private String stringObject;
 
-        public void setIntPrimitive(int intPrimitive) {
-            this.intPrimitive = intPrimitive;
-        }
+    private byte bytePrimitive;
+    private Byte byteObject;
 
-        public Integer getIntObject() {
-            return intObject;
-        }
+    private BigInteger bigIntegerObject;
+    private BigDecimal bigDecimalObject;
 
-        public void setIntObject(Integer intObject) {
-            this.intObject = intObject;
-        }
+    private LocalDate dateObject;
+    private LocalTime timeObject;
+    private LocalDateTime dateTimeObject;
 
-        public long getLongPrimitive() {
-            return longPrimitive;
-        }
+    private String id;
 
-        public void setLongPrimitive(long longPrimitive) {
-            this.longPrimitive = longPrimitive;
-        }
+    public ScalarHolder() {
 
-        public Long getLongObject() {
-            return longObject;
-        }
+    }
 
-        public void setLongObject(Long longObject) {
-            this.longObject = longObject;
-        }
+    public short getShortPrimitive() {
+        return shortPrimitive;
+    }
 
-        public float getFloatPrimitive() {
-            return floatPrimitive;
-        }
+    public void setShortPrimitive(short shortPrimitive) {
+        this.shortPrimitive = shortPrimitive;
+    }
 
-        public void setFloatPrimitive(float floatPrimitive) {
-            this.floatPrimitive = floatPrimitive;
-        }
+    public Short getShortObject() {
+        return shortObject;
+    }
 
-        public Float getFloatObject() {
-            return floatObject;
-        }
+    public void setShortObject(Short shortObject) {
+        this.shortObject = shortObject;
+    }
 
-        public void setFloatObject(Float floatObject) {
-            this.floatObject = floatObject;
-        }
+    public int getIntPrimitive() {
+        return intPrimitive;
+    }
 
-        public double getDoublePrimitive() {
-            return doublePrimitive;
-        }
+    public void setIntPrimitive(int intPrimitive) {
+        this.intPrimitive = intPrimitive;
+    }
 
-        public void setDoublePrimitive(double doublePrimitive) {
-            this.doublePrimitive = doublePrimitive;
-        }
+    public Integer getIntObject() {
+        return intObject;
+    }
 
-        public Double getDoubleObject() {
-            return doubleObject;
-        }
+    public void setIntObject(Integer intObject) {
+        this.intObject = intObject;
+    }
 
-        public void setDoubleObject(Double doubleObject) {
-            this.doubleObject = doubleObject;
-        }
+    public long getLongPrimitive() {
+        return longPrimitive;
+    }
 
-        public boolean isBooleanPrimitive() {
-            return booleanPrimitive;
-        }
+    public void setLongPrimitive(long longPrimitive) {
+        this.longPrimitive = longPrimitive;
+    }
 
-        public void setBooleanPrimitive(boolean booleanPrimitive) {
-            this.booleanPrimitive = booleanPrimitive;
-        }
+    public Long getLongObject() {
+        return longObject;
+    }
 
-        public Boolean getBooleanObject() {
-            return booleanObject;
-        }
+    public void setLongObject(Long longObject) {
+        this.longObject = longObject;
+    }
 
-        public void setBooleanObject(Boolean booleanObject) {
-            this.booleanObject = booleanObject;
-        }
+    public float getFloatPrimitive() {
+        return floatPrimitive;
+    }
 
-        public char getCharPrimitive() {
-            return charPrimitive;
-        }
+    public void setFloatPrimitive(float floatPrimitive) {
+        this.floatPrimitive = floatPrimitive;
+    }
 
-        public void setCharPrimitive(char charPrimitive) {
-            this.charPrimitive = charPrimitive;
-        }
+    public Float getFloatObject() {
+        return floatObject;
+    }
 
-        public Character getCharObject() {
-            return charObject;
-        }
+    public void setFloatObject(Float floatObject) {
+        this.floatObject = floatObject;
+    }
 
-        public void setCharObject(Character charObject) {
-            this.charObject = charObject;
-        }
+    public double getDoublePrimitive() {
+        return doublePrimitive;
+    }
 
-        public char[] getStringPrimitive() {
-            return stringPrimitive;
-        }
+    public void setDoublePrimitive(double doublePrimitive) {
+        this.doublePrimitive = doublePrimitive;
+    }
 
-        public void setStringPrimitive(char[] stringPrimitive) {
-            this.stringPrimitive = stringPrimitive;
-        }
+    public Double getDoubleObject() {
+        return doubleObject;
+    }
 
-        public String getStringObject() {
-            return stringObject;
-        }
+    public void setDoubleObject(Double doubleObject) {
+        this.doubleObject = doubleObject;
+    }
 
-        public void setStringObject(String stringObject) {
-            this.stringObject = stringObject;
-        }
+    public boolean isBooleanPrimitive() {
+        return booleanPrimitive;
+    }
 
-        public byte getBytePrimitive() {
-            return bytePrimitive;
-        }
+    public void setBooleanPrimitive(boolean booleanPrimitive) {
+        this.booleanPrimitive = booleanPrimitive;
+    }
 
-        public void setBytePrimitive(byte bytePrimitive) {
-            this.bytePrimitive = bytePrimitive;
-        }
+    public Boolean getBooleanObject() {
+        return booleanObject;
+    }
 
-        public Byte getByteObject() {
-            return byteObject;
-        }
+    public void setBooleanObject(Boolean booleanObject) {
+        this.booleanObject = booleanObject;
+    }
 
-        public void setByteObject(Byte byteObject) {
-            this.byteObject = byteObject;
-        }
+    public char getCharPrimitive() {
+        return charPrimitive;
+    }
 
-        public BigInteger getBigIntegerObject() {
-            return bigIntegerObject;
-        }
+    public void setCharPrimitive(char charPrimitive) {
+        this.charPrimitive = charPrimitive;
+    }
 
-        public void setBigIntegerObject(BigInteger bigIntegerObject) {
-            this.bigIntegerObject = bigIntegerObject;
-        }
+    public Character getCharObject() {
+        return charObject;
+    }
 
-        public BigDecimal getBigDecimalObject() {
-            return bigDecimalObject;
-        }
+    public void setCharObject(Character charObject) {
+        this.charObject = charObject;
+    }
 
-        public void setBigDecimalObject(BigDecimal bigDecimalObject) {
-            this.bigDecimalObject = bigDecimalObject;
-        }
+    public char[] getStringPrimitive() {
+        return stringPrimitive;
+    }
 
-        public LocalDate getDateObject() {
-            return dateObject;
-        }
+    public void setStringPrimitive(char[] stringPrimitive) {
+        this.stringPrimitive = stringPrimitive;
+    }
 
-        public void setDateObject(LocalDate dateObject) {
-            this.dateObject = dateObject;
-        }
+    public String getStringObject() {
+        return stringObject;
+    }
 
-        public LocalTime getTimeObject() {
-            return timeObject;
-        }
+    public void setStringObject(String stringObject) {
+        this.stringObject = stringObject;
+    }
 
-        public void setTimeObject(LocalTime timeObject) {
-            this.timeObject = timeObject;
-        }
+    public byte getBytePrimitive() {
+        return bytePrimitive;
+    }
 
-        public LocalDateTime getDateTimeObject() {
-            return dateTimeObject;
-        }
+    public void setBytePrimitive(byte bytePrimitive) {
+        this.bytePrimitive = bytePrimitive;
+    }
 
-        public void setDateTimeObject(LocalDateTime dateTimeObject) {
-            this.dateTimeObject = dateTimeObject;
-        }
+    public Byte getByteObject() {
+        return byteObject;
+    }
 
-        public String getId() {
-            return id;
-        }
+    public void setByteObject(Byte byteObject) {
+        this.byteObject = byteObject;
+    }
 
-        public void setId(String id) {
-            this.id = id;
-        }
+    public BigInteger getBigIntegerObject() {
+        return bigIntegerObject;
+    }
+
+    public void setBigIntegerObject(BigInteger bigIntegerObject) {
+        this.bigIntegerObject = bigIntegerObject;
+    }
+
+    public BigDecimal getBigDecimalObject() {
+        return bigDecimalObject;
+    }
+
+    public void setBigDecimalObject(BigDecimal bigDecimalObject) {
+        this.bigDecimalObject = bigDecimalObject;
+    }
+
+    public LocalDate getDateObject() {
+        return dateObject;
+    }
+
+    public void setDateObject(LocalDate dateObject) {
+        this.dateObject = dateObject;
+    }
+
+    public LocalTime getTimeObject() {
+        return timeObject;
+    }
+
+    public void setTimeObject(LocalTime timeObject) {
+        this.timeObject = timeObject;
+    }
+
+    public LocalDateTime getDateTimeObject() {
+        return dateTimeObject;
+    }
+
+    public void setDateTimeObject(LocalDateTime dateTimeObject) {
+        this.dateTimeObject = dateTimeObject;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 }
