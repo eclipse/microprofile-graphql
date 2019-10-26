@@ -15,33 +15,86 @@
 //
 
 [[entities]]
-
 == GraphQL Entities
 
-Entities are the objects used in GraphQL. They can be simple objects ("scalars" in GraphQL terminology) or more complex
-objects that are composed of scalars.
+Entities are the objects used in GraphQL. They can be:
 
+- <<scalars>>, or simple objects ("scalars" in GraphQL terminology), 
+- <<enums>> (similar to Java Enum), 
+- <<complexobjects>> that are composed of scalars or other objects or enums or a combination of these.
+
+[[scalars]]
 === Scalars
 
 According to the https://graphql.org/learn/schema/#scalar-types[GraphQL documentation] a scalar has no sub-fields, and
 all GraphQL implementations are expected to handle, the following scalar types:
 
-- `Int` - which maps to a Java `int`/`Integer` or `long`/`Long`.
+- `Short` - which maps to a Java `short`/`Short`
+- `Int` - which maps to a Java `int`/`Integer`
+- `Long` - which maps to a Java `long`/`Long`
 - `Float` - which maps to a Java `float`/`Float` or `double`/`Double`.
-- `String` - which maps to a Java `char`, `char[]`, `String`, etc.
 - `Boolean` - which maps to a Java `boolean`/`Boolean`.
-- `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be
-human-readable.
-
-The GraphQL specification also allows for users to define custom scalars. MP GraphQL implementations must define the
-following custom scalars:
+- `Char` - which maps to a Java `char`, `Character`.
+- `String` - which maps to a Java `char[]`/`String`.
+- `Byte` - which maps to a Java `byte`/`Byte`.
+- `BigInteger` - which maps to a Java `BigInteger`.
+- `BigDecimal` - which maps to a Java BigDecimal`.
 - `Date` - which maps to a Java `java.time.LocalDate`.
 - `Time` - which maps to a Java `java.time.LocalTime`.
 - `DateTime` - which maps to a Java `java.time.LocalDateTime`.
+- `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
 
-MP GraphQL implementations may use these or other custom scalars for similar common Java types.
+The GraphQL specification also allows for users or implementors to define custom scalars:
 
-=== POJOs
+@TODO: Define how the date related scalars to be serialized. Maybe configurable ?
+@TODO: Define how to create your own scalar.
+
+[[enums]]
+=== Enumerable types
+
+GraphQL offers enumerable types similar to Java `enum` types. When a Java `enum` type is specified as the return type or
+parameter of a query/mutation method or a field of an entity, the implementation will produce the GraphQL `enum` type in
+the schema. For example:
+
+```
+@Type
+public class SuperHero {
+    private ShirtSize tshirtSize; // public getters/setters, ...
+
+    public enum ShirtSize {
+        S, M, L, XL
+    }
+}
+```
+
+The implementation would generate a schema that would include:
+```
+enum ShirtSize {
+  L
+  M
+  S
+  XL
+}
+
+type SuperHero @_mappedType(type : "__internal__") {
+  #...
+  tshirtSize: ShirtSize @_mappedOperation(operation : "__internal__")
+  #...
+}
+
+input SuperHeroInput @_mappedType(type : "__internal__") {
+  #...
+  tshirtSize: ShirtSize @_mappedInputField(inputField : "__internal__")
+  #...
+}
+#...
+```
+
+When using an enumerated type, it is considered a validation error when the client enters a value that is not included
+in the enumerated type.
+
+[[complexobjects]]
+=== Complex objects
 
 In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
 
@@ -54,8 +107,9 @@ GraphQL must use JSON-B to serialize and deserialize entities to JSON, so it is 
 using JSON-B annotations.
 
 If the entity cannot be serialized by JSON-B, the implementation must return in an internal server error to the client.
+
 [[types]]
-=== Types vs InputTypes
+==== Types vs InputTypes
 
 GraphQL differentiates types from input types.  Input types are entities that are sent by the client as arguments to
 queries or mutations. Types are entities that are sent from the server to the client as return types from queries or
@@ -72,12 +126,12 @@ schema; by default, the entity name in the schema will be the same as the simple
 output types; for input types, the simple class name is used with "Input" appended. Thus, an entity class named 
 `com.mypkg.Tree` would create a GraphQL schema type called "Tree" and an input type called "TreeInput".
 
-=== Java interfaces as GraphQL entity types
+==== Java interfaces as GraphQL entity types
 
 It is possible for entities (types and input types) to be defined as a Java interfaces. In order for JSON-B to
 deserialize an interface, the interface may need a `JsonbDeserializer` in order to instantiate a concrete type.
 
-=== GraphQL interfaces
+==== GraphQL interfaces
 
 GraphQL interfaces are very similar in concept to Java interfaces, in that other types may implement an interface. This
 allows the GraphQL schema to better align with the Java application's model and allows clients to retrieve the same data
@@ -134,14 +188,14 @@ type Villain implements Character {
 }
 ```
 
-=== Limitations
+==== Limitations
 
-==== Generic types
+===== Generic types
 
 TODO: info on limitations to generic types (collections only?)
 
 [[fields]]
-=== Fields
+==== Fields
 
 Fields in GraphQL are similar to fields in Java in that they are a child of a single entity.  Thus, Java fields on
 entity classes are, by default, GraphQL fields of that entity. It is also possible for GraphQL fields that are not part
@@ -202,19 +256,21 @@ input WidgetInput {
 }
 ```
 
-=== Description
+=== Other annotations available on Complex Objects
+
+==== Description
 
 The `@Description` annotation can be used to provide comments in the generated schema for entity types (both input and
 output types) and fields.
 
-=== Default Values
+==== Default Values
 
 The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
 a value. Default values may only be specified on input types (and also as `@Argument` parameters) and will have no
 effect if specified on output types.  The value specified in this annotation may be plain text for Java primitives and 
 `String` types or JSON for complex types.
 
-=== Ignorable fields
+==== Ignorable fields
 
 There may be cases where a developer wants to use a class as a GraphQL type or input type, but use fields that should
 not be part of the exposed schema. The `@Ignore` annotation can be placed on the field to prevent it from being part of
@@ -225,7 +281,7 @@ output types in the generated schema.  If the annotation is only placed on the "
 excluded from the input type.  If the annotation is only placed on the "setter" method, then it will only be excluded
 from the output type.
 
-=== Non-nullable fields
+==== Non-nullable fields
 
 The GraphQL specification states that fields may be marked as non-nullable - usually the field's type is marked with an
 exclamation point to indicate that null values are not allowed.  Non-nullable fields may be present on types and input
@@ -251,46 +307,3 @@ One drawback to using non-nullable fields is that if there is an error loading a
 itself up causing the field to be null - and since this is itself an error condition, the implementation must return
 the non-null field error, which means that the implementation would not be able to send partial results for other child
 fields.
-
-=== Enumerable types
-
-GraphQL offers enumerable types similar to Java `enum` types. When a Java `enum` type is specified as the return type or
-parameter of a query/mutation method or a field of an entity, the implementation will produce the GraphQL `enum` type in
-the schema. For example:
-
-```
-@Type
-public class SuperHero {
-    private ShirtSize tshirtSize; // public getters/setters, ...
-
-    public enum ShirtSize {
-        S, M, L, XL
-    }
-}
-```
-
-The implementation would generate a schema that would include:
-```
-enum ShirtSize {
-  L
-  M
-  S
-  XL
-}
-
-type SuperHero @_mappedType(type : "__internal__") {
-  #...
-  tshirtSize: ShirtSize @_mappedOperation(operation : "__internal__")
-  #...
-}
-
-input SuperHeroInput @_mappedType(type : "__internal__") {
-  #...
-  tshirtSize: ShirtSize @_mappedInputField(inputField : "__internal__")
-  #...
-}
-#...
-```
-
-When using an enumerated type, it is considered a validation error when the client enters a value that is not included
-in the enumerated type.

@@ -1,0 +1,25 @@
+# Basic Scalar Types
+type ScalarHolder   |   bigDecimalObject: BigDecimal                            |   Expecting a BigDecimal Scalar Type
+type ScalarHolder   |   bigIntegerObject: BigInteger                            |   Expecting a BigInteger Scalar Type
+type ScalarHolder   |   booleanObject: Boolean                                  |   Expecting a bigDecimal Scalar Type
+type ScalarHolder   |   booleanPrimitive: Boolean                               |   Expecting a Boolean Scalar Type
+type ScalarHolder   |   byteObject: Byte                                        |   Expecting a Byte Scalar Type
+type ScalarHolder   |   bytePrimitive: Byte                                     |   Expecting a Byte Scalar Type
+type ScalarHolder   |   charObject: Char                                        |   Expecting a Char Scalar Type
+type ScalarHolder   |   charPrimitive: Char                                     |   Expecting a Char Scalar Type
+type ScalarHolder   |   dateObject: Date                                        |   Expecting a Date Scalar Type
+type ScalarHolder   |   dateTimeObject: DateTime                                |   Expecting a DateTime Scalar Type
+type ScalarHolder   |   doubleObject: Float                                     |   Expecting a Float Scalar Type
+type ScalarHolder   |   doublePrimitive: Float                                  |   Expecting a Float Scalar Type
+type ScalarHolder   |   floatObject: Float                                      |   Expecting a Float Scalar Type
+type ScalarHolder   |   floatPrimitive: Float                                   |   Expecting a Float Scalar Type
+type ScalarHolder   |   id: String                                              |   Expecting a String Scalar Type
+type ScalarHolder   |   intObject: Int                                          |   Expecting a Int Scalar Type
+type ScalarHolder   |   intPrimitive: Int                                       |   Expecting a Int Scalar Type
+type ScalarHolder   |   longObject: Long                                        |   Expecting a Long Scalar Type
+type ScalarHolder   |   longPrimitive: Long                                     |   Expecting a Long Scalar Type
+type ScalarHolder   |   shortObject: Short                                      |   Expecting a Short Scalar Type
+type ScalarHolder   |   shortPrimitive: Short                                   |   Expecting a Short Scalar Type
+type ScalarHolder   |   stringObject: String                                    |   Expecting a String Scalar Type
+type ScalarHolder   |   stringPrimitive: String                                 |   Expecting a String Scalar Type
+type ScalarHolder   |   timeObject: Time                                        |   Expecting a Time Scalar Type 

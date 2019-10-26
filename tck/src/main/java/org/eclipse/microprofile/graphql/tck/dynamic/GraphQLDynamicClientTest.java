@@ -17,8 +17,8 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic;
 
-import org.eclipse.microprofile.graphql.tck.dynamic.init.PrintUtil;
-import org.eclipse.microprofile.graphql.tck.dynamic.init.TestData;
+import org.eclipse.microprofile.graphql.tck.dynamic.execution.PrintUtil;
+import org.eclipse.microprofile.graphql.tck.dynamic.execution.TestData;
 import java.io.BufferedReader;
 import java.net.URL;
 import java.io.IOException;
@@ -33,21 +33,14 @@ import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.testng.Assert;
-import org.eclipse.microprofile.graphql.tck.apps.superhero.api.HeroFinder;
-import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
-import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
-import org.eclipse.microprofile.graphql.tck.dynamic.init.GraphQLTestDataProvider;
+import org.eclipse.microprofile.graphql.tck.dynamic.execution.GraphQLTestDataProvider;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.testng.annotations.Test;
 
 /**
@@ -72,16 +65,7 @@ public class GraphQLDynamicClientTest extends Arquillian {
     
     @Deployment
     public static Archive<?> getDeployment() throws Exception {
-        return ShrinkWrap.create(WebArchive.class, "tck-dynamic.war")
-                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                .addAsManifestResource(
-                        new StringAsset("mp.graphql.defaultErrorMessage=" + 
-                                        "Unexpected failure in the system. Jarvis is working to fix it."),
-                        "microprofile-config.properties")
-                .addPackage(HeroFinder.class.getPackage())
-                .addPackage(HeroDatabase.class.getPackage())
-                .addPackage(SuperHero.class.getPackage())
-                .addPackage(TestData.class.getPackage());
+        return DeployableUnit.getDeployment("tck-dynamic");
     }
     
     @RunAsClient
@@ -122,7 +106,6 @@ public class GraphQLDynamicClientTest extends Arquillian {
             try{
                 JSONAssert.assertEquals(PrintUtil.toString(testData,json),testData.getOutput(), json, false);
             } catch (JSONException ex) {
-                ex.printStackTrace();
                 Assert.fail(ex.getMessage());
             }
         }else{
