@@ -84,9 +84,9 @@ public class SchemaDynamicValidityTest extends Arquillian {
         
         // Check if this is a negative test
         if(input.getContainsString().startsWith("!")){
-            Assert.assertFalse(snippet.contains(input.getContainsString().substring(1)), input.getErrorMessage());
+            Assert.assertFalse(snippet.contains(input.getContainsString().substring(1)), "[" + input.getHeader() + "] " + input.getErrorMessage());
         }else{
-            Assert.assertTrue(snippet.contains(input.getContainsString()), input.getErrorMessage());    
+            Assert.assertTrue(snippet.contains(input.getContainsString()), "[" + input.getHeader() + "] " + input.getErrorMessage());    
         }
     }
     

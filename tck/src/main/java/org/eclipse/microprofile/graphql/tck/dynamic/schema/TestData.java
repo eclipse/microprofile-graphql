@@ -20,6 +20,8 @@ package org.eclipse.microprofile.graphql.tck.dynamic.schema;
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class TestData {
+    private int count;
+    private String header;
     private String name;
     private String snippetSearchTerm;
     private String containsString;
@@ -28,11 +30,20 @@ public class TestData {
     public TestData() {
     }
 
-    public TestData(String name, String snippetSearchTerm, String containsString, String errorMessage) {
-        this.name = name;
-        this.snippetSearchTerm = snippetSearchTerm;
-        this.containsString = containsString;
-        this.errorMessage = errorMessage;
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
     }
 
     public String getName() {

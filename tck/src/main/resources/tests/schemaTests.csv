@@ -1,99 +1,98 @@
 # testIgnoreOnFieldExcludedFromInputAndOutputTypes
-type Item           |   powerLevel                                              |   Missing expected, un-ignored field, "powerLevel"
-type Item           |   !invisible                                              |   Found field "invisible" that should be ignored"
-input ItemInput     |   powerLevel                                              |   Missing expected, un-ignored field, "powerLevel"
-input ItemInput     |   !invisible                                              |   Found field "invisible" that should be ignored"
+1| type Item           |   powerLevel                                               |   Missing expected, un-ignored field, "powerLevel"
+2| type Item           |   !invisible                                               |   Found field "invisible" that should be ignored"
+3| input ItemInput     |   powerLevel                                               |   Missing expected, un-ignored field, "powerLevel"
+4| input ItemInput     |   !invisible                                               |   Found field "invisible" that should be ignored"
         
 # testIgnoreOnGetterExcludedOnOutputType
-type Item           |   artificialIntelligenceRating                            |   Missing expected, un-ignored field, "artificialIntelligenceRating"
-type Item           |   !canWield                                               |   Found field "canWield" that should be ignored
+5| type Item           |   artificialIntelligenceRating                             |   Missing expected, un-ignored field, "artificialIntelligenceRating"
+6| type Item           |   !canWield                                                |   Found field "canWield" that should be ignored
 
 # testIgnoreOnSetterExcludedOnInputType
-input ItemInput     |   canWield                                                |   Missing expected, un-ignored field, "canWield"
-input ItemInput     |   !artificialIntelligenceRating                           |   Found field "artificialIntelligenceRating" that should be ignored in input type
+7| input ItemInput     |   canWield                                                 |   Missing expected, un-ignored field, "canWield"
+8| input ItemInput     |   !artificialIntelligenceRating                            |   Found field "artificialIntelligenceRating" that should be ignored in input type
     
 # testJsonbTransientOnSetterExcludedOnInputType
-input SuperHeroInput|   colorOfCostume                                          |   Missing expected, un-ignored field, "colorOfCostume"
-input SuperHeroInput|   !knownEnemies                                           |   Found field "knownEnemies" that should be ignored in input type
-type SuperHero      |   knownEnemies                                            |   Did not find field "knownEnemies" that should be present (only ignored in input type)
+9| input SuperHeroInput|   colorOfCostume                                           |   Missing expected, un-ignored field, "colorOfCostume"
+10| input SuperHeroInput|   !knownEnemies                                           |   Found field "knownEnemies" that should be ignored in input type
+11| type SuperHero      |   knownEnemies                                            |   Did not find field "knownEnemies" that should be present (only ignored in input type)
 
 # testInputTypeOnField
-input SuperHeroInput|   tshirtSize: ShirtSize                                   |   Missing expected field, "tshirtSize" specified in @InputField annotation
-input SuperHeroInput|   !sizeOfTShirt                                           |   Found field "sizeOfTShirt" that should be replaced by "tshirtSize" in input type
-
-type SuperHero      |   !tshirtSize                                             |   Found field "tshirtSize" in output type, when it should only be found in the input type
-type SuperHero      |   sizeOfTShirt: ShirtSize                                 |   Did not find field "sizeOfTShirt" in the output type
+12| input SuperHeroInput|   tshirtSize: ShirtSize                                   |   Missing expected field, "tshirtSize" specified in @InputField annotation
+13| input SuperHeroInput|   !sizeOfTShirt                                           |   Found field "sizeOfTShirt" that should be replaced by "tshirtSize" in input type
+14| type SuperHero      |   !tshirtSize                                             |   Found field "tshirtSize" in output type, when it should only be found in the input type
+15| type SuperHero      |   sizeOfTShirt: ShirtSize                                 |   Did not find field "sizeOfTShirt" in the output type
     
 # testEnumAppearsInSchema
-enum ShirtSize      |   S                                                       |   Missing expected enum value, "S"
-enum ShirtSize      |   M                                                       |   Missing expected enum value, "M"
-enum ShirtSize      |   XL                                                      |   Missing expected enum value, "XL"
-enum ShirtSize      |   HULK                                                    |   Missing expected enum value, "HULK"
+16| enum ShirtSize      |   S                                                       |   Missing expected enum value, "S"
+17| enum ShirtSize      |   M                                                       |   Missing expected enum value, "M"
+18| enum ShirtSize      |   XL                                                      |   Missing expected enum value, "XL"
+19| enum ShirtSize      |   HULK                                                    |   Missing expected enum value, "HULK"
     
 # testDateScalarUsedForLocalDate
-input SuperHeroInput|   dateOfLastCheckin: Date                                 |   Missing or incorrect Scalar type in "SuperHeroInput" field "dateOfLastCheckin"
-type SuperHero      |   dateOfLastCheckin: Date                                 |   Missing or incorrect Scalar type in "SuperHero" field "dateOfLastCheckin"
+20|input SuperHeroInput|   dateOfLastCheckin: Date                                 |   Missing or incorrect Scalar type in "SuperHeroInput" field "dateOfLastCheckin"
+21|type SuperHero      |   dateOfLastCheckin: Date                                 |   Missing or incorrect Scalar type in "SuperHero" field "dateOfLastCheckin"
     
 # testTimeScalarUsedForLocalTime
-input SuperHeroInput|   patrolStartTime: Time                                   |   Missing or incorrect Scalar type in "SuperHeroInput" field "patrolStartTime"
-type SuperHero      |   patrolStartTime: Time                                   |   Missing or incorrect Scalar type in "SuperHero" field "patrolStartTime"
+22|input SuperHeroInput|   patrolStartTime: Time                                   |   Missing or incorrect Scalar type in "SuperHeroInput" field "patrolStartTime"
+23|type SuperHero      |   patrolStartTime: Time                                   |   Missing or incorrect Scalar type in "SuperHero" field "patrolStartTime"
     
 # testDateTimeScalarUsedForLocalDateTime
-input SuperHeroInput|   timeOfLastBattle: DateTime                              |   Missing or incorrect Scalar type in "SuperHeroInput" field "timeOfLastBattle"
-type SuperHero      |   timeOfLastBattle: DateTime                              |   Missing or incorrect Scalar type in "SuperHero" field "timeOfLastBattle"
+24|input SuperHeroInput|   timeOfLastBattle: DateTime                              |   Missing or incorrect Scalar type in "SuperHeroInput" field "timeOfLastBattle"
+25|type SuperHero      |   timeOfLastBattle: DateTime                              |   Missing or incorrect Scalar type in "SuperHero" field "timeOfLastBattle"
     
 # testSchemaContainsDescriptionForQueryMethods
-type Query          |   #List all super heroes in the database                  |   Missing description on Query Method
+26|type Query          |   #List all super heroes in the database                  |   Missing description on Query Method
     
 # testSchemaContainsDescriptionForMutationMethods
-type Mutation       |   #Removes a hero... permanently...                       |   Missing description on Mutation Method
+27|type Mutation       |   #Removes a hero... permanently...                       |   Missing description on Mutation Method
     
 # testSchemaContainsDescriptionForEntityTypes
-                    |   #Something of use to a super hero                       |   Missing description on Entity type
+28|                    |   #Something of use to a super hero                       |   Missing description on Entity type
 
 # testSchemaContainsDescriptionForInputTypes
 
 # testSchemaContainsDescriptionForArguments
-type Query          |   #Super hero name, not real name                         |   Missing description on Query Argument
+29|type Query          |   #Super hero name, not real name                         |   Missing description on Query Argument
 
 # testSchemaContainsDescriptionForOutputTypeFields
-type SuperHero      |   #Super hero name/nickname                               |   Missing description on Output Type
-type SuperHero      |   #Location where you are most likely to find this hero   |   Missing description on Output Type  
+30|type SuperHero      |   #Super hero name/nickname                               |   Missing description on Output Type
+31|type SuperHero      |   #Location where you are most likely to find this hero   |   Missing description on Output Type  
 
 # testSchemaContainsDescriptionForInputTypeFields
-input SuperHeroInput|   #Super hero name/nickname                               |   Missing description on Input Type
-input SuperHeroInput|   #Powers that make this hero super                       |   Missing description on Input Type
+32|input SuperHeroInput|   #Super hero name/nickname                               |   Missing description on Input Type
+33|input SuperHeroInput|   #Powers that make this hero super                       |   Missing description on Input Type
 
 # testSchemaOutputTypeFieldsContainsDescriptionFromJsonbDateFormat
-type SuperHero      |   #MM/dd/yyyy                                             |   Missing Date Format description on Output Type
-type SuperHero      |   #HH:mm                                                  |   Missing Time Format description on Output Type
-type SuperHero      |   #HH:mm:ss dd-MM-yyyy                                    |   Missing DateTime Format description on Output Type
+34|type SuperHero      |   #MM/dd/yyyy                                             |   Missing Date Format description on Output Type
+35|type SuperHero      |   #HH:mm                                                  |   Missing Time Format description on Output Type
+36|type SuperHero      |   #HH:mm:ss dd-MM-yyyy                                    |   Missing DateTime Format description on Output Type
   
 # testSchemaInputTypeFieldsContainsDescriptionFromJsonbDateFormat
-input SuperHeroInput|   #MM/dd/yyyy                                             |   Missing Date Format description on Input Type
-input SuperHeroInput|   #HH:mm                                                  |   Missing Time Format description on Input Type
-input SuperHeroInput|   #HH:mm:ss dd-MM-yyyy                                    |   Missing DateTime Format description on Input Type
+37|input SuperHeroInput|   #MM/dd/yyyy                                             |   Missing Date Format description on Input Type
+38|input SuperHeroInput|   #HH:mm                                                  |   Missing Time Format description on Input Type
+39|input SuperHeroInput|   #HH:mm:ss dd-MM-yyyy                                    |   Missing DateTime Format description on Input Type
 
 # testNonNullOnSetterOnlyMakesInputTypeNonNull
-input SuperHeroInput|   name: String!                                           |   Missing expected, non-null field, "name"
-type SuperHero      |   !name: String!                                          |   Found "name" as non-null field, expected nullable
+40|input SuperHeroInput|   name: String!                                           |   Missing expected, non-null field, "name"
+41|type SuperHero      |   !name: String!                                          |   Found "name" as non-null field, expected nullable
     
 # testNonNullOnGetterOnlyMakesOutputTypeNonNull
-input TeamInput     |   !name: String!                                          |   Found "name" as non-null field, expected nullable
-type Team           |   name: String!                                           |   Missing expected, non-null field, "name"
+42|input TeamInput     |   !name: String!                                          |   Found "name" as non-null field, expected nullable
+43|type Team           |   name: String!                                           |   Missing expected, non-null field, "name"
 
 # testNonNullOnFieldMakesBothNonNull
-input ItemInput     |   name: String!                                           |   Missing expected, non-null field, "name" on input
-type Item           |   name: String!                                           |   Missing expected, non-null field, "name"
+44|input ItemInput     |   name: String!                                           |   Missing expected, non-null field, "name" on input
+45|type Item           |   name: String!                                           |   Missing expected, non-null field, "name"
 
 # testNonNullOnFieldWithDefaultValueIsNullable
-input ItemInput     |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
-input ItemInput     |   description: String = "An unidentified item"            |   Field's default value is missing
-type Item           |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
-type Item           |   description: String                                     |   Field with default value and nonnull is missing
+46|input ItemInput     |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
+47|input ItemInput     |   description: String = "An unidentified item"            |   Field's default value is missing
+48|type Item           |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
+49|type Item           |   description: String                                     |   Field with default value and nonnull is missing
 
 # testSchemaContainsDefaultValueOnEntityField
-input ItemInput     |   supernatural: Boolean = false                           |   Missing default value in Input boolean field
+50|input ItemInput     |   supernatural: Boolean = false                           |   Missing default value in Input boolean field
 
 # testSchemaContainsDefaultValueOnEntitySetter
-input ItemInput     |   description: String = "An unidentified item"            |   Missing default value in Input String field
+51|input ItemInput     |   description: String = "An unidentified item"            |   Missing default value in Input String field
