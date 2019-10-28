@@ -41,6 +41,8 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.arquillian.testng.Arquillian;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -59,6 +61,9 @@ public class GraphQLDynamicClientTest extends Arquillian {
     private static final String HEADER_ACCEPT = "Accept";
     private static final String QUERY = "query";
     private static final String VARIABLES = "variables";
+    
+    private TestData currentTestData = null;
+    private String currentOutput = null;
     
     @ArquillianResource
     private URI uri;
@@ -82,6 +87,7 @@ public class GraphQLDynamicClientTest extends Arquillian {
 
     private void runTest(TestData testData){
         if(testData!=null && isValidInput(testData.getInput())) {
+            this.currentTestData = testData;
             Map<String, String> httpHeaders = new HashMap<>();
             if(testData.getHttpHeaders()!=null && !testData.getHttpHeaders().isEmpty()){
                 for(Map.Entry<String, String> header:httpHeaders.entrySet()){
@@ -95,7 +101,7 @@ public class GraphQLDynamicClientTest extends Arquillian {
             }
 
             // Run the actual test and get the response
-            String json = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
+            this.currentOutput = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
             
             // Cleanup if needed
             if(isValidInput(testData.getCleanup())){
@@ -104,13 +110,24 @@ public class GraphQLDynamicClientTest extends Arquillian {
 
             // Compare to expected output
             try{
-                JSONAssert.assertEquals(PrintUtil.toString(testData,json),testData.getOutput(), json, false);
+                JSONAssert.assertEquals(testData.getName(),testData.getOutput(), this.currentOutput, false);
             } catch (JSONException ex) {
                 Assert.fail(ex.getMessage());
             }
         }else{
+            this.currentTestData = null;
+            this.currentOutput = null;
             LOG.warning("Could not find any tests to run...");
         }
+    }
+    
+    @AfterMethod
+    public void tearDown(ITestResult result) {
+       if (result.getStatus() == ITestResult.FAILURE) {
+            PrintUtil.toDisk(currentTestData,currentOutput,result.getThrowable().getMessage());
+       }
+       this.currentTestData = null;
+       this.currentOutput = null;
     }
     
     private boolean isValidInput(String input){
