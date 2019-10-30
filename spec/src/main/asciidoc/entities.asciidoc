@@ -296,11 +296,11 @@ automatically be marked as required.  If a Java primitive property has a `@Defau
 allowed, but the implementation is expected to convert the value to be the default value specified in the annotation.
 
 By default, all GraphQL fields generated from non-primitive properties will be considered nullable. A user may specify
-that a field is required/non-nullable by adding the `@NotNull` annotation. This annotation may be applied to an entity's
+that a field is required/non-nullable by adding the `@NonNull` annotation. This annotation may be applied to an entity's
 getter method, setter method or field. The placement will determine whether it applies to the type, input type or both,
 respectively.
 
-The implementation should ignore a `@NotNull` annotation when it is on the same field or setter method that also
+The implementation should ignore a `@NonNull` annotation when it is on the same field or setter method that also
 contains `@DefaultValue` annotation, as the "null" value would result in the default value being used.
 
 One drawback to using non-nullable fields is that if there is an error loading a child field, that error could propagate
