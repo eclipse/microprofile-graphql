@@ -50,8 +50,8 @@ import org.testng.annotations.Test;
  * and all test included here in the archive's /tests folder
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
-public class GraphQLDynamicClientTest extends Arquillian {
-    private static final Logger LOG = Logger.getLogger(GraphQLDynamicClientTest.class.getName());   
+public class ExecutionDynamicTest extends Arquillian {
+    private static final Logger LOG = Logger.getLogger(ExecutionDynamicTest.class.getName());   
     
     private static final String PATH = "graphql"; // Default. TODO: Test when configured
     
