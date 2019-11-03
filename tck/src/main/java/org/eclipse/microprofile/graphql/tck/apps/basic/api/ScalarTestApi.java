@@ -20,7 +20,9 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import javax.json.bind.annotation.JsonbProperty;
 import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.Id;
 import org.eclipse.microprofile.graphql.Query;
 
 /**
@@ -30,7 +32,7 @@ import org.eclipse.microprofile.graphql.Query;
  */
 @GraphQLApi
 public class ScalarTestApi {
-    @Query
+    @Query("testScalarsInPojo")
     public ScalarHolder getScalarHolder() {
         ScalarHolder sh = new ScalarHolder();
         sh.setBigDecimalObject(new BigDecimal(123.123));
@@ -62,10 +64,150 @@ public class ScalarTestApi {
         sh.setShortObject(new Short(s));
         sh.setShortPrimitive(s);
         sh.setStringObject("123");
-        sh.setStringPrimitive("123".toCharArray());
+        sh.setCharArray("123".toCharArray());
         sh.setTimeObject(LocalTime.parse("11:46:34.263"));
         
         return sh;
     }
+ 
     
+    @Query
+    @JsonbProperty("testShortPrimitive")
+    public short shortPrimitive(){
+        return getScalarHolder().getShortPrimitive();
+    }
+    @Query
+    @JsonbProperty("testShortObject")
+    public Short shortObject(){
+        return getScalarHolder().getShortPrimitive();
+    }
+
+    @Query
+    @JsonbProperty("testIntPrimitive")
+    public int intPrimitive(){
+        return getScalarHolder().getIntPrimitive();
+    }
+    
+    @Query
+    @JsonbProperty("testIntObject")
+    public Integer intObject(){
+        return getScalarHolder().getIntObject();
+    }
+
+    @Query
+    @JsonbProperty("testLongPrimitive")
+    public long longPrimitive(){
+        return getScalarHolder().getLongPrimitive();
+    }
+    
+    @Query
+    @JsonbProperty("testLongObject")
+    public Long longObject(){
+        return getScalarHolder().getLongObject();
+    }
+
+    @Query
+    @JsonbProperty("testFloatPrimitive")
+    public float floatPrimitive(){
+        return getScalarHolder().getFloatPrimitive();
+    }
+    
+    @Query
+    @JsonbProperty("testFloatObject")
+    public Float floatObject(){
+        return getScalarHolder().getFloatObject();
+    }
+
+    @Query
+    @JsonbProperty("testDoublePrimitive")
+    public double doublePrimitive(){
+        return getScalarHolder().getDoublePrimitive();
+    }
+    
+    @Query
+    @JsonbProperty("testDoubleObject")
+    public Double doubleObject(){
+        return getScalarHolder().getDoubleObject();
+    }
+
+    @Query
+    @JsonbProperty("testBooleanPrimitive")
+    public boolean booleanPrimitive(){
+        return getScalarHolder().isBooleanPrimitive();
+    }
+    @Query
+    @JsonbProperty("testBooleanObject")
+    public Boolean booleanObject(){
+        return getScalarHolder().getBooleanObject();
+    }
+
+    @Query
+    @JsonbProperty("testCharPrimitive")
+    public char charPrimitive(){
+        return getScalarHolder().getCharPrimitive();
+    }
+    
+    @Query
+    @JsonbProperty("testCharObject")
+    public Character charObject(){
+        return getScalarHolder().getCharObject();
+    }
+
+    @Query
+    @JsonbProperty("testCharArray")
+    public char[] charArray(){
+        return getScalarHolder().getCharArray();
+    }
+    @Query
+    @JsonbProperty("testStringObject")
+    public String stringObject(){
+        return getScalarHolder().getStringObject();
+    }
+
+    @Query
+    @JsonbProperty("testBytePrimitive")
+    public byte bytePrimitive(){
+        return getScalarHolder().getBytePrimitive();
+    }
+    @Query
+    @JsonbProperty("testByteObject")
+    public Byte byteObject(){
+        return getScalarHolder().getByteObject();
+    }
+
+    @Query
+    @JsonbProperty("testBigIntegerObject")
+    public BigInteger bigIntegerObject(){
+        return getScalarHolder().getBigIntegerObject();
+    }
+    
+    @Query
+    @JsonbProperty("testBigDecimalObject")
+    public BigDecimal bigDecimalObject(){
+        return getScalarHolder().getBigDecimalObject();
+    }
+
+    @Query
+    @JsonbProperty("testDateObject")
+    public LocalDate dateObject(){
+        return getScalarHolder().getDateObject();
+    }
+    
+    @Query
+    @JsonbProperty("testTimeObject")
+    public LocalTime timeObject(){
+        return getScalarHolder().getTimeObject();
+    }
+    
+    @Query
+    @JsonbProperty("testDateTimeObject")
+    public LocalDateTime dateTimeObject(){
+        return getScalarHolder().getDateTimeObject();
+    }
+
+    @Query @Id
+    @JsonbProperty("testId")
+    public String id(){
+        return getScalarHolder().getId();
+    }   
 }

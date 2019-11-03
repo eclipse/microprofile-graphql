@@ -51,7 +51,7 @@ public @interface Query {
 [source,java,numbered]
 ----
 @Query
-public SuperHero superHero(@Argument("name") String name) {
+public SuperHero superHero(@SchemaName("name") String name) {
     return heroDB.getHero(name);
 }
 ----
@@ -73,7 +73,7 @@ annoation value to the query method. For example:
 ----
 @Query
 @Description("Returns the super hero with the specified name")
-public SuperHero superHero(@Argument("name") String name) {
+public SuperHero superHero(@SchemaName("name") String name) {
     return heroDB.getHero(name);
 }
 ----
@@ -97,7 +97,7 @@ arguments. For example:
 ----
 @Query
 @Description("Returns the super hero with the specified name")
-public SuperHero superHero(@Argument("name") @Description("Super hero name, not real name") String name) {
+public SuperHero superHero(@SchemaName("name") @Description("Super hero name, not real name") String name) {
     return heroDB.getHero(name);
 }
 ----

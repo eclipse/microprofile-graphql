@@ -27,7 +27,7 @@ import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 
 import org.eclipse.microprofile.graphql.Description;
-import org.eclipse.microprofile.graphql.InputField;
+import org.eclipse.microprofile.graphql.SchemaName;
 import org.eclipse.microprofile.graphql.NonNull;
 import org.eclipse.microprofile.graphql.Query;
 
@@ -58,7 +58,7 @@ public class SuperHero implements Character {
     @JsonbNumberFormat("0000,0000")
     private Long idNumber;
 
-    @InputField("tshirtSize")
+    @SchemaName("tshirtSize")
     private ShirtSize sizeOfTShirt;
 
     public SuperHero(){

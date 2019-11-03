@@ -23,17 +23,40 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Controls the mapping from a class' property to a GraphQL input type's field.
+ * Allows users to name a field or argument in the GraphQL Schema <br>
  * <br>
- * <br>
- * For example, a user might annotate a class' property as such:
+ * For example, a user might annotate a method's parameter as such:
+ * 
+ * <pre>
+ * public class CharacterService {
+ *     {@literal @}Query("searchByName")
+ *     public List{@literal <}Character{@literal >} getByName(
+ *                      {@literal @}SchemaName("name")
+ *                      {@literal @}DefaultValue("Han Solo")
+ *                      {@literal @}Description("Name to search for") String name) {
+ *         //...
+ *     }
+ * }
+ * </pre>
+ *
+ * Schema generation of this would result in a stanza such as:
+ * 
+ * <pre>
+ * type Query {
+ *         # Search characters by name
+ *         # name: Name to search for. Default value: Han Solo.
+ *         searchByName(name: String = "Han Solo"): [Character]
+ *     }
+ * </pre>
+ * 
+ * Or a user might annotate a class' property as such:
  * 
  * <pre>
  * {@literal @}Type("Starship")
  * {@literal @}InputType("StarshipInput")
  * {@literal @}Description("A starship in Star Wars")
  * public class Starship {
- *     {@literal @}InputField("uuid")
+ *     {@literal @}SchemaName("uuid")
  *     {@literal @}Description("uuid of a new Starship")
  *     private String id;
  *     private String name;
@@ -56,12 +79,11 @@ import java.lang.annotation.Target;
  * </pre>
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD,ElementType.PARAMETER,ElementType.METHOD})
 @Documented
-public @interface InputField {
-
+public @interface SchemaName {
     /**
-     * @return the name to use for the input field.
+     * @return the name to use in the GraphQL schema.
      */
     String value();
 }
