@@ -13,7 +13,7 @@
 12| type ScalarHolder   |   doublePrimitive: Float!                                 |   Expecting a non null Float Scalar Type in type ScalarHolder
 13| type ScalarHolder   |   floatObject: Float                                      |   Expecting a Float Scalar Type in type ScalarHolder
 14| type ScalarHolder   |   floatPrimitive: Float!                                  |   Expecting a non null Float Scalar Type in type ScalarHolder
-15| type ScalarHolder   |   id: String                                              |   Expecting a String Scalar Type in type ScalarHolder
+15| type ScalarHolder   |   id: ID                                                  |   Expecting a ID Scalar Type in type ScalarHolder
 16| type ScalarHolder   |   intObject: Int                                          |   Expecting a Int Scalar Type in type ScalarHolder
 17| type ScalarHolder   |   intPrimitive: Int!                                      |   Expecting a non null Int Scalar Type in type ScalarHolder
 18| type ScalarHolder   |   longObject: Long                                        |   Expecting a Long Scalar Type in type ScalarHolder
@@ -37,7 +37,7 @@
 36| type Query          |   testDoublePrimitive: Float!                             |   Expecting a non null Float Scalar Type in type Query
 37| type Query          |   testFloatObject: Float                                  |   Expecting a Float Scalar Type in type Query
 38| type Query          |   testFloatPrimitive: Float!                              |   Expecting a non null Float Scalar Type in type Query
-39| type Query          |   testId: ID                                              |   Expecting a String Scalar Type in type Query
+39| type Query          |   testId: ID                                              |   Expecting a ID Scalar Type in type Query
 40| type Query          |   testIntObject: Int                                      |   Expecting a Int Scalar Type in type Query
 41| type Query          |   testIntPrimitive: Int!                                  |   Expecting a non null Int Scalar Type in type Query
 42| type Query          |   testLongObject: Long                                    |   Expecting a Long Scalar Type in type Query
@@ -45,7 +45,7 @@
 44| type Query          |   testShortObject: Short                                  |   Expecting a Short Scalar Type in type Query
 45| type Query          |   testShortPrimitive: Short!                              |   Expecting a non null Short Scalar Type in type Query
 46| type Query          |   testStringObject: String                                |   Expecting a String Scalar Type in type Query
-47| type Query          |   testCharArray: [Char!]                                  |   Expecting a non null Char Array Scalar Type in type Query
+47| type Query          |   testCharArray: [Char]                                   |   Expecting a non null Char Array Scalar Type in type Query
 48| type Query          |   testTimeObject: Time                                    |   Expecting a Time Scalar Type in type Query
 # Default Time Descriptions
 49|type ScalarHolder|#yyyy-MM-dd                 |Missing Default Date Format description on Output Type
