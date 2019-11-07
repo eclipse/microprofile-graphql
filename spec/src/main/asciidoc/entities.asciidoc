@@ -53,7 +53,7 @@ By default the date related scalars (DateTime, Date, and Time) will use a ISO fo
 - `yyyy-MM-dd` for Date
 - `HH:mm:ss` for Time 
 
-By adding the `JsonB` annotation `@JsonbDateFormat` a user can change the format.
+By adding the JSON-B annotation `@JsonbDateFormat` a user can change the format.
 
 ==== Custom user defined scalars
 @TODO: Define how to create your own scalar.
@@ -275,7 +275,7 @@ output types) and fields.
 ==== Default Values
 
 The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
-a value. Default values may only be specified on input types (and also as `@SchemaName` parameters) and will have no
+a value. Default values may only be specified on input types and method parameters and will have no
 effect if specified on output types.  The value specified in this annotation may be plain text for Java primitives and 
 `String` types or JSON for complex types.
 

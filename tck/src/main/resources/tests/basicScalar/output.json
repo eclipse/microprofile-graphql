@@ -1,6 +1,6 @@
 {
     "data": {
-        "scalarHolder": {
+        "testScalarsInPojo": {
             "id": "123",
             "bigDecimalObject": 123.123,
             "bigIntegerObject": 123,
@@ -23,7 +23,7 @@
             "shortObject": 123,
             "shortPrimitive": 123,
             "stringObject": "123",
-            "stringPrimitive": [
+            "charArray": [
                 "1",
                 "2",
                 "3"

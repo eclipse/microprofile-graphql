@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  *     public List{@literal <}Character{@literal >} getByName(
  *                      {@literal @}SchemaName("name")
  *                      {@literal @}DefaultValue("Han Solo")
- *                      {@literal @}Description("Name to search for") String name) {
+ *                      {@literal @}Description("Name to search for") String characterName) {
  *         //...
  *     }
  * }

@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import org.eclipse.microprofile.graphql.DefaultValue;
+import org.eclipse.microprofile.graphql.Id;
 
 /**
  * Plain POJO with scalar fields
@@ -61,7 +62,7 @@ public class ScalarHolder {
     private LocalDate dateObject;
     private LocalTime timeObject;
     private LocalDateTime dateTimeObject;
-
+    @Id
     private String id;
 
     public ScalarHolder() {
