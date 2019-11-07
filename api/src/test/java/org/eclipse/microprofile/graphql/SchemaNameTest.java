@@ -26,16 +26,17 @@ import static org.testng.Assert.assertEquals;
 /**
  * Simple test mainly as a placeholder for now.
  */
-public class ArgumentTest {
+public class SchemaNameTest {
 
     private static class Character {
-
+        
+        @SchemaName("theName")
         private String name;
 
         public Character(String name) {
             this.name = name;
         }
-
+        
         public String getName() {
             return name;
         }
@@ -43,7 +44,7 @@ public class ArgumentTest {
         @Query("friendsOf")
         @Description("Returns all the friends of a character")
         public List<Character> getFriendsOf(
-                @Argument("whomFriends")
+                @SchemaName("whomFriends")
                 @Description("Whom friends to fetch") Character character) {
             if (character.getName().equals("Han Solo")) {
                 return Collections.singletonList(new Character("Chewbacca"));
@@ -53,12 +54,18 @@ public class ArgumentTest {
     }
 
     @Test
-    public void testArgumentAnnotationOnCharacterParameter() throws Exception {
-        Argument argument = (Argument)Character.class.getDeclaredMethod("getFriendsOf", Character.class)
+    public void testSchemaNameAnnotationOnCharacterParameter() throws Exception {
+        SchemaName argument = (SchemaName)Character.class.getDeclaredMethod("getFriendsOf", Character.class)
                                                      .getParameterAnnotations()[0][0];
         Description description = (Description) Character.class.getDeclaredMethod("getFriendsOf", Character.class)
                                                                .getParameterAnnotations()[0][1];
         assertEquals(argument.value(), "whomFriends");
         assertEquals(description.value(), "Whom friends to fetch");
+    }
+    
+    @Test
+    public void testSchemaNameAnnotationOnNameField() throws Exception {
+        SchemaName inputField = SchemaNameTest.Character.class.getDeclaredField("name").getAnnotationsByType(SchemaName.class)[0];
+        assertEquals(inputField.value(),"theName");
     }
 }

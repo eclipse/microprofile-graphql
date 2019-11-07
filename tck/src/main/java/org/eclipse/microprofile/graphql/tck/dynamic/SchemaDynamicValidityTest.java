@@ -84,22 +84,22 @@ public class SchemaDynamicValidityTest extends Arquillian {
         
         // Check if this is a negative test
         if(input.getContainsString().startsWith("!")){
-            Assert.assertFalse(snippet.contains(input.getContainsString().substring(1)), input.getErrorMessage());
+            Assert.assertFalse(snippet.contains(input.getContainsString().substring(1)), "[" + input.getHeader() + "] " + input.getErrorMessage());
         }else{
-            Assert.assertTrue(snippet.contains(input.getContainsString()), input.getErrorMessage());    
+            Assert.assertTrue(snippet.contains(input.getContainsString()), "[" + input.getHeader() + "] " + input.getErrorMessage());    
         }
     }
     
     private void saveSchemaFile(){
         try{
-            Path downloadedSchema = Paths.get("target/schema.graphql");
+            Path downloadedSchema = Paths.get("target" + FS  + "schema.graphql");
             Path createFile = Files.createFile(downloadedSchema);
             try(BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))){
                 writer.write(this.schema);
             }
             LOG.log(Level.INFO, "Schema written to {0}", createFile.toUri());
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Could not save schema file to target/schema.graphql - {0}", ex.getMessage());
+            LOG.log(Level.SEVERE, "Could not save schema file to target" + FS + "schema.graphql - {0}", ex.getMessage());
         }
     }
     
@@ -153,4 +153,6 @@ public class SchemaDynamicValidityTest extends Arquillian {
             return sw.toString();
         }
     }
+    
+    private static final String FS = System.getProperty("file.separator");
 }

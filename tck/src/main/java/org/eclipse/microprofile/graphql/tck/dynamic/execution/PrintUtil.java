@@ -17,11 +17,18 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic.execution;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -34,13 +41,25 @@ import javax.json.stream.JsonGenerator;
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class PrintUtil {
+    private static final Logger LOG = Logger.getLogger(PrintUtil.class.getName());   
     
     private PrintUtil(){
     }
     
-    public static String toString(TestData testData,String output){
+    public static void toDisk(TestData testData, String output, String errorMessage){
+        try{
+            String log = toString(testData, output,errorMessage);
+            writeTestFile(testData.getName(),log);
+        } catch (IOException ex) {
+            LOG.log(Level.SEVERE, "Could not save data to target folder - {0}", ex.getMessage());
+        }
+    }
+    
+    private static String toString(TestData testData,String output, String errorMessage){
         try(StringWriter sw = new StringWriter()){
             sw.write("============= " + testData.getName() + " =============");
+            sw.write("\n\n");
+            sw.write("errorMessage = " + errorMessage);
             sw.write("\n\n");
             sw.write("given input = " + testData.getInput());
             sw.write("\n\n");
@@ -55,6 +74,16 @@ public class PrintUtil {
             return sw.toString();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+    
+    private static void writeTestFile(String testName, String data) throws IOException{
+        if(data!=null && !data.isEmpty()){
+            Path file = Paths.get("target" + FS + testName + ".log");
+            Path createFile = Files.createFile(file);
+            try(BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))){
+                writer.write(data);
+            }
         }
     }
     
@@ -78,4 +107,6 @@ public class PrintUtil {
         }
         return null;
     }
+    
+    private static final String FS = System.getProperty("file.separator");
 }

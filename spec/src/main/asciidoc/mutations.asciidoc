@@ -47,7 +47,7 @@ public @interface Mutation {
 
 Mutations generally require arguments (parameters) in order to determine which entity to modify/delete or the data
 necessary to create a new entity, etc. These arguments are the parameters of the mutation method and should be annotated
-with `@Argument`.  The `@Argument` annotation's value is used to specify the name of the argument. The argument name
+with `@SchemaName`.  The `@SchemaName` annotation's value is used to specify the name of the argument. The argument name
 will be used in the generated schema. Arguments can be GraphQL scalars or more complex input types (for more information
 on input types, see <<entities.asciidoc#types,Entities, Types vs InputTypes>>).
 
@@ -57,7 +57,7 @@ on input types, see <<entities.asciidoc#types,Entities, Types vs InputTypes>>).
 [source,java,numbered]
 ----
 @Mutation
-public SuperHero createNewHero(@Argument("hero") SuperHero newHero) 
+public SuperHero createNewHero(@SchemaName("hero") SuperHero newHero) 
     throws DuplicateSuperHeroException {
 
     heroDB.addHero(newHero);
@@ -69,7 +69,7 @@ public SuperHero createNewHero(@Argument("hero") SuperHero newHero)
 [source,java,numbered]
 ----
 @Mutation
-public SuperHero removeHero(@Argument("hero") String heroName)
+public SuperHero removeHero(@SchemaName("hero") String heroName)
     throws UnknownHeroException {
 
     SuperHero removedHero = heroDB.removeHero(heroName);
@@ -84,8 +84,8 @@ public SuperHero removeHero(@Argument("hero") String heroName)
 [source,java,numbered]
 ----
 @Mutation
-public SuperHero addNewPowerToHero(@Argument("hero") SuperHero hero,
-                                   @Argument("newPower") String newPower)
+public SuperHero addNewPowerToHero(@SchemaName("hero") SuperHero hero,
+                                   @SchemaName("newPower") String newPower)
                                    throws UnknownHeroException {
 
     SuperHero heroFromDB = heroDB.getHero(newHero.getName());

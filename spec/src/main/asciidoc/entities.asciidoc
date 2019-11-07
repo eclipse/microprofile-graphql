@@ -35,7 +35,7 @@ all GraphQL implementations are expected to handle, the following scalar types:
 - `Float` - which maps to a Java `float`/`Float` or `double`/`Double`.
 - `Boolean` - which maps to a Java `boolean`/`Boolean`.
 - `Char` - which maps to a Java `char`, `Character`.
-- `String` - which maps to a Java `char[]`/`String`.
+- `String` - which maps to a Java `String`.
 - `Byte` - which maps to a Java `byte`/`Byte`.
 - `BigInteger` - which maps to a Java `BigInteger`.
 - `BigDecimal` - which maps to a Java BigDecimal`.
@@ -44,9 +44,18 @@ all GraphQL implementations are expected to handle, the following scalar types:
 - `DateTime` - which maps to a Java `java.time.LocalDateTime`.
 - `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
 
-The GraphQL specification also allows for users or implementors to define custom scalars:
+The GraphQL specification also allows for users or implementers to define custom scalars:
 
-@TODO: Define how the date related scalars to be serialized. Maybe configurable ?
+==== Dates
+By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
+
+- `yyyy-MM-dd'T'HH:mm:ss'Z'`for DateTime
+- `yyyy-MM-dd` for Date
+- `HH:mm:ss` for Time 
+
+By adding the JSON-B annotation `@JsonbDateFormat` a user can change the format.
+
+==== Custom user defined scalars
 @TODO: Define how to create your own scalar.
 
 [[enums]]
@@ -98,7 +107,7 @@ in the enumerated type.
 
 In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
 
-- It must be the return type or parameter (annotated with `@Argument`) of a query or mutation method,
+- It must be the return type or parameter (annotated with `@SchemaName`) of a query or mutation method,
 - It must be annotated with `@Type`,
 - It must be annotated with `@InputType`
 
@@ -234,13 +243,13 @@ part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This a
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
 not interested in.
 
-Users can use the `@InputField` annotation to specify a different field name for the input field in the GraphQL
+Users can use the `@SchemaName` annotation to specify a different field name for the input field in the GraphQL
 schema. For example:
 
 ```
 public class Widget {
 
-    @InputField("cost")
+    @SchemaName("cost")
     private float price;
     // ... public getters/setters
 }
@@ -266,7 +275,7 @@ output types) and fields.
 ==== Default Values
 
 The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
-a value. Default values may only be specified on input types (and also as `@Argument` parameters) and will have no
+a value. Default values may only be specified on input types and method parameters and will have no
 effect if specified on output types.  The value specified in this annotation may be plain text for Java primitives and 
 `String` types or JSON for complex types.
 

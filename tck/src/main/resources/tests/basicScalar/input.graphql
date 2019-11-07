@@ -1,5 +1,5 @@
 {
-  scalarHolder {
+  testScalarsInPojo {
     id
     bigDecimalObject
     bigIntegerObject
@@ -22,7 +22,7 @@
     shortObject
     shortPrimitive
     stringObject
-    stringPrimitive
+    charArray
     timeObject
     }
 }

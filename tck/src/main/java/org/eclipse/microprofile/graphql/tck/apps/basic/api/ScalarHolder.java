@@ -20,6 +20,8 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import org.eclipse.microprofile.graphql.DefaultValue;
+import org.eclipse.microprofile.graphql.Id;
 
 /**
  * Plain POJO with scalar fields
@@ -47,7 +49,7 @@ public class ScalarHolder {
     private char charPrimitive;
     private Character charObject;
 
-    private char[] stringPrimitive;
+    private char[] charArray;
     private String stringObject;
 
     private byte bytePrimitive;
@@ -56,10 +58,11 @@ public class ScalarHolder {
     private BigInteger bigIntegerObject;
     private BigDecimal bigDecimalObject;
 
+    @DefaultValue("1978-07-03")
     private LocalDate dateObject;
     private LocalTime timeObject;
     private LocalDateTime dateTimeObject;
-
+    @Id
     private String id;
 
     public ScalarHolder() {
@@ -178,12 +181,12 @@ public class ScalarHolder {
         this.charObject = charObject;
     }
 
-    public char[] getStringPrimitive() {
-        return stringPrimitive;
+    public char[] getCharArray() {
+        return charArray;
     }
 
-    public void setStringPrimitive(char[] stringPrimitive) {
-        this.stringPrimitive = stringPrimitive;
+    public void setCharArray(char[] charArray) {
+        this.charArray = charArray;
     }
 
     public String getStringObject() {
