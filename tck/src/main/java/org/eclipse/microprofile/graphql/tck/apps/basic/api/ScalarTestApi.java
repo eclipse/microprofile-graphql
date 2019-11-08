@@ -23,6 +23,7 @@ import java.time.LocalTime;
 import javax.json.bind.annotation.JsonbProperty;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Id;
+import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.Query;
 
 /**
@@ -77,7 +78,7 @@ public class ScalarTestApi {
         return getScalarHolder().getShortPrimitive();
     }
     @Query
-    @JsonbProperty("testShortObject")
+    @Name("testShortObject")
     public Short shortObject(){
         return getScalarHolder().getShortPrimitive();
     }
@@ -89,7 +90,7 @@ public class ScalarTestApi {
     }
     
     @Query
-    @JsonbProperty("testIntObject")
+    @Name("testIntObject")
     public Integer intObject(){
         return getScalarHolder().getIntObject();
     }
@@ -101,7 +102,7 @@ public class ScalarTestApi {
     }
     
     @Query
-    @JsonbProperty("testLongObject")
+    @Name("testLongObject")
     public Long longObject(){
         return getScalarHolder().getLongObject();
     }
@@ -113,7 +114,7 @@ public class ScalarTestApi {
     }
     
     @Query
-    @JsonbProperty("testFloatObject")
+    @Name("testFloatObject")
     public Float floatObject(){
         return getScalarHolder().getFloatObject();
     }
@@ -125,7 +126,7 @@ public class ScalarTestApi {
     }
     
     @Query
-    @JsonbProperty("testDoubleObject")
+    @Name("testDoubleObject")
     public Double doubleObject(){
         return getScalarHolder().getDoubleObject();
     }
@@ -136,7 +137,7 @@ public class ScalarTestApi {
         return getScalarHolder().isBooleanPrimitive();
     }
     @Query
-    @JsonbProperty("testBooleanObject")
+    @Name("testBooleanObject")
     public Boolean booleanObject(){
         return getScalarHolder().getBooleanObject();
     }
@@ -148,7 +149,7 @@ public class ScalarTestApi {
     }
     
     @Query
-    @JsonbProperty("testCharObject")
+    @Name("testCharObject")
     public Character charObject(){
         return getScalarHolder().getCharObject();
     }
@@ -159,7 +160,7 @@ public class ScalarTestApi {
         return getScalarHolder().getCharArray();
     }
     @Query
-    @JsonbProperty("testStringObject")
+    @Name("testStringObject")
     public String stringObject(){
         return getScalarHolder().getStringObject();
     }
@@ -170,7 +171,7 @@ public class ScalarTestApi {
         return getScalarHolder().getBytePrimitive();
     }
     @Query
-    @JsonbProperty("testByteObject")
+    @Name("testByteObject")
     public Byte byteObject(){
         return getScalarHolder().getByteObject();
     }
@@ -182,7 +183,7 @@ public class ScalarTestApi {
     }
     
     @Query
-    @JsonbProperty("testBigDecimalObject")
+    @Name("testBigDecimalObject")
     public BigDecimal bigDecimalObject(){
         return getScalarHolder().getBigDecimalObject();
     }
@@ -194,7 +195,7 @@ public class ScalarTestApi {
     }
     
     @Query
-    @JsonbProperty("testTimeObject")
+    @Name("testTimeObject")
     public LocalTime timeObject(){
         return getScalarHolder().getTimeObject();
     }
@@ -206,7 +207,7 @@ public class ScalarTestApi {
     }
 
     @Query @Id
-    @JsonbProperty("testId")
+    @Name("testId")
     public String id(){
         return getScalarHolder().getId();
     }   

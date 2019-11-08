@@ -54,7 +54,7 @@ annotation must represent the object as JSON.
 ----
 @Query
 public Collection<SuperHero> allHeroesIn(
-    @DefaultValue("New York, NY") @SchemaName("city") String city) {
+    @DefaultValue("New York, NY") @Name("city") String city) {
 
     return allHeroesByFilter(hero -> {
         return city.equals(hero.getPrimaryLocation());});
@@ -72,8 +72,8 @@ public final static String CAPE =
         "}";
 
 @Mutation
-public SuperHero provisionHero(@SchemaName("hero") String heroName,
-                               @DefaultValue(CAPE) @SchemaName("item") Item item) 
+public SuperHero provisionHero(@Name("hero") String heroName,
+                               @DefaultValue(CAPE) @Name("item") Item item) 
                                throws UnknownHeroException {
 
         SuperHero hero = heroDB.getHero(heroName);

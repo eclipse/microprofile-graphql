@@ -31,8 +31,8 @@ import java.lang.annotation.Target;
  * public class CharacterService {
  *     {@literal @}Query("searchByName")
  *     public List{@literal <}Character{@literal >} getByName(
- *                      {@literal @}SchemaName("name")
- *                      {@literal @}DefaultValue("Han Solo")
+ *                      {@literal @}Name("name")
+                      {@literal @}DefaultValue("Han Solo")
  *                      {@literal @}Description("Name to search for") String characterName) {
  *         //...
  *     }
@@ -56,8 +56,8 @@ import java.lang.annotation.Target;
  * {@literal @}InputType("StarshipInput")
  * {@literal @}Description("A starship in Star Wars")
  * public class Starship {
- *     {@literal @}SchemaName("uuid")
- *     {@literal @}Description("uuid of a new Starship")
+ *     {@literal @}Name("uuid")
+     {@literal @}Description("uuid of a new Starship")
  *     private String id;
  *     private String name;
  *     private float length;
@@ -81,7 +81,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD,ElementType.PARAMETER,ElementType.METHOD})
 @Documented
-public @interface SchemaName {
+public @interface Name {
     /**
      * @return the name to use in the GraphQL schema.
      */
