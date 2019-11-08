@@ -58,7 +58,6 @@ public class SuperHero implements Character {
     @JsonbNumberFormat("0000,0000")
     private Long idNumber;
 
-    @Name("tshirtSize")
     private ShirtSize sizeOfTShirt;
 
     public SuperHero(){
@@ -183,6 +182,7 @@ public class SuperHero implements Character {
         return sizeOfTShirt;
     }
 
+    @Name("tshirtSize")
     public void setSizeOfTShirt(ShirtSize sizeOfTShirt) {
         this.sizeOfTShirt = sizeOfTShirt;
     }
