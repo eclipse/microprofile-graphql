@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import org.eclipse.microprofile.graphql.SchemaName;
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
@@ -46,6 +45,7 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Sidekick;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.UnknownCharacterException;
+import org.eclipse.microprofile.graphql.Name;
 
 @GraphQLApi
 public class HeroFinder {
@@ -61,7 +61,7 @@ public class HeroFinder {
     private HeroLocator heroLocator;
 
     @Query
-    public Character character(@SchemaName("name") String name) throws UnknownCharacterException {
+    public Character character(@Name("name") String name) throws UnknownCharacterException {
         LOG.info("character invoked");
 
         try {
@@ -78,7 +78,7 @@ public class HeroFinder {
     }
 
     @Query
-    public SuperHero superHero(@SchemaName("name") @Description("Super hero name, not real name") String name) throws UnknownHeroException {
+    public SuperHero superHero(@Name("name") @Description("Super hero name, not real name") String name) throws UnknownHeroException {
         LOG.info("superHero invoked " + name);
         return Optional.ofNullable(heroDB.getHero(name)).orElseThrow(() -> new UnknownHeroException(name));
     }
@@ -91,7 +91,7 @@ public class HeroFinder {
     }
 
     @Query
-    public Collection<SuperHero> allHeroesIn(@DefaultValue("New York, NY") @SchemaName("city") String city) {
+    public Collection<SuperHero> allHeroesIn(@DefaultValue("New York, NY") @Name("city") String city) {
         LOG.info("allHeroesIn " + city + " invoked");
         return allHeroesByFilter(hero -> {
             return city.equals(hero.getPrimaryLocation());
@@ -99,7 +99,7 @@ public class HeroFinder {
     }
 
     @Query
-    public Collection<SuperHero> allHeroesWithPower(@SchemaName("power") String power) {
+    public Collection<SuperHero> allHeroesWithPower(@Name("power") String power) {
         LOG.info("allHeroesWithPower invoked");
         return allHeroesByFilter(hero -> {
             return hero.getSuperPowers().contains(power);
@@ -107,7 +107,7 @@ public class HeroFinder {
     }
 
     @Query
-    public Collection<SuperHero> allHeroesInTeam(@SchemaName("team") String teamName) throws UnknownTeamException {
+    public Collection<SuperHero> allHeroesInTeam(@Name("team") String teamName) throws UnknownTeamException {
         LOG.info("allHeroesInTeam invoked");
         return heroDB.getTeam(teamName).getMembers();
     }
@@ -119,7 +119,7 @@ public class HeroFinder {
     }
 
     @Mutation
-    public SuperHero createNewHero(@SchemaName("hero") SuperHero newHero) throws DuplicateSuperHeroException, UnknownHeroException {
+    public SuperHero createNewHero(@Name("hero") SuperHero newHero) throws DuplicateSuperHeroException, UnknownHeroException {
         LOG.info("createNewHero invoked");
         heroDB.addHero(newHero);
         return heroDB.getHero(newHero.getName());
@@ -127,8 +127,8 @@ public class HeroFinder {
 
     @Mutation
     @Description("Adds a hero to the specified team and returns the updated team.")
-    public Team addHeroToTeam(@SchemaName("hero") String heroName,
-                              @SchemaName("team") String teamName)
+    public Team addHeroToTeam(@Name("hero") String heroName,
+                              @Name("team") String teamName)
             throws UnknownTeamException, UnknownHeroException {
 
         LOG.info("addHeroToTeam invoked");
@@ -138,8 +138,8 @@ public class HeroFinder {
 
     @Mutation
     @Description("Removes a hero to the specified team and returns the updated team.")
-    public Team removeHeroFromTeam(@SchemaName("hero") String heroName,
-                                   @SchemaName("team") String teamName)
+    public Team removeHeroFromTeam(@Name("hero") String heroName,
+                                   @Name("team") String teamName)
             throws UnknownTeamException, UnknownHeroException {
         LOG.info("removeHeroFromTeam invoked");
         return heroDB.getTeam(teamName)
@@ -148,7 +148,7 @@ public class HeroFinder {
 
     @Mutation
     @Description("Removes a hero... permanently...")
-    public Collection<SuperHero> removeHero(@SchemaName("hero") String heroName) throws UnknownHeroException {
+    public Collection<SuperHero> removeHero(@Name("hero") String heroName) throws UnknownHeroException {
         LOG.info("removeHero invoked");
         if (heroDB.removeHero(heroName) == null) {
             throw new UnknownHeroException(heroName);
@@ -158,8 +158,8 @@ public class HeroFinder {
 
     @Mutation
     @Description("Gives a hero new equipment")
-    public SuperHero provisionHero(@SchemaName("hero") String heroName,
-                                   @DefaultValue(Item.CAPE) @SchemaName("item") Item item)
+    public SuperHero provisionHero(@Name("hero") String heroName,
+                                   @DefaultValue(Item.CAPE) @Name("item") Item item)
             throws UnknownHeroException {
         LOG.info("provisionHero invoked");
         SuperHero hero = heroDB.getHero(heroName);
@@ -172,8 +172,8 @@ public class HeroFinder {
 
     @Mutation
     @Description("Removes equipment from a hero")
-    public SuperHero removeItemFromHero(@SchemaName("hero") String heroName,
-                                        @SchemaName("itemID") long itemID)
+    public SuperHero removeItemFromHero(@Name("hero") String heroName,
+                                        @Name("itemID") long itemID)
             throws UnknownHeroException {
         LOG.info("removeItemFromHero invoked");
         SuperHero hero = heroDB.getHero(heroName);
@@ -188,8 +188,8 @@ public class HeroFinder {
 
     @Mutation
     @Description("Update an item's powerLevel") 
-    public Item updateItemPowerLevel(@SchemaName("itemID") long itemID,
-                                     @DefaultValue("5") @SchemaName("powerLevel") int newLevel) {
+    public Item updateItemPowerLevel(@Name("itemID") long itemID,
+                                     @DefaultValue("5") @Name("powerLevel") int newLevel) {
 
         Item item = null;
         for (SuperHero hero : allHeroes()) {
@@ -222,7 +222,7 @@ public class HeroFinder {
     }
 
     @Mutation
-    public Team setRivalTeam(@SchemaName("teamName") String teamName, @SchemaName("rivalTeam") Team rivalTeam)
+    public Team setRivalTeam(@Name("teamName") String teamName, @Name("rivalTeam") Team rivalTeam)
             throws UnknownTeamException {
 
         LOG.info("setRivalTeam: " + teamName + "'s new rival is: " + (Optional.ofNullable(rivalTeam).map(Team::getName).orElse("null")));
@@ -258,7 +258,7 @@ public class HeroFinder {
     }
 
     @Query
-    public Item getItemById(@SchemaName("id") long id) {
+    public Item getItemById(@Name("id") long id) {
         for (SuperHero hero : allHeroes()) {
             for (Item item : hero.getEquipment()) {
                 if (id == item.getId()) {
@@ -270,7 +270,7 @@ public class HeroFinder {
     }
 
     @Mutation
-    public Team createNewTeam(@SchemaName("newTeam") Team newTeam) {
+    public Team createNewTeam(@Name("newTeam") Team newTeam) {
         List<SuperHero> members = newTeam.getMembers();
         Team team = heroDB.createNewTeam(newTeam.getName());
         if (members != null && members.size() > 0) {
@@ -281,7 +281,7 @@ public class HeroFinder {
     }
 
     @Mutation
-    public Team removeTeam(@SchemaName("teamName") String teamName) throws UnknownTeamException {
+    public Team removeTeam(@Name("teamName") String teamName) throws UnknownTeamException {
         return heroDB.removeTeam(teamName);
     }
 }

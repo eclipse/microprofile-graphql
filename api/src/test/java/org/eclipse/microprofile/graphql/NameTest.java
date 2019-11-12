@@ -26,11 +26,11 @@ import static org.testng.Assert.assertEquals;
 /**
  * Simple test mainly as a placeholder for now.
  */
-public class SchemaNameTest {
+public class NameTest {
 
     private static class Character {
         
-        @SchemaName("theName")
+        @Name("theName")
         private String name;
 
         public Character(String name) {
@@ -44,7 +44,7 @@ public class SchemaNameTest {
         @Query("friendsOf")
         @Description("Returns all the friends of a character")
         public List<Character> getFriendsOf(
-                @SchemaName("whomFriends")
+                @Name("whomFriends")
                 @Description("Whom friends to fetch") Character character) {
             if (character.getName().equals("Han Solo")) {
                 return Collections.singletonList(new Character("Chewbacca"));
@@ -55,7 +55,7 @@ public class SchemaNameTest {
 
     @Test
     public void testSchemaNameAnnotationOnCharacterParameter() throws Exception {
-        SchemaName argument = (SchemaName)Character.class.getDeclaredMethod("getFriendsOf", Character.class)
+        Name argument = (Name)Character.class.getDeclaredMethod("getFriendsOf", Character.class)
                                                      .getParameterAnnotations()[0][0];
         Description description = (Description) Character.class.getDeclaredMethod("getFriendsOf", Character.class)
                                                                .getParameterAnnotations()[0][1];
@@ -65,7 +65,7 @@ public class SchemaNameTest {
     
     @Test
     public void testSchemaNameAnnotationOnNameField() throws Exception {
-        SchemaName inputField = SchemaNameTest.Character.class.getDeclaredField("name").getAnnotationsByType(SchemaName.class)[0];
+        Name inputField = NameTest.Character.class.getDeclaredField("name").getAnnotationsByType(Name.class)[0];
         assertEquals(inputField.value(),"theName");
     }
 }

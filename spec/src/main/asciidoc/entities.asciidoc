@@ -107,7 +107,7 @@ in the enumerated type.
 
 In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
 
-- It must be the return type or parameter (annotated with `@SchemaName`) of a query or mutation method,
+- It must be the return type or parameter (annotated with `@Name`) of a query or mutation method,
 - It must be annotated with `@Type`,
 - It must be annotated with `@InputType`
 
@@ -243,13 +243,13 @@ part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This a
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
 not interested in.
 
-Users can use the `@SchemaName` annotation to specify a different field name for the input field in the GraphQL
+Users can use the `@Name` annotation to specify a different field name for the input field in the GraphQL
 schema. For example:
 
 ```
 public class Widget {
 
-    @SchemaName("cost")
+    @Name("cost")
     private float price;
     // ... public getters/setters
 }
