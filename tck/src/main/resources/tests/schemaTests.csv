@@ -96,3 +96,7 @@
 
 # testSchemaContainsDefaultValueOnEntitySetter
 51|input ItemInput     |   description: String = "An unidentified item"            |   Missing default value in Input String field
+
+# testWithArgumentNameAndDefaultValue
+52|type Query          |   allHeroesIn(city: String = "New York, NY"): [SuperHero] |   Missing default value on argument
+53|type Query          |   allHeroesInTeam(team: String): [SuperHero]              |   Missing argument on Query
