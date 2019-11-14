@@ -44,6 +44,8 @@ all GraphQL implementations are expected to handle, the following scalar types:
 - `DateTime` - which maps to a Java `java.time.LocalDateTime`.
 - `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
 
+Note that an ID scalar must map to a Java `String` - anything else is considered a deployment error.
+
 The GraphQL specification also allows for users or implementers to define custom scalars:
 
 ==== Dates
