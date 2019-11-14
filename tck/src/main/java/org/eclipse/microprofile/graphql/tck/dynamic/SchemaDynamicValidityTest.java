@@ -49,8 +49,9 @@ import org.testng.Assert;
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class SchemaDynamicValidityTest extends Arquillian {
-    private static final Logger LOG = Logger.getLogger(SchemaDynamicValidityTest.class.getName());   
-    private static final String PATH = "graphql/schema.graphql";
+    private static final Logger LOG = Logger.getLogger(SchemaDynamicValidityTest.class.getName()); 
+    private static final String FILENAME = "schema.graphql";
+    private static final String PATH = "graphql/" + FILENAME;
     
     private String schema;
     
@@ -92,14 +93,14 @@ public class SchemaDynamicValidityTest extends Arquillian {
     
     private void saveSchemaFile(){
         try{
-            Path downloadedSchema = Paths.get("target" + FS  + "schema.graphql");
+            Path downloadedSchema = Paths.get("target" + FS  + FILENAME);
             Path createFile = Files.createFile(downloadedSchema);
             try(BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))){
                 writer.write(this.schema);
             }
             LOG.log(Level.INFO, "Schema written to {0}", createFile.toUri());
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Could not save schema file to target" + FS + "schema.graphql - {0}", ex.getMessage());
+            LOG.log(Level.SEVERE, "Could not save schema file to target" + FS + FILENAME + " - {0}", ex.getMessage());
         }
     }
     

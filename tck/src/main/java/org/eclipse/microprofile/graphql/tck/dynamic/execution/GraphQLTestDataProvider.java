@@ -88,7 +88,10 @@ public class GraphQLTestDataProvider {
         for (Path testFolder : testFolders) {
             if(!testFolder.getFileName().toString().startsWith("META-INF")){// Ignore META-INF
                 try {
-                    testDataList.add(toTestData(testFolder));
+                    TestData testData = toTestData(testFolder);
+                    if(!testData.shouldIgnore()){
+                        testDataList.add(testData);
+                    }
                 } catch (IOException ioe) {
                     LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", new Object[]{testFolder.getFileName().toString(), ioe.getMessage()});
                 }

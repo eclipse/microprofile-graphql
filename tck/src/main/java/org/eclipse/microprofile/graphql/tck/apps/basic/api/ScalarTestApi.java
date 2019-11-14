@@ -36,9 +36,9 @@ public class ScalarTestApi {
     @Query("testScalarsInPojo")
     public ScalarHolder getScalarHolder() {
         ScalarHolder sh = new ScalarHolder();
-        sh.setBigDecimalObject(new BigDecimal(123.123));
-        sh.setBigIntegerObject(new BigInteger("123"));
-        sh.setBooleanObject(new Boolean(false));
+        sh.setBigDecimalObject(BigDecimal.valueOf(123.123));
+        sh.setBigIntegerObject(BigInteger.valueOf(123));
+        sh.setBooleanObject(Boolean.valueOf(false));
         sh.setBooleanPrimitive(false);
         sh.setByteObject(new Byte("123"));
         byte b = 123;
