@@ -49,7 +49,7 @@ The GraphQL specification also allows for users or implementers to define custom
 ==== Dates
 By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
 
-- `yyyy-MM-dd'T'HH:mm:ss'Z'`for DateTime
+- `yyyy-MM-dd\'T\'HH:mm:ss\'Z'` for DateTime
 - `yyyy-MM-dd` for Date
 - `HH:mm:ss` for Time 
 
@@ -65,7 +65,8 @@ GraphQL offers enumerable types similar to Java `enum` types. When a Java `enum`
 parameter of a query/mutation method or a field of an entity, the implementation will produce the GraphQL `enum` type in
 the schema. For example:
 
-```
+[source,java,numbered]
+----
 @Type
 public class SuperHero {
     private ShirtSize tshirtSize; // public getters/setters, ...
@@ -74,10 +75,12 @@ public class SuperHero {
         S, M, L, XL
     }
 }
-```
+----
 
 The implementation would generate a schema that would include:
-```
+
+[source,graphql,numbered]
+----
 enum ShirtSize {
   L
   M
@@ -85,19 +88,19 @@ enum ShirtSize {
   XL
 }
 
-type SuperHero @_mappedType(type : "__internal__") {
+type SuperHero {
   #...
-  tshirtSize: ShirtSize @_mappedOperation(operation : "__internal__")
+  tshirtSize: ShirtSize
   #...
 }
 
-input SuperHeroInput @_mappedType(type : "__internal__") {
+input SuperHeroInput
   #...
-  tshirtSize: ShirtSize @_mappedInputField(inputField : "__internal__")
+  tshirtSize: ShirtSize
   #...
 }
 #...
-```
+----
 
 When using an enumerated type, it is considered a validation error when the client enters a value that is not included
 in the enumerated type.
@@ -148,7 +151,8 @@ allows the GraphQL schema to better align with the Java application's model and 
 with `@Interface`. The MP GraphQL implementation must then generate a schema where every class in the application that
 implements that Java interface must have a type in the schema that implements the GraphQL interface. For example:
 
-```
+[source,java,numbered]
+----
 @Interface
 public interface Character {
     public String getName();
@@ -162,7 +166,7 @@ public class SuperHero implements Character {
     @Description("Name of hero")
     public String getName() { return name; }
 
-    ...
+    // ...
 }
 
 public class Villain implements Character {
@@ -173,13 +177,14 @@ public class Villain implements Character {
     @Description("Name of villain")
     public String getName() { return name; }
 
-    ...
+    // ...
 }
-```
+----
 
 This should generate a schema like:
 
-```
+[source,graphql,numbered]
+----
 interface Character {
   name: String
 }
@@ -187,15 +192,15 @@ interface Character {
 type SuperHero implements Character {
   #Name of hero
   name: String
-  ...
+  #...
 }
 
 type Villain implements Character {
   #Name of villain
   name: String
-...
+  #...
 }
-```
+----
 
 ==== Limitations
 
@@ -213,19 +218,21 @@ also queries.
 
 Consider the following example:
 
-```
+[source,java,numbered]
+----
 public class SuperHero {
     private String name;
     private String realName;
     private List<String> superPowers;
     // ...
 }
-```
+----
 
 The Java fields, `name`, `realName` and `superPowers` are all GraphQL fields of the `SuperHero` entity type. Now
 consider this example:
 
-```
+[source,java,numbered]
+----
 @GraphQLApi
 public class MyQueries {
 
@@ -235,7 +242,7 @@ public class MyQueries {
     }
     // ...
 }
-```
+----
 
 The above query adds a new field to the `SuperHero` GraphQL entity type, called `currentLocation`.  This field is not 
 part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This association is made by using the
@@ -246,24 +253,27 @@ not interested in.
 Users can use the `@Name` annotation to specify a different field name for the input field in the GraphQL
 schema. For example:
 
-```
+[source,java,numbered]
+----
 public class Widget {
 
     @Name("cost")
     private float price;
     // ... public getters/setters
 }
-```
+----
 
 This would result in a schema that looks something like:
-```
+
+[source,graphql,numbered]
+----
 type Widget {
     price: Float!
 }
 input WidgetInput {
     cost: Float!
 }
-```
+----
 
 === Other annotations available on Complex Objects
 

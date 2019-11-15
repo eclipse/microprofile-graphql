@@ -60,7 +60,8 @@ It is possible in GraphQL to send back some results even though the overall requ
 This is possible by passing the partial results to the `GraphQLException` (or subclass of `GraphQLException`) that is
 thrown by the query or mutation method.  For example:
 
-```
+[source,java,numbered]
+----
 @Query
 public Collection<SuperHero> allHeroesFromCalifornia() throws GraphQLException {
     List<SuperHero> westCoastHeroes = new ArrayList<>();
@@ -75,7 +76,7 @@ public Collection<SuperHero> allHeroesFromCalifornia() throws GraphQLException {
     }
     return westCoastHeroes;
 }
-```
+----
 
 If an exception is thrown while iterating over of the database collection of heroes or while checking a hero's location,
 all previously-processed heroes will still be in the list and will be displayed to the client along with the error
@@ -88,7 +89,8 @@ a much less usable result returned to the client.
 It is also possible to send partial results when using multiple methods and the `@Source` annotation. Here is an
 example:
 
-```
+[source,java,numbered]
+----
 @Query
 public Collection<SuperHero> allHeroes() {
     return database.getAllHeroes();
@@ -101,17 +103,19 @@ public Location currentLocation(@Source SuperHero hero) throws GraphQLException 
     }
     return database.getLocationForHero(hero);
 }
-```
+----
 
 Suppose the client issued this query:
-```
+
+[source,graphql,numbered]
+----
 query allHeroes {
     allHeroes {
         name
         currentLocation
     }
 }
-```
+----
 
 In this case, if there are any heroes that have a location blocking power, one or more errors will be returned to the
 client. However, the names of all of the heroes in the database will be returned as well as the location of all heroes
