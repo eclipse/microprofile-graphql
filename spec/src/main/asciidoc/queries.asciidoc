@@ -86,7 +86,7 @@ type Query {
   ...
   #Returns the super hero with the specified name
   superHero(name: String): [SuperHero] 
-  ...
+  #...
 ----
 
 The `@Description` annotation can also be placed on parameters of a query method to provide documentation for the
@@ -113,7 +113,7 @@ type Query {
   #Super hero name, not real name
   name: String
   ): SuperHero 
-  ...
+  #...
 ----
 
 ==== Unnamed queries
