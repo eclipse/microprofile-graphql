@@ -23,6 +23,7 @@ import java.time.LocalTime;
 import javax.json.bind.annotation.JsonbProperty;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Id;
+import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.Query;
 
@@ -71,15 +72,17 @@ public class ScalarTestApi {
         return sh;
     }
  
+    @Mutation
+    public ScalarHolder setScalarHolder(ScalarHolder scalarHolder) {
+        return scalarHolder;
+    }
     
     @Query
-    @JsonbProperty("testShortPrimitive")
-    public short shortPrimitive(){
+    public short getShortPrimitive(){
         return getScalarHolder().getShortPrimitive();
     }
     @Query
-    @Name("testShortObject")
-    public Short shortObject(){
+    public Short getShortObject(){
         return getScalarHolder().getShortPrimitive();
     }
 
@@ -132,13 +135,11 @@ public class ScalarTestApi {
     }
 
     @Query
-    @JsonbProperty("testBooleanPrimitive")
-    public boolean booleanPrimitive(){
+    public boolean isBooleanPrimitive(){
         return getScalarHolder().isBooleanPrimitive();
     }
     @Query
-    @Name("testBooleanObject")
-    public Boolean booleanObject(){
+    public Boolean isBooleanObject(){
         return getScalarHolder().getBooleanObject();
     }
 
