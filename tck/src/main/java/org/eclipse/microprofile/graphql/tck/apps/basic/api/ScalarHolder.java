@@ -20,6 +20,8 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.UUID;
+
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Id;
 
@@ -64,6 +66,24 @@ public class ScalarHolder {
     private LocalDateTime dateTimeObject;
     @Id
     private String id;
+    @Id
+    private long longPrimitiveId;
+    @Id
+    private int intPrimitiveId;
+    @Id
+    private double doublePrimitiveId;
+    @Id
+    private float floatPrimitiveId;
+    @Id
+    private Long longObjectId;
+    @Id
+    private Integer integerObjectId;
+    @Id
+    private Double doubleObjectId;
+    @Id
+    private Float floatObjectId;
+    @Id
+    private UUID uuidId;
 
     public ScalarHolder() {
 
@@ -259,6 +279,78 @@ public class ScalarHolder {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public long getLongPrimitiveId() {
+        return longPrimitiveId;
+    }
+
+    public void setLongPrimitiveId(long longPrimitiveId) {
+        this.longPrimitiveId = longPrimitiveId;
+    }
+
+    public int getIntPrimitiveId() {
+        return intPrimitiveId;
+    }
+
+    public void setIntPrimitiveId(int intPrimitiveId) {
+        this.intPrimitiveId = intPrimitiveId;
+    }
+
+    public double getDoublePrimitiveId() {
+        return doublePrimitiveId;
+    }
+
+    public void setDoublePrimitiveId(double doublePrimitiveId) {
+        this.doublePrimitiveId = doublePrimitiveId;
+    }
+
+    public float getFloatPrimitiveId() {
+        return floatPrimitiveId;
+    }
+
+    public void setFloatPrimitiveId(float floatPrimitiveId) {
+        this.floatPrimitiveId = floatPrimitiveId;
+    }
+
+    public Long getLongObjectId() {
+        return longObjectId;
+    }
+
+    public void setLongObjectId(Long longObjectId) {
+        this.longObjectId = longObjectId;
+    }
+
+    public Integer getIntegerObjectId() {
+        return integerObjectId;
+    }
+
+    public void setIntegerObjectId(Integer integerObjectId) {
+        this.integerObjectId = integerObjectId;
+    }
+
+    public Double getDoubleObjectId() {
+        return doubleObjectId;
+    }
+
+    public void setDoubleObjectId(Double doubleObjectId) {
+        this.doubleObjectId = doubleObjectId;
+    }
+
+    public Float getFloatObjectId() {
+        return floatObjectId;
+    }
+
+    public void setFloatObjectId(Float floatObjectId) {
+        this.floatObjectId = floatObjectId;
+    }
+
+    public UUID getUuidId() {
+        return uuidId;
+    }
+
+    public void setUuidId(UUID uuidId) {
+        this.uuidId = uuidId;
     }
 
 }
