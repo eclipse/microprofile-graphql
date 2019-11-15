@@ -250,7 +250,7 @@ part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This a
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
 not interested in.
 
-Users can use the `@Name` annotation to specify a different field name for the input field in the GraphQL
+Users can use the `@Name` annotation to specify a different field name for the field in the GraphQL
 schema. For example:
 
 [source,java,numbered]
@@ -268,6 +268,68 @@ This would result in a schema that looks something like:
 [source,graphql,numbered]
 ----
 type Widget {
+    cost: Float!
+}
+input WidgetInput {
+    cost: Float!
+}
+----
+
+By putting the `@Name` annotation on the `getter` method, rather than the field, the name will only apply to the `Type`, eg:
+
+[source,java,numbered]
+----
+public class Widget {
+
+    private float price;
+    
+    @Name("cost")
+    public float getPrice(){
+        return this.price;
+    }
+
+    public void setPrice(float price){
+        this.price = price;
+    }
+}
+----
+
+This would result in a schema that looks something like:
+
+[source,graphql,numbered]
+----
+type Widget {
+    cost: Float!
+}
+input WidgetInput {
+    price: Float!
+}
+----
+
+The input type keeps the default field name. Similarly, when the `@Name` annotation is only placed on the `setter` method, the name will only apply to the `InputType`, eg:
+
+[source,java,numbered]
+----
+public class Widget {
+
+    private float price;
+    
+    public float getPrice(){
+        return this.price;
+    }
+
+    @Name("cost")
+    public void setPrice(float price){
+        this.price = price;
+    }
+}
+----
+
+This would result in a schema that looks something like:
+
+[source,graphql,numbered]
+----
+type Widget {
     price: Float!
 }
 input WidgetInput {
@@ -275,6 +337,36 @@ input WidgetInput {
 }
 ----
 
+When the default name is used, i.e, there is no annotation specifying the name, the field name will always be used, and not the method name. 
+
+The same applies to `Query` and `Mutation` methods. If that method starts with `get`, `set` or `is`, that will be removed when detirmining the name. Eg:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+
+    @Query
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+This would result in a schema that looks something like this:
+ 
+[source,graphql,numbered]
+----
+#Query root
+type Query {
+  #...
+  currentLocation(arg0: SuperHeroInput): String
+  #...
+}
+----
+
+Note that the `get` is removed from the name in the schema.
+  
 === Other annotations available on Complex Objects
 
 ==== Description
