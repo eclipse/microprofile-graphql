@@ -48,7 +48,15 @@
 47| type Query          |   testCharArray: [Char]                                   |   Expecting a non null Char Array Scalar Type in type Query
 48| type Query          |   testTimeObject: Time                                    |   Expecting a Time Scalar Type in type Query
 49| type Mutation       |   scalarHolder(arg0: ScalarHolderInput): ScalarHolder     |   Expecting a Mutation with the set removed from the name, scalarHolder.
-# Default Time Descriptions
-50|type ScalarHolder|#yyyy-MM-dd                 |Missing Default Date Format description on Output Type
-51|type ScalarHolder|#yyyy-MM-dd'T'HH:mm:ss'Z'   |Missing Default DateTime Format description on Output Type
-52|type ScalarHolder|#HH:mm:ss                   |Missing Default Time Format description on Output Type
+50| type ScalarHolder   |   #yyyy-MM-dd                                             |   Missing Default Date Format description on Output Type
+51| type ScalarHolder   |   #yyyy-MM-dd'T'HH:mm:ss'Z'                               |   Missing Default DateTime Format description on Output Type
+52| type ScalarHolder   |   #HH:mm:ss                                               |   Missing Default Time Format description on Output Type
+53| type ScalarHolder   |   longPrimitiveId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, long
+54| type ScalarHolder   |   intPrimitiveId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, int
+55| type ScalarHolder   |   doublePrimitiveId: ID                                   |   Expecting a ID Scalar Type in type ScalarHolder, double
+56| type ScalarHolder   |   floatPrimitiveId: ID                                    |   Expecting a ID Scalar Type in type ScalarHolder, float
+57| type ScalarHolder   |   longObjectId: ID                                        |   Expecting a ID Scalar Type in type ScalarHolder, long
+58| type ScalarHolder   |   integerObjectId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, Integer
+59| type ScalarHolder   |   doubleObjectId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, Double
+60| type ScalarHolder   |   floatObjectId: ID                                       |   Expecting a ID Scalar Type in type ScalarHolder, Float
+61| type ScalarHolder   |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
