@@ -61,23 +61,22 @@ That would create a schema like this:
 .JsonbProperty Schema Example
 [source,graphql,numbered]
 ----
-type Widget @_mappedType(type : "__internal__") {
-  widgetName: String @_mappedOperation(operation : "__internal__")
-  quantity: Int! @_mappedOperation(operation : "__internal__")
-  shippingWeight: Float! @_mappedOperation(operation : "__internal__")
+type Widget {
+    widgetName: String
+    quantity: Int!
+    shippingWeight: Float!
 }
 
-input WidgetInput @_mappedType(type : "__internal__") {
-  widgetName: String @_mappedInputField(inputField : "__internal__")
-  qty: Int! @_mappedInputField(inputField : "__internal__")
-  weight: Float! @_mappedInputField(inputField : "__internal__")
+input WidgetInput {
+    widgetName: String
+    qty: Int!
+    weight: Float!
 }
 ----
 
-
 Similarly, the `@JsonbTransient` annotation can be used to ignore certain fields from the type or input type in the 
 schema. The same rules apply: if the annotation is on the getter, then the field is ignored in the type; if the
-annotation is on the setter, then the field is ingored in the input type; if the annotation is on the Java field, it
+annotation is on the setter, then the field is ignored in the input type; if the annotation is on the Java field, it
 is ignored in both.
 
 Here is an example, similar to the previous example:
@@ -110,12 +109,12 @@ That would create a schema like this:
 .JsonbTransient Schema Example
 [source,graphql,numbered]
 ----
-type Widget @_mappedType(type : "__internal__") {
-  quantity: Int! @_mappedOperation(operation : "__internal__")
+type Widget {
+    quantity: Int!
 }
 
-input WidgetInput @_mappedType(type : "__internal__") {
-  weight: Float! @_mappedInputField(inputField : "__internal__")
+input WidgetInput {
+    weight: Float!
 }
 ----
 

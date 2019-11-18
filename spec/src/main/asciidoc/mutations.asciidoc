@@ -96,3 +96,25 @@ public SuperHero addNewPowerToHero(@Name("hero") SuperHero hero,
     return heroFromDB;
 }
 ----
+
+==== Void Mutations
+
+Like query methods, mutation methods are expected to return some value, thus it is considered a deployment error for a
+method with a `void` return type to be annotated with `@Mutation`. If a void method is annotated with the `@Mutation`
+annotation, the implementation must prevent the application from starting and should provide a log message indicating
+that this is not allowed.
+
+==== Mutation Names
+
+The name of a mutation in the schema is obtained using the following order:
+
+* if the method is annotated with a `@Mutation` annotation containing a non-empty String for it's value, that String
+value is used as the mutation name.
+* if the method is annotated with a `@Name` annotation containing a non-empty String for it's value, that String value
+is used as the mutation name.
+* if the method is annotated with a `@JsonbProperty` annotation containing a non-empty String for it's value, that
+String value is used as the mutation name.
+* if no other name can be determined, the Java method name is used as the mutation name.
+
+Note that it is considered a deployment error if more than one mutation method has the same name with the same
+arguments.
