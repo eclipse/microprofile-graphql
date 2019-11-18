@@ -348,7 +348,7 @@ input WidgetInput {
 
 When the default name is used, i.e, there is no annotation specifying the name, the field name will always be used, and not the method name. 
 
-The same applies to `Query` and `Mutation` methods. If that method starts with `get`, `set` or `is`, that will be removed when detirmining the name. Eg:
+The same applies to `Query` and `Mutation` methods. If that method starts with `get`, `set` or `is`, that will be removed when determining the name. Eg:
 
 [source,java,numbered]
 ----
@@ -375,7 +375,58 @@ type Query {
 ----
 
 Note that the `get` is removed from the name in the schema.
-  
+
+Even though `@Name` is not required on an input argument for a `@Query` or `@Mutation`, it is strongly recommended
+as it is the only guaranteed portable way to ensure the argument names.
+
+If a user compiles with `-parameters` option, then the implementation should try to use the Java parameter names as the schema argument names, 
+but this is not a requirement. Some implementations may still have trouble getting the parameter names even with the `-parameters` option.
+
+Example recommended argument usage (with annotation):
+
+[source,java,numbered]
+----
+@Query
+public SuperHero superHero(@Name("name") String name) {
+    return heroDB.getHero(name);
+}
+----
+
+Above will result in:
+
+[source,graphql,numbered]
+----
+#Query root
+type Query {
+  # ...
+  superHero(name: String): SuperHero
+  # ...
+----
+
+If the `@Name` annotation is not present, and the user did not compile with the `-parameters` option, or the implementation 
+does not support the `-parameters` option, arguments will get generic names like `arg0`, `arg1` and so on.
+
+Example argument usage (with no annotation):
+
+[source,java,numbered]
+----
+@Query
+public SuperHero superHero(String name) {
+    return heroDB.getHero(name);
+}
+----
+
+Above will result in:
+
+[source,graphql,numbered]
+----
+#Query root
+type Query {
+  # ...
+  superHero(arg0: String): SuperHero
+  # ...
+----
+
 === Other annotations available on Complex Objects
 
 ==== Description
