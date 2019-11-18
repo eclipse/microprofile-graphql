@@ -115,7 +115,7 @@ In order for an entity class to be defined in the GraphQL schema, it must meet a
 
 - It must be the return type or parameter (annotated with `@Name`) of a query or mutation method,
 - It must be annotated with `@Type`,
-- It must be annotated with `@InputType`
+- It must be annotated with `@Input`
 
 Any Plain Old Java Object (POJO) can be an entity.  No special annotations are required. Implementations of MicroProfile
 GraphQL must use JSON-B to serialize and deserialize entities to JSON, so it is possible to further define entities
@@ -124,7 +124,7 @@ using JSON-B annotations.
 If the entity cannot be serialized by JSON-B, the implementation must return in an internal server error to the client.
 
 [[types]]
-==== Types vs InputTypes
+==== Types vs Input
 
 GraphQL differentiates types from input types.  Input types are entities that are sent by the client as arguments to
 queries or mutations. Types are entities that are sent from the server to the client as return types from queries or
@@ -133,7 +133,7 @@ mutations.
 In many cases the same Java type can be used for input (sent _from_ the client) and output (sent _to_ the client), but
 there are cases where an application may need two different Java types to handle input and output.
 
-The `@Type` annotation is used for output entities while the `@InputType` annotation is used for input entities.
+The `@Type` annotation is used for output entities while the `@Input` annotation is used for input entities.
 
 Normally these annotations are unnecessary if the type can be serialized and/or deserialized by JSON-B, and if the type
 is specified in a query or mutation method. These annotations can be used to specify the name of the type in the GraphQL
@@ -309,7 +309,7 @@ input WidgetInput {
 }
 ----
 
-The input type keeps the default field name. Similarly, when the `@Name` annotation is only placed on the `setter` method, the name will only apply to the `InputType`, eg:
+The input type keeps the default field name. Similarly, when the `@Name` annotation is only placed on the `setter` method, the name will only apply to the `Input`, eg:
 
 [source,java,numbered]
 ----

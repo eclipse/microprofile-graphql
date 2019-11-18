@@ -28,8 +28,8 @@ import java.lang.annotation.Target;
  * For example, a user might annotate a class as such:
  * 
  * <pre>
- * {@literal @}InputType("StarshipInput")
- * {@literal @}Description("Input type for a starship")
+ * {@literal @}Input("StarshipInput")
+ {@literal @}Description("Input type for a starship")
  * public class Starship {
  *     private String id;
  *     private String name;
@@ -53,7 +53,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @Documented
-public @interface InputType {
+public @interface Input {
 
     /**
      * @return the name of the GraphQL input type.
