@@ -64,8 +64,13 @@ By adding the JSON-B annotation `@JsonbDateFormat` a user can change the format.
 [[enums]]
 === Enumerable types
 
-GraphQL offers enumerable types similar to Java `enum` types. When a Java `enum` type is specified as the return type or
-parameter of a query/mutation method or a field of an entity, the implementation will produce the GraphQL `enum` type in
+GraphQL offers enumerable types similar to Java `enum` types. 
+In order for an enum to be defined in the GraphQL schema, it must meet at least one of the following criteria:
+
+- It must be the return type or parameter (optionally annotated with `@Name`) of a query or mutation method,
+- It must be annotated with `@Enum`
+
+The implementation will produce the GraphQL `enum` type in
 the schema. For example:
 
 [source,java,numbered]
@@ -74,6 +79,7 @@ the schema. For example:
 public class SuperHero {
     private ShirtSize tshirtSize; // public getters/setters, ...
 
+    @Enum("ClothingSize)
     public enum ShirtSize {
         S, M, L, XL
     }
@@ -84,7 +90,7 @@ The implementation would generate a schema that would include:
 
 [source,graphql,numbered]
 ----
-enum ShirtSize {
+enum ClothingSize {
   L
   M
   S
@@ -93,13 +99,13 @@ enum ShirtSize {
 
 type SuperHero {
   #...
-  tshirtSize: ShirtSize
+  tshirtSize: ClothingSize
   #...
 }
 
 input SuperHeroInput
   #...
-  tshirtSize: ShirtSize
+  tshirtSize: ClothingSize
   #...
 }
 #...
@@ -113,7 +119,7 @@ in the enumerated type.
 
 In order for an entity class to be defined in the GraphQL schema, it must meet at least one of the following criteria:
 
-- It must be the return type or parameter (annotated with `@Name`) of a query or mutation method,
+- It must be the return type or parameter (optionally annotated with `@Name`) of a query or mutation method,
 - It must be annotated with `@Type`,
 - It must be annotated with `@Input`
 
