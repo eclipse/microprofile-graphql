@@ -36,18 +36,18 @@ import org.testng.annotations.DataProvider;
  */
 public class SchemaTestDataProvider {
     private static final Logger LOG = Logger.getLogger(SchemaTestDataProvider.class.getName());
-    
+
     private SchemaTestDataProvider(){
     }
-    
+
     @DataProvider(name = "schemaSnippets")
     public static Object[][] getSnippetTestData(){
         List<Path> dataFiles = getDataFiles();
-        
+
         List<TestData> testDataList = toListOfTestData(dataFiles);
-        
+
         Object[][] testParameters = new Object[testDataList.size()][1];
-        
+
         for (int row = 0; row < testDataList.size(); row++) {
             TestData testData = testDataList.get(row);
             testParameters[row][0] = testData;
@@ -55,7 +55,7 @@ public class SchemaTestDataProvider {
 
         return testParameters;
     }
-    
+
     private static List<Path> getDataFiles() {
         List<Path> f = new ArrayList<>();
         try {
@@ -65,10 +65,10 @@ public class SchemaTestDataProvider {
         }
         try {
             f.addAll(toListOfPaths(DynamicPaths.getDataForSpecification()));
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             LOG.log(Level.WARNING, "No specification tests found [{0}]", ex.getMessage());
         }
-        
+
         return f;
     }
     
@@ -94,7 +94,7 @@ public class SchemaTestDataProvider {
         }
         return testDataList;
     }
-    
+
     private static List<TestData> toTestData(Path testFile) throws IOException{
         List<TestData> testDataList = new LinkedList<>();
         List<String> content = Files.readAllLines(testFile);
@@ -115,7 +115,7 @@ public class SchemaTestDataProvider {
         }
         return testDataList;
     }
-    
+
     private static TestData createTestData(String header, String filename,String[] parts){
         TestData testData = new TestData();
         testData.setCount(Integer.valueOf(parts[0]));
@@ -133,15 +133,15 @@ public class SchemaTestDataProvider {
 
         return testData;
     }
-    
+
     private static boolean validLine(String line){
         return !line.isEmpty() && line.trim().contains(PIPE) && !isHeader(line);
     }
-    
+
     private static boolean isHeader(String line){
         return line.trim().startsWith(COMMENT);
     }
-    
+
     private static final String PIPE = "|";
     private static final String DELIMITER = "\\" + PIPE;
     private static final String COMMENT = "#";

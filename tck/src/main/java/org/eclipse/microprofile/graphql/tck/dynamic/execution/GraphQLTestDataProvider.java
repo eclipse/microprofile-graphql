@@ -46,24 +46,24 @@ import org.testng.annotations.DataProvider;
  */
 public class GraphQLTestDataProvider {
     private static final Logger LOG = Logger.getLogger(GraphQLTestDataProvider.class.getName());
-    
+
     private static enum DataFrom {
         implementation,specification
     }
-    
+
     private GraphQLTestDataProvider(){
     }
-    
+
     @DataProvider(name="specification")
     public static Object[][] getSpecificationTestData(){
         return getTestData(DataFrom.specification);
     }
-    
+
     @DataProvider(name="implementation")
     public static Object[][] getImplementationTestData(){
         return getTestData(DataFrom.implementation);
     }
-    
+
     private static Object[][] getTestData(DataFrom dataFrom){
         try {
             DirectoryStream<Path> directoryStream = null;
@@ -72,12 +72,12 @@ public class GraphQLTestDataProvider {
             }else{
                 directoryStream = DynamicPaths.getDataForImplementation();
             }
-            
+
             List<Path> testFolders = toListOfPaths(directoryStream);
             List<TestData> testDataList = toListOfTestData(testFolders);
             sort(testDataList);
             return toObjectArray(testDataList);
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             LOG.log(Level.INFO, "No " + dataFrom.name() + " specific tests found [{0}]", ex.getMessage());
             return new Object[][]{};
         }
@@ -96,11 +96,10 @@ public class GraphQLTestDataProvider {
                     LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", new Object[]{testFolder.getFileName().toString(), ioe.getMessage()});
                 }
             }
-            
         }
         return testDataList;
     }
-   
+
     private static Object[][] toObjectArray(List<TestData> testDataList){
         Object[][] testParameters = new Object[testDataList.size()][1];
         for (int row = 0; row < testDataList.size(); row++) {
@@ -113,7 +112,7 @@ public class GraphQLTestDataProvider {
         }
         return testParameters;
     }
-    
+
     private static void sort(List<TestData> testDataList){
         Collections.sort(testDataList, new Comparator<TestData>() {
             @Override
@@ -122,17 +121,17 @@ public class GraphQLTestDataProvider {
             }
         });
     }
-    
+
     private static TestData toTestData(Path folder) throws IOException {
         TestData testData = new TestData(folder.getFileName().toString().replace("/", ""));
         Files.walkFileTree(folder,new HashSet<>(), 1, new FileVisitor<Path>() {
-        
+
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                     throws IOException {
-                
+
                 String filename = file.getFileName().toString();
-                
+
                 switch (filename) {
                     case "input.graphql":
                         {
@@ -182,7 +181,7 @@ public class GraphQLTestDataProvider {
                         LOG.log(Level.WARNING, "Ignoring unknown file {0}", filename);
                         break;
                 }
-                
+
                 return FileVisitResult.CONTINUE;
             }
 
@@ -192,25 +191,25 @@ public class GraphQLTestDataProvider {
                 LOG.log(Level.SEVERE, "Could not load file {0}[{1}]", new Object[]{file, exc.getMessage()});
                 return FileVisitResult.CONTINUE;
             }
-            
+
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 return FileVisitResult.CONTINUE;
             }
-            
+
             @Override
             public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
                 return FileVisitResult.CONTINUE;
             }
         });
-        
+
         return testData;
     }
-    
+
     private static String getFileContent(Path file) throws IOException {
         return new String(Files.readAllBytes(file));
     }
-    
+
     private static List<Path> toListOfPaths(DirectoryStream<Path> directoryStream){
         List<Path> files = new ArrayList<>();
         for(Path p: directoryStream){
@@ -220,7 +219,7 @@ public class GraphQLTestDataProvider {
         }
         return files;
     }
-    
+
     private static JsonObject toJsonObject(String jsonString){
         if(jsonString==null || jsonString.isEmpty()) {
             return null;
@@ -228,5 +227,5 @@ public class GraphQLTestDataProvider {
         try (JsonReader jsonReader = Json.createReader(new StringReader(jsonString))) {
             return jsonReader.readObject();
         }
-    } 
+    }
 }
