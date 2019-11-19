@@ -29,6 +29,7 @@ import java.net.ProtocolException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -52,33 +53,35 @@ import org.testng.annotations.Test;
  */
 public class ExecutionDynamicTest extends Arquillian {
     private static final Logger LOG = Logger.getLogger(ExecutionDynamicTest.class.getName());   
-    
+
     private static final String PATH = "graphql"; // Default. TODO: Test when configured
-    
+
     private static final String UTF8 = "utf-8";
     private static final String MEDIATYPE_JSON = "application/json";
     private static final String HEADER_CONTENT_TYPE = "Content-Type";
     private static final String HEADER_ACCEPT = "Accept";
     private static final String QUERY = "query";
     private static final String VARIABLES = "variables";
-    
+    private static final int CONNECT_TIMEOUT = Integer.getInteger("mp.tck.connect.timeout", 5000);
+    private static final int READ_TIMEOUT = Integer.getInteger("mp.tck.read.timeout", 5000);
+
     private TestData currentTestData = null;
     private String currentOutput = null;
-    
+
     @ArquillianResource
     private URI uri;
-    
+
     @Deployment
     public static Archive<?> getDeployment() throws Exception {
         return DeployableUnit.getDeployment("tck-dynamic");
     }
-    
+
     @RunAsClient
     @Test(dataProvider="specification", dataProviderClass = GraphQLTestDataProvider.class)
     public void testSpecification(TestData testData){
         runTest(testData);
     }
-    
+
     @RunAsClient
     @Test(dataProvider="implementation", dataProviderClass = GraphQLTestDataProvider.class)
     public void testImplementationSpecific(TestData testData) throws IOException {
@@ -102,7 +105,7 @@ public class ExecutionDynamicTest extends Arquillian {
 
             // Run the actual test and get the response
             this.currentOutput = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
-            
+
             // Cleanup if needed
             if(isValidInput(testData.getCleanup())){
                 postHTTPRequest(testData.getCleanup(),testData.getVariables(),httpHeaders);
@@ -120,7 +123,7 @@ public class ExecutionDynamicTest extends Arquillian {
             LOG.warning("Could not find any tests to run...");
         }
     }
-    
+
     @AfterMethod
     public void tearDown(ITestResult result) {
        if (result.getStatus() == ITestResult.FAILURE) {
@@ -129,36 +132,38 @@ public class ExecutionDynamicTest extends Arquillian {
        this.currentTestData = null;
        this.currentOutput = null;
     }
-    
+
     private boolean isValidInput(String input){
         return input!=null && !input.isEmpty();
     }
-    
+
     private String postHTTPRequest(String graphQL, JsonObject variables, Map<String, String> httpHeaders){
         try {
             URL url = new URL(this.uri + PATH);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST"); // TODO: Also test with GET and query string ? Are we allowing it ?
-            
+
             setTimeouts(connection);
             addHeaders(connection,httpHeaders);
-            
+
             connection.setDoOutput(true);
-            
+
             JsonObject body = createRequestBody(graphQL, variables);
-            
+
             postRequest(connection,body);
-            
+
             return getResponse(connection);
-            
+
         } catch (ProtocolException pex) {
+            LOG.log(Level.SEVERE, "Caught ProtocolException attempting to post an HTTP request", pex);
             throw new RuntimeException(pex);
         } catch (IOException ex) {
+            LOG.log(Level.SEVERE, "Caught IOException attempting to post an HTTP request", ex);
             Assert.fail("Could not open a connection to the test server, is it running ?");
             throw new RuntimeException(ex);
         }
     }
-    
+
     private void addHeaders(HttpURLConnection connection,Map<String, String> httpHeaders){
         // Default headers
         connection.setRequestProperty(HEADER_CONTENT_TYPE, MEDIATYPE_JSON); // default header.
@@ -171,15 +176,13 @@ public class ExecutionDynamicTest extends Arquillian {
             }
         }
     }
-    
+
     private void setTimeouts(HttpURLConnection connection){
         // Set timeouts
-//        connection.setConnectTimeout(Integer.valueOf(CONNECT_TIMEOUT));
-//        connection.setReadTimeout(Integer.valueOf(READ_TIMEOUT));
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
+        connection.setConnectTimeout(CONNECT_TIMEOUT);
+        connection.setReadTimeout(READ_TIMEOUT);
     }
-    
+
     private JsonObject createRequestBody(String graphQL, JsonObject variables){
         // Create the request
         if(variables==null || variables.isEmpty()) {
@@ -187,14 +190,14 @@ public class ExecutionDynamicTest extends Arquillian {
         }
         return Json.createObjectBuilder().add(QUERY, graphQL).add(VARIABLES, variables).build();
     }
-    
+
     private void postRequest(HttpURLConnection connection,JsonObject body) throws IOException{
         try(OutputStream os = connection.getOutputStream()) {
             byte[] input = body.toString().getBytes(UTF8);
-            os.write(input, 0, input.length);           
+            os.write(input, 0, input.length);
         }   
     }
-    
+
     private String getResponse(HttpURLConnection connection) throws IOException{
         int status = connection.getResponseCode();
         if(status == 200) {
@@ -214,5 +217,4 @@ public class ExecutionDynamicTest extends Arquillian {
             throw new RuntimeException("Status " + status + " - " + connection.getResponseMessage());
         }
     }
-
 }
