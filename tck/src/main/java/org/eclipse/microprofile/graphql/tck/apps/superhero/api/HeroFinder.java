@@ -221,7 +221,7 @@ public class HeroFinder {
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    @Mutation
+    @Mutation("setRivalTeam")
     public Team setRivalTeam(@Name("teamName") String teamName, @Name("rivalTeam") Team rivalTeam)
             throws UnknownTeamException {
 
