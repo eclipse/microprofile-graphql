@@ -16,6 +16,7 @@
 package org.eclipse.microprofile.graphql.tck.dynamic;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystem;
@@ -31,17 +32,17 @@ import java.nio.file.Paths;
 public class DynamicPaths {
     private static final String SPEC = "/tests/";
     private static final String IMPL = "src/test/resources/tests";
-    
+
     private DynamicPaths(){}
-    
+
     public static DirectoryStream<Path> getDataForImplementation() throws IOException {
         Path folderPath = Paths.get(IMPL);
         return Files.newDirectoryStream(folderPath);
     }
-            
-    public static DirectoryStream<Path> getDataForSpecification() throws IOException{
+
+    public static DirectoryStream<Path> getDataForSpecification() throws IOException, URISyntaxException {
         URL jar = DynamicPaths.class.getProtectionDomain().getCodeSource().getLocation();
-        Path jarFile = Paths.get(jar.toString().substring("file:".length()));
+        Path jarFile = Paths.get(jar.toURI());
         FileSystem fs = FileSystems.newFileSystem(jarFile, null);
         return Files.newDirectoryStream(fs.getPath(SPEC));
     }
