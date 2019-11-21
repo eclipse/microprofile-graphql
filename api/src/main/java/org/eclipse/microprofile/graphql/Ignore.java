@@ -41,7 +41,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * {@literal @}Type("Starship")
- * {@literal @}InputType("StarshipInput")
+ * {@literal @}Input("StarshipInput")
  * {@literal @}Description("A starship in Star Wars")
  * public class Starship {
  *     private String id;

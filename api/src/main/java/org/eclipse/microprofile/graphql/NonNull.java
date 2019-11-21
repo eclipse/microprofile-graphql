@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * {@literal @}Type(name = "Starship", description = "A starship in StarWars")
- * {@literal @}InputType(name = "StarshipInput", description = "Input type for a starship")
+ * {@literal @}Input(name = "StarshipInput", description = "Input type for a starship")
  * public class Starship {
  *     private String id;
  *     {@literal @}NonNull

@@ -100,3 +100,6 @@
 # testWithArgumentNameAndDefaultValue
 52|type Query          |   allHeroesIn(city: String = "New York, NY"): [SuperHero] |   Missing default value on argument
 53|type Query          |   allHeroesInTeam(team: String): [SuperHero]              |   Missing argument on Query
+
+# testSourceFieldInType
+53|type SuperHero      |   currentLocation(arg0: SuperHeroInput): String           |   Expecting a currentLocation field in SuperHero due to Source annotation

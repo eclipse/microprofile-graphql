@@ -49,7 +49,7 @@ Mutations generally require arguments (parameters) in order to determine which e
 necessary to create a new entity, etc. These arguments are the parameters of the mutation method and should be annotated
 with `@Name`.  The `@Name` annotation's value is used to specify the name of the argument. The argument name
 will be used in the generated schema. Arguments can be GraphQL scalars or more complex input types (for more information
-on input types, see <<entities.asciidoc#types,Entities, Types vs InputTypes>>).
+on input types, see <<entities.asciidoc#types,Entities, Types vs Input>>).
 
 ==== Basic POJO Examples
 

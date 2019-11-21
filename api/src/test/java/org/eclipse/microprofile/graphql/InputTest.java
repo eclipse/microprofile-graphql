@@ -24,9 +24,9 @@ import static org.testng.Assert.assertEquals;
 /**
  * Simple test mainly as a placeholder for now.
  */
-public class InputTypeTest {
+public class InputTest {
 
-    @InputType("StarshipInput")
+    @Input("StarshipInput")
     @Description("StarshipInput type")
     private static class Starship {
         private String id;
@@ -36,7 +36,7 @@ public class InputTypeTest {
 
     @Test
     public void testInputTypeAnnotationOnStarshipClass() throws Exception {
-        InputType inputType = Starship.class.getAnnotation(InputType.class);
+        Input inputType = Starship.class.getAnnotation(Input.class);
         assertEquals(inputType.value(), "StarshipInput");
         Description description = Starship.class.getAnnotation(Description.class);
         assertEquals(description.value(), "StarshipInput type");
