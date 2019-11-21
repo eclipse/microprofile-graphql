@@ -102,4 +102,4 @@
 53|type Query          |   allHeroesInTeam(team: String): [SuperHero]              |   Missing argument on Query
 
 # testSourceFieldInType
-53|type SuperHero      |   currentLocation(arg0: SuperHeroInput): String           |   Expecting a currentLocation field in SuperHero due to Source annotation
+54|type SuperHero      |   currentLocation(arg0: SuperHeroInput): String           |   Expecting a currentLocation field in SuperHero due to Source annotation
