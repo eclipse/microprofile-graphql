@@ -216,10 +216,17 @@ public class HeroFinder {
     }
 
     @Name("secretToken")
-    public String generateSecretToken(@Source SuperHero hero) throws GraphQLException {
+    public String generateSecretToken(@Source SuperHero hero,
+                                      @DefaultValue("true") 
+                                      @Name("maskFirstPart") boolean maskFirstPart) throws GraphQLException {
         final String heroName = hero.getName();
         LOG.info("generating secret token for: " + heroName);
-        return UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
+        if(maskFirstPart){
+            return uuid.substring(0,uuid.length()-4).replaceAll("[A-Za-z0-9]", "*") + uuid.substring(uuid.length()-4,uuid.length());
+        }else{
+            return uuid;
+        }
     }
     
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {

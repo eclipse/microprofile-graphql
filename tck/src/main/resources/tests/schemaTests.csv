@@ -104,5 +104,5 @@
 # testSourceFieldInType
 54|type SuperHero      |   currentLocation: String                                 |   Expecting a currentLocation field in SuperHero due to Source annotation
 55|type Query          |   currentLocation(superHero: SuperHeroInput): String      |   Expecting a currentLocation query in Query to Source annotation
-56|type SuperHero      |   secretToken: String                                     |   Expecting a secretToken field in SuperHero due to Source annotation
-57|type Query          |   !secretToken(arg0: SuperHeroInput): String              |   Not expecting a secretToken query in Query
+56|type SuperHero      |   secretToken(maskFirstPart: Boolean = true): String      |   Expecting a secretToken field with a boolean argument in SuperHero due to Source annotation
+57|type Query          |   !secretToken(maskFirstPart: Boolean = true): String     |   Not expecting a secretToken query in Query
