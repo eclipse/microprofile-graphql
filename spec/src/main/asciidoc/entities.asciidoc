@@ -245,7 +245,6 @@ consider this example:
 @GraphQLApi
 public class MyQueries {
 
-    @Query
     public Location currentLocation(@Source SuperHero hero) {
         return getLocationForHero(hero.getName());
     }
@@ -258,6 +257,44 @@ part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This a
 `@Source` annotation. Also note that the `currentLocation` method will only be invoked if the client requests the
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
 not interested in.
+
+Above will add a field to the SuperHero type in the Schema:
+
+[source,graphql,numbered]
+----
+type SuperHero {
+    #...
+    currentLocation: String
+    #...
+}
+----
+
+You can also choose to expose the method containing the `@Source` annotation as a top-level `Query` by adding the `@Query` annotation:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+    
+    @Query
+    public Location currentLocation(@Source SuperHero hero) {
+        return getLocationForHero(hero.getName());
+    }
+    // ...
+}
+----
+
+Above will create the field on SuperHero as described before, and will also add a Query like this:
+
+[source,graphql,numbered]
+----
+#Query root
+type Query {
+    #...
+    currentLocation(arg0: SuperHeroInput): String
+    #...
+}
+----
 
 Users can use the `@Name` annotation to specify a different field name for the field in the GraphQL
 schema. For example:
@@ -425,6 +462,117 @@ type Query {
   # ...
   superHero(arg0: String): SuperHero
   # ...
+----
+
+When adding a `@Name` to a `@Source` method, you can name the field that should be added to the type, eg:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+
+    @Name("heroLocation")
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+Above will result in the schema like this:
+
+[source,graphql,numbered]
+----
+type SuperHero {
+    #...
+    heroLocation: String
+    #...
+}
+----
+
+Also making this a `Query` by adding the `@Query` annotation:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+    
+    @Query
+    @Name("heroLocation")
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+#Query root
+type Query {
+    #...
+    heroLocation(arg0: SuperHeroInput): String
+    #...
+}
+----
+
+If you want the field name generated in `SuperHero` and the query name to be different, you can name the Query like this:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+    
+    @Query("locationQuery")
+    @Name("heroLocation")
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+#Query root
+type Query {
+    #...
+    locationQuery(arg0: SuperHeroInput): String
+    #...
+}
+
+type SuperHero {
+    #...
+    heroLocation: String
+    #...
+}
+----
+
+As with any argument, you can also name the argument in the above scenario:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+    
+    @Query("locationQuery")
+    public Location getCurrentLocation(@Name("heroInput") @Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+#Query root
+type Query {
+    #...
+    locationQuery(heroInput: SuperHeroInput): String
+    #...
+}
 ----
 
 === Other annotations available on Complex Objects

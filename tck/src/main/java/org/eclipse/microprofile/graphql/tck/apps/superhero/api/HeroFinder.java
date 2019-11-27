@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -204,7 +205,7 @@ public class HeroFinder {
     }
 
     @Query
-    public String currentLocation(@Source SuperHero hero) throws GraphQLException {
+    public String currentLocation(@Name("superHero")@Source SuperHero hero) throws GraphQLException {
         final String heroName = hero.getName();
         LOG.info("checking current location for: " + heroName);
         return heroLocator.getHeroLocation(heroName)
@@ -214,6 +215,20 @@ public class HeroFinder {
                 });
     }
 
+    @Name("secretToken")
+    public String generateSecretToken(@Source SuperHero hero,
+                                      @DefaultValue("true") 
+                                      @Name("maskFirstPart") boolean maskFirstPart) throws GraphQLException {
+        final String heroName = hero.getName();
+        LOG.info("generating secret token for: " + heroName);
+        String uuid = UUID.randomUUID().toString();
+        if(maskFirstPart){
+            return uuid.substring(0,uuid.length()-4).replaceAll("[A-Za-z0-9]", "*") + uuid.substring(uuid.length()-4,uuid.length());
+        }else{
+            return uuid;
+        }
+    }
+    
     private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
         return heroDB.getAllHeroes()
                 .stream()
