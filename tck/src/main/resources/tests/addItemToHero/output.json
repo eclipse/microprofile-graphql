@@ -4,7 +4,7 @@
       "name": "Starlord",
       "equipment": [
         {
-          "id": 12345,
+          "id": "12345",
           "name": "Power Infinity Stone",
           "height": 0.001,
           "weight": 0.2,
