@@ -26,28 +26,33 @@ Entities are the objects used in GraphQL. They can be:
 [[scalars]]
 === Scalars
 
-According to the https://graphql.org/learn/schema/#scalar-types[GraphQL documentation] a scalar has no sub-fields, and
-all GraphQL implementations are expected to handle, the following scalar types:
+According to the https://graphql.github.io/graphql-spec/draft/#sec-Scalars[GraphQL documentation] a scalar has no
+sub-fields, and all GraphQL implementations are expected to handle the following scalar types:
 
-- `Short` - which maps to a Java `short`/`Short`
-- `Int` - which maps to a Java `int`/`Integer`
-- `Long` - which maps to a Java `long`/`Long`
+- `Int` - which maps to a Java `int`/`Integer`.
 - `Float` - which maps to a Java `float`/`Float` or `double`/`Double`.
-- `Boolean` - which maps to a Java `boolean`/`Boolean`.
-- `Char` - which maps to a Java `char`, `Character`.
 - `String` - which maps to a Java `String`.
+- `Boolean` - which maps to a Java `boolean`/`Boolean`.
+- `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
+
+Note that an ID scalar must map to a Java `String`, numerical primitive (`long`, `int`, `double`, `float`) or their
+object equivalents (`Long`, `Integer`, `Double`, `Float`), or a `java.util.UUID` - anything else is considered a
+deployment error.
+
+GraphQL allows implementations to define additional scalars. MicroProfile GraphQL implementations are required to
+handle the following additional scalar types:
+
+- `Short` - which maps to a Java `short`/`Short`.
+- `Long` - which maps to a Java `long`/`Long`.
+- `Char` - which maps to a Java `char`,`Character`.
 - `Byte` - which maps to a Java `byte`/`Byte`.
 - `BigInteger` - which maps to a Java `BigInteger`.
 - `BigDecimal` - which maps to a Java BigDecimal`.
 - `Date` - which maps to a Java `java.time.LocalDate`.
 - `Time` - which maps to a Java `java.time.LocalTime`.
 - `DateTime` - which maps to a Java `java.time.LocalDateTime`.
-- `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
 
-Note that an ID scalar must map to a Java `String`, numerical primitive (`long`, `int`, `double`, `float`) or their
-object equivalents (`Long`, `Integer`, `Double`, `Float`), or a `java.util.UUID` - anything else is considered a deployment error.
-
-The GraphQL specification also allows for users or implementers to define custom scalars:
+Implementations may define additional custom scalars beyond those listed above.
 
 ==== Dates
 By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
@@ -79,7 +84,7 @@ the schema. For example:
 public class SuperHero {
     private ShirtSize tshirtSize; // public getters/setters, ...
 
-    @Enum("ClothingSize)
+    @Enum("ClothingSize")
     public enum ShirtSize {
         S, M, L, XL
     }
