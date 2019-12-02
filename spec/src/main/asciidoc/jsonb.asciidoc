@@ -147,3 +147,11 @@ The date format string specified in the `@JsonbDateFormat` annotation will be us
 schema, if no `@Description` annotation is provided for that field. If the same field (or property) contains both 
 `@JsonbDateFormat` and `@Description` annotations, it should be considered a best practice to document the date format
 in the description text so that the format is communicated to clients in the schema.
+
+=== JSON-B Annotations vs MP GraphQL Annotations
+
+The `@JsonbProperty` annotation can be used interchangeably with `@Name`. If both annotations are used on the same
+member, the `@Name` annotation will take precendence when determining the field name in the schema and the JSON property
+in the response.
+
+Likewise, `@JsonbTransient` can be used interchangeably with `@Ignore`. 
