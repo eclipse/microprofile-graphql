@@ -1,7 +1,7 @@
 {
   "data": {
     "updateItemPowerLevel": {
-      "id": 1001,
+      "id": "1001",
       "name": "Iron Man Suit",
       "powerLevel": 5
     }
