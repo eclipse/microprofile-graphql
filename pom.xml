@@ -294,6 +294,9 @@
                         <exclude>**/*.graphql</exclude>
                         <exclude>**/*.properties</exclude>
                         <exclude>**/*.csv</exclude>
+                        <exclude>**/.settings/*.*</exclude>
+                        <exclude>**/.classpath</exclude>
+                        <exclude>**/.project</exclude>
                     </excludes>
                 </configuration>
             </plugin>

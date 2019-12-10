@@ -77,4 +77,12 @@ public class Team {
     public void setRivalTeam(Team rivalTeam) {
         this.rivalTeam = rivalTeam;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" 
+                + "name=" + name 
+                + ", members=" + members 
+                + ", rivalTeam=" + rivalTeam + '}';
+    }
 }

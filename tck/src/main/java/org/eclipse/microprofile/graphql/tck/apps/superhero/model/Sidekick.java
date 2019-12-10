@@ -34,4 +34,11 @@ public class Sidekick implements Character {
     public void setSuperHeroSidekicked(SuperHero superHeroSidekicked) {
         this.superHeroSidekicked = superHeroSidekicked;
     }
+
+    @Override
+    public String toString() {
+        return "Sidekick{" 
+                + "name=" + name 
+                + ", superHeroSidekicked=" + superHeroSidekicked + '}';
+    }
 }
