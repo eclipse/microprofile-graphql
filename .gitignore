@@ -7,3 +7,4 @@
 /runner/target/
 /spqr/target/
 .idea
+.DS_Store
