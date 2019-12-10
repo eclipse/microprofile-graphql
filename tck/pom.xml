@@ -27,16 +27,16 @@
     <artifactId>microprofile-graphql-tck</artifactId>
     <name>MicroProfile GraphQL :: TCK</name>
     <description>Code-first GraphQL APIs for MicroProfile :: TCK</description>
-    
+
     <properties>
         <arquillian.version>1.4.1.Final</arquillian.version>
-        
-        <jsonp-api.version>1.1.4</jsonp-api.version>
-        <jsonb-api.version>1.0</jsonb-api.version>
+
+        <jsonp-api.version>1.1.6</jsonp-api.version>
+        <jsonb-api.version>1.0.2</jsonb-api.version>
         <commons-io.version>2.6</commons-io.version>
         <jsonassert.version>1.5.0</jsonassert.version>
     </properties>
-    
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -48,7 +48,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -56,54 +56,54 @@
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
-            <groupId>javax.enterprise</groupId>
-            <artifactId>cdi-api</artifactId>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.json.bind</groupId>
-            <artifactId>javax.json.bind-api</artifactId>
+            <groupId>jakarta.json.bind</groupId>
+            <artifactId>jakarta.json.bind-api</artifactId>
             <version>${jsonb-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
             <version>${jsonp-api.version}</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-container-test-spi</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>compile</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jboss.shrinkwrap</groupId>
             <artifactId>shrinkwrap-api</artifactId>
             <scope>compile</scope>
         </dependency>
-        
+
         <!-- Needed for dynamic -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
@@ -111,7 +111,7 @@
         </dependency>
         <dependency>
             <groupId>org.glassfish</groupId>
-            <artifactId>javax.json</artifactId>
+            <artifactId>jakarta.json</artifactId>
             <version>${jsonp-api.version}</version>
         </dependency>
 
@@ -123,7 +123,7 @@
             <scope>provided</scope>
             <optional>true</optional>
         </dependency>
-        
+
     </dependencies>
 
     <build>
