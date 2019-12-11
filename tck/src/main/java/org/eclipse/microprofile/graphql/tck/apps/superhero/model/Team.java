@@ -82,7 +82,6 @@ public class Team {
     public String toString() {
         return "Team{" 
                 + "name=" + name 
-                + ", members=" + members 
-                + ", rivalTeam=" + rivalTeam.getName() + '}';
+                + ", members=" + members;
     }
 }
