@@ -199,12 +199,10 @@ public class SuperHero implements Character {
     @Override
     public String toString() {
         return "SuperHero{" 
-                + "teamAffiliations=" + teamAffiliations 
                 + ", superPowers=" + superPowers 
                 + ", primaryLocation=" + primaryLocation 
                 + ", name=" + name 
                 + ", realName=" + realName 
-                + ", equipment=" + equipment 
                 + ", dateOfLastCheckin=" + dateOfLastCheckin 
                 + ", patrolStartTime=" + patrolStartTime 
                 + ", timeOfLastBattle=" + timeOfLastBattle 

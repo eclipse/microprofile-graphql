@@ -83,6 +83,6 @@ public class Team {
         return "Team{" 
                 + "name=" + name 
                 + ", members=" + members 
-                + ", rivalTeam=" + rivalTeam + '}';
+                + ", rivalTeam=" + rivalTeam.getName() + '}';
     }
 }
