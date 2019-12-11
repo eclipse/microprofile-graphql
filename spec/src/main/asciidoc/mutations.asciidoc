@@ -97,6 +97,10 @@ public SuperHero addNewPowerToHero(@Name("hero") SuperHero hero,
 }
 ----
 
+Note that generic types other than subtypes of `java.util.Collection` (such as `java.util.List` or `java.util.Set`) are
+not allowed to be specified as mutation return types. Implementations may allow additional types (such as
+`java.util.Map`), but the behavior for these return types are undefined.
+
 ==== Void Mutations
 
 Like query methods, mutation methods are expected to return some value, thus it is considered a deployment error for a

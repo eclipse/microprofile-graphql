@@ -41,6 +41,26 @@ For example, suppose your application was registered at host, "myhost" on TCP po
 "MyApp" (usually the context root is the name of the WAR file but without the file extension), then the schema would be
 available at: `http://myhost:50080/MyApp/graphql/schema.graphql`
 
+=== Arguments
+
+Arguments can exist for both queries and mutations and are generally represented as method parameters in Java code.
+
+For example:
+
+.Basic Argument Example
+[source,java,numbered]
+----
+@Query
+public List<SuperHero> getHeroesAt(@Name("location") String location) { //...
+----
+
+
+In this example, `location` is an argument that the client must provide when invoking the `getHeroesAt` query.
+
+Note that abstract classes, interfaces or generic types other than subtypes of `java.util.Collection` (such as
+`java.util.List` or `java.util.Set`) are not allowed to be specified as arguments. Implementations may allow additional
+types (such as `java.util.Map`), but the behavior for these types of arguments are undefined.
+
 === Default Values
 
 It is possible to specify a default value for query or mutation arguments so that the client does not need to specify a
