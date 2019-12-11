@@ -195,4 +195,20 @@ public class SuperHero implements Character {
         XXL,
         HULK
     }
+
+    @Override
+    public String toString() {
+        return "SuperHero{" 
+                + ", superPowers=" + superPowers 
+                + ", primaryLocation=" + primaryLocation 
+                + ", name=" + name 
+                + ", realName=" + realName 
+                + ", dateOfLastCheckin=" + dateOfLastCheckin 
+                + ", patrolStartTime=" + patrolStartTime 
+                + ", timeOfLastBattle=" + timeOfLastBattle 
+                + ", costumeColor=" + costumeColor 
+                + ", namesOfKnownEnemies=" + namesOfKnownEnemies 
+                + ", idNumber=" + idNumber 
+                + ", sizeOfTShirt=" + sizeOfTShirt + '}';
+    }
 }

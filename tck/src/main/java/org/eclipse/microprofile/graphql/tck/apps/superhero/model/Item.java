@@ -146,4 +146,19 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "Item{" 
+                + "id=" + id 
+                + ", name=" + name 
+                + ", description=" + description 
+                + ", powerLevel=" + powerLevel 
+                + ", height=" + height 
+                + ", weight=" + weight 
+                + ", supernatural=" + supernatural 
+                + ", invisible=" + invisible 
+                + ", canWield=" + canWield 
+                + ", artificialIntelligenceRating=" + artificialIntelligenceRating + '}';
+    }
 }

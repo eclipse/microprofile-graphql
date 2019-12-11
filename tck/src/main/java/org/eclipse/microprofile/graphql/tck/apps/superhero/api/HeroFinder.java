@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,7 @@ public class HeroFinder {
 
     @Query
     public Character character(@Name("name") String name) throws UnknownCharacterException {
-        LOG.info("character invoked");
+        LOG.log(Level.INFO, "character invoked [{0}]", name);
 
         try {
             SuperHero superHero = heroDB.getHero(name);
@@ -80,7 +81,7 @@ public class HeroFinder {
 
     @Query
     public SuperHero superHero(@Name("name") @Description("Super hero name, not real name") String name) throws UnknownHeroException {
-        LOG.info("superHero invoked " + name);
+        LOG.log(Level.INFO, "superHero invoked [{0}]", name);
         return Optional.ofNullable(heroDB.getHero(name)).orElseThrow(() -> new UnknownHeroException(name));
     }
 
@@ -93,7 +94,7 @@ public class HeroFinder {
 
     @Query
     public Collection<SuperHero> allHeroesIn(@DefaultValue("New York, NY") @Name("city") String city) {
-        LOG.info("allHeroesIn " + city + " invoked");
+        LOG.log(Level.INFO, "allHeroesIn invoked [{0}]", city);
         return allHeroesByFilter(hero -> {
             return city.equals(hero.getPrimaryLocation());
         });
@@ -101,7 +102,7 @@ public class HeroFinder {
 
     @Query
     public Collection<SuperHero> allHeroesWithPower(@Name("power") String power) {
-        LOG.info("allHeroesWithPower invoked");
+        LOG.log(Level.INFO, "allHeroesWithPower invoked [{0}]", power);
         return allHeroesByFilter(hero -> {
             return hero.getSuperPowers().contains(power);
         });
@@ -109,7 +110,7 @@ public class HeroFinder {
 
     @Query
     public Collection<SuperHero> allHeroesInTeam(@Name("team") String teamName) throws UnknownTeamException {
-        LOG.info("allHeroesInTeam invoked");
+        LOG.log(Level.INFO, "allHeroesInTeam invoked [{0}]", teamName);
         return heroDB.getTeam(teamName).getMembers();
     }
 
@@ -121,7 +122,7 @@ public class HeroFinder {
 
     @Mutation
     public SuperHero createNewHero(@Name("hero") SuperHero newHero) throws DuplicateSuperHeroException, UnknownHeroException {
-        LOG.info("createNewHero invoked");
+        LOG.log(Level.INFO, "createNewHero invoked [{0}]", newHero);
         heroDB.addHero(newHero);
         return heroDB.getHero(newHero.getName());
     }
@@ -132,7 +133,7 @@ public class HeroFinder {
                               @Name("team") String teamName)
             throws UnknownTeamException, UnknownHeroException {
 
-        LOG.info("addHeroToTeam invoked");
+        LOG.log(Level.INFO, "addHeroToTeam invoked [{0}],[{1}]", new Object[]{heroName, teamName});
         return heroDB.getTeam(teamName)
                 .addMembers(heroDB.getHero(heroName));
     }
@@ -142,7 +143,7 @@ public class HeroFinder {
     public Team removeHeroFromTeam(@Name("hero") String heroName,
                                    @Name("team") String teamName)
             throws UnknownTeamException, UnknownHeroException {
-        LOG.info("removeHeroFromTeam invoked");
+        LOG.log(Level.INFO, "removeHeroFromTeam invoked [{0}],[{1}]", new Object[]{heroName, teamName});
         return heroDB.getTeam(teamName)
                 .removeMembers(heroDB.getHero(heroName));
     }
@@ -150,7 +151,7 @@ public class HeroFinder {
     @Mutation
     @Description("Removes a hero... permanently...")
     public Collection<SuperHero> removeHero(@Name("hero") String heroName) throws UnknownHeroException {
-        LOG.info("removeHero invoked");
+        LOG.log(Level.INFO, "removeHero invoked [{0}]", heroName);
         if (heroDB.removeHero(heroName) == null) {
             throw new UnknownHeroException(heroName);
         }
@@ -162,7 +163,7 @@ public class HeroFinder {
     public SuperHero provisionHero(@Name("hero") String heroName,
                                    @DefaultValue(Item.CAPE) @Name("item") Item item)
             throws UnknownHeroException {
-        LOG.info("provisionHero invoked");
+        LOG.log(Level.INFO, "provisionHero invoked [{0}],[{1}]", new Object[]{heroName, item});
         SuperHero hero = heroDB.getHero(heroName);
         if (hero == null) {
             throw new UnknownHeroException(heroName);
@@ -176,7 +177,7 @@ public class HeroFinder {
     public SuperHero removeItemFromHero(@Name("hero") String heroName,
                                         @Name("itemID") long itemID)
             throws UnknownHeroException {
-        LOG.info("removeItemFromHero invoked");
+        LOG.log(Level.INFO, "removeItemFromHero invoked [{0}],[{1}]", new Object[]{heroName, itemID});
         SuperHero hero = heroDB.getHero(heroName);
         if (hero == null) {
             throw new UnknownHeroException(heroName);
@@ -191,7 +192,7 @@ public class HeroFinder {
     @Description("Update an item's powerLevel") 
     public Item updateItemPowerLevel(@Name("itemID") long itemID,
                                      @DefaultValue("5") @Name("powerLevel") int newLevel) {
-
+        LOG.log(Level.INFO, "updateItemPowerLevel invoked [{0}],[{1}]", new Object[]{itemID, newLevel});
         Item item = null;
         for (SuperHero hero : allHeroes()) {
             for (Item i : hero.getEquipment()) {
@@ -206,8 +207,8 @@ public class HeroFinder {
 
     @Query
     public String currentLocation(@Name("superHero")@Source SuperHero hero) throws GraphQLException {
+        LOG.log(Level.INFO, "currentLocation invoked [{0}]", hero);
         final String heroName = hero.getName();
-        LOG.info("checking current location for: " + heroName);
         return heroLocator.getHeroLocation(heroName)
                 .orElseThrow(() -> {
                     return new GraphQLException("Cannot find location for " + heroName,
@@ -219,8 +220,8 @@ public class HeroFinder {
     public String generateSecretToken(@Source SuperHero hero,
                                       @DefaultValue("true") 
                                       @Name("maskFirstPart") boolean maskFirstPart) throws GraphQLException {
-        final String heroName = hero.getName();
-        LOG.info("generating secret token for: " + heroName);
+        LOG.log(Level.INFO, "generateSecretToken invoked [{0}],[{1}]", new Object[]{hero,maskFirstPart});
+        
         String uuid = UUID.randomUUID().toString();
         if(maskFirstPart){
             return uuid.substring(0,uuid.length()-4).replaceAll("[A-Za-z0-9]", "*") + uuid.substring(uuid.length()-4,uuid.length());
@@ -229,18 +230,11 @@ public class HeroFinder {
         }
     }
     
-    private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
-        return heroDB.getAllHeroes()
-                .stream()
-                .filter(predicate)
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
     @Mutation("setRivalTeam")
     public Team setRivalTeam(@Name("teamName") String teamName, @Name("rivalTeam") Team rivalTeam)
             throws UnknownTeamException {
 
-        LOG.info("setRivalTeam: " + teamName + "'s new rival is: " + (Optional.ofNullable(rivalTeam).map(Team::getName).orElse("null")));
+        LOG.log(Level.INFO, "setRivalTeam invoked [{0}],[{1}]", new Object[]{teamName, rivalTeam});
         Team team = heroDB.getTeam(teamName);
         team.setRivalTeam(rivalTeam);
         return team;
@@ -274,6 +268,7 @@ public class HeroFinder {
 
     @Query
     public Item getItemById(@Name("id") long id) {
+        LOG.log(Level.INFO, "getItemById invoked [{0}]", id);
         for (SuperHero hero : allHeroes()) {
             for (Item item : hero.getEquipment()) {
                 if (id == item.getId()) {
@@ -286,6 +281,7 @@ public class HeroFinder {
 
     @Mutation
     public Team createNewTeam(@Name("newTeam") Team newTeam) {
+        LOG.log(Level.INFO, "createNewTeam invoked [{0}]", newTeam);
         List<SuperHero> members = newTeam.getMembers();
         Team team = heroDB.createNewTeam(newTeam.getName());
         if (members != null && members.size() > 0) {
@@ -297,6 +293,14 @@ public class HeroFinder {
 
     @Mutation
     public Team removeTeam(@Name("teamName") String teamName) throws UnknownTeamException {
+        LOG.log(Level.INFO, "removeTeam invoked [{0}]", teamName);
         return heroDB.removeTeam(teamName);
+    }
+    
+    private Collection<SuperHero> allHeroesByFilter(Predicate<SuperHero> predicate) {
+        return heroDB.getAllHeroes()
+                .stream()
+                .filter(predicate)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 }
