@@ -56,6 +56,10 @@ public SuperHero superHero(@Name("name") String name) {
 }
 ----
 
+Note that generic types other than subtypes of `java.util.Collection` (such as `java.util.List` or `java.util.Set`) are
+not allowed to be specified as query return types. Implementations may allow additional types (such as `java.util.Map`),
+but the behavior for these return types are undefined.
+
 ==== Entity fields are also queries
 
 In the previous example, an explicitly defined query named "superHero" returns a `SuperHero` entity. The fields on that
