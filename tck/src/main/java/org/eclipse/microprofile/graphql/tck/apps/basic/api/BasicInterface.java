@@ -15,28 +15,16 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
-import org.eclipse.microprofile.graphql.Type;
+import org.eclipse.microprofile.graphql.Interface;
+import org.eclipse.microprofile.graphql.Name;
 
 /**
- * To Test the generation of a Type even if it's not used (directly) as a return type or argument.
- * @author Phillip Kruger (phillip.kruger@redhat.com)
+ * To Test the generation of a Types/Inputs/Enums even if it's not used (directly) as a return type or argument.
+ * This is the interface that is used directly.
  */
-@Type("BasicMessage")
-public class BasicType implements BasicInterface {
-    private String message;
+@Interface
+public interface BasicInterface {
+    String getMessage();
 
-    public BasicType() {
-    }
-    
-    public BasicType(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    void setMessage(@Name("message") String message);
 }
