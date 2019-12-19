@@ -1,0 +1,54 @@
+{
+  "data": {
+    "createNewHero": {
+      "name": "Captain America",
+      "teamAffiliations": [
+        {
+          "members": [
+            {
+              "name": "Iron Man",
+              "currentLocation": "Wachovia"
+            },
+            {
+              "name": "Spider Man",
+              "currentLocation": "Brooklyn"
+            },
+            {
+              "name": "Wolverine",
+              "currentLocation": "New Orleans"
+            },
+            {
+              "name": "Captain America",
+              "currentLocation": null
+            }
+          ]
+        }
+      ],
+      "primaryLocation": "New York, NY",
+      "superPowers": [
+        "Super strength",
+        "Vibranium Shield"
+      ],
+      "realName": "Steven Rogers"
+    }
+  },
+  "errors": [
+        {
+            "message": "Cannot find location for Captain America",
+            "locations": [
+                {
+                    "line": 14,
+                    "column": 17
+                }
+            ],
+            "path": [
+                "createNewHero",
+                "teamAffiliations",
+                0,
+                "members",
+                3,
+                "currentLocation"
+            ]
+        }
+  ]
+}

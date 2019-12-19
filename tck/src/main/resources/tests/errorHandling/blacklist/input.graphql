@@ -1,0 +1,7 @@
+query exportToFile {
+  exportToFile(name:"Phillip") {
+    name
+    realName
+    superPowers
+  }
+}

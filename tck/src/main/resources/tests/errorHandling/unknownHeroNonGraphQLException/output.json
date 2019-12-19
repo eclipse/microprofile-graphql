@@ -1,0 +1,19 @@
+{
+    "data": {
+        "superHero": null
+    },
+    "errors": [
+        {
+            "message": "Funny Guy",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "superHero"
+            ]
+        }
+    ]
+}

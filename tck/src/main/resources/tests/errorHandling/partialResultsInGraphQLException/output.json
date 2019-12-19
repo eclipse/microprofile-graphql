@@ -1,0 +1,33 @@
+{
+  "data": {
+    "allHeroesWithError": [
+      {
+        "name": "Iron Man",
+        "primaryLocation": "Los Angeles, CA"
+      },
+      null,
+      {
+        "name": "Wolverine",
+        "primaryLocation": "Unknown"
+      },
+      {
+        "name": "Spider Man",
+        "primaryLocation": "New York, NY"
+      }
+    ]
+  },
+  "errors": [
+    {
+      "locations": [
+        {
+          "line": 2,
+          "column": 5
+        }
+      ],
+      "message": "Failed to find one or more heroes",
+      "path": [
+        "allHeroesWithError"
+      ]
+    }
+  ]
+}

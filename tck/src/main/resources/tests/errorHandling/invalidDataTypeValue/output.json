@@ -1,0 +1,14 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type WrongType: argument 'powerLevel' with value 'StringValue{value='Unlimited'}' is not a valid 'Int' @ 'updateItemPowerLevel'",
+      "locations": [
+        {
+          "line": 2,
+          "column": 37
+        }
+      ]
+    }
+  ]
+}
