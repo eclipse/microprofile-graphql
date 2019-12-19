@@ -112,6 +112,7 @@ public class SuperHero implements Character {
     }
 
     @NonNull
+    @Override
     public void setName(String name) {
         this.name = name;
     }

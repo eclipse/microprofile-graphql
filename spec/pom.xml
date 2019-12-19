@@ -30,8 +30,8 @@
     <description>Code-first GraphQL APIs for MicroProfile :: Specification</description>
     
     <properties>
-        <asciidoctor-maven.version>1.5.8</asciidoctor-maven.version>
-        <asciidoctorj-pdf.version>1.5.0-alpha.16</asciidoctorj-pdf.version>
+        <asciidoctor-maven.version>1.6.0</asciidoctor-maven.version>
+        <asciidoctorj-pdf.version>1.5.0-beta.8</asciidoctorj-pdf.version>
         
         <license>Apache License v 2.0</license>
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
