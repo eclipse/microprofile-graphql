@@ -22,8 +22,9 @@ import org.eclipse.microprofile.graphql.Input;
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 @Input("BasicMessageInput")
-public class BasicInput {
+public class BasicInput implements BasicInterface {
     private String message;
+    private BasicEnum countdownPlace;
 
     public BasicInput() {
     }
@@ -38,5 +39,13 @@ public class BasicInput {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public BasicEnum getCountdownPlace() {
+        return countdownPlace;
+    }
+
+    public void setCountdownPlace(BasicEnum countdownPlace) {
+        this.countdownPlace = countdownPlace;
     }
 }

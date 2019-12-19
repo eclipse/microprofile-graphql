@@ -211,5 +211,10 @@ public class ScalarTestApi {
     @Name("testId")
     public String id(){
         return getScalarHolder().getId();
-    }   
+    }  
+
+    @Query
+    public BasicInterface basicMessageEcho(@Name("input") BasicInput input) {
+        return new BasicType(input.getMessage());
+    }
 }
