@@ -127,13 +127,7 @@ public class TestData {
     }
     
     public boolean shouldIgnore(){
-        if(properties!=null && !properties.isEmpty() && properties.containsKey("ignore")){
-            String ignore = properties.getProperty("ignore");
-            if(ignore!=null && !ignore.isEmpty() && ignore.equalsIgnoreCase("true")){
-                return true;
-            }
-        }
-        return false; // default   
+        return getBooleanProperty("ignore");   
     }
     
     public Integer getPriority(){
@@ -141,6 +135,36 @@ public class TestData {
             return Integer.valueOf(properties.getProperty("priority"));
         }
         return 999; // default
+    }
+
+    public int getExpectedHttpStatusCode() {
+        if(properties!=null && !properties.isEmpty() && properties.containsKey("expectedHttpStatusCode")){
+            return Integer.valueOf(properties.getProperty("expectedHttpStatusCode"));
+        }
+        return 200; // default
+    }
+
+    public boolean beStrict(){
+        return getBooleanProperty("strict");
+    }
+
+    public String getFailMessage() {
+        if(properties!=null && !properties.isEmpty() && properties.containsKey("failMessage")){
+            return properties.getProperty("failMessage");
+        }
+        return getName() + " failed"; // default
+    }
+
+    private boolean getBooleanProperty(String key){
+
+        if(properties!=null && !properties.isEmpty() && properties.containsKey(key)){
+            String ignore = properties.getProperty(key);
+            if(ignore!=null && !ignore.isEmpty() && ignore.equalsIgnoreCase("true")){
+                return true;
+            }
+        }
+        return false; // default   
+
     }
 
     @Override

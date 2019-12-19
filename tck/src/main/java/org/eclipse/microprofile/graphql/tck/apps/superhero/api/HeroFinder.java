@@ -15,6 +15,7 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -83,6 +84,30 @@ public class HeroFinder {
     public SuperHero superHero(@Name("name") @Description("Super hero name, not real name") String name) throws UnknownHeroException {
         LOG.log(Level.INFO, "superHero invoked [{0}]", name);
         return Optional.ofNullable(heroDB.getHero(name)).orElseThrow(() -> new UnknownHeroException(name));
+    }
+
+    @Query @Description("Testing the blacklist of Checked Exceptions")
+    public SuperHero exportToFile(@Name("name") @Description("Super hero name, not real name") String name) throws IOException {
+        LOG.log(Level.INFO, "exportToFile invoked [{0}]", name);
+        throw new IOException("No you can not do this.");
+    }
+
+    @Query @Description("Testing the default blacklist for Runtime Exceptions")
+    public SuperHero villian(@Name("name") @Description("Super hero name, not real name") String name) {
+        LOG.log(Level.INFO, "villian invoked [{0}]", name);
+        throw new RuntimeException("SuperHero can not be a villian");
+    }
+
+    @Query @Description("Testing the whitelist for Runtime Exceptions")
+    public SuperHero weakness(@Name("name") @Description("Super hero name, not real name") String name) {
+        LOG.log(Level.INFO, "weakness invoked [{0}]", name);
+        throw new WeaknessNotFoundException("Superhero has no weakness");
+    }
+
+    @Query @Description("Testing Errors, as in Java Error")
+    public SuperHero wreakHavoc(@Name("name") @Description("Super hero name, not real name") String name) {
+        LOG.log(Level.INFO, "wreakHavoc invoked [{0}]", name);
+        throw new OutOfMemoryError("a SuperHero has used all the memory");
     }
 
     @Query
@@ -256,7 +281,7 @@ public class HeroFinder {
 
     @Query
     public Collection<SuperHero> allHeroesWithSpecificError() throws SuperHeroLookupException {
-        LOG.info("allHeroesWithError invoked");
+        LOG.info("allHeroesWithSpecificError invoked");
         List<SuperHero> partialHeroes = new ArrayList<>();
         for (SuperHero hero : heroDB.getAllHeroes()) {
             if (!"Spider Man".equals(hero.getName())) {

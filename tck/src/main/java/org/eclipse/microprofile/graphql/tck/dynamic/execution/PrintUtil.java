@@ -46,20 +46,24 @@ public class PrintUtil {
     private PrintUtil(){
     }
     
-    public static void toDisk(TestData testData, String output, String errorMessage){
+    public static void toDisk(TestData testData, String output, Throwable throwable){
         try{
-            String log = toString(testData, output,errorMessage);
+            String log = toString(testData, output, throwable);
             writeTestFile(testData.getName(),log);
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Could not save data to target folder - {0}", ex.getMessage());
         }
     }
     
-    private static String toString(TestData testData,String output, String errorMessage){
+    private static String toString(TestData testData,String output, Throwable throwable){
         try(StringWriter sw = new StringWriter()){
             sw.write("============= " + testData.getName() + " =============");
             sw.write("\n\n");
-            sw.write("errorMessage = " + errorMessage);
+            if(throwable!=null){
+                sw.write("errorMessage = " + throwable.getMessage());
+            }else{
+                sw.write("errorMessage = ");
+            }
             sw.write("\n\n");
             sw.write("given input = " + testData.getInput());
             sw.write("\n\n");
@@ -88,9 +92,12 @@ public class PrintUtil {
     }
     
     private static String prettyJson(String json) {
-        JsonReader jr = Json.createReader(new StringReader(json));
-        JsonObject jobj = jr.readObject();
-        return prettyJson(jobj);
+        if(json!=null){
+            JsonReader jr = Json.createReader(new StringReader(json));
+            JsonObject jobj = jr.readObject();
+            return prettyJson(jobj);
+        }
+        return null;
     }
     
     private static String prettyJson(JsonObject jsonObject) {

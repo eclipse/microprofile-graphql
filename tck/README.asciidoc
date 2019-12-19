@@ -37,7 +37,10 @@ The folder name will be the name of the test. You can then add the following:
 
 * test.properties - pass properties to the test, supported properties:
 ** ignore - true or false (default false), will ignore the test if set to true
-** priority - the weight of the test, this will influence the order in which test are run
+** priority - the weight (default 999) of the test, this will influence the order in which tests are run
+** strict - true or false (default false), will do a strict compare when doing a http://jsonassert.skyscreamer.org/javadoc/org/skyscreamer/jsonassert/JSONAssert.html[JSONAssert]
+** failMessage - the error message (default to 'testName failed') to show when the test fail
+** expectedHttpStatusCode - if you expect a HTTP response code other than 200
 * variables.json - if you need to pass any variables with the request
 * httpHeaders.properties - if you need to set any HTTP Headers with the request
 * prepare.graphql - a graphql mutation to run before the test to prepare the test data

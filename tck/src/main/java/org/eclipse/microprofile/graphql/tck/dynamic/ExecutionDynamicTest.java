@@ -24,15 +24,21 @@ import java.net.URL;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
+import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonPatchBuilder;
+import javax.json.JsonReader;
 import org.jboss.shrinkwrap.api.Archive;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -104,40 +110,96 @@ public class ExecutionDynamicTest extends Arquillian {
             }
 
             // Run the actual test and get the response
-            this.currentOutput = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
-
-            // Cleanup if needed
-            if(isValidInput(testData.getCleanup())){
-                postHTTPRequest(testData.getCleanup(),testData.getVariables(),httpHeaders);
+            HttpResponse httpResponse = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
+            if(httpResponse.isSuccessfull()){
+                this.currentOutput = httpResponse.getContent();
+                
+                // Validate the output structure
+                validateResponseStructure();
+                
+                // Cleanup if needed
+                if(isValidInput(testData.getCleanup())){
+                    postHTTPRequest(testData.getCleanup(),testData.getVariables(),httpHeaders);
+                }
+                
+                // Compare to expected output
+                try{
+                    JSONAssert.assertEquals(testData.getFailMessage(),testData.getOutput(), this.currentOutput, testData.beStrict());
+                } catch (JSONException ex) {
+                    clearGlobals();
+                    Assert.fail(ex.getMessage());
+                }
+            } else {
+                Assert.assertEquals(httpResponse.status, testData.getExpectedHttpStatusCode(),httpResponse.getContent());
             }
-
-            // Compare to expected output
-            try{
-                JSONAssert.assertEquals(testData.getName(),testData.getOutput(), this.currentOutput, false);
-            } catch (JSONException ex) {
-                Assert.fail(ex.getMessage());
-            }
+            
         }else{
-            this.currentTestData = null;
-            this.currentOutput = null;
+            clearGlobals();
             LOG.warning("Could not find any tests to run...");
         }
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
-       if (result.getStatus() == ITestResult.FAILURE) {
-            PrintUtil.toDisk(currentTestData,currentOutput,result.getThrowable().getMessage());
+       if (result!=null && result.getStatus() == ITestResult.FAILURE) {
+            PrintUtil.toDisk(this.currentTestData,
+                    this.currentOutput,
+                    result.getThrowable());
        }
-       this.currentTestData = null;
-       this.currentOutput = null;
+       clearGlobals();
     }
 
+    private void validateResponseStructure(){
+        JsonObject received = getJsonObject(new StringReader(this.currentOutput));
+        JsonArray errors = received.getJsonArray("errors");
+        validatePart(received,"root","data","errors");
+        if(errors!=null){
+            for(JsonObject errorJsonObject: errors.getValuesAs(JsonObject.class)){
+                JsonArray locations = errorJsonObject.getJsonArray("locations");
+                validatePart(errorJsonObject, "errors", "message","locations","path","extensions");
+                if(locations!=null){
+                    for(JsonObject locationJsonObject: locations.getValuesAs(JsonObject.class)){
+                        validatePart(locationJsonObject, "errors/locations", "line", "column");
+                    }
+                }
+            }
+        }
+    }
+
+    private void validatePart(JsonObject jsonObject, String rootName, String... keys){
+        JsonPatchBuilder jsonPatchBuilder = Json.createPatchBuilder();
+        for(String key:keys){
+            jsonPatchBuilder = remove(jsonPatchBuilder,jsonObject,key);
+        }
+
+        JsonObject emptyObject = jsonPatchBuilder.build().apply(jsonObject);
+
+        Assert.assertTrue(emptyObject.isEmpty(),
+                "Unknown elements in " + rootName + ", only " + Arrays.toString(keys)  + " expected");
+    }
+
+    private JsonPatchBuilder remove(JsonPatchBuilder emptyJsonErrorPatchBuilder,JsonObject errorJsonObject, String key){
+        if(errorJsonObject.containsKey(key)){
+            emptyJsonErrorPatchBuilder = emptyJsonErrorPatchBuilder.remove("/" + key);
+        }
+        return emptyJsonErrorPatchBuilder;
+    }
+
+    private void clearGlobals(){
+        this.currentTestData = null;
+        this.currentOutput = null;
+    }
+
+    private JsonObject getJsonObject(Reader input){
+        JsonReader expectedReader = Json.createReader(input);
+        return expectedReader.readObject();
+    }
+    
     private boolean isValidInput(String input){
         return input!=null && !input.isEmpty();
     }
 
-    private String postHTTPRequest(String graphQL, JsonObject variables, Map<String, String> httpHeaders){
+    private HttpResponse postHTTPRequest(String graphQL, JsonObject variables, Map<String, String> httpHeaders){
         try {
             URL url = new URL(this.uri + PATH);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -152,7 +214,13 @@ public class ExecutionDynamicTest extends Arquillian {
 
             postRequest(connection,body);
 
-            return getResponse(connection);
+            int status = connection.getResponseCode();
+
+            if(status == 200) {
+                return new HttpResponse(status, getResponse(connection));
+            }else{
+                return new HttpResponse(status, connection.getResponseMessage());
+            }
 
         } catch (ProtocolException pex) {
             LOG.log(Level.SEVERE, "Caught ProtocolException attempting to post an HTTP request", pex);
@@ -215,6 +283,28 @@ public class ExecutionDynamicTest extends Arquillian {
         } else {
             connection.disconnect();
             throw new RuntimeException("Status " + status + " - " + connection.getResponseMessage());
+        }
+    }
+    
+    private static class HttpResponse {
+        private final int status;
+        private final String content;
+
+        public HttpResponse(int status, String content) {
+            this.status = status;
+            this.content = content;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public boolean isSuccessfull(){
+            return status==200;
         }
     }
 }
