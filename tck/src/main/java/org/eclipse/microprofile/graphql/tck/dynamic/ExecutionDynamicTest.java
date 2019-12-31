@@ -303,7 +303,7 @@ public class ExecutionDynamicTest extends Arquillian {
             return content;
         }
 
-        public boolean isSuccessfull(){
+        public boolean isSuccessful(){
             return status==200;
         }
     }
