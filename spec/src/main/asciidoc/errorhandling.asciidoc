@@ -42,7 +42,7 @@ and each error can contain the following:
 * `message` - a string description of the error (mandatory)
 * `locations` - a list of locations, where each location is a map with the keys `line` and `column`, both positive numbers starting from 1 which describe the beginning of an associated syntax element to a particular point in the requested GraphQL document. (optional)
 * `path` - details the path of the response field which experienced the error (optional)
-* `extensions` - this allows implementation to add any additional key-value pairs of information.
+* `extensions` - this allows implementation to add any additional key-value pairs of information (optional)
 
 .Error Example
 [source,json,numbered]
