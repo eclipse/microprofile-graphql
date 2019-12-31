@@ -29,25 +29,11 @@
     <description>Code-first GraphQL APIs for MicroProfile :: TCK</description>
 
     <properties>
-        <arquillian.version>1.4.1.Final</arquillian.version>
-
         <jsonp-api.version>1.1.6</jsonp-api.version>
         <jsonb-api.version>1.0.2</jsonb-api.version>
         <commons-io.version>2.6</commons-io.version>
         <jsonassert.version>1.5.0</jsonassert.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>${arquillian.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -108,11 +94,6 @@
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
             <version>${jsonassert.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish</groupId>
-            <artifactId>jakarta.json</artifactId>
-            <version>${jsonp-api.version}</version>
         </dependency>
 
         <!-- actually only referenced in JavaDoc -->

@@ -1,0 +1,7 @@
+query wreakHavoc {
+  wreakHavoc(name:"Phillip") {
+    name
+    realName
+    superPowers
+  }
+}

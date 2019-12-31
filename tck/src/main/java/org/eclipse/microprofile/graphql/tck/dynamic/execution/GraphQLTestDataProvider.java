@@ -31,8 +31,11 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -73,7 +76,7 @@ public class GraphQLTestDataProvider {
                 directoryStream = DynamicPaths.getDataForImplementation();
             }
 
-            List<Path> testFolders = toListOfPaths(directoryStream);
+            Set<Path> testFolders = toListOfPaths(directoryStream);
             List<TestData> testDataList = toListOfTestData(testFolders);
             sort(testDataList);
             return toObjectArray(testDataList);
@@ -83,7 +86,7 @@ public class GraphQLTestDataProvider {
         }
     }
     
-    private static List<TestData> toListOfTestData(List<Path> testFolders){
+    private static List<TestData> toListOfTestData(Set<Path> testFolders){
         List<TestData> testDataList = new ArrayList<>();
         for (Path testFolder : testFolders) {
             if(!testFolder.getFileName().toString().startsWith("META-INF")){// Ignore META-INF
@@ -210,14 +213,18 @@ public class GraphQLTestDataProvider {
         return new String(Files.readAllBytes(file));
     }
 
-    private static List<Path> toListOfPaths(DirectoryStream<Path> directoryStream){
-        List<Path> files = new ArrayList<>();
+    private static Set<Path> toListOfPaths(DirectoryStream<Path> directoryStream){
+        Set<Path> directories = new HashSet<>();
         for(Path p: directoryStream){
-            if(Files.isDirectory(p)){
-                files.add(p);
+            try (Stream<Path> paths = Files.walk(p)) {
+                                Set<Path> tree = paths.filter(Files::isDirectory)
+                        .collect(Collectors.toSet());
+                                directories.addAll(tree);
+            }catch (IOException ex) {
+                LOG.log(Level.SEVERE, "Ignoring directory [{0}] - {1}", new Object[]{p.getFileName().toString(), ex.getMessage()});
             }
         }
-        return files;
+        return directories;
     }
 
     private static JsonObject toJsonObject(String jsonString){

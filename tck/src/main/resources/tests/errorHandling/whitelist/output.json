@@ -1,0 +1,19 @@
+{
+    "errors": [
+        {
+            "message": "Superhero has no weakness",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "weakness"
+            ]
+        }
+    ],
+    "data": {
+        "weakness": null
+    }
+}

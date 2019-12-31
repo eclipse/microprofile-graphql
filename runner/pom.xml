@@ -155,7 +155,7 @@
         <profile>
             <id>thorntail</id>
             <properties>
-                <thorntail.version>2.4.0.Final</thorntail.version>
+                <thorntail.version>2.6.0.Final</thorntail.version>
             </properties>
 
             <build>

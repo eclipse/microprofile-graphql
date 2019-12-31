@@ -34,8 +34,8 @@
 
         <cdi-api.version>2.0.2</cdi-api.version>
 
-        <testng.version>6.14.3</testng.version>
-        <arquillian.version>1.4.1.Final</arquillian.version>
+        <testng.version>7.0.0</testng.version>
+        <arquillian.version>1.5.0.Final</arquillian.version>
 
         <revremark>Draft</revremark>
     </properties>
@@ -82,6 +82,7 @@
 
     <developers>
         <developer>
+            <id>1</id>
             <name>MicroProfile Community</name>
             <url>http://microprofile.io/</url>
             <organization>Eclipse Foundation</organization>
@@ -297,6 +298,7 @@
                         <exclude>**/.settings/*.*</exclude>
                         <exclude>**/.classpath</exclude>
                         <exclude>**/.project</exclude>
+                        <exclude>**/.github/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

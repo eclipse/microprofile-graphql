@@ -34,10 +34,49 @@ the client. Examples of transport errors include network disruption, mis-configu
 The MP GraphQL specification addresses the handling of client and server errors. Transport error handling is beyond the
 scope of this document.
 
+=== Structure
+
+As per the https://graphql.github.io/graphql-spec/June2018/#sec-Errors[GraphQL Specification], errors can be included in the response, 
+and each error can contain the following:
+
+* `message` - a string description of the error (mandatory)
+* `locations` - a list of locations, where each location is a map with the keys `line` and `column`, both positive numbers starting from 1 which describe the beginning of an associated syntax element to a particular point in the requested GraphQL document. (optional)
+* `path` - details the path of the response field which experienced the error (optional)
+* `extensions` - this allows implementation to add any additional key-value pairs of information (optional)
+
+.Error Example
+[source,json,numbered]
+----
+{
+    "errors": [
+        {
+            "message": "Validation error of type WrongType: argument 'powerLevel' with value 'StringValue{value='Unlimited'}' is not a valid 'Int' @ 'updateItemPowerLevel'",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 37
+                }
+            ],
+            "extensions": {
+                "description": "argument 'powerLevel' with value 'StringValue{value='Unlimited'}' is not a valid 'Int'",
+                "validationErrorType": "WrongType",
+                "queryPath": [
+                    "updateItemPowerLevel"
+                ],
+                "classification": "ValidationError"
+            }
+        }
+    ],
+    "data": null
+}
+----
+
+In the example above you can see implementation specific usage of the `extensions` section to add more information on the validation error.
+
 === Client Errors
 
 Client errors must be handled automatically by the implementation. Invalid requests must never result in user
-application code invocation.  Instead, the implementation must provide the client with an error message that indicates
+application code invocation. Instead, the implementation must provide the client with an error message that indicates
 why the client request was invalid.
 
 === Server Errors
@@ -47,12 +86,33 @@ application. The user application can indicate that an error has occurred by thr
 unchecked).  When the user application throws and exception, the implementation must send back a response that includes
 an error message.
 
-The user may determine the error message that is sent back to the client in two ways:
-- Throw an instance of `GraphQLException` or a subclass. The implementation must send the exception's message text to 
-the client.  Optionally, the user can specify an `ExceptionType` in the exception which must also be sent to the client
-if specified.
-- Specify the default error message to use when any other (non-`GraphQLException`) exception is thrown. This is set
-using the MicroProfile Config property, `mp.graphql.defaultErrorMessage`.
+==== Unchecked exceptions
+
+If an unchecked exception is thrown from the user application, the implementation must 'hide' the error message (for security reasons) and replace the `message` with a configured default message. 
+
+The default message is "Server Error" and can be configured by the user using MicroProfile Config and setting the `mp.graphql.defaultErrorMessage` property.
+
+Example:
+
+`mp.graphql.defaultErrorMessage=Unexpected failure in the system. Jarvis is working to fix it.`
+
+Users can allow unchecked exception messages to be included (changing the default behavior as described above) by adding the exception class name to a `whitelist`. This is done using MicroProfile Config and setting the `mp.graphql.exceptionsWhiteList` property (comma-separated list)
+
+Example:
+
+`mp.graphql.exceptionsWhiteList=org.eclipse.microprofile.graphql.tck.apps.superhero.api.WeaknessNotFoundException`
+
+(Note: By default all checked exceptions is on the `whitelist` and all unchecked exception on the `blacklist`)
+
+==== Checked exceptions
+
+By default checked exceptions must include the exception message in the `message` field of the error, and where possible also include the `locations` and `path`.
+
+Implementations must support the ability to 'hide' this message for checked exceptions by allowing users to add them to a `blacklist`. This is done using MicroProfile Config and setting the `mp.graphql.exceptionsBlackList` property (comma-separated list)
+
+Example:
+
+`mp.graphql.exceptionsBlackList=java.io.IOException,java.util.concurrent.TimeoutException`
 
 === Partial Results
 

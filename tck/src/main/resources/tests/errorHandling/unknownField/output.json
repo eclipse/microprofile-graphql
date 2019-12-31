@@ -1,0 +1,14 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type FieldUndefined: Field 'weaknesses' in type 'SuperHero' is undefined @ 'allHeroes/weaknesses'",
+      "locations": [
+        {
+          "line": 4,
+          "column": 5
+        }
+      ]
+    }
+  ]
+}

@@ -15,6 +15,10 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Properties;
+import org.eclipse.microprofile.graphql.ConfigKey;
 import org.eclipse.microprofile.graphql.tck.apps.basic.api.ScalarTestApi;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.api.HeroFinder;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
@@ -38,8 +42,7 @@ public class DeployableUnit {
         return ShrinkWrap.create(WebArchive.class, unitName + ".war")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource(
-                        new StringAsset("mp.graphql.defaultErrorMessage=" + 
-                                        "Unexpected failure in the system. Jarvis is working to fix it."),
+                        new StringAsset(getPropertyAsString()),
                         "microprofile-config.properties")
                 .addPackage(HeroFinder.class.getPackage())
                 .addPackage(HeroDatabase.class.getPackage())
@@ -47,4 +50,18 @@ public class DeployableUnit {
                 .addPackage(TestData.class.getPackage())
                 .addPackage(ScalarTestApi.class.getPackage());
     }
+    
+    private static String getPropertyAsString() throws IOException {    
+        StringWriter writer = new StringWriter();
+        PROPERTIES.store(writer,"TCK Properties");
+        return writer.toString();
+    }
+
+    private static final Properties PROPERTIES = new Properties();
+    static {
+        PROPERTIES.put(ConfigKey.DEFAULT_ERROR_MESSAGE, "Unexpected failure in the system. Jarvis is working to fix it.");
+        PROPERTIES.put(ConfigKey.EXCEPTION_BLACK_LIST, "java.io.IOException,java.util.concurrent.TimeoutException");
+        PROPERTIES.put(ConfigKey.EXCEPTION_WHITE_LIST, "org.eclipse.microprofile.graphql.tck.apps.superhero.api.WeaknessNotFoundException");
+    }
+
 }

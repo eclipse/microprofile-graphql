@@ -1,0 +1,7 @@
+query joker {
+  villian(name:"Joker") {
+    name
+    realName
+    superPowers
+  }
+}
