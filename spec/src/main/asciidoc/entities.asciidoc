@@ -661,8 +661,7 @@ public class SuperHero {
 }
 ----
 
-This indicated that superPowers can be null, but if it's not, it has to have elements in the list.
-Placing a `@NonNull` on the List can also makes the actual list non null;
+This indicated that superPowers can be null, but if it's not, then it must only contain non-null entries.
 
 The code above will result in a schema entry like this:
 
@@ -679,7 +678,8 @@ input SuperHeroInput {
 }
 ----
 
-Again, adding this only on the setter will only mark the input as non null and on the getter the type.
+Adding this only on the setter will only mark the input as non null and on the getter the type.
+Placing a `@NonNull` on the List can also makes the actual list non null. 
 
 The implementation should ignore a `@NonNull` annotation when it is on the same field or setter method that also
 contains `@DefaultValue` annotation, as the "null" value would result in the default value being used.
