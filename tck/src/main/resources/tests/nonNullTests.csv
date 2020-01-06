@@ -1,0 +1,29 @@
+# testNonNullOnSetterOnlyMakesInputTypeNonNull
+1|input SuperHeroInput  |   name: String!                                           |   Missing expected, non-null field, "name"
+2|type SuperHero        |   !name: String!                                          |   Found "name" as non-null field, expected nullable
+    
+# testNonNullOnGetterOnlyMakesOutputTypeNonNull
+3|input TeamInput       |   !name: String!                                          |   Found "name" as non-null field, expected nullable
+4|type Team             |   name: String!                                           |   Missing expected, non-null field, "name"
+
+# testNonNullOnFieldMakesBothNonNull
+5|input ItemInput       |   name: String!                                           |   Missing expected, non-null field, "name" on input
+6|type Item             |   name: String!                                           |   Missing expected, non-null field, "name"
+
+# testNonNullOnFieldWithDefaultValueIsNullable
+7|input ItemInput       |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
+8|input ItemInput       |   description: String = "An unidentified item"            |   Field's default value is missing
+9|type Item             |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
+10|type Item            |   description: String                                     |   Field with default value and nonnull is missing
+
+# testNonNullOnTypeUse
+11|type SuperHero       |   superPowers: [String!]                                  |   superPowers list in SuperHero should contain NonNull strings
+12|input SuperHeroInput |   superPowers: [String!]                                  |   superPowers list in SuperHeroInput should contain NonNull strings
+
+#testNonNullOnTypeUseInputOnly
+13|type SuperHero       |   equipment: [Item]                                       |   equipment list in SuperHero should contain Nullable Item
+14|input SuperHeroInput |   equipment: [ItemInput!]                                 |   equipment list in SuperHeroInput should contain NonNull ItemInput
+
+#testNonNullOnTypeUseOutputOnly
+15|type Team            |   members: [SuperHero!]                                   |   members list in SuperHero should contain NonNull SuperHero
+16|input TeamInput      |   members: [SuperHeroInput]                               |   members list in TeamInput should contain Nullable SuperHeroInput

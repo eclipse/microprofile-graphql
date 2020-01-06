@@ -61,7 +61,7 @@
 60| type ScalarHolder       |   floatObjectId: ID                                       |   Expecting a ID Scalar Type in type ScalarHolder, Float
 61| type ScalarHolder       |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
 62| input BasicMessageInput |   message: String                                         |   Expecting a BasicMessageInput from @Input
-63| input BasicMessageInput |   countdownPlace: CountDown                                         |   Expecting a BasicMessageInput from @Input
+63| input BasicMessageInput |   countdownPlace: CountDown                               |   Expecting a BasicMessageInput from @Input
 64| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
 65| enum CountDown          |   THREE                                                   |   Expecting a CountDown from @Enum
 66| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface
