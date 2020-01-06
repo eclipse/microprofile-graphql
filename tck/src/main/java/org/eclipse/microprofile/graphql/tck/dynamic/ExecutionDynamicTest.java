@@ -111,7 +111,7 @@ public class ExecutionDynamicTest extends Arquillian {
 
             // Run the actual test and get the response
             HttpResponse httpResponse = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
-            if(httpResponse.isSuccessfull()){
+            if(httpResponse.isSuccessful()){
                 this.currentOutput = httpResponse.getContent();
                 
                 // Validate the output structure
