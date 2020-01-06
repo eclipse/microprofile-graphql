@@ -89,7 +89,7 @@ This would generate a schema that would include:
 type Query {
   ...
   #Returns the super hero with the specified name
-  superHero(name: String): [SuperHero] 
+  superHero(name: String): SuperHero 
   #...
 ----
 
