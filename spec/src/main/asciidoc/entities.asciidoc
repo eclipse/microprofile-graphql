@@ -35,8 +35,8 @@ sub-fields, and all GraphQL implementations are expected to handle the following
 - `Boolean` - which maps to a Java `boolean`/`Boolean`.
 - `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
 
-Note that an ID scalar must map to a Java `String`, numerical primitive (`long`, `int`, `double`, `float`) or their
-object equivalents (`Long`, `Integer`, `Double`, `Float`), or a `java.util.UUID` - anything else is considered a
+Note that an ID scalar must map to a Java `String`, numerical primitive `long` and `int` or their
+object equivalents (`Long`, `Integer`), or a `java.util.UUID` - anything else is considered a
 deployment error.
 
 GraphQL allows implementations to define additional scalars. MicroProfile GraphQL implementations are required to
