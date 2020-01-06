@@ -624,6 +624,63 @@ that a field is required/non-nullable by adding the `@NonNull` annotation. This 
 getter method, setter method or field. The placement will determine whether it applies to the type, input type or both,
 respectively.
 
+Example, placing the annotation on the field: 
+
+[source,java,numbered]
+----
+public class Item {
+    // ...
+    @NonNull
+    private String name;
+    // ....
+----
+
+Will result in both the Type and Input to be marked not null (!):
+
+[source,graphql,numbered]
+----
+input ItemInput {
+  name: String!
+  # ...
+}
+
+type Item {
+  name: String!
+  #...  
+}
+----
+
+The annotation can also be use to indicate that elements in a collection can not be null, example:
+
+[source,java,numbered]
+----
+public class SuperHero {
+    // ...
+    private List<@NonNull String> superPowers;
+    // ...
+}
+----
+
+This indicated that superPowers can be null, but if it's not, it has to have elements in the list.
+Placing a `@NonNull` on the List can also makes the actual list non null;
+
+The code above will result in a schema entry like this:
+
+[source,graphql,numbered]
+----
+type SuperHero {
+  superPowers: [String!]
+  # ...
+}
+
+input SuperHeroInput {
+  superPowers: [String!]
+  #...
+}
+----
+
+Again, adding this only on the setter will only mark the input as non null and on the getter the type.
+
 The implementation should ignore a `@NonNull` annotation when it is on the same field or setter method that also
 contains `@DefaultValue` annotation, as the "null" value would result in the default value being used.
 
