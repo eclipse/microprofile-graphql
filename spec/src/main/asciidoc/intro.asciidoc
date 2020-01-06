@@ -95,7 +95,7 @@ Like REST, GraphQL is independent from particular transport protocols or data mo
 * it is not tied to any specific database technology or storage engine and is instead backed by existing code and data.
 
 [[what_make_graphql_different]]
-=== What make GraphQL different?
+=== What makes GraphQL different?
 In practice, here are the main differentiating features of GraphQL compared to REST:
 
 * *schema-driven*: a GraphQL API natively exposes a schema describing the structure of the data and operations (queries
