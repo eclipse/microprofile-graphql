@@ -34,7 +34,7 @@ import org.eclipse.microprofile.graphql.Name;
 
 public class SuperHero implements Character {
     private List<Team> teamAffiliations;
-    private List<String> superPowers;
+    private List<@NonNull String> superPowers;
     private String primaryLocation;
     @Description("Super hero name/nickname")
     private String name;
@@ -125,7 +125,7 @@ public class SuperHero implements Character {
         return equipment;
     }
 
-    public void setEquipment(List<Item> equipment) {
+    public void setEquipment(List<@NonNull Item> equipment) {
         this.equipment = equipment;
     }
 

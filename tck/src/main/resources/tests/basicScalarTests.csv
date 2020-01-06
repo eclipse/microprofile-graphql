@@ -53,15 +53,11 @@
 52| type ScalarHolder       |   #HH:mm:ss                                               |   Missing Default Time Format description on Output Type
 53| type ScalarHolder       |   longPrimitiveId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, long
 54| type ScalarHolder       |   intPrimitiveId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, int
-55| type ScalarHolder       |   doublePrimitiveId: ID                                   |   Expecting a ID Scalar Type in type ScalarHolder, double
-56| type ScalarHolder       |   floatPrimitiveId: ID                                    |   Expecting a ID Scalar Type in type ScalarHolder, float
-57| type ScalarHolder       |   longObjectId: ID                                        |   Expecting a ID Scalar Type in type ScalarHolder, long
-58| type ScalarHolder       |   integerObjectId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, Integer
-59| type ScalarHolder       |   doubleObjectId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, Double
-60| type ScalarHolder       |   floatObjectId: ID                                       |   Expecting a ID Scalar Type in type ScalarHolder, Float
-61| type ScalarHolder       |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
-62| input BasicMessageInput |   message: String                                         |   Expecting a BasicMessageInput from @Input
-63| input BasicMessageInput |   countdownPlace: CountDown                                         |   Expecting a BasicMessageInput from @Input
-64| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
-65| enum CountDown          |   THREE                                                   |   Expecting a CountDown from @Enum
-66| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface
+55| type ScalarHolder       |   longObjectId: ID                                        |   Expecting a ID Scalar Type in type ScalarHolder, long
+56| type ScalarHolder       |   integerObjectId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, Integer
+57| type ScalarHolder       |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
+58| input BasicMessageInput |   message: String                                         |   Expecting a BasicMessageInput from @Input
+59| input BasicMessageInput |   countdownPlace: CountDown                               |   Expecting a BasicMessageInput from @Input
+60| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
+61| enum CountDown          |   THREE                                                   |   Expecting a CountDown from @Enum
+62| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface

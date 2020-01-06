@@ -73,36 +73,18 @@
 38|input SuperHeroInput|   #HH:mm                                                  |   Missing Time Format description on Input Type
 39|input SuperHeroInput|   #HH:mm:ss dd-MM-yyyy                                    |   Missing DateTime Format description on Input Type
 
-# testNonNullOnSetterOnlyMakesInputTypeNonNull
-40|input SuperHeroInput|   name: String!                                           |   Missing expected, non-null field, "name"
-41|type SuperHero      |   !name: String!                                          |   Found "name" as non-null field, expected nullable
-    
-# testNonNullOnGetterOnlyMakesOutputTypeNonNull
-42|input TeamInput     |   !name: String!                                          |   Found "name" as non-null field, expected nullable
-43|type Team           |   name: String!                                           |   Missing expected, non-null field, "name"
-
-# testNonNullOnFieldMakesBothNonNull
-44|input ItemInput     |   name: String!                                           |   Missing expected, non-null field, "name" on input
-45|type Item           |   name: String!                                           |   Missing expected, non-null field, "name"
-
-# testNonNullOnFieldWithDefaultValueIsNullable
-46|input ItemInput     |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
-47|input ItemInput     |   description: String = "An unidentified item"            |   Field's default value is missing
-48|type Item           |   !description: String!                                   |   Field with default value is unexpectedly marked as required/non-nullable
-49|type Item           |   description: String                                     |   Field with default value and nonnull is missing
-
 # testSchemaContainsDefaultValueOnEntityField
-50|input ItemInput     |   supernatural: Boolean = false                           |   Missing default value in Input boolean field
+40|input ItemInput     |   supernatural: Boolean = false                           |   Missing default value in Input boolean field
 
 # testSchemaContainsDefaultValueOnEntitySetter
-51|input ItemInput     |   description: String = "An unidentified item"            |   Missing default value in Input String field
+41|input ItemInput     |   description: String = "An unidentified item"            |   Missing default value in Input String field
 
 # testWithArgumentNameAndDefaultValue
-52|type Query          |   allHeroesIn(city: String = "New York, NY"): [SuperHero] |   Missing default value on argument
-53|type Query          |   allHeroesInTeam(team: String): [SuperHero]              |   Missing argument on Query
+42|type Query          |   allHeroesIn(city: String = "New York, NY"): [SuperHero] |   Missing default value on argument
+43|type Query          |   allHeroesInTeam(team: String): [SuperHero]              |   Missing argument on Query
 
 # testSourceFieldInType
-54|type SuperHero      |   currentLocation: String                                 |   Expecting a currentLocation field in SuperHero due to Source annotation
-55|type Query          |   currentLocation(superHero: SuperHeroInput): String      |   Expecting a currentLocation query in Query to Source annotation
-56|type SuperHero      |   secretToken(maskFirstPart: Boolean = true): String      |   Expecting a secretToken field with a boolean argument in SuperHero due to Source annotation
-57|type Query          |   !secretToken(maskFirstPart: Boolean = true): String     |   Not expecting a secretToken query in Query
+44|type SuperHero      |   currentLocation: String                                 |   Expecting a currentLocation field in SuperHero due to Source annotation
+45|type Query          |   currentLocation(superHero: SuperHeroInput): String      |   Expecting a currentLocation query in Query to Source annotation
+46|type SuperHero      |   secretToken(maskFirstPart: Boolean = true): String      |   Expecting a secretToken field with a boolean argument in SuperHero due to Source annotation
+47|type Query          |   !secretToken(maskFirstPart: Boolean = true): String     |   Not expecting a secretToken query in Query

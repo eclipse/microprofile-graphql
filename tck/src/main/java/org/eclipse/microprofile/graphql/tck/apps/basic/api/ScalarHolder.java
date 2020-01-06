@@ -71,17 +71,9 @@ public class ScalarHolder {
     @Id
     private int intPrimitiveId;
     @Id
-    private double doublePrimitiveId;
-    @Id
-    private float floatPrimitiveId;
-    @Id
     private Long longObjectId;
     @Id
     private Integer integerObjectId;
-    @Id
-    private Double doubleObjectId;
-    @Id
-    private Float floatObjectId;
     @Id
     private UUID uuidId;
 
@@ -297,22 +289,6 @@ public class ScalarHolder {
         this.intPrimitiveId = intPrimitiveId;
     }
 
-    public double getDoublePrimitiveId() {
-        return doublePrimitiveId;
-    }
-
-    public void setDoublePrimitiveId(double doublePrimitiveId) {
-        this.doublePrimitiveId = doublePrimitiveId;
-    }
-
-    public float getFloatPrimitiveId() {
-        return floatPrimitiveId;
-    }
-
-    public void setFloatPrimitiveId(float floatPrimitiveId) {
-        this.floatPrimitiveId = floatPrimitiveId;
-    }
-
     public Long getLongObjectId() {
         return longObjectId;
     }
@@ -327,22 +303,6 @@ public class ScalarHolder {
 
     public void setIntegerObjectId(Integer integerObjectId) {
         this.integerObjectId = integerObjectId;
-    }
-
-    public Double getDoubleObjectId() {
-        return doubleObjectId;
-    }
-
-    public void setDoubleObjectId(Double doubleObjectId) {
-        this.doubleObjectId = doubleObjectId;
-    }
-
-    public Float getFloatObjectId() {
-        return floatObjectId;
-    }
-
-    public void setFloatObjectId(Float floatObjectId) {
-        this.floatObjectId = floatObjectId;
     }
 
     public UUID getUuidId() {

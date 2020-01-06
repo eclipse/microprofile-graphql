@@ -40,7 +40,7 @@ public class Team {
         return name;
     }
 
-    public List<SuperHero> getMembers() {
+    public List<@NonNull SuperHero> getMembers() {
         return members;
     }
 

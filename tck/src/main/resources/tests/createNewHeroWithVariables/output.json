@@ -3,7 +3,9 @@
         "createNewHero": {
             "name": "Batman",
             "primaryLocation": "Gotham City",
-            "superPowers": [],
+            "superPowers": [
+                "Genius-level intellect"
+            ],
             "realName": "Bruce Wayne"
         }
     }
