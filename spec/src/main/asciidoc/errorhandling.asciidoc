@@ -179,4 +179,4 @@ query allHeroes {
 
 In this case, if there are any heroes that have a location blocking power, one or more errors will be returned to the
 client. However, the names of all of the heroes in the database will be returned as well as the location of all heroes
-to do not have a location blocking power.
+that do not have a location blocking power.
