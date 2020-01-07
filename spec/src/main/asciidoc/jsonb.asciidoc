@@ -143,10 +143,43 @@ A query that requests a Widget's construction date would get a result like this:
 }
 ----
 
-The date format string specified in the `@JsonbDateFormat` annotation will be used as the field's description in the
-schema, if no `@Description` annotation is provided for that field. If the same field (or property) contains both 
-`@JsonbDateFormat` and `@Description` annotations, it should be considered a best practice to document the date format
-in the description text so that the format is communicated to clients in the schema.
+If no `@Description` annotation is provided for a date field, the date format string specified in the `@JsonbDateFormat` annotation 
+will be used as the field's description, or the default date format in the case there is not `@JsonbDateFormat` annotation. 
+
+If a `@Description` annotation is provided for a date field, the date format string specified in the `@JsonbDateFormat` annotation 
+will be appended to the given description in brackets `(...)`, or the default date format in the case there is not `@JsonbDateFormat` annotation. 
+
+Example:
+
+[source,java,numbered]
+----
+
+private LocalDate dateObject;
+
+@Description("This is another date")
+private LocalDate anotherDateObject;
+
+@JsonbDateFormat("MM dd yyyy")
+@Description("This is a formatted date")
+private LocalDate formattedDateObject;
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+type ScalarHolder {
+  #yyyy-MM-dd
+  dateObject: Date
+
+  #This is another date (yyyy-MM-dd)
+  anotherDateObject: Date
+  
+  #This is a formatted date (MM dd yyyy)
+  formattedDateObject: Date
+  #...
+}
+----
 
 === JSON-B Annotations vs MP GraphQL Annotations
 

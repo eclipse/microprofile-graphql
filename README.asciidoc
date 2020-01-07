@@ -16,6 +16,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
+image:https://github.com/eclipse/microprofile-graphql/workflows/Build/badge.svg[link="https://github.com/github.com/eclipse/microprofile-graphql/actions"]
 image:https://badges.gitter.im/eclipse/microprofile-graphql.svg[link="https://gitter.im/eclipse/microprofile-graphql"]
 
 = Microprofile GraphQL Specification
