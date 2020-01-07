@@ -21,8 +21,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
+import javax.json.bind.annotation.JsonbDateFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
+import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.Id;
 
 /**
@@ -64,6 +66,24 @@ public class ScalarHolder {
     private LocalDate dateObject;
     private LocalTime timeObject;
     private LocalDateTime dateTimeObject;
+    
+    @Description("This is another date")
+    private LocalDate anotherDateObject;
+    @Description("This is another time")
+    private LocalTime anotherTimeObject;
+    @Description("This is another datetime")
+    private LocalDateTime anotherDateTimeObject;
+    
+    @JsonbDateFormat("MM dd yyyy")
+    @Description("This is a formatted date")
+    private LocalDate formattedDateObject;
+    @JsonbDateFormat("hh:mm a")
+    @Description("This is a formatted time")
+    private LocalTime formattedTimeObject;
+    @JsonbDateFormat("MM dd yyyy 'at' hh:mm a")
+    @Description("This is a formatted datetime")
+    private LocalDateTime formattedDateTimeObject;
+    
     @Id
     private String id;
     @Id
@@ -265,6 +285,54 @@ public class ScalarHolder {
         this.dateTimeObject = dateTimeObject;
     }
 
+    public LocalDate getAnotherDateObject() {
+        return anotherDateObject;
+    }
+
+    public void setAnotherDateObject(LocalDate dateObject) {
+        this.anotherDateObject = dateObject;
+    }
+
+    public LocalTime getAnotherTimeObject() {
+        return anotherTimeObject;
+    }
+
+    public void setAnotherTimeObject(LocalTime timeObject) {
+        this.anotherTimeObject = timeObject;
+    }
+
+    public LocalDateTime getAnotherDateTimeObject() {
+        return anotherDateTimeObject;
+    }
+
+    public void setAnotherDateTimeObject(LocalDateTime dateTimeObject) {
+        this.anotherDateTimeObject = dateTimeObject;
+    }
+    
+    public LocalDate getFormattedDateObject() {
+        return formattedDateObject;
+    }
+
+    public void setFormattedDateObject(LocalDate dateObject) {
+        this.formattedDateObject = dateObject;
+    }
+
+    public LocalTime getFormattedTimeObject() {
+        return formattedTimeObject;
+    }
+
+    public void setFormattedTimeObject(LocalTime timeObject) {
+        this.formattedTimeObject = timeObject;
+    }
+
+    public LocalDateTime getFormattedDateTimeObject() {
+        return formattedDateTimeObject;
+    }
+
+    public void setFormattedDateTimeObject(LocalDateTime dateTimeObject) {
+        this.formattedDateTimeObject = dateTimeObject;
+    }
+    
     public String getId() {
         return id;
     }
