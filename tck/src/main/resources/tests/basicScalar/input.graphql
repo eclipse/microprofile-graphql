@@ -1,29 +1,51 @@
 {
   testScalarsInPojo {
-    id
+    shortPrimitive
+    shortObject
+    formattedShortObject
+
+    intPrimitive
+    intObject
+    formattedIntObject
+
+    longPrimitive
+    formattedLongPrimitive
+    longObject
+    formattedLongObject
+
+    floatPrimitive
+    floatObject
+    formattedFloatObject
+
+    doublePrimitive
+    doubleObject
+    formattedDoubleObject
+
+    bytePrimitive
+    byteObject
+    formattedByteObject    
+
+    bigIntegerObject
+    formattedBigIntegerObject
+
     bigDecimalObject
     formattedBigDecimalObject
-    bigIntegerObject
+    
     booleanObject
     booleanPrimitive
-    byteObject
-    bytePrimitive
+
     charObject
     charPrimitive
-    dateObject
-    dateTimeObject
-    doubleObject
-    doublePrimitive
-    floatObject
-    floatPrimitive
-    intObject
-    intPrimitive
-    longObject
-    longPrimitive
-    shortObject
-    shortPrimitive
+
     stringObject
     charArray
+
+    dateObject
+
     timeObject
-    }
+
+    dateTimeObject
+    
+    id
+  }
 }

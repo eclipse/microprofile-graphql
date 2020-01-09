@@ -37,38 +37,76 @@ public class ScalarTestApi {
     @Query("testScalarsInPojo")
     public ScalarHolder getScalarHolder() {
         ScalarHolder sh = new ScalarHolder();
-        sh.setBigDecimalObject(BigDecimal.valueOf(123.123));
-        sh.setFormattedBigDecimalObject(BigDecimal.valueOf(123.123));
-        sh.setBigIntegerObject(BigInteger.valueOf(123));
+        
+        // Short
+        short s = 123;
+        sh.setShortObject(new Short(s));
+        sh.setFormattedShortObject(new Short(s));
+        sh.setShortPrimitive(s);
+        
+        // Integer
+        int i = 123456789;
+        sh.setIntObject(new Integer(i));
+        sh.setFormattedIntObject(new Integer(i));
+        sh.setIntPrimitive(i);
+        
+        // Long
+        long l = 123456789L;
+        sh.setLongObject(new Long(l));
+        sh.setFormattedLongObject(new Long(l));
+        sh.setLongPrimitive(l);
+        sh.setFormattedLongPrimitive(l);
+        
+        // Float
+        float f = 123456.789F;
+        sh.setFloatObject(new Float(f));
+        sh.setFormattedFloatObject(new Float(f));
+        sh.setFloatPrimitive(f);
+        
+        // Double
+        double d = 123456.789;
+        sh.setDoubleObject(new Double(d));
+        sh.setFormattedDoubleObject(new Double(d));
+        sh.setDoublePrimitive(d);
+        
+        // Byte
+        byte b = 123;
+        sh.setByteObject(new Byte("123"));
+        sh.setFormattedByteObject(new Byte("123"));
+        sh.setBytePrimitive(b);
+        
+        // BigInteger
+        sh.setBigIntegerObject(BigInteger.valueOf(123456789));
+        sh.setFormattedBigIntegerObject(BigInteger.valueOf(123456789));
+        
+        // BigDecimal
+        sh.setBigDecimalObject(BigDecimal.valueOf(123456.789));
+        sh.setFormattedBigDecimalObject(BigDecimal.valueOf(123456.789));
+        
+        // Boolean
         sh.setBooleanObject(Boolean.valueOf(false));
         sh.setBooleanPrimitive(false);
-        sh.setByteObject(new Byte("123"));
-        byte b = 123;
-        sh.setBytePrimitive(b);
+        
+        // Character
         char c = "c".charAt(0);
         sh.setCharObject(new Character(c));
         sh.setCharPrimitive(c);
+        
+        // String
+        sh.setStringObject("123456789");
+        sh.setCharArray("123456789".toCharArray());
+        
+        // LocalDate
         sh.setDateObject(LocalDate.parse("2019-10-23"));
-        sh.setDateTimeObject(LocalDateTime.parse("2019-10-23T11:46:34.263"));
-        double d = 123.123;
-        sh.setDoubleObject(new Double(d));
-        sh.setDoublePrimitive(d);
-        float f = 123.123F;
-        sh.setFloatObject(new Float(f));
-        sh.setFloatPrimitive(f);
-        sh.setId("123");
-        int i = 123;
-        sh.setIntObject(new Integer(i));
-        sh.setIntPrimitive(i);
-        long l = 123L;
-        sh.setLongObject(new Long(l));
-        sh.setLongPrimitive(l);
-        short s = 123;
-        sh.setShortObject(new Short(s));
-        sh.setShortPrimitive(s);
-        sh.setStringObject("123");
-        sh.setCharArray("123".toCharArray());
+        
+        // LocalTime
         sh.setTimeObject(LocalTime.parse("11:46:34.263"));
+        
+        // LocalDateTime
+        sh.setDateTimeObject(LocalDateTime.parse("2019-10-23T11:46:34.263"));
+        
+        // ID
+        sh.setId("123456789");
         
         return sh;
     }
