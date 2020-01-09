@@ -2,6 +2,7 @@
   testScalarsInPojo {
     id
     bigDecimalObject
+    formattedBigDecimalObject
     bigIntegerObject
     booleanObject
     booleanPrimitive

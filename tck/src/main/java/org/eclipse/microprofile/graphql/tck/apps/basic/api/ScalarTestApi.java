@@ -38,6 +38,7 @@ public class ScalarTestApi {
     public ScalarHolder getScalarHolder() {
         ScalarHolder sh = new ScalarHolder();
         sh.setBigDecimalObject(BigDecimal.valueOf(123.123));
+        sh.setFormattedBigDecimalObject(BigDecimal.valueOf(123.123));
         sh.setBigIntegerObject(BigInteger.valueOf(123));
         sh.setBooleanObject(Boolean.valueOf(false));
         sh.setBooleanPrimitive(false);

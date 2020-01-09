@@ -3,6 +3,7 @@
         "testScalarsInPojo": {
             "id": "123",
             "bigDecimalObject": 123.123,
+            "formattedBigDecimalObject": 123.12,
             "bigIntegerObject": 123,
             "booleanObject": false,
             "booleanPrimitive": false,

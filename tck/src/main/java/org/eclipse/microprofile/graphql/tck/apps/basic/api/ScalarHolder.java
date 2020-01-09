@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 import javax.json.bind.annotation.JsonbDateFormat;
+import javax.json.bind.annotation.JsonbNumberFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
@@ -61,7 +62,9 @@ public class ScalarHolder {
 
     private BigInteger bigIntegerObject;
     private BigDecimal bigDecimalObject;
-
+    @JsonbNumberFormat("#0.00")
+    private BigDecimal formattedBigDecimalObject;
+    
     @DefaultValue("1978-07-03")
     private LocalDate dateObject;
     private LocalTime timeObject;
@@ -261,6 +264,14 @@ public class ScalarHolder {
         this.bigDecimalObject = bigDecimalObject;
     }
 
+    public BigDecimal getFormattedBigDecimalObject() {
+        return formattedBigDecimalObject;
+    }
+
+    public void setFormattedBigDecimalObject(BigDecimal bigDecimalObject) {
+        this.formattedBigDecimalObject = bigDecimalObject;
+    }
+    
     public LocalDate getDateObject() {
         return dateObject;
     }
