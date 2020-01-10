@@ -57,13 +57,15 @@
 56| type ScalarHolder       |   #This is a formatted time (hh:mm a)                     |   Missing Formatted Time Format description (appended) on Output Type
 57| type ScalarHolder       |   #This is a formatted date (MM dd yyyy)                  |   Missing Formatted Date Format description (appended) on Output Type
 58| type ScalarHolder       |   #This is a formatted datetime (MM dd yyyy 'at' hh:mm a) |   Missing Formatted DateTime Format description (appended) on Output Type
-59| type ScalarHolder       |   longPrimitiveId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, long
-60| type ScalarHolder       |   intPrimitiveId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, int
-61| type ScalarHolder       |   longObjectId: ID                                        |   Expecting a ID Scalar Type in type ScalarHolder, long
-62| type ScalarHolder       |   integerObjectId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, Integer
-63| type ScalarHolder       |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
-64| input BasicMessageInput |   message: String                                         |   Expecting a BasicMessageInput from @Input
-65| input BasicMessageInput |   countdownPlace: CountDown                               |   Expecting a BasicMessageInput from @Input
-66| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
-67| enum CountDown          |   THREE                                                   |   Expecting a CountDown from @Enum
-68| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface
+59| type ScalarHolder       |   ##0.00                                                  |   Missing Default Number Format description on Output Type
+60| type ScalarHolder       |   #This is a formatted number (#0.0)                      |   Missing Formatted Number Format description (appended) on Output Type
+61| type ScalarHolder       |   longPrimitiveId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, long
+62| type ScalarHolder       |   intPrimitiveId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, int
+63| type ScalarHolder       |   longObjectId: ID                                        |   Expecting a ID Scalar Type in type ScalarHolder, long
+64| type ScalarHolder       |   integerObjectId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, Integer
+65| type ScalarHolder       |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
+66| input BasicMessageInput |   message: String                                         |   Expecting a BasicMessageInput from @Input
+67| input BasicMessageInput |   countdownPlace: CountDown                               |   Expecting a BasicMessageInput from @Input
+68| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
+69| enum CountDown          |   THREE                                                   |   Expecting a CountDown from @Enum
+70| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface

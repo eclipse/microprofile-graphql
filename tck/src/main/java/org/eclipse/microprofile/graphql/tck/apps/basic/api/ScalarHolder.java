@@ -62,6 +62,7 @@ public class ScalarHolder {
     // Double
     private double doublePrimitive;
     private Double doubleObject;
+    @Description("This is a formatted number")
     @JsonbNumberFormat("#0.0")
     private Double formattedDoubleObject;
     
