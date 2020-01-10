@@ -41,11 +41,17 @@
     charArray
 
     dateObject
+    anotherDateObject
+    formattedDateObject
 
     timeObject
+    anotherTimeObject
+    formattedTimeObject
 
     dateTimeObject
-    
+    anotherDateTimeObject
+    formattedDateTimeObject
+
     id
   }
 }

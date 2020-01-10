@@ -10,6 +10,7 @@
             "longPrimitive": 123456789,
             "longObject": 123456789,
             "formattedLongObject": "123'456'789",
+            "formattedLongPrimitive": "123'456'789",
             "floatPrimitive": 123456.79,
             "floatObject": 123456.79,
             "formattedFloatObject": "123456.8",
@@ -40,8 +41,15 @@
                 "9"
             ],
             "dateObject": "2019-10-23",
+            "anotherDateObject": "2019-10-23",
+            "formattedDateObject": "10 23 2019",
             "timeObject": "11:46:34.263",
+            "anotherTimeObject": "11:46:34.263",
+            "formattedTimeObject": "11:46 AM",
             "dateTimeObject": "2019-10-23T11:46:34.263",
+            "dateTimeObject": "2019-10-23T11:46:34.263",
+            "anotherDateTimeObject": "2019-10-23T11:46:34.263",
+            "formattedDateTimeObject": "10 23 2019 at 11:46 AM",
             "id": "123456789"
         }
     }

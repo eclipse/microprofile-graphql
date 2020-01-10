@@ -48,7 +48,7 @@ public class ScalarHolder {
     // Long
     private long longPrimitive;
     @JsonbNumberFormat(locale = "de_CH")
-    private Long formattedLongPrimitive;
+    private long formattedLongPrimitive;
     private Long longObject;
     @JsonbNumberFormat(locale = "de_CH")
     private Long formattedLongObject;
@@ -391,7 +391,7 @@ public class ScalarHolder {
     public void setFormattedDateObject(LocalDate formattedDateObject) {
         this.formattedDateObject = formattedDateObject;
     }
-
+   
     public LocalTime getTimeObject() {
         return timeObject;
     }
@@ -415,7 +415,7 @@ public class ScalarHolder {
     public void setFormattedTimeObject(LocalTime formattedTimeObject) {
         this.formattedTimeObject = formattedTimeObject;
     }
-
+    
     public LocalDateTime getDateTimeObject() {
         return dateTimeObject;
     }
@@ -439,7 +439,7 @@ public class ScalarHolder {
     public void setFormattedDateTimeObject(LocalDateTime formattedDateTimeObject) {
         this.formattedDateTimeObject = formattedDateTimeObject;
     }
-
+    
     public String getId() {
         return id;
     }

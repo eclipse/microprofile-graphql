@@ -97,14 +97,23 @@ public class ScalarTestApi {
         sh.setCharArray("123456789".toCharArray());
         
         // LocalDate
-        sh.setDateObject(LocalDate.parse("2019-10-23"));
-        
+        LocalDate localDate = LocalDate.parse("2019-10-23");
+        sh.setDateObject(localDate);
+        sh.setAnotherDateObject(localDate);
+        sh.setFormattedDateObject(localDate);
+            
         // LocalTime
-        sh.setTimeObject(LocalTime.parse("11:46:34.263"));
+        LocalTime localTime = LocalTime.parse("11:46:34.263");
+        sh.setTimeObject(localTime);
+        sh.setAnotherTimeObject(localTime);
+        sh.setFormattedTimeObject(localTime);
         
         // LocalDateTime
-        sh.setDateTimeObject(LocalDateTime.parse("2019-10-23T11:46:34.263"));
-        
+        LocalDateTime localDateTime = LocalDateTime.parse("2019-10-23T11:46:34.263");
+        sh.setDateTimeObject(localDateTime);
+        sh.setAnotherDateTimeObject(localDateTime);
+        sh.setFormattedDateTimeObject(localDateTime);
+            
         // ID
         sh.setId("123456789");
         
