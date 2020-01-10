@@ -54,6 +54,31 @@ handle the following additional scalar types:
 
 Implementations may define additional custom scalars beyond those listed above.
 
+==== Numbers
+All number scalars (Int, Float, Short, Long, Byte, BigInteger and BigDecimal) can be formatted
+using the JSON-B annotation `@JsonbNumberFormat`.
+
+When formatting is added to a number type, the formatted result will be of type String.
+
+Example:
+[source,java,numbered]
+----
+@JsonbNumberFormat(value = "¤000",locale = "en_ZA")
+private Short formattedShortObject;
+----
+
+will result in a formatted amount (South African Rand) in the result:
+[source,json,numbered]
+----
+{
+    "data": {
+        "testScalarsInPojo": {        
+            "formattedShortObject": "R123"
+        }
+    }
+}
+----
+
 ==== Dates
 By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
 
@@ -63,8 +88,8 @@ By default the date related scalars (DateTime, Date, and Time) will use a ISO fo
 
 By adding the JSON-B annotation `@JsonbDateFormat` a user can change the format.
 
-==== Custom user defined scalars
-@TODO: Define how to create your own scalar.
+// ==== Custom user defined scalars (v1.1)
+// @TODO: Define how to create your own scalar.
 
 [[enums]]
 === Enumerable types

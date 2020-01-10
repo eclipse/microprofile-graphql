@@ -143,11 +143,11 @@ A query that requests a Widget's construction date would get a result like this:
 }
 ----
 
-If no `@Description` annotation is provided for a date field, the date format string specified in the `@JsonbDateFormat` annotation 
-will be used as the field's description, or the default date format in the case there is not `@JsonbDateFormat` annotation. 
+If no `@Description` annotation is provided for a date or number field, the format string specified in the `@JsonbDateFormat` or `@JsonbNumberFormat` annotation 
+will be used as the field's description, or, for dates only, the default date format in the case there is not `@JsonbDateFormat` annotation.
 
-If a `@Description` annotation is provided for a date field, the date format string specified in the `@JsonbDateFormat` annotation 
-will be appended to the given description in brackets `(...)`, or the default date format in the case there is not `@JsonbDateFormat` annotation. 
+If a `@Description` annotation is provided for a date or number field, the format string specified in the `@JsonbDateFormat` or `@JsonbNumberFormat` annotation 
+will be appended to the given description in brackets `(...)`, or, for dates only, the default date format in the case there is not `@JsonbDateFormat` annotation. 
 
 Example:
 
@@ -162,6 +162,13 @@ private LocalDate anotherDateObject;
 @JsonbDateFormat("MM dd yyyy")
 @Description("This is a formatted date")
 private LocalDate formattedDateObject;
+
+@JsonbNumberFormat("#0.0")
+private Float formattedFloatObject;
+
+@Description("This is a formatted number")
+@JsonbNumberFormat("#0.0")
+private Double formattedDoubleObject;
 ----
 
 will result in:
@@ -177,6 +184,13 @@ type ScalarHolder {
   
   #This is a formatted date (MM dd yyyy)
   formattedDateObject: Date
+
+  ##0.0
+  formattedFloatObject: Float
+
+  #This is a formatted number (#0.0)
+  formattedDoubleObject: Float
+
   #...
 }
 ----
