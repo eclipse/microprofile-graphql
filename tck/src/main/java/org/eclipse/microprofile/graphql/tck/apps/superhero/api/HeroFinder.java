@@ -16,6 +16,7 @@
 package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -230,6 +231,18 @@ public class HeroFinder {
         return item;
     }
 
+    @Mutation
+    @Description("Check in a superhero") 
+    public SuperHero checkIn(@Name("name") String name,
+                             @Name("date") LocalDate localDate) throws UnknownHeroException {
+        LOG.log(Level.INFO, "checkIn invoked [{0}],[{1}]", new Object[]{name, localDate});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setDateOfLastCheckin(localDate);
+        }
+        return superHero;
+    }
+    
     @Query
     public String currentLocation(@Name("superHero")@Source SuperHero hero) throws GraphQLException {
         LOG.log(Level.INFO, "currentLocation invoked [{0}]", hero);

@@ -1,0 +1,6 @@
+mutation invalidCheckInDate {
+  checkIn(name:"Starlord", date:"2020-01-13") {
+    name
+    dateOfLastCheckin
+  }
+}
