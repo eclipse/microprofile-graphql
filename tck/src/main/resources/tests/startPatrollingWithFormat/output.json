@@ -1,0 +1,8 @@
+{
+    "data": {
+        "startPatrollingWithCorrectDateFormat": {
+            "name": "Starlord",
+            "patrolStartTime": "20:00"
+        }
+    }
+}

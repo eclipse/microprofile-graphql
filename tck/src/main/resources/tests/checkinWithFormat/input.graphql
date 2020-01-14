@@ -1,0 +1,6 @@
+mutation checkInHero {
+  checkInWithCorrectDateFormat(name:"Starlord", date:"01/13/2020") {
+    name
+    dateOfLastCheckin
+  }
+}

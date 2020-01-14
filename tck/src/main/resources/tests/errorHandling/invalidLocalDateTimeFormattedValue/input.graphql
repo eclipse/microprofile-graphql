@@ -1,0 +1,6 @@
+mutation invalidBattleDate {
+  battleWithCorrectDateFormat(name:"Starlord", dateTime:"Today") {
+    name
+    timeOfLastBattle
+  }
+}

@@ -30,6 +30,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.json.bind.annotation.JsonbDateFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
@@ -246,10 +247,34 @@ public class HeroFinder {
     }
     
     @Mutation
+    @Description("Check in a superhero") 
+    public SuperHero checkInWithCorrectDateFormat(@Name("name") String name,
+                             @JsonbDateFormat("MM/dd/yyyy") @Name("date") LocalDate localDate) throws UnknownHeroException {
+        LOG.log(Level.INFO, "checkInWithCorrectDateFormat invoked [{0}],[{1}]", new Object[]{name, localDate});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setDateOfLastCheckin(localDate);
+        }
+        return superHero;
+    }
+    
+    @Mutation
     @Description("Set the time a here started patrolling") 
     public SuperHero startPatrolling(@Name("name") String name,
                              @Name("time") LocalTime localTime) throws UnknownHeroException {
         LOG.log(Level.INFO, "startPatrolling invoked [{0}],[{1}]", new Object[]{name, localTime});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setPatrolStartTime(localTime);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Set the time a here started patrolling") 
+    public SuperHero startPatrollingWithCorrectDateFormat(@Name("name") String name,
+                             @JsonbDateFormat("HH:mm") @Name("time") LocalTime localTime) throws UnknownHeroException {
+        LOG.log(Level.INFO, "startPatrollingWithCorrectDateFormat invoked [{0}],[{1}]", new Object[]{name, localTime});
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
             superHero.setPatrolStartTime(localTime);
@@ -269,6 +294,17 @@ public class HeroFinder {
         return superHero;
     }
     
+    @Mutation
+    @Description("Start a battle") 
+    public SuperHero battleWithCorrectDateFormat(@Name("name") String name,
+                             @JsonbDateFormat("HH:mm:ss dd-MM-yyyy") @Name("dateTime") LocalDateTime localDateTime) throws UnknownHeroException {
+        LOG.log(Level.INFO, "battleWithCorrectDateFormat invoked [{0}],[{1}]", new Object[]{name, localDateTime});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setTimeOfLastBattle(localDateTime);
+        }
+        return superHero;
+    }
     
     @Query
     public String currentLocation(@Name("superHero")@Source SuperHero hero) throws GraphQLException {
