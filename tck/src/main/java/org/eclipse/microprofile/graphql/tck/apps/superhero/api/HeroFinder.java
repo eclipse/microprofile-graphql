@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.json.bind.annotation.JsonbDateFormat;
+import javax.json.bind.annotation.JsonbNumberFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
@@ -302,6 +303,30 @@ public class HeroFinder {
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
             superHero.setTimeOfLastBattle(localDateTime);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Set the ID Number for a hero") 
+    public SuperHero idNumber(@Name("name") String name,
+                             @Name("id") Long idNumber) throws UnknownHeroException {
+        LOG.log(Level.INFO, "idNumber invoked [{0}],[{1}]", new Object[]{name, idNumber});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setIdNumber(idNumber);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Set the ID Number for a hero") 
+    public SuperHero idNumberWithCorrectFormat(@Name("name") String name,
+                             @JsonbNumberFormat("0000,0000") @Name("id") Long idNumber) throws UnknownHeroException {
+        LOG.log(Level.INFO, "idNumberWithCorrectFormat invoked [{0}],[{1}]", new Object[]{name, idNumber});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setIdNumber(idNumber);
         }
         return superHero;
     }
