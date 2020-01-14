@@ -1,0 +1,6 @@
+mutation invalidBattleDate {
+  battle(name:"Starlord", dateTime:"Today") {
+    name
+    timeOfLastBattle
+  }
+}

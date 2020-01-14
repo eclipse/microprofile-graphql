@@ -1,0 +1,6 @@
+mutation startABattle {
+  battle(name:"Starlord", dateTime:"2020-01-13T10:00:00") {
+    name
+    timeOfLastBattle
+  }
+}

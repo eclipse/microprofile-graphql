@@ -1,0 +1,6 @@
+mutation invalidPatrollingDate {
+  startPatrolling(name:"Starlord", time:"Today") {
+    name
+    patrolStartTime
+  }
+}

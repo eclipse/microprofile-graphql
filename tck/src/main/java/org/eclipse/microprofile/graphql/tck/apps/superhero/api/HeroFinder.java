@@ -17,6 +17,8 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -242,6 +244,31 @@ public class HeroFinder {
         }
         return superHero;
     }
+    
+    @Mutation
+    @Description("Set the time a here started patrolling") 
+    public SuperHero startPatrolling(@Name("name") String name,
+                             @Name("time") LocalTime localTime) throws UnknownHeroException {
+        LOG.log(Level.INFO, "startPatrolling invoked [{0}],[{1}]", new Object[]{name, localTime});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setPatrolStartTime(localTime);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Start a battle") 
+    public SuperHero battle(@Name("name") String name,
+                             @Name("dateTime") LocalDateTime localDateTime) throws UnknownHeroException {
+        LOG.log(Level.INFO, "battle invoked [{0}],[{1}]", new Object[]{name, localDateTime});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setTimeOfLastBattle(localDateTime);
+        }
+        return superHero;
+    }
+    
     
     @Query
     public String currentLocation(@Name("superHero")@Source SuperHero hero) throws GraphQLException {
