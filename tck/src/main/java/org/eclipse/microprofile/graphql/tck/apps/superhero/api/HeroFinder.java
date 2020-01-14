@@ -234,6 +234,23 @@ public class HeroFinder {
         }
         return item;
     }
+    
+    @Mutation
+    @Description("Update an item's powerLevel in persentage") 
+    public Item updateItemPowerLevelPersentage(@Name("itemID") long itemID,
+                                     @JsonbNumberFormat("##'%'") @Name("powerLevel") int newLevel) {
+        LOG.log(Level.INFO, "updateItemPowerLevelPersentage invoked [{0}],[{1}]", new Object[]{itemID, newLevel});
+        Item item = null;
+        for (SuperHero hero : allHeroes()) {
+            for (Item i : hero.getEquipment()) {
+                if (i.getId() == itemID) {
+                    item = i;
+                    item.setPowerLevel(newLevel/20 );
+                }
+            }
+        }
+        return item;
+    }
 
     @Mutation
     @Description("Check in a superhero") 

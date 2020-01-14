@@ -1,0 +1,8 @@
+# Tests that the implementation can handle a transformation on a primitive scalar (int).
+mutation alterIronManSuitPower {
+  updateItemPowerLevelPersentage(itemID:1001,powerLevel:"80%") {
+    id
+    name
+    powerLevel
+  }
+}
