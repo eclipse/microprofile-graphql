@@ -30,7 +30,7 @@ According to the https://graphql.github.io/graphql-spec/draft/#sec-Scalars[Graph
 sub-fields, and all GraphQL implementations are expected to handle the following scalar types:
 
 - `Int` - which maps to a Java `int`/`Integer`.
-- `Float` - which maps to a Java `float`/`Float` or `double`/`Double`.
+- `Float` - which maps to a Java `float`/`Float`.
 - `String` - which maps to a Java `String`.
 - `Boolean` - which maps to a Java `boolean`/`Boolean`.
 - `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
@@ -42,6 +42,7 @@ deployment error.
 GraphQL allows implementations to define additional scalars. MicroProfile GraphQL implementations are required to
 handle the following additional scalar types:
 
+- `Double` - which maps to a Java `double`/`Double`.
 - `Short` - which maps to a Java `short`/`Short`.
 - `Long` - which maps to a Java `long`/`Long`.
 - `Char` - which maps to a Java `char`,`Character`.
@@ -55,7 +56,7 @@ handle the following additional scalar types:
 Implementations may define additional custom scalars beyond those listed above.
 
 ==== Numbers
-All number scalars (Int, Float, Short, Long, Byte, BigInteger and BigDecimal) can be formatted
+All number scalars (Int, Double, Float, Short, Long, Byte, BigInteger and BigDecimal) can be formatted
 using the JSON-B annotation `@JsonbNumberFormat`.
 
 When formatting is added to a number type, the formatted result will be of type String.

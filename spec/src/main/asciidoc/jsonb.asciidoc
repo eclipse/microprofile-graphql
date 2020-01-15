@@ -64,13 +64,13 @@ That would create a schema like this:
 type Widget {
     widgetName: String
     quantity: Int!
-    shippingWeight: Float!
+    shippingWeight: Double!
 }
 
 input WidgetInput {
     widgetName: String
     qty: Int!
-    weight: Float!
+    weight: Double!
 }
 ----
 
@@ -114,7 +114,7 @@ type Widget {
 }
 
 input WidgetInput {
-    weight: Float!
+    weight: Double!
 }
 ----
 
@@ -189,7 +189,7 @@ type ScalarHolder {
   formattedFloatObject: Float
 
   #This is a formatted number (#0.0)
-  formattedDoubleObject: Float
+  formattedDoubleObject: Double
 
   #...
 }
