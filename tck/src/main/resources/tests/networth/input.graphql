@@ -1,0 +1,6 @@
+mutation updateNetWorthForHero {
+  updateNetWorth(name:"Starlord", netWorth:156984.66) {
+    name
+    netWorth
+  }
+}

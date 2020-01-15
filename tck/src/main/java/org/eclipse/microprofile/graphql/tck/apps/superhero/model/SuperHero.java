@@ -15,6 +15,7 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -60,6 +61,9 @@ public class SuperHero implements Character {
 
     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA")
     private Double bankBalance;
+    
+    @JsonbNumberFormat(value = "¤ 000.00",locale = "en_US")
+    private BigDecimal netWorth;
     
     private ShirtSize sizeOfTShirt;
 
@@ -197,6 +201,14 @@ public class SuperHero implements Character {
 
     public void setBankBalance(Double bankBalance) {
         this.bankBalance = bankBalance;
+    }
+
+    public BigDecimal getNetWorth() {
+        return netWorth;
+    }
+
+    public void setNetWorth(BigDecimal netWorth) {
+        this.netWorth = netWorth;
     }
 
     public enum ShirtSize {

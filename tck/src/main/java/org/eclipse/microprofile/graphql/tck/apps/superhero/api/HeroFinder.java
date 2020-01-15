@@ -16,6 +16,7 @@
 package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -256,6 +257,31 @@ public class HeroFinder {
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
             superHero.setBankBalance(bankBalance);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Update a hero's net worth") 
+    public SuperHero updateNetWorth(@Name("name") String name,
+                                     @Name("netWorth") BigDecimal netWorth) throws UnknownHeroException {
+        LOG.log(Level.INFO, "updateNetWorth invoked [{0}],[{1}]", new Object[]{name, netWorth});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setNetWorth(netWorth);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Update a hero's back account in USD") 
+    public SuperHero updateNetWorthInUSD(@Name("name") String name,
+                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_US") 
+                                     @Name("netWorth") BigDecimal netWorth) throws UnknownHeroException {
+        LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, netWorth});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setNetWorth(netWorth);
         }
         return superHero;
     }
