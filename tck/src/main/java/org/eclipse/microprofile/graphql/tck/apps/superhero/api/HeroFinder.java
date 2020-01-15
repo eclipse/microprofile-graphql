@@ -262,6 +262,31 @@ public class HeroFinder {
     }
     
     @Mutation
+    @Description("Update a hero's favourite drink size") 
+    public SuperHero favouriteDrinkSize(@Name("name") String name,
+                                     @Name("size") float size) throws UnknownHeroException {
+        LOG.log(Level.INFO, "favouriteDrinkSize invoked [{0}],[{1}]", new Object[]{name, size});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setFavouriteDrinkSize(size);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Update a hero's favourite drink size in milliliters") 
+    public SuperHero favouriteDrinkSizeInML(@Name("name") String name,
+                                     @JsonbNumberFormat(value = "000.00 'ml'") 
+                                     @Name("size") Float size) throws UnknownHeroException {
+        LOG.log(Level.INFO, "favouriteDrinkSizeInML invoked [{0}],[{1}]", new Object[]{name, size});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setFavouriteDrinkSize(size);
+        }
+        return superHero;
+    }
+    
+    @Mutation
     @Description("Update a hero's net worth") 
     public SuperHero updateNetWorth(@Name("name") String name,
                                      @Name("netWorth") BigDecimal netWorth) throws UnknownHeroException {

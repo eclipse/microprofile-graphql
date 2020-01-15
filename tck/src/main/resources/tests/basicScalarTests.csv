@@ -9,8 +9,8 @@
 8|  type ScalarHolder       |   charPrimitive: Char!                                    |   Expecting a non null Char Scalar Type in type ScalarHolder
 9|  type ScalarHolder       |   dateObject: Date                                        |   Expecting a Date Scalar Type in type ScalarHolder
 10| type ScalarHolder       |   dateTimeObject: DateTime                                |   Expecting a DateTime Scalar Type in type ScalarHolder
-11| type ScalarHolder       |   doubleObject: Float                                     |   Expecting a Float Scalar Type in type ScalarHolder
-12| type ScalarHolder       |   doublePrimitive: Float!                                 |   Expecting a non null Float Scalar Type in type ScalarHolder
+11| type ScalarHolder       |   doubleObject: Double                                    |   Expecting a Double Scalar Type in type ScalarHolder
+12| type ScalarHolder       |   doublePrimitive: Double!                                |   Expecting a non null Double Scalar Type in type ScalarHolder
 13| type ScalarHolder       |   floatObject: Float                                      |   Expecting a Float Scalar Type in type ScalarHolder
 14| type ScalarHolder       |   floatPrimitive: Float!                                  |   Expecting a non null Float Scalar Type in type ScalarHolder
 15| type ScalarHolder       |   id: ID                                                  |   Expecting a ID Scalar Type in type ScalarHolder
@@ -33,8 +33,8 @@
 32| type Query              |   testCharPrimitive: Char!                                |   Expecting a non null Char Scalar Type in type Query
 33| type Query              |   testDateObject: Date                                    |   Expecting a Date Scalar Type in type Query
 34| type Query              |   testDateTimeObject: DateTime                            |   Expecting a DateTime Scalar Type in type Query
-35| type Query              |   testDoubleObject: Float                                 |   Expecting a Float Scalar Type in type Query
-36| type Query              |   testDoublePrimitive: Float!                             |   Expecting a non null Float Scalar Type in type Query
+35| type Query              |   testDoubleObject: Double                                |   Expecting a Double Scalar Type in type Query
+36| type Query              |   testDoublePrimitive: Double!                            |   Expecting a non null Double Scalar Type in type Query
 37| type Query              |   testFloatObject: Float                                  |   Expecting a Float Scalar Type in type Query
 38| type Query              |   testFloatPrimitive: Float!                              |   Expecting a non null Float Scalar Type in type Query
 39| type Query              |   testId: ID                                              |   Expecting a ID Scalar Type in type Query

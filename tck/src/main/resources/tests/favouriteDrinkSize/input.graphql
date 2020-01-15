@@ -1,0 +1,6 @@
+mutation updateFavouriteDrinkSizeForHero {
+  favouriteDrinkSize(name:"Starlord", size:340.15) {
+    name
+    favouriteDrinkSize
+  }
+}

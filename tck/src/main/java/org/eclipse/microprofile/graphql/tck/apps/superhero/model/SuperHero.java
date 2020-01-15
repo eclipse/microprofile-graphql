@@ -65,6 +65,9 @@ public class SuperHero implements Character {
     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_US")
     private BigDecimal netWorth;
     
+    @JsonbNumberFormat(value = "000.00 'ml'")
+    private Float favouriteDrinkSize;
+    
     private ShirtSize sizeOfTShirt;
 
     public SuperHero(){
@@ -209,6 +212,14 @@ public class SuperHero implements Character {
 
     public void setNetWorth(BigDecimal netWorth) {
         this.netWorth = netWorth;
+    }
+
+    public Float getFavouriteDrinkSize() {
+        return favouriteDrinkSize;
+    }
+
+    public void setFavouriteDrinkSize(Float favouriteDrinkSize) {
+        this.favouriteDrinkSize = favouriteDrinkSize;
     }
 
     public enum ShirtSize {
