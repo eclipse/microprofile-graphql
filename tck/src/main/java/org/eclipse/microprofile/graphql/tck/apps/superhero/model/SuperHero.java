@@ -58,6 +58,9 @@ public class SuperHero implements Character {
     @JsonbNumberFormat("0000,0000")
     private Long idNumber;
 
+    @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA")
+    private Double bankBalance;
+    
     private ShirtSize sizeOfTShirt;
 
     public SuperHero(){
@@ -186,6 +189,14 @@ public class SuperHero implements Character {
     @Name("tshirtSize")
     public void setSizeOfTShirt(ShirtSize sizeOfTShirt) {
         this.sizeOfTShirt = sizeOfTShirt;
+    }
+
+    public Double getBankBalance() {
+        return bankBalance;
+    }
+
+    public void setBankBalance(Double bankBalance) {
+        this.bankBalance = bankBalance;
     }
 
     public enum ShirtSize {

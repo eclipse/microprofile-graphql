@@ -236,6 +236,31 @@ public class HeroFinder {
     }
     
     @Mutation
+    @Description("Update a hero's back account") 
+    public SuperHero updateBankBalance(@Name("name") String name,
+                                     @Name("bankBalance") double bankBalance) throws UnknownHeroException {
+        LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, bankBalance});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setBankBalance(bankBalance);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Update a hero's back account in South African Rand") 
+    public SuperHero updateBankBalanceInZAR(@Name("name") String name,
+                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA") 
+                                     @Name("bankBalance") double bankBalance) throws UnknownHeroException {
+        LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, bankBalance});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setBankBalance(bankBalance);
+        }
+        return superHero;
+    }
+    
+    @Mutation
     @Description("Update an item's powerLevel in persentage") 
     public Item updateItemPowerLevelPersentage(@Name("itemID") long itemID,
                                      @JsonbNumberFormat("##'%'") @Name("powerLevel") int newLevel) {
