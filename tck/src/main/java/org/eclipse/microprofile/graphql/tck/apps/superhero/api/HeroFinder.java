@@ -159,6 +159,13 @@ public class HeroFinder {
     }
 
     @Mutation
+    public Collection<SuperHero> createNewHeroes(@Name("heroes") List<SuperHero> newHeroes) throws DuplicateSuperHeroException, UnknownHeroException {
+        LOG.log(Level.INFO, "createNewHeroes invoked [{0}]", newHeroes);
+        heroDB.addHeroes(newHeroes);
+        return newHeroes;
+    }
+    
+    @Mutation
     @Description("Adds a hero to the specified team and returns the updated team.")
     public Team addHeroToTeam(@Name("hero") String heroName,
                               @Name("team") String teamName)
@@ -307,6 +314,31 @@ public class HeroFinder {
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
             superHero.setNetWorth(netWorth);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Log the last place the hero was seen") 
+    public SuperHero logLocation(@Name("name") String name,
+                                     @Name("coordinates") List<BigDecimal> coordinates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "logLocation invoked [{0}],[{1}]", new Object[]{name, coordinates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setLastKnownCoordinates(coordinates);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Log the last place the hero was seen (Long Lat)") 
+    public SuperHero logLocationLongLat(@Name("name") String name,
+                                     @JsonbNumberFormat("00.0000000 'longlat'") 
+                                     @Name("coordinates") List<BigDecimal> coordinates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "logLocationLongLat invoked [{0}],[{1}]", new Object[]{name, coordinates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setLastKnownCoordinates(coordinates);
         }
         return superHero;
     }

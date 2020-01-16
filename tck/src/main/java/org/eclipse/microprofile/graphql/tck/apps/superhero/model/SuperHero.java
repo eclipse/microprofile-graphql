@@ -68,6 +68,9 @@ public class SuperHero implements Character {
     @JsonbNumberFormat(value = "000.00 'ml'")
     private Float favouriteDrinkSize;
     
+    private List<BigDecimal> lastKnownCoordinates;
+    
+    
     private ShirtSize sizeOfTShirt;
 
     public SuperHero(){
@@ -222,6 +225,14 @@ public class SuperHero implements Character {
         this.favouriteDrinkSize = favouriteDrinkSize;
     }
 
+    public List<BigDecimal> getLastKnownCoordinates() {
+        return lastKnownCoordinates;
+    }
+
+    public void setLastKnownCoordinates(List<BigDecimal> lastKnownCoordinates) {
+        this.lastKnownCoordinates = lastKnownCoordinates;
+    }
+   
     public enum ShirtSize {
         S,
         M,
