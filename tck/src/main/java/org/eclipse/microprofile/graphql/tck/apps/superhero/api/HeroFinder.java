@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -162,6 +163,14 @@ public class HeroFinder {
     public Collection<SuperHero> createNewHeroes(@Name("heroes") List<SuperHero> newHeroes) throws DuplicateSuperHeroException, UnknownHeroException {
         LOG.log(Level.INFO, "createNewHeroes invoked [{0}]", newHeroes);
         heroDB.addHeroes(newHeroes);
+        return newHeroes;
+    }
+    
+    @Mutation
+    public SuperHero[] createNewHeroesWithArray(@Name("heroes") SuperHero[] newHeroes) throws DuplicateSuperHeroException, UnknownHeroException {
+        LOG.log(Level.INFO, "createNewHeroesWithArray invoked [{0}]", newHeroes);
+        List<SuperHero> asList = Arrays.asList(newHeroes);
+        heroDB.addHeroes(asList);
         return newHeroes;
     }
     
@@ -321,7 +330,7 @@ public class HeroFinder {
     @Mutation
     @Description("Log the last place the hero was seen") 
     public SuperHero logLocation(@Name("name") String name,
-                                     @Name("coordinates") List<BigDecimal> coordinates) throws UnknownHeroException {
+                                     @Name("coordinates") ArrayList<BigDecimal> coordinates) throws UnknownHeroException {
         LOG.log(Level.INFO, "logLocation invoked [{0}],[{1}]", new Object[]{name, coordinates});
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
@@ -339,6 +348,31 @@ public class HeroFinder {
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
             superHero.setLastKnownCoordinates(coordinates);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Log the last place the hero was seen using an array") 
+    public SuperHero logLocationWithArray(@Name("name") String name,
+                                     @Name("coordinates") BigDecimal[] coordinates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "logLocationWithArray invoked [{0}],[{1}]", new Object[]{name, coordinates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setLastKnownCoordinates(Arrays.asList(coordinates));
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Log the last place the hero was seen (Long Lat) using an array") 
+    public SuperHero logLocationLongLatWithArray(@Name("name") String name,
+                                     @JsonbNumberFormat("00.0000000 'longlat'") 
+                                     @Name("coordinates") BigDecimal[] coordinates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "logLocationLongLatWithArray invoked [{0}],[{1}]", new Object[]{name, coordinates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setLastKnownCoordinates(Arrays.asList(coordinates));
         }
         return superHero;
     }
