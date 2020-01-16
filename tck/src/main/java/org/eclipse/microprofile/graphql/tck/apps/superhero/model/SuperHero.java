@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbNumberFormat;
@@ -71,6 +72,8 @@ public class SuperHero implements Character {
     private List<BigDecimal> lastKnownCoordinates;
     
     private List<List<BigDecimal>> track;
+
+    private Set<String> beenThere;
     
     private ShirtSize sizeOfTShirt;
 
@@ -240,6 +243,14 @@ public class SuperHero implements Character {
 
     public void setTrack(List<List<BigDecimal>> track) {
         this.track = track;
+    }
+
+    public Set<String> getBeenThere() {
+        return beenThere;
+    }
+
+    public void setBeenThere(Set<String> beenThere) {
+        this.beenThere = beenThere;
     }
 
     public enum ShirtSize {

@@ -1,0 +1,6 @@
+mutation placesThisHeroHasBeen {
+  beenThere(name:"Starlord", places:["Pretoria","Cape Town", "Johannesburg"]) {
+    name
+    beenThere
+  }
+}

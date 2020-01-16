@@ -23,8 +23,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -328,9 +330,21 @@ public class HeroFinder {
     }
     
     @Mutation
+    @Description("All the places this hero has been") 
+    public SuperHero beenThere(@Name("name") String name,
+                                     @Name("places") Set<String> places) throws UnknownHeroException {
+        LOG.log(Level.INFO, "beenThere invoked [{0}],[{1}]", new Object[]{name, places});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setBeenThere(places);
+        }
+        return superHero;
+    }
+    
+    @Mutation
     @Description("Log the last place the hero was seen") 
     public SuperHero logLocation(@Name("name") String name,
-                                     @Name("coordinates") ArrayList<BigDecimal> coordinates) throws UnknownHeroException {
+                                     @Name("coordinates") LinkedList<BigDecimal> coordinates) throws UnknownHeroException {
         LOG.log(Level.INFO, "logLocation invoked [{0}],[{1}]", new Object[]{name, coordinates});
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
