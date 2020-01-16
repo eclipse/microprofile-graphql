@@ -234,7 +234,7 @@ public class HeroFinder {
         });
         return hero;
     }
-
+    
     @Mutation
     @Description("Update an item's powerLevel") 
     public Item updateItemPowerLevel(@Name("itemID") long itemID,
@@ -348,6 +348,31 @@ public class HeroFinder {
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
             superHero.setLastKnownCoordinates(coordinates);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Log the last few places the hero was seen") 
+    public SuperHero trackHero(@Name("name") String name,
+                                     @Name("coordinates") List<List<BigDecimal>> coordinates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "trackHero invoked [{0}],[{1}]", new Object[]{name, coordinates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setTrack(coordinates);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Log the last few places the hero was seen (Long Lat)") 
+    public SuperHero trackHeroLongLat(@Name("name") String name,
+                                     @JsonbNumberFormat("00.0000000 'longlat'") 
+                                     @Name("coordinates") List<List<BigDecimal>> coordinates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "trackHeroLongLat invoked [{0}],[{1}]", new Object[]{name, coordinates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setTrack(coordinates);
         }
         return superHero;
     }

@@ -1,0 +1,6 @@
+mutation trackHero {
+  trackHero(name:"Starlord", coordinates:[[-25.926804, 28.203392],[-26.926804, 27.203392],[-27.926804, 26.203392]]) {
+    name
+    track
+  }
+}

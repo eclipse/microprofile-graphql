@@ -70,6 +70,7 @@ public class SuperHero implements Character {
     
     private List<BigDecimal> lastKnownCoordinates;
     
+    private List<List<BigDecimal>> track;
     
     private ShirtSize sizeOfTShirt;
 
@@ -232,7 +233,15 @@ public class SuperHero implements Character {
     public void setLastKnownCoordinates(List<BigDecimal> lastKnownCoordinates) {
         this.lastKnownCoordinates = lastKnownCoordinates;
     }
-   
+
+    public List<List<BigDecimal>> getTrack() {
+        return track;
+    }
+
+    public void setTrack(List<List<BigDecimal>> track) {
+        this.track = track;
+    }
+
     public enum ShirtSize {
         S,
         M,
