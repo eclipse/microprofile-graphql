@@ -1,0 +1,6 @@
+mutation clearTrack {
+  trackHero(name:"Starlord", coordinates:null) {
+    name
+    track
+  }
+}

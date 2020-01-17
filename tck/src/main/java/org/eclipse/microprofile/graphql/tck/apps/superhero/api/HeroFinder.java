@@ -255,7 +255,7 @@ public class HeroFinder {
     }
     
     @Mutation
-    @Description("Update a hero's back account") 
+    @Description("Update a hero's bank account") 
     public SuperHero updateBankBalance(@Name("name") String name,
                                      @Name("bankBalance") double bankBalance) throws UnknownHeroException {
         LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, bankBalance});
@@ -267,10 +267,10 @@ public class HeroFinder {
     }
     
     @Mutation
-    @Description("Update a hero's back account in South African Rand") 
+    @Description("Update a hero's bank account in South African Rand") 
     public SuperHero updateBankBalanceInZAR(@Name("name") String name,
                                      @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA") 
-                                     @Name("bankBalance") double bankBalance) throws UnknownHeroException {
+                                     @Name("bankBalance") Double bankBalance) throws UnknownHeroException {
         LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, bankBalance});
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
@@ -392,7 +392,7 @@ public class HeroFinder {
     }
     
     @Mutation
-    @Description("Log the last place the hero was seen using an array") 
+    @Description("Log the last place the hero was seen (using an array)") 
     public SuperHero logLocationWithArray(@Name("name") String name,
                                      @Name("coordinates") BigDecimal[] coordinates) throws UnknownHeroException {
         LOG.log(Level.INFO, "logLocationWithArray invoked [{0}],[{1}]", new Object[]{name, coordinates});
@@ -417,10 +417,10 @@ public class HeroFinder {
     }
     
     @Mutation
-    @Description("Update an item's powerLevel in persentage") 
-    public Item updateItemPowerLevelPersentage(@Name("itemID") long itemID,
+    @Description("Update an item's powerLevel in percentage") 
+    public Item updateItemPowerLevelPercentage(@Name("itemID") long itemID,
                                      @JsonbNumberFormat("##'%'") @Name("powerLevel") int newLevel) {
-        LOG.log(Level.INFO, "updateItemPowerLevelPersentage invoked [{0}],[{1}]", new Object[]{itemID, newLevel});
+        LOG.log(Level.INFO, "updateItemPowerLevelPercentage invoked [{0}],[{1}]", new Object[]{itemID, newLevel});
         Item item = null;
         for (SuperHero hero : allHeroes()) {
             for (Item i : hero.getEquipment()) {
@@ -458,7 +458,7 @@ public class HeroFinder {
     }
     
     @Mutation
-    @Description("Set the time a here started patrolling") 
+    @Description("Set the time a hero started patrolling") 
     public SuperHero startPatrolling(@Name("name") String name,
                              @Name("time") LocalTime localTime) throws UnknownHeroException {
         LOG.log(Level.INFO, "startPatrolling invoked [{0}],[{1}]", new Object[]{name, localTime});
@@ -470,7 +470,7 @@ public class HeroFinder {
     }
     
     @Mutation
-    @Description("Set the time a here started patrolling") 
+    @Description("Set the time a hero started patrolling (using formatted time)") 
     public SuperHero startPatrollingWithCorrectDateFormat(@Name("name") String name,
                              @JsonbDateFormat("HH:mm") @Name("time") LocalTime localTime) throws UnknownHeroException {
         LOG.log(Level.INFO, "startPatrollingWithCorrectDateFormat invoked [{0}],[{1}]", new Object[]{name, localTime});

@@ -1,5 +1,5 @@
 mutation logLocationForHero {
-  logLocationLongLatWithArray(name:"Starlord", coordinates:["-25.926804 longlat" , "28.203392 longlat"]) {
+  logLocationLongLatWithArray(name:"Starlord", coordinates:["-25.926807 longlat" , "28.203395 longlat"]) {
     name
     lastKnownCoordinates
   }

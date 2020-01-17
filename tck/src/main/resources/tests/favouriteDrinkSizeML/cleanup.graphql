@@ -1,0 +1,6 @@
+mutation clearFavouriteDrinkSizeForHero {
+  favouriteDrinkSize(name:"Starlord", size:0) {
+    name
+    favouriteDrinkSize
+  }
+}

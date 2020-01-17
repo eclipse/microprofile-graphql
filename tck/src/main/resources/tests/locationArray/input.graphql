@@ -1,5 +1,5 @@
 mutation logLocationForHero {
-  logLocationWithArray(name:"Starlord", coordinates:[-25.926804, 28.203392]) {
+  logLocationWithArray(name:"Starlord", coordinates:[-25.926805, 28.203393]) {
     name
     lastKnownCoordinates
   }
