@@ -4,7 +4,5 @@
 .vscode/
 .classpath
 .factorypath
-/runner/target/
-/spqr/target/
 .idea
 .DS_Store
