@@ -367,12 +367,6 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>runner</id>
-            <modules>
-                <module>spqr</module> <!-- Only here until mp sqpr is available in maven central -->
-                <module>runner</module>
-            </modules>
-        </profile>
+        
     </profiles>
 </project>
