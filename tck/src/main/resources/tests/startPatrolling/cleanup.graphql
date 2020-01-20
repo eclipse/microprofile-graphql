@@ -1,0 +1,6 @@
+mutation clearPatrolling {
+  startPatrolling(name:"Starlord", time:null) {
+    name
+    patrolStartTime
+  }
+}

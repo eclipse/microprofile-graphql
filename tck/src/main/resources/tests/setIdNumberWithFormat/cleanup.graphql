@@ -1,0 +1,6 @@
+mutation restoreHeroIdNumber {
+  idNumber(name:"Starlord", id:23409876) {
+    name
+    idNumber
+  }
+}

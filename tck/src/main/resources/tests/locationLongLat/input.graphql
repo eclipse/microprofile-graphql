@@ -1,0 +1,6 @@
+mutation logLocationForHero {
+  logLocationLongLat(name:"Starlord", coordinates:["-25.926806 longlat" , "28.203394 longlat"]) {
+    name
+    lastKnownCoordinates
+  }
+}

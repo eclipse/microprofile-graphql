@@ -15,11 +15,13 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbNumberFormat;
@@ -58,6 +60,21 @@ public class SuperHero implements Character {
     @JsonbNumberFormat("0000,0000")
     private Long idNumber;
 
+    @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA")
+    private Double bankBalance;
+    
+    @JsonbNumberFormat(value = "¤ 000.00",locale = "en_US")
+    private BigDecimal netWorth;
+    
+    @JsonbNumberFormat(value = "000.00 'ml'")
+    private Float favouriteDrinkSize;
+    
+    private List<BigDecimal> lastKnownCoordinates;
+    
+    private List<List<BigDecimal>> track;
+
+    private Set<String> beenThere;
+    
     private ShirtSize sizeOfTShirt;
 
     public SuperHero(){
@@ -186,6 +203,54 @@ public class SuperHero implements Character {
     @Name("tshirtSize")
     public void setSizeOfTShirt(ShirtSize sizeOfTShirt) {
         this.sizeOfTShirt = sizeOfTShirt;
+    }
+
+    public Double getBankBalance() {
+        return bankBalance;
+    }
+
+    public void setBankBalance(Double bankBalance) {
+        this.bankBalance = bankBalance;
+    }
+
+    public BigDecimal getNetWorth() {
+        return netWorth;
+    }
+
+    public void setNetWorth(BigDecimal netWorth) {
+        this.netWorth = netWorth;
+    }
+
+    public Float getFavouriteDrinkSize() {
+        return favouriteDrinkSize;
+    }
+
+    public void setFavouriteDrinkSize(Float favouriteDrinkSize) {
+        this.favouriteDrinkSize = favouriteDrinkSize;
+    }
+
+    public List<BigDecimal> getLastKnownCoordinates() {
+        return lastKnownCoordinates;
+    }
+
+    public void setLastKnownCoordinates(List<BigDecimal> lastKnownCoordinates) {
+        this.lastKnownCoordinates = lastKnownCoordinates;
+    }
+
+    public List<List<BigDecimal>> getTrack() {
+        return track;
+    }
+
+    public void setTrack(List<List<BigDecimal>> track) {
+        this.track = track;
+    }
+
+    public Set<String> getBeenThere() {
+        return beenThere;
+    }
+
+    public void setBeenThere(Set<String> beenThere) {
+        this.beenThere = beenThere;
     }
 
     public enum ShirtSize {

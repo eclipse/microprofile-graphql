@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
 import javax.json.bind.annotation.JsonbDateFormat;
+import javax.json.bind.annotation.JsonbNumberFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
@@ -32,66 +33,101 @@ import org.eclipse.microprofile.graphql.Id;
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class ScalarHolder {
+    // Short
     private short shortPrimitive;
     private Short shortObject;
+    @JsonbNumberFormat(value = "¤000",locale = "en_ZA")
+    private Short formattedShortObject;
 
+    // Integer
     private int intPrimitive;
     private Integer intObject;
-
+    @JsonbNumberFormat(locale = "en_US")
+    private Integer formattedIntObject;
+    
+    // Long
     private long longPrimitive;
+    @JsonbNumberFormat(locale = "de_CH")
+    private long formattedLongPrimitive;
     private Long longObject;
+    @JsonbNumberFormat(locale = "de_CH")
+    private Long formattedLongObject;
 
+    // Float
     private float floatPrimitive;
     private Float floatObject;
-
+    @JsonbNumberFormat("#0.0")
+    private Float formattedFloatObject;
+    
+    // Double
     private double doublePrimitive;
     private Double doubleObject;
-
+    @Description("This is a formatted number")
+    @JsonbNumberFormat("#0.0")
+    private Double formattedDoubleObject;
+    
+    // Byte
+    private byte bytePrimitive;
+    private Byte byteObject;
+    @JsonbNumberFormat(value = "¤00",locale = "de_CH")
+    private Byte formattedByteObject;
+    
+    // BigInteger
+    private BigInteger bigIntegerObject;
+    @JsonbNumberFormat(value = "¤000", locale = "en_US")
+    private BigInteger formattedBigIntegerObject;
+    
+    // BigDecimal
+    private BigDecimal bigDecimalObject;
+    @JsonbNumberFormat("#0.00")
+    private BigDecimal formattedBigDecimalObject;
+    
+    // Boolean
     private boolean booleanPrimitive;
     private Boolean booleanObject;
 
+    // Character
     private char charPrimitive;
     private Character charObject;
 
+    // String
     private char[] charArray;
     private String stringObject;
-
-    private byte bytePrimitive;
-    private Byte byteObject;
-
-    private BigInteger bigIntegerObject;
-    private BigDecimal bigDecimalObject;
-
+    
+    // LocalDate
     @DefaultValue("1978-07-03")
     private LocalDate dateObject;
-    private LocalTime timeObject;
-    private LocalDateTime dateTimeObject;
-    
     @Description("This is another date")
     private LocalDate anotherDateObject;
-    @Description("This is another time")
-    private LocalTime anotherTimeObject;
-    @Description("This is another datetime")
-    private LocalDateTime anotherDateTimeObject;
-    
     @JsonbDateFormat("MM dd yyyy")
     @Description("This is a formatted date")
     private LocalDate formattedDateObject;
+    
+    // LocalTime
+    private LocalTime timeObject;
+    @Description("This is another time")
+    private LocalTime anotherTimeObject;
     @JsonbDateFormat("hh:mm a")
     @Description("This is a formatted time")
     private LocalTime formattedTimeObject;
+    
+    // LocalDateTime
+    private LocalDateTime dateTimeObject;
+    @Description("This is another datetime")
+    private LocalDateTime anotherDateTimeObject;
     @JsonbDateFormat("MM dd yyyy 'at' hh:mm a")
     @Description("This is a formatted datetime")
     private LocalDateTime formattedDateTimeObject;
     
+    // ID
     @Id
     private String id;
     @Id
     private long longPrimitiveId;
     @Id
-    private int intPrimitiveId;
-    @Id
     private Long longObjectId;
+    @Id
+    private int intPrimitiveId;
     @Id
     private Integer integerObjectId;
     @Id
@@ -117,6 +153,14 @@ public class ScalarHolder {
         this.shortObject = shortObject;
     }
 
+    public Short getFormattedShortObject() {
+        return formattedShortObject;
+    }
+
+    public void setFormattedShortObject(Short formattedShortObject) {
+        this.formattedShortObject = formattedShortObject;
+    }
+
     public int getIntPrimitive() {
         return intPrimitive;
     }
@@ -133,6 +177,14 @@ public class ScalarHolder {
         this.intObject = intObject;
     }
 
+    public Integer getFormattedIntObject() {
+        return formattedIntObject;
+    }
+
+    public void setFormattedIntObject(Integer formattedIntObject) {
+        this.formattedIntObject = formattedIntObject;
+    }
+
     public long getLongPrimitive() {
         return longPrimitive;
     }
@@ -141,12 +193,28 @@ public class ScalarHolder {
         this.longPrimitive = longPrimitive;
     }
 
+    public long getFormattedLongPrimitive() {
+        return formattedLongPrimitive;
+    }
+
+    public void setFormattedLongPrimitive(long formattedLongPrimitive) {
+        this.formattedLongPrimitive = formattedLongPrimitive;
+    }
+    
     public Long getLongObject() {
         return longObject;
     }
 
     public void setLongObject(Long longObject) {
         this.longObject = longObject;
+    }
+
+    public Long getFormattedLongObject() {
+        return formattedLongObject;
+    }
+
+    public void setFormattedLongObject(Long formattedLongObject) {
+        this.formattedLongObject = formattedLongObject;
     }
 
     public float getFloatPrimitive() {
@@ -165,6 +233,14 @@ public class ScalarHolder {
         this.floatObject = floatObject;
     }
 
+    public Float getFormattedFloatObject() {
+        return formattedFloatObject;
+    }
+
+    public void setFormattedFloatObject(Float formattedFloatObject) {
+        this.formattedFloatObject = formattedFloatObject;
+    }
+
     public double getDoublePrimitive() {
         return doublePrimitive;
     }
@@ -179,6 +255,70 @@ public class ScalarHolder {
 
     public void setDoubleObject(Double doubleObject) {
         this.doubleObject = doubleObject;
+    }
+
+    public Double getFormattedDoubleObject() {
+        return formattedDoubleObject;
+    }
+
+    public void setFormattedDoubleObject(Double formattedDoubleObject) {
+        this.formattedDoubleObject = formattedDoubleObject;
+    }
+
+    public byte getBytePrimitive() {
+        return bytePrimitive;
+    }
+
+    public void setBytePrimitive(byte bytePrimitive) {
+        this.bytePrimitive = bytePrimitive;
+    }
+
+    public Byte getByteObject() {
+        return byteObject;
+    }
+
+    public void setByteObject(Byte byteObject) {
+        this.byteObject = byteObject;
+    }
+
+    public Byte getFormattedByteObject() {
+        return formattedByteObject;
+    }
+
+    public void setFormattedByteObject(Byte formattedByteObject) {
+        this.formattedByteObject = formattedByteObject;
+    }
+
+    public BigInteger getBigIntegerObject() {
+        return bigIntegerObject;
+    }
+
+    public void setBigIntegerObject(BigInteger bigIntegerObject) {
+        this.bigIntegerObject = bigIntegerObject;
+    }
+
+    public BigInteger getFormattedBigIntegerObject() {
+        return formattedBigIntegerObject;
+    }
+
+    public void setFormattedBigIntegerObject(BigInteger formattedBigIntegerObject) {
+        this.formattedBigIntegerObject = formattedBigIntegerObject;
+    }
+
+    public BigDecimal getBigDecimalObject() {
+        return bigDecimalObject;
+    }
+
+    public void setBigDecimalObject(BigDecimal bigDecimalObject) {
+        this.bigDecimalObject = bigDecimalObject;
+    }
+
+    public BigDecimal getFormattedBigDecimalObject() {
+        return formattedBigDecimalObject;
+    }
+
+    public void setFormattedBigDecimalObject(BigDecimal formattedBigDecimalObject) {
+        this.formattedBigDecimalObject = formattedBigDecimalObject;
     }
 
     public boolean isBooleanPrimitive() {
@@ -229,38 +369,6 @@ public class ScalarHolder {
         this.stringObject = stringObject;
     }
 
-    public byte getBytePrimitive() {
-        return bytePrimitive;
-    }
-
-    public void setBytePrimitive(byte bytePrimitive) {
-        this.bytePrimitive = bytePrimitive;
-    }
-
-    public Byte getByteObject() {
-        return byteObject;
-    }
-
-    public void setByteObject(Byte byteObject) {
-        this.byteObject = byteObject;
-    }
-
-    public BigInteger getBigIntegerObject() {
-        return bigIntegerObject;
-    }
-
-    public void setBigIntegerObject(BigInteger bigIntegerObject) {
-        this.bigIntegerObject = bigIntegerObject;
-    }
-
-    public BigDecimal getBigDecimalObject() {
-        return bigDecimalObject;
-    }
-
-    public void setBigDecimalObject(BigDecimal bigDecimalObject) {
-        this.bigDecimalObject = bigDecimalObject;
-    }
-
     public LocalDate getDateObject() {
         return dateObject;
     }
@@ -269,6 +377,22 @@ public class ScalarHolder {
         this.dateObject = dateObject;
     }
 
+    public LocalDate getAnotherDateObject() {
+        return anotherDateObject;
+    }
+
+    public void setAnotherDateObject(LocalDate anotherDateObject) {
+        this.anotherDateObject = anotherDateObject;
+    }
+
+    public LocalDate getFormattedDateObject() {
+        return formattedDateObject;
+    }
+
+    public void setFormattedDateObject(LocalDate formattedDateObject) {
+        this.formattedDateObject = formattedDateObject;
+    }
+   
     public LocalTime getTimeObject() {
         return timeObject;
     }
@@ -277,6 +401,22 @@ public class ScalarHolder {
         this.timeObject = timeObject;
     }
 
+    public LocalTime getAnotherTimeObject() {
+        return anotherTimeObject;
+    }
+
+    public void setAnotherTimeObject(LocalTime anotherTimeObject) {
+        this.anotherTimeObject = anotherTimeObject;
+    }
+
+    public LocalTime getFormattedTimeObject() {
+        return formattedTimeObject;
+    }
+
+    public void setFormattedTimeObject(LocalTime formattedTimeObject) {
+        this.formattedTimeObject = formattedTimeObject;
+    }
+    
     public LocalDateTime getDateTimeObject() {
         return dateTimeObject;
     }
@@ -285,52 +425,20 @@ public class ScalarHolder {
         this.dateTimeObject = dateTimeObject;
     }
 
-    public LocalDate getAnotherDateObject() {
-        return anotherDateObject;
-    }
-
-    public void setAnotherDateObject(LocalDate dateObject) {
-        this.anotherDateObject = dateObject;
-    }
-
-    public LocalTime getAnotherTimeObject() {
-        return anotherTimeObject;
-    }
-
-    public void setAnotherTimeObject(LocalTime timeObject) {
-        this.anotherTimeObject = timeObject;
-    }
-
     public LocalDateTime getAnotherDateTimeObject() {
         return anotherDateTimeObject;
     }
 
-    public void setAnotherDateTimeObject(LocalDateTime dateTimeObject) {
-        this.anotherDateTimeObject = dateTimeObject;
-    }
-    
-    public LocalDate getFormattedDateObject() {
-        return formattedDateObject;
-    }
-
-    public void setFormattedDateObject(LocalDate dateObject) {
-        this.formattedDateObject = dateObject;
-    }
-
-    public LocalTime getFormattedTimeObject() {
-        return formattedTimeObject;
-    }
-
-    public void setFormattedTimeObject(LocalTime timeObject) {
-        this.formattedTimeObject = timeObject;
+    public void setAnotherDateTimeObject(LocalDateTime anotherDateTimeObject) {
+        this.anotherDateTimeObject = anotherDateTimeObject;
     }
 
     public LocalDateTime getFormattedDateTimeObject() {
         return formattedDateTimeObject;
     }
 
-    public void setFormattedDateTimeObject(LocalDateTime dateTimeObject) {
-        this.formattedDateTimeObject = dateTimeObject;
+    public void setFormattedDateTimeObject(LocalDateTime formattedDateTimeObject) {
+        this.formattedDateTimeObject = formattedDateTimeObject;
     }
     
     public String getId() {
@@ -349,20 +457,20 @@ public class ScalarHolder {
         this.longPrimitiveId = longPrimitiveId;
     }
 
-    public int getIntPrimitiveId() {
-        return intPrimitiveId;
-    }
-
-    public void setIntPrimitiveId(int intPrimitiveId) {
-        this.intPrimitiveId = intPrimitiveId;
-    }
-
     public Long getLongObjectId() {
         return longObjectId;
     }
 
     public void setLongObjectId(Long longObjectId) {
         this.longObjectId = longObjectId;
+    }
+
+    public int getIntPrimitiveId() {
+        return intPrimitiveId;
+    }
+
+    public void setIntPrimitiveId(int intPrimitiveId) {
+        this.intPrimitiveId = intPrimitiveId;
     }
 
     public Integer getIntegerObjectId() {

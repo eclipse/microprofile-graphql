@@ -1,0 +1,6 @@
+mutation removeNetWorthForHero {
+  updateNetWorth(name:"Starlord", netWorth:null) {
+    name
+    netWorth
+  }
+}

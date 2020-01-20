@@ -1,0 +1,6 @@
+mutation invalidPatrollingDate {
+  startPatrollingWithCorrectDateFormat(name:"Starlord", time:"Today") {
+    name
+    patrolStartTime
+  }
+}

@@ -1,0 +1,6 @@
+mutation resetABattle {
+  battle(name:"Starlord", dateTime:null) {
+    name
+    timeOfLastBattle
+  }
+}

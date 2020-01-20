@@ -1,0 +1,6 @@
+mutation invalidCheckInDate {
+  checkInWithCorrectDateFormat(name:"Starlord", date:"Today") {
+    name
+    dateOfLastCheckin
+  }
+}

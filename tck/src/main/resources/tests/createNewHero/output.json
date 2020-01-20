@@ -4,7 +4,8 @@
             "name": "Captain America",
             "primaryLocation": "New York, NY",
             "superPowers": ["Super strength", "Vibranium Shield"],
-            "realName": "Steven Rogers"
+            "realName": "Steven Rogers",
+            "idNumber": "6578,4312"
         }
     }
 }

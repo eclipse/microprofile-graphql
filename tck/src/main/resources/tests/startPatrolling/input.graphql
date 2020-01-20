@@ -1,0 +1,6 @@
+mutation heroStartPatrolling {
+  startPatrolling(name:"Starlord", time:"20:00:00") {
+    name
+    patrolStartTime
+  }
+}

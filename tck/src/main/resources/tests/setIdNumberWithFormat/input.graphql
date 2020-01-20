@@ -1,0 +1,6 @@
+mutation setHeroIdNumber {
+  idNumberWithCorrectFormat(name:"Starlord", id:"8888,8888") {
+    name
+    idNumber
+  }
+}

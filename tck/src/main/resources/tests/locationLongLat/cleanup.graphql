@@ -1,0 +1,6 @@
+mutation cleanupLocationForHero {
+  logLocation(name:"Starlord", coordinates:null) {
+    name
+    lastKnownCoordinates
+  }
+}

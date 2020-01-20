@@ -1,0 +1,6 @@
+mutation trackHero {
+  trackHeroLongLat(name:"Starlord", coordinates:[["-25.926804 longlat", "28.203392 longlat"],["-26.926804 longlat", "27.203392 longlat"],["-27.926804 longlat", "26.203392 longlat"]]) {
+    name
+    track
+  }
+}

@@ -1,0 +1,6 @@
+mutation startABattle {
+  battleWithCorrectDateFormat(name:"Starlord", dateTime:"10:00:00 13-01-2020") {
+    name
+    timeOfLastBattle
+  }
+}

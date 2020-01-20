@@ -1,0 +1,6 @@
+mutation updateBankBalanceForHero {
+  updateBankBalance(name:"Starlord", bankBalance:80435.34) {
+    name
+    bankBalance
+  }
+}

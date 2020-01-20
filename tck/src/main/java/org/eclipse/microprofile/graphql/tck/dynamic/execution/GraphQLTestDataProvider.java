@@ -133,58 +133,59 @@ public class GraphQLTestDataProvider {
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                     throws IOException {
 
-                String filename = file.getFileName().toString();
+                if(!Files.isDirectory(file)){
+                    String filename = file.getFileName().toString();
 
-                switch (filename) {
-                    case "input.graphql":
-                        {
-                            String content = getFileContent(file);
-                            testData.setInput(content);
+                    switch (filename) {
+                        case "input.graphql":
+                            {
+                                String content = getFileContent(file);
+                                testData.setInput(content);
+                                break;
+                            }
+                        case "httpHeader.properties":
+                            {
+                                Properties properties = new Properties();
+                                properties.load(Files.newInputStream(file));
+                                testData.setHttpHeaders(properties);
+                                break;
+                            }    
+                        case "output.json":
+                            {
+                                String content = getFileContent(file);
+                                testData.setOutput(content);
+                                break;
+                            }
+                        case "variables.json":
+                            {
+                                String content = getFileContent(file);
+                                testData.setVariables(toJsonObject(content));
+                                break;
+                            }
+                        case "test.properties":
+                            {
+                                Properties properties = new Properties();
+                                properties.load(Files.newInputStream(file));
+                                testData.setProperties(properties);
+                                break;
+                            }
+                        case "cleanup.graphql":
+                            {
+                                String content = getFileContent(file);
+                                testData.setCleanup(content);
+                                break;
+                            }    
+                        case "prepare.graphql":
+                            {
+                                String content = getFileContent(file);
+                                testData.setPrepare(content);
+                                break;
+                            }    
+                        default:
+                            LOG.log(Level.WARNING, "Ignoring unknown file {0}", filename);
                             break;
-                        }
-                    case "httpHeader.properties":
-                        {
-                            Properties properties = new Properties();
-                            properties.load(Files.newInputStream(file));
-                            testData.setHttpHeaders(properties);
-                            break;
-                        }    
-                    case "output.json":
-                        {
-                            String content = getFileContent(file);
-                            testData.setOutput(content);
-                            break;
-                        }
-                    case "variables.json":
-                        {
-                            String content = getFileContent(file);
-                            testData.setVariables(toJsonObject(content));
-                            break;
-                        }
-                    case "test.properties":
-                        {
-                            Properties properties = new Properties();
-                            properties.load(Files.newInputStream(file));
-                            testData.setProperties(properties);
-                            break;
-                        }
-                    case "cleanup.graphql":
-                        {
-                            String content = getFileContent(file);
-                            testData.setCleanup(content);
-                            break;
-                        }    
-                    case "prepare.graphql":
-                        {
-                            String content = getFileContent(file);
-                            testData.setPrepare(content);
-                            break;
-                        }    
-                    default:
-                        LOG.log(Level.WARNING, "Ignoring unknown file {0}", filename);
-                        break;
+                    }
                 }
-
                 return FileVisitResult.CONTINUE;
             }
 

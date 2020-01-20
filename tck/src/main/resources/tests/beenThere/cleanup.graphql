@@ -1,0 +1,6 @@
+mutation removePlacesThisHeroHasBeen {
+  beenThere(name:"Starlord", places:[]) {
+    name
+    beenThere
+  }
+}
