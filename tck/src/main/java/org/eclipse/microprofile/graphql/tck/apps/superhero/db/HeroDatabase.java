@@ -34,8 +34,8 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
 @ApplicationScoped
 public class HeroDatabase {
-    final Map<String, SuperHero> allHeroes = new HashMap<>();
-    final Map<String, Team> allTeams = new HashMap<>();
+    private final Map<String, SuperHero> allHeroes = new HashMap<>();
+    private final Map<String, Team> allTeams = new HashMap<>();
 
     private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
 

@@ -66,6 +66,6 @@
 65| type ScalarHolder       |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
 66| input BasicMessageInput |   message: String                                         |   Expecting a BasicMessageInput from @Input
 67| input BasicMessageInput |   countdownPlace: CountDown                               |   Expecting a BasicMessageInput from @Input
-# 68| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
+68| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
 69| enum CountDown          |   THREE                                                   |   Expecting a CountDown from @Enum
-# 70| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface
+70| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface

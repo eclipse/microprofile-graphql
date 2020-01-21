@@ -25,7 +25,7 @@ import javax.enterprise.event.Observes;
 
 @ApplicationScoped
 public class HeroLocator {
-    final Map<String,String> heroLocations = new HashMap<>();
+    private final Map<String,String> heroLocations = new HashMap<>();
 
     protected void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         heroLocations.put("Iron Man", "Wachovia");
