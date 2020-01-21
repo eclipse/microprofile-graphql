@@ -1,0 +1,6 @@
+mutation importantDates {
+  importantDates(name:"Starlord", dates:[]) {
+    name
+    importantDates
+  }
+}

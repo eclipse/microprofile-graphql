@@ -27,6 +27,7 @@ import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbNumberFormat;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
+import org.eclipse.microprofile.graphql.DateFormat;
 
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.NonNull;
@@ -77,6 +78,9 @@ public class SuperHero implements Character {
     
     private ShirtSize sizeOfTShirt;
 
+    @DateFormat("dd/MM")
+    private List<LocalDate> importantDates;
+    
     public SuperHero(){
     }
     
@@ -251,6 +255,14 @@ public class SuperHero implements Character {
 
     public void setBeenThere(Set<String> beenThere) {
         this.beenThere = beenThere;
+    }
+
+    public List<LocalDate> getImportantDates() {
+        return importantDates;
+    }
+
+    public void setImportantDates(List<LocalDate> importantDates) {
+        this.importantDates = importantDates;
     }
 
     public enum ShirtSize {
