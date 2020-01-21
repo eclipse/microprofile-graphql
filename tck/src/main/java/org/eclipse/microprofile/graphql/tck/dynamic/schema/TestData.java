@@ -15,6 +15,9 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic.schema;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Simple Holder for Test Data sets
  * @author Phillip Kruger (phillip.kruger@redhat.com)
@@ -24,7 +27,7 @@ public class TestData {
     private String header;
     private String name;
     private String snippetSearchTerm;
-    private String containsString;
+    private List<String> containsAnyOfString = new ArrayList<>();
     private String errorMessage;
     
     public TestData() {
@@ -62,14 +65,18 @@ public class TestData {
         this.snippetSearchTerm = snippetSearchTerm;
     }
 
-    public String getContainsString() {
-        return containsString;
+    public List<String> getContainsAnyOfString() {
+        return containsAnyOfString;
     }
 
-    public void setContainsString(String containsString) {
-        this.containsString = containsString;
+    public void setContainsAnyOfString(List<String> containsAnyOfString) {
+        this.containsAnyOfString = containsAnyOfString;
     }
 
+    public void addContainsString(String containsString) {
+        this.containsAnyOfString.add(containsString);
+    }
+    
     public String getErrorMessage() {
         return errorMessage;
     }

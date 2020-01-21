@@ -29,6 +29,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.microprofile.graphql.tck.dynamic.schema.SchemaTestDataProvider;
@@ -83,12 +84,24 @@ public class SchemaDynamicValidityTest extends Arquillian {
             snippet = getSchemaSnippet(schema, input.getSnippetSearchTerm());
         }
         
-        // Check if this is a negative test
-        if(input.getContainsString().startsWith("!")){
-            Assert.assertFalse(snippet.contains(input.getContainsString().substring(1)), "[" + input.getHeader() + "] " + input.getErrorMessage());
-        }else{
-            Assert.assertTrue(snippet.contains(input.getContainsString()), "[" + input.getHeader() + "] " + input.getErrorMessage());    
+        Assert.assertTrue(matchAtLeastOneOfTheSnippets(input,snippet), "[" + input.getHeader() + "] " + input.getErrorMessage());    
+    }
+    
+    private boolean matchAtLeastOneOfTheSnippets(TestData input,String snippet){
+        List<String> containsAnyOfString = input.getContainsAnyOfString();
+        for(String contains:containsAnyOfString){
+            if(contains.startsWith("!")){
+                contains = contains.substring(1);
+                if(!snippet.contains(contains)){
+                    return true;
+                }
+            }else{
+                if(snippet.contains(contains)){
+                    return true;
+                }
+            }
         }
+        return false;
     }
     
     private void saveSchemaFile(){
