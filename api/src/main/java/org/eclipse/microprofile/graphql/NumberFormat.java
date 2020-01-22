@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 /**
  * Annotation provides way how to set custom number format to field or JavaBean property.
  * (or collection there of)
- * This is similar to Jsonb (jakarta.json.bind.annotation.JsonbNumberFormat) except that it adds support for TYPE_USE
+ * This is similar to Jsonb (JsonbNumberFormat) except that it adds support for TYPE_USE
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE_USE, 
