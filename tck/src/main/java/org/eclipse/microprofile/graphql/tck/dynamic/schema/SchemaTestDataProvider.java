@@ -127,8 +127,16 @@ public class SchemaTestDataProvider {
             snippet = null;
         }
         testData.setSnippetSearchTerm(snippet);
-        testData.setContainsString(parts[2].trim());
         
+        String containsString = parts[2].trim();
+        if(containsString.contains(OR)){
+            String[] containsStrings = containsString.split(OR);
+            for(String oneOf:containsStrings){
+                testData.addContainsString(oneOf);
+            }
+        }else{
+            testData.addContainsString(containsString);
+        }
         testData.setErrorMessage("(" + count + ") - " + parts[3].trim());
 
         return testData;
@@ -146,4 +154,5 @@ public class SchemaTestDataProvider {
     private static final String DELIMITER = "\\" + PIPE;
     private static final String COMMENT = "#";
     private static final String FILE_TYPE = ".csv";
+    private static final String OR = "'OR'";
 }

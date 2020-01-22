@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbNumberFormat;
+import org.eclipse.microprofile.graphql.DateFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
@@ -58,6 +59,7 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.UnknownCharacterException;
 import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.NumberFormat;
 
 @GraphQLApi
 public class HeroFinder {
@@ -294,7 +296,8 @@ public class HeroFinder {
     @Mutation
     @Description("Update a hero's favourite drink size in milliliters") 
     public SuperHero favouriteDrinkSizeInML(@Name("name") String name,
-                                     @JsonbNumberFormat(value = "000.00 'ml'") 
+                                     @JsonbNumberFormat(value = "000.00 'kl'") // This should be ignored due to NumberFormat below
+                                     @NumberFormat(value = "000.00 'ml'") 
                                      @Name("size") Float size) throws UnknownHeroException {
         LOG.log(Level.INFO, "favouriteDrinkSizeInML invoked [{0}],[{1}]", new Object[]{name, size});
         SuperHero superHero = heroDB.getHero(name);
@@ -381,8 +384,9 @@ public class HeroFinder {
     @Mutation
     @Description("Log the last few places the hero was seen (Long Lat)") 
     public SuperHero trackHeroLongLat(@Name("name") String name,
-                                     @JsonbNumberFormat("00.0000000 'longlat'") 
-                                     @Name("coordinates") List<List<BigDecimal>> coordinates) throws UnknownHeroException {
+                                     @JsonbNumberFormat(value = "00.0000000 'latlong'") // This should be ignored due to NumberFormat below
+                                     @Name("coordinates") List<List<@NumberFormat("00.0000000 'longlat'") BigDecimal>> coordinates) 
+            throws UnknownHeroException {
         LOG.log(Level.INFO, "trackHeroLongLat invoked [{0}],[{1}]", new Object[]{name, coordinates});
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
@@ -448,11 +452,37 @@ public class HeroFinder {
     @Mutation
     @Description("Check in a superhero") 
     public SuperHero checkInWithCorrectDateFormat(@Name("name") String name,
-                             @JsonbDateFormat("MM/dd/yyyy") @Name("date") LocalDate localDate) throws UnknownHeroException {
+                             @JsonbDateFormat("yy dd MM") // This should be ignored due to DateFormat below
+                             @DateFormat("MM/dd/yyyy") @Name("date") LocalDate localDate) throws UnknownHeroException {
         LOG.log(Level.INFO, "checkInWithCorrectDateFormat invoked [{0}],[{1}]", new Object[]{name, localDate});
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){
             superHero.setDateOfLastCheckin(localDate);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Set all the important dates for a certain hero") 
+    public SuperHero importantDates(@Name("name") String name,
+                             @Name("dates") List<LocalDate> localDates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "importantDates invoked [{0}],[{1}]", new Object[]{name, localDates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setImportantDates(localDates);
+        }
+        return superHero;
+    }
+    
+    @Mutation
+    @Description("Set all the important dates (US format) for a certain hero") 
+    public SuperHero importantDatesUS(@Name("name") String name,
+                             @JsonbDateFormat("yy dd MM") // This should be ignored due to DateFormat below
+                             @Name("dates") List<@DateFormat("MM/dd/yyyy") LocalDate> localDates) throws UnknownHeroException {
+        LOG.log(Level.INFO, "importantDatesUS invoked [{0}],[{1}]", new Object[]{name, localDates});
+        SuperHero superHero = heroDB.getHero(name);
+        if(superHero!=null){
+            superHero.setImportantDates(localDates);
         }
         return superHero;
     }

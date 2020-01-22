@@ -1,0 +1,6 @@
+mutation importantDatesUS {
+  importantDatesUS(name:"Starlord", dates:["01/14/2020","02/15/2021"]) {
+    name
+    importantDates
+  }
+}

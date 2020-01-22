@@ -56,7 +56,9 @@ Implementations may define additional custom scalars beyond those listed above.
 
 ==== Numbers
 All number scalars (Int, Double, Float, Short, Long, Byte, BigInteger and BigDecimal) can be formatted
-using the JSON-B annotation `@JsonbNumberFormat`.
+using the `@NumberFormat` or alternatively the JSON-B annotation `@JsonbNumberFormat` (except that `@JsonbNumberFormat` is not valid on `TYPE_USE`)
+
+In the case that a property has both `@NumberFormat` and `@JsonbNumberFormat`, the GraphQL annotation (`@NumberFormat`) takes priority.
 
 When formatting is added to a number type, the formatted result will be of type String.
 
@@ -79,6 +81,16 @@ will result in a formatted amount (South African Rand) in the result:
 }
 ----
 
+List example:
+[source,java,numbered]
+----
+@Mutation
+public SuperHero trackHeroLongLat(@Name("name") String name,
+                                 @Name("coordinates") List<List<@NumberFormat("00.0000000 'longlat'") BigDecimal>> coordinates) throws UnknownHeroException {
+    // Here add the tracking
+    return superHero;
+}
+
 ==== Dates
 By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
 
@@ -86,7 +98,10 @@ By default the date related scalars (DateTime, Date, and Time) will use a ISO fo
 - `yyyy-MM-dd` for Date
 - `HH:mm:ss` for Time 
 
-By adding the JSON-B annotation `@JsonbDateFormat` a user can change the format.
+By adding the `@DateFormat` annotation, or alternatively JSON-B annotation `@JsonbDateFormat`, a user can change the format. However, `@JsonbDateFormat` does not 
+support usage on `TYPE_USE`.
+
+In the case that a property has both `@DateFormat` and `@JsonbDateFormat`, the GraphQL annotation (`@DateFormat`) takes priority.
 
 // ==== Custom user defined scalars (v1.1)
 // @TODO: Define how to create your own scalar.
@@ -446,8 +461,8 @@ Note that the `get` is removed from the name in the schema.
 Even though `@Name` is not required on an input argument for a `@Query` or `@Mutation`, it is strongly recommended
 as it is the only guaranteed portable way to ensure the argument names.
 
-If a user compiles with `-parameters` option, then the implementation should try to use the Java parameter names as the schema argument names, 
-but this is not a requirement. Some implementations may still have trouble getting the parameter names even with the `-parameters` option.
+If no name is provided using the `@Name` annotation and the user compiled the application class with the `-parameters` option, 
+then the implementation should use the Java parameter names as the schema argument names.
 
 Example recommended argument usage (with annotation):
 
@@ -470,8 +485,8 @@ type Query {
   # ...
 ----
 
-If the `@Name` annotation is not present, and the user did not compile with the `-parameters` option, or the implementation 
-does not support the `-parameters` option, arguments will get generic names like `arg0`, `arg1` and so on.
+If the `@Name` annotation is not present, and the user did not compile with the `-parameters` option, 
+the generated schema will use generic argument names like `arg0`, `arg1` and so on.
 
 Example argument usage (with no annotation):
 

@@ -47,7 +47,7 @@
 46| type Query              |   testStringObject: String                                |   Expecting a String Scalar Type in type Query
 47| type Query              |   testCharArray: [Char]                                   |   Expecting a non null Char Array Scalar Type in type Query
 48| type Query              |   testTimeObject: Time                                    |   Expecting a Time Scalar Type in type Query
-49| type Mutation           |   scalarHolder(arg0: ScalarHolderInput): ScalarHolder     |   Expecting a Mutation with the set removed from the name, scalarHolder.
+49| type Mutation           |   scalarHolder(arg0: ScalarHolderInput): ScalarHolder 'OR' scalarHolder(scalarHolder: ScalarHolderInput): ScalarHolder   |   Expecting a Mutation with the set removed from the name, scalarHolder.
 50| type ScalarHolder       |   #HH:mm:ss                                               |   Missing Default Time Format description on Output Type
 51| type ScalarHolder       |   #yyyy-MM-dd                                             |   Missing Default Date Format description on Output Type
 52| type ScalarHolder       |   #yyyy-MM-dd'T'HH:mm:ss'Z'                               |   Missing Default DateTime Format description on Output Type

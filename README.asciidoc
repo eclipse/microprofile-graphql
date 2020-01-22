@@ -71,9 +71,6 @@ MicroProfile is the optimal place to host that standard as it is open, ideally s
 This specification will focus on making it easy for developers to create a GraphQL Service/Endpoint and publish it as an API. 
 Where the data comes from (NoSQL, Relational DB, another service, etc.) is not the concern of this Proposed Specification. 
 
-== Original Proposal
-See the original proposal https://github.com/eclipse/microprofile-sandbox/blob/master/proposals/graphql/proposal/src/main/asciidoc/proposal.asciidoc[here]
-
 == Contributing
 
 Do you want to contribute to this project? link:CONTRIBUTING.adoc[Find out how you can help here].
