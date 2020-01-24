@@ -265,4 +265,14 @@ public class ScalarTestApi {
     public BasicInterface basicMessageEcho(@Name("input") BasicInput input) {
         return new BasicType(input.getMessage());
     }
+    
+    @Query
+    public String getaway(){
+        return "Just testing a name that starts with get but is not a getter";
+    }
+    
+    @Mutation
+    public String settlement(){
+        return "Just testing a name that starts with set but is not a setter";
+    }
 }

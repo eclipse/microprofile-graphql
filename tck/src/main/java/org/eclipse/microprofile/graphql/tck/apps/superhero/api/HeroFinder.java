@@ -560,7 +560,7 @@ public class HeroFinder {
     }
     
     @Query
-    public String currentLocation(@Name("superHero")@Source SuperHero hero) throws GraphQLException {
+    public String getCurrentLocation(@Name("superHero")@Source SuperHero hero) throws GraphQLException {
         LOG.log(Level.INFO, "currentLocation invoked [{0}]", hero);
         final String heroName = hero.getName();
         return heroLocator.getHeroLocation(heroName)
