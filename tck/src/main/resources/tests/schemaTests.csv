@@ -88,3 +88,7 @@
 45|type Query          |   currentLocation(superHero: SuperHeroInput): String      |   Expecting a currentLocation query in Query to Source annotation
 46|type SuperHero      |   secretToken(maskFirstPart: Boolean = true): String      |   Expecting a secretToken field with a boolean argument in SuperHero due to Source annotation
 47|type Query          |   !secretToken(maskFirstPart: Boolean = true): String     |   Not expecting a secretToken query in Query
+
+# testGetAndSetNotGetterAndSetter
+48|type Query          |   getaway: String                                         |   Expecting a getaway query where the get is not removed
+49|type Mutation       |   settlement: String                                      |   Expecting a settlement mutation where the set is not removed
