@@ -33,6 +33,7 @@ import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.NonNull;
 import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.NumberFormat;
 
 
 public class SuperHero implements Character {
@@ -78,8 +79,12 @@ public class SuperHero implements Character {
     
     private ShirtSize sizeOfTShirt;
 
-    @DateFormat("dd/MM")
     private List<LocalDate> importantDates;
+    
+    private List<Integer> kidsAges;
+    
+    @DateFormat("dd MMMM yyyy")
+    private LocalDate birthday;
     
     public SuperHero(){
     }
@@ -256,15 +261,34 @@ public class SuperHero implements Character {
     public void setBeenThere(Set<String> beenThere) {
         this.beenThere = beenThere;
     }
-
-    public List<LocalDate> getImportantDates() {
+    
+    public List<@DateFormat("dd/MM") LocalDate> getImportantDates() {
         return importantDates;
     }
 
-    public void setImportantDates(List<LocalDate> importantDates) {
+    @Name("calendarEntries")
+    public void setImportantDates(List<@DateFormat("dd/MM/yy") LocalDate> importantDates) {
         this.importantDates = importantDates;
     }
 
+    @Name("agesOfKids")
+    public List<@NumberFormat("0 'years'")Integer> getKidsAges() {
+        return kidsAges;
+    }
+
+    public void setKidsAges(List<@NumberFormat("0 'years old'")Integer> kidsAges) {
+        this.kidsAges = kidsAges;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    @Name("dateOfBirth")
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }    
+    
     public enum ShirtSize {
         S,
         M,

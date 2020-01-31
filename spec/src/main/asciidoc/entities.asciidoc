@@ -90,6 +90,7 @@ public SuperHero trackHeroLongLat(@Name("name") String name,
     // Here add the tracking
     return superHero;
 }
+----
 
 ==== Dates
 By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
