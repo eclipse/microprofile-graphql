@@ -50,10 +50,10 @@
 49| type Mutation           |   scalarHolder(arg0: ScalarHolderInput): ScalarHolder 'OR' scalarHolder(scalarHolder: ScalarHolderInput): ScalarHolder   |   Expecting a Mutation with the set removed from the name, scalarHolder.
 50| type ScalarHolder       |   #HH:mm:ss                                               |   Missing Default Time Format description on Output Type
 51| type ScalarHolder       |   #yyyy-MM-dd                                             |   Missing Default Date Format description on Output Type
-52| type ScalarHolder       |   #yyyy-MM-dd'T'HH:mm:ss'Z'                               |   Missing Default DateTime Format description on Output Type
+52| type ScalarHolder       |   #yyyy-MM-dd'T'HH:mm:ss                                  |   Missing Default DateTime Format description on Output Type
 53| type ScalarHolder       |   #This is another time (HH:mm:ss)                        |   Missing Default Time Format description (appended) on Output Type
 54| type ScalarHolder       |   #This is another date (yyyy-MM-dd)                      |   Missing Default Date Format description (appended) on Output Type
-55| type ScalarHolder       |   #This is another datetime (yyyy-MM-dd'T'HH:mm:ss'Z')    |   Missing Default DateTime Format description (appended) on Output Type
+55| type ScalarHolder       |   #This is another datetime (yyyy-MM-dd'T'HH:mm:ss)       |   Missing Default DateTime Format description (appended) on Output Type
 56| type ScalarHolder       |   #This is a formatted time (hh:mm a)                     |   Missing Formatted Time Format description (appended) on Output Type
 57| type ScalarHolder       |   #This is a formatted date (MM dd yyyy)                  |   Missing Formatted Date Format description (appended) on Output Type
 58| type ScalarHolder       |   #This is a formatted datetime (MM dd yyyy 'at' hh:mm a) |   Missing Formatted DateTime Format description (appended) on Output Type
