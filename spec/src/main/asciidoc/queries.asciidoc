@@ -88,7 +88,7 @@ This would generate a schema that would include:
 [source,numbered]
 type Query {
   ...
-  #Returns the super hero with the specified name
+  "Returns the super hero with the specified name"
   superHero(name: String): SuperHero 
   #...
 ----
@@ -112,9 +112,9 @@ This would generate a schema that would include:
 [source,numbered]
 type Query {
   ...
-  #Returns the super hero with the specified name
+  "Returns the super hero with the specified name"
   superHero(
-  #Super hero name, not real name
+  "Super hero name, not real name"
   name: String
   ): SuperHero 
   #...
