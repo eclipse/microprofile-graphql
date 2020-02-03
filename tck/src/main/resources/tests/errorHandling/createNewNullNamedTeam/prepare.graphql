@@ -1,0 +1,9 @@
+ mutation createTeamWithNullName {
+  createNewTeam(newTeam: {
+    name: null
+  }) {
+    members {
+      name
+    }
+  }
+}
