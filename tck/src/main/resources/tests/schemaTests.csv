@@ -42,36 +42,36 @@
 25|type SuperHero      |   timeOfLastBattle: DateTime                              |   Missing or incorrect Scalar type in "SuperHero" field "timeOfLastBattle"
     
 # testSchemaContainsDescriptionForQueryMethods
-26|type Query          |   #List all super heroes in the database                  |   Missing description on Query Method
+26|type Query          |   "List all super heroes in the database"                 |   Missing description on Query Method
     
 # testSchemaContainsDescriptionForMutationMethods
-27|type Mutation       |   #Removes a hero... permanently...                       |   Missing description on Mutation Method
+27|type Mutation       |   "Removes a hero... permanently..."                      |   Missing description on Mutation Method
     
 # testSchemaContainsDescriptionForEntityTypes
-28|                    |   #Something of use to a super hero                       |   Missing description on Entity type
+28|                    |   "Something of use to a super hero"                      |   Missing description on Entity type
 
 # testSchemaContainsDescriptionForInputTypes
 
 # testSchemaContainsDescriptionForArguments
-29|type Query          |   #Super hero name, not real name                         |   Missing description on Query Argument
+29|type Query          |   "Super hero name, not real name"                        |   Missing description on Query Argument
 
 # testSchemaContainsDescriptionForOutputTypeFields
-30|type SuperHero      |   #Super hero name/nickname                               |   Missing description on Output Type
-31|type SuperHero      |   #Location where you are most likely to find this hero   |   Missing description on Output Type  
+30|type SuperHero      |   "Super hero name/nickname"                              |   Missing description on Output Type
+31|type SuperHero      |   "Location where you are most likely to find this hero"  |   Missing description on Output Type  
 
 # testSchemaContainsDescriptionForInputTypeFields
-32|input SuperHeroInput|   #Super hero name/nickname                               |   Missing description on Input Type
-33|input SuperHeroInput|   #Powers that make this hero super                       |   Missing description on Input Type
+32|input SuperHeroInput|   "Super hero name/nickname"                              |   Missing description on Input Type
+33|input SuperHeroInput|   "Powers that make this hero super"                      |   Missing description on Input Type
 
 # testSchemaOutputTypeFieldsContainsDescriptionFromJsonbDateFormat
-34|type SuperHero      |   #MM/dd/yyyy                                             |   Missing Date Format description on Output Type
-35|type SuperHero      |   #HH:mm                                                  |   Missing Time Format description on Output Type
-36|type SuperHero      |   #HH:mm:ss dd-MM-yyyy                                    |   Missing DateTime Format description on Output Type
+34|type SuperHero      |   "MM/dd/yyyy"                                            |   Missing Date Format description on Output Type
+35|type SuperHero      |   "HH:mm"                                                 |   Missing Time Format description on Output Type
+36|type SuperHero      |   "HH:mm:ss dd-MM-yyyy"                                   |   Missing DateTime Format description on Output Type
   
 # testSchemaInputTypeFieldsContainsDescriptionFromJsonbDateFormat
-37|input SuperHeroInput|   #MM/dd/yyyy                                             |   Missing Date Format description on Input Type
-38|input SuperHeroInput|   #HH:mm                                                  |   Missing Time Format description on Input Type
-39|input SuperHeroInput|   #HH:mm:ss dd-MM-yyyy                                    |   Missing DateTime Format description on Input Type
+37|input SuperHeroInput|   "MM/dd/yyyy"                                            |   Missing Date Format description on Input Type
+38|input SuperHeroInput|   "HH:mm"                                                 |   Missing Time Format description on Input Type
+39|input SuperHeroInput|   "HH:mm:ss dd-MM-yyyy"                                   |   Missing DateTime Format description on Input Type
 
 # testSchemaContainsDefaultValueOnEntityField
 40|input ItemInput     |   supernatural: Boolean = false                           |   Missing default value in Input boolean field
