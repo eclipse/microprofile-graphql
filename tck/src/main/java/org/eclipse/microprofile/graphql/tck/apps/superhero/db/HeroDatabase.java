@@ -15,6 +15,7 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.db;
 
+import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,6 +46,7 @@ public class HeroDatabase {
             addHeroes(jsonb.fromJson(mapJson,
                       new ArrayList<SuperHero>(){}.getClass().getGenericSuperclass()));
             getHero("Iron Man").setNamesOfKnownEnemies(Arrays.asList("Whiplash", "Mandarin"));
+            getTeam("Avengers").setDailyStandupMeeting(OffsetTime.parse("11:05:00+02:00"));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -162,7 +164,8 @@ public class HeroDatabase {
              "\"superPowers\":[\"wealth\",\"engineering\"]," +
              "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
              "\"equipment\":[{\"id\": 1001, \"name\": \"Iron Man Suit\", \"powerLevel\": 18, " +
-             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false}]," +
+             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false, \"dateCreated\": \"12 February 1967 at 11:45 in Africa/Johannesburg\"," + 
+             "\"dateLastUsed\": \"30 Jan 2020 at 17:55 in zone +0200\" }]," +
              "\"colorOfCostume\":\"Red\"," +
              "\"idNumber\":\"1234,5678\"," +
              "\"dateOfLastCheckin\":\"09/09/2019\"," +

@@ -1,0 +1,26 @@
+{
+  "data": {
+    "superHero": {
+      "name": "Iron Man",
+      "primaryLocation": "Los Angeles, CA",
+      "realName": "Tony Stark",
+      "superPowers": [
+        "wealth",
+        "engineering"
+      ],
+      "equipment": [
+        {
+          "name": "Iron Man Suit",
+          "dateCreated": "12 February 1967 at 11:45 in Africa/Johannesburg",
+          "dateLastUsed": "30 Jan 2020 at 17:55 in zone +0200"                    
+        }
+      ],
+      "teamAffiliations": [
+        {
+          "name": "Avengers",
+          "dailyStandupMeeting": "11:05 offset +0200"
+        }
+      ]
+    }
+  }
+}

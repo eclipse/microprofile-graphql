@@ -15,7 +15,10 @@
  */
 package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
 import java.util.Collection;
+import javax.json.bind.annotation.JsonbDateFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
@@ -41,6 +44,12 @@ public class Item {
     private Collection<SuperHero> canWield;
     private boolean artificialIntelligenceRating;
 
+    @JsonbDateFormat(value = "dd MMMM yyyy 'at' HH:mm 'in' VV",locale = "en_ZA")
+    private ZonedDateTime dateCreated;
+    
+    @JsonbDateFormat(value = "dd MMM yyyy 'at' HH:mm 'in zone' Z",locale = "en_ZA")
+    private OffsetDateTime dateLastUsed;
+    
     public final static String CAPE =
         "{" +
         "   \"id\": 1000," +
@@ -48,7 +57,9 @@ public class Item {
         "   \"powerLevel\": 3," +
         "   \"height\": 1.2," +
         "   \"weight\": 0.3," +
-        "   \"supernatural\": false" +
+        "   \"supernatural\": false," +
+        "   \"dateCreated\": \"19 February 1900 at 12:00 in Africa/Johannesburg\"," +
+        "   \"dateLastUsed\": \"29 Jan 2020 at 09:45 in zone +0200\"" +
         "}";
 
     public Item(){
@@ -145,6 +156,22 @@ public class Item {
     @DefaultValue("An unidentified item")
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ZonedDateTime getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(ZonedDateTime dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public OffsetDateTime getDateLastUsed() {
+        return dateLastUsed;
+    }
+
+    public void setDateLastUsed(OffsetDateTime dateLastUsed) {
+        this.dateLastUsed = dateLastUsed;
     }
 
     @Override

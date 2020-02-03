@@ -1,0 +1,18 @@
+{
+  superHero(name:"Iron Man") {
+    
+    name
+    primaryLocation
+    realName
+    superPowers
+    equipment{
+      name
+      dateCreated
+      dateLastUsed
+    }
+    teamAffiliations {
+      name
+      dailyStandupMeeting
+    }
+  }
+}
