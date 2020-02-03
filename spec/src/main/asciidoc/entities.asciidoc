@@ -49,8 +49,8 @@ handle the following additional scalar types:
 - `BigInteger` - which maps to a Java `BigInteger`.
 - `BigDecimal` - which maps to a Java BigDecimal`.
 - `Date` - which maps to a Java `java.time.LocalDate`.
-- `Time` - which maps to a Java `java.time.LocalTime`.
-- `DateTime` - which maps to a Java `java.time.LocalDateTime`.
+- `Time` - which maps to a Java `java.time.LocalTime` or `java.time.OffsetTime`.
+- `DateTime` - which maps to a Java `java.time.LocalDateTime`, `java.time.OffsetDateTime` or `java.time.ZonedDateTime`.
 
 Implementations may define additional custom scalars beyond those listed above.
 
@@ -95,9 +95,12 @@ public SuperHero trackHeroLongLat(@Name("name") String name,
 ==== Dates
 By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
 
-- `yyyy-MM-dd\'T\'HH:mm:ss\'Z'` for DateTime
+- `yyyy-MM-dd\'T\'HH:mm:ss` for DateTime
+- `yyyy-MM-dd\'T\'HH:mm:ssZ` for OffsetDateTime
+- `yyyy-MM-dd\'T\'HH:mm:ssZ'['VV']'` for ZonedDateTime
 - `yyyy-MM-dd` for Date
 - `HH:mm:ss` for Time 
+- `HH:mm:ssZ` for OffsetTime 
 
 By adding the `@DateFormat` annotation, or alternatively JSON-B annotation `@JsonbDateFormat`, a user can change the format. However, `@JsonbDateFormat` does not 
 support usage on `TYPE_USE`.
