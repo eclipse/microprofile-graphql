@@ -35,7 +35,7 @@
         <cdi-api.version>2.0.2</cdi-api.version>
 
         <testng.version>7.0.0</testng.version>
-        <arquillian.version>1.5.0.Final</arquillian.version>
+        <arquillian.version>1.6.0.Final</arquillian.version>
 
         <revremark>Draft</revremark>
     </properties>
