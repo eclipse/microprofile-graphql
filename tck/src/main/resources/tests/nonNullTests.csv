@@ -20,10 +20,10 @@
 11|type SuperHero       |   superPowers: [String!]                                  |   superPowers list in SuperHero should contain NonNull strings
 12|input SuperHeroInput |   superPowers: [String!]                                  |   superPowers list in SuperHeroInput should contain NonNull strings
 
-#testNonNullOnTypeUseInputOnly
+# testNonNullOnTypeUseInputOnly
 13|type SuperHero       |   equipment: [Item]                                       |   equipment list in SuperHero should contain Nullable Item
 14|input SuperHeroInput |   equipment: [ItemInput!]                                 |   equipment list in SuperHeroInput should contain NonNull ItemInput
 
-#testNonNullOnTypeUseOutputOnly
+# testNonNullOnTypeUseOutputOnly
 15|type Team            |   members: [SuperHero!]                                   |   members list in SuperHero should contain NonNull SuperHero
 16|input TeamInput      |   members: [SuperHeroInput]                               |   members list in TeamInput should contain Nullable SuperHeroInput

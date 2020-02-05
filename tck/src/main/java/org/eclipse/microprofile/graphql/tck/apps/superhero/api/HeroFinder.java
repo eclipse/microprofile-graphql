@@ -151,6 +151,12 @@ public class HeroFinder {
     }
 
     @Query
+    public Team getTeam(@Name("team") String teamName) throws UnknownTeamException {
+        LOG.log(Level.INFO, "getTeam invoked [{0}]", teamName);
+        return heroDB.getTeam(teamName);
+    }
+    
+    @Query
     public Collection<Team> allTeams() {
         LOG.info("allTeams invoked");
         return heroDB.getAllTeams();

@@ -176,19 +176,19 @@ will result in:
 [source,graphql,numbered]
 ----
 type ScalarHolder {
-  #yyyy-MM-dd
+  "yyyy-MM-dd"
   dateObject: Date
 
-  #This is another date (yyyy-MM-dd)
+  "This is another date (yyyy-MM-dd)"
   anotherDateObject: Date
   
-  #This is a formatted date (MM dd yyyy)
+  "This is a formatted date (MM dd yyyy)"
   formattedDateObject: Date
 
-  ##0.0
+  "#0.0"
   formattedFloatObject: Float
 
-  #This is a formatted number (#0.0)
+  "This is a formatted number (#0.0)"
   formattedDoubleObject: Double
 
   #...

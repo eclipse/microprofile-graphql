@@ -23,7 +23,6 @@ import org.eclipse.microprofile.graphql.tck.apps.basic.api.ScalarTestApi;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.api.HeroFinder;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
-import org.eclipse.microprofile.graphql.tck.dynamic.execution.TestData;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -47,7 +46,6 @@ public class DeployableUnit {
                 .addPackage(HeroFinder.class.getPackage())
                 .addPackage(HeroDatabase.class.getPackage())
                 .addPackage(SuperHero.class.getPackage())
-                .addPackage(TestData.class.getPackage())
                 .addPackage(ScalarTestApi.class.getPackage());
     }
     

@@ -248,13 +248,13 @@ interface Character {
 }
 
 type SuperHero implements Character {
-  #Name of hero
+  "Name of hero"
   name: String
   #...
 }
 
 type Villain implements Character {
-  #Name of villain
+  "Name of villain"
   name: String
   #...
 }
@@ -337,7 +337,7 @@ Above will create the field on SuperHero as described before, and will also add 
 
 [source,graphql,numbered]
 ----
-#Query root
+"Query root"
 type Query {
     #...
     currentLocation(arg0: SuperHeroInput): String
@@ -452,7 +452,7 @@ This would result in a schema that looks something like this:
  
 [source,graphql,numbered]
 ----
-#Query root
+"Query root"
 type Query {
   #...
   currentLocation(arg0: SuperHeroInput): String
@@ -482,7 +482,7 @@ Above will result in:
 
 [source,graphql,numbered]
 ----
-#Query root
+"Query root"
 type Query {
   # ...
   superHero(name: String): SuperHero
@@ -506,7 +506,7 @@ Above will result in:
 
 [source,graphql,numbered]
 ----
-#Query root
+"Query root"
 type Query {
   # ...
   superHero(arg0: String): SuperHero
@@ -557,7 +557,7 @@ will result in:
 
 [source,graphql,numbered]
 ----
-#Query root
+"Query root"
 type Query {
     #...
     heroLocation(arg0: SuperHeroInput): String
@@ -584,7 +584,7 @@ will result in:
 
 [source,graphql,numbered]
 ----
-#Query root
+"Query root"
 type Query {
     #...
     locationQuery(arg0: SuperHeroInput): String
@@ -616,7 +616,7 @@ will result in:
 
 [source,graphql,numbered]
 ----
-#Query root
+"Query root"
 type Query {
     #...
     locationQuery(heroInput: SuperHeroInput): String
@@ -685,7 +685,7 @@ Will result in both the Type and Input to be marked not null (!):
 ----
 input ItemInput {
   name: String!
-  # ...
+  #...
 }
 
 type Item {
@@ -713,7 +713,7 @@ The code above will result in a schema entry like this:
 ----
 type SuperHero {
   superPowers: [String!]
-  # ...
+  #...
 }
 
 input SuperHeroInput {

@@ -1,14 +1,14 @@
 {
-  "data": {
-    "createNewTeam": null
-  },
   "errors": [
     {
-      "message": "Cannot return null for non-nullable type: 'String' within parent 'Team' (/createNewTeam/name)",
+      "message": "Cannot return null for non-nullable type: 'String' within parent 'Team' (/team/name)",
       "path": [
-        "createNewTeam",
+        "team",
         "name"
       ]
     }
-  ]
+  ],
+  "data": {
+    "team": null
+  }
 }

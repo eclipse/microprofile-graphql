@@ -1,10 +1,5 @@
-mutation createTeamWithNullName {
-  createNewTeam(newTeam: {
-    name: null
-  }) {
+{
+  team(team:null){
     name
-    members {
-      name
-    }
   }
 }
