@@ -1,0 +1,44 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[default_values]]
+===== Default Values
+
+The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
+a value. Default values may only be specified on input types and method parameters and will have no
+effect if specified on output types.  The value specified in this annotation may be plain text for Java primitives and 
+`String` types or JSON for complex types.
+
+example:
+
+[source,java,numbered]
+----
+@Query
+public Collection<SuperHero> allHeroesIn(@DefaultValue("New York, NY") @Name("city") String city) {
+    //...
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+    allHeroesIn(city: String = "New York, NY"): [SuperHero]
+    # ...
+}
+----

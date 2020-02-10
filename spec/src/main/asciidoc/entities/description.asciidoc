@@ -1,0 +1,100 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[description]]
+===== Description
+
+The `@Description` annotation can be used to provide a description in the generated schema for entity types (both input and
+output types) and fields.
+
+example:
+
+[source,java,numbered]
+----
+@Query
+@Description("List all super heroes in the database")
+public Collection<SuperHero> allHeroes() {
+    // ...
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+    "List all super heroes in the database"
+    allHeroes: [SuperHero]
+    #...
+}
+----
+
+====== Default Descriptions
+
+Formatting annotations like `@NumberFormat` and `@DateFormat` ( or `@JsonbDateFormat` and `@JsonbNumberFormat` from JsonB) can be used to transform data at runtime (see <<scalars>>) 
+
+If no `@Description` annotation is provided for a date or number field, the format string specified in the relative annotation (`@NumberFormat` or `@DateFormat` or `@JsonbDateFormat` or `@JsonbNumberFormat`) 
+will be used as the field's description, or, for dates only, the default date format in the case there is no `@DateFormat` or `@JsonbDateFormat` annotation.
+
+If a `@Description` annotation is provided for a date or number field, the format string specified in the relative annotation (`@NumberFormat` or `@DateFormat` or `@JsonbDateFormat` or `@JsonbNumberFormat`)
+will be appended to the given description in brackets `(...)`, or, for dates only, the default date format in the case there is no `@DateFormat` or `@JsonbDateFormat` annotation. 
+
+Example:
+
+[source,java,numbered]
+----
+
+private LocalDate dateObject;
+
+@Description("This is another date")
+private LocalDate anotherDateObject;
+
+@JsonbDateFormat("MM dd yyyy")
+@Description("This is a formatted date")
+private LocalDate formattedDateObject;
+
+@JsonbNumberFormat("#0.0")
+private Float formattedFloatObject;
+
+@Description("This is a formatted number")
+@JsonbNumberFormat("#0.0")
+private Double formattedDoubleObject;
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+type ScalarHolder {
+  "yyyy-MM-dd"
+  dateObject: Date
+
+  "This is another date (yyyy-MM-dd)"
+  anotherDateObject: Date
+  
+  "This is a formatted date (MM dd yyyy)"
+  formattedDateObject: Date
+
+  "#0.0"
+  formattedFloatObject: Float
+
+  "This is a formatted number (#0.0)"
+  formattedDoubleObject: Double
+
+  #...
+}
+----

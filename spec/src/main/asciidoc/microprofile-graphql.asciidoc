@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= GraphQL for MicroProfile
+= MicroProfile GraphQL
 :authors: Jean-Francois James, Phillip Krüger, Andy McCright, Jean-Baptiste Roux, Bojan Tomic, Adam Anderson
 :email: microprofile@googlegroups.com
 :version-label!:
@@ -43,7 +43,5 @@ include::entities.asciidoc[]
 include::components.asciidoc[]
 
 include::errorhandling.asciidoc[]
-
-include::jsonb.asciidoc[]
 
 include::release_notes.asciidoc[]

@@ -1,0 +1,71 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[ignorable_fields]]
+===== Ignorable fields
+
+There may be cases where a developer wants to use a class as a GraphQL type or input type, but use fields that should
+not be part of the exposed schema. The `@Ignore` annotation can be placed on the field to prevent it from being part of
+the schema.
+
+If the `@Ignore` annotation is placed on the field itself, then the field will be excluded from both the input and 
+output types in the generated schema.  If the annotation is only placed on the "getter" method, then it will only be
+excluded from the input type.  If the annotation is only placed on the "setter" method, then it will only be excluded
+from the output type.
+
+Similarly, the `@JsonbTransient` annotation (from Json-B API) can be used to ignore certain fields from the type or input type in the 
+schema. The same rules apply: if the annotation is on the getter, then the field is ignored in the type; if the
+annotation is on the setter, then the field is ignored in the input type; if the annotation is on the Java field, it
+is ignored in both.
+
+example:
+
+.Ignore Java Code Example
+[source,java,numbered]
+----
+public class Widget {
+    @Ignore
+    private String name;
+    private double weight;
+    private int quantity;
+    //...
+
+    @JsonbTransient
+    public double getWeight() {
+        return weight;
+    }
+    //...
+
+    @Ignore
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+}
+----
+
+That would create a schema like this:
+
+.Ignore Schema Example
+[source,graphql,numbered]
+----
+type Widget {
+    quantity: Int!
+}
+
+input WidgetInput {
+    weight: Double!
+}
+----

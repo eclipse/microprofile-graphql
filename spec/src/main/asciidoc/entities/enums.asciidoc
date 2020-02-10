@@ -1,0 +1,72 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[enums]]
+=== Enumerable types
+
+GraphQL offers enumerable types similar to Java `enum` types. 
+In order for an enum to be defined in the GraphQL schema, it must meet the following criteria:
+
+- It must be the return type or parameter of a query or mutation method,
+
+Optionally it can also:
+ 
+- Be annotated with `@Enum` with a value to name the field
+- Be annotated with `@Name` with a value to name the field
+
+The implementation will produce the GraphQL `enum` type in
+the schema. For example:
+
+[source,java,numbered]
+----
+@Type
+public class SuperHero {
+    private ShirtSize tshirtSize; // public getters/setters, ...
+
+    @Enum("ClothingSize")
+    public enum ShirtSize {
+        S, M, L, XL
+    }
+}
+----
+
+The implementation would generate a schema that would include:
+
+[source,graphql,numbered]
+----
+enum ClothingSize {
+  L
+  M
+  S
+  XL
+}
+
+type SuperHero {
+  #...
+  tshirtSize: ClothingSize
+  #...
+}
+
+input SuperHeroInput
+  #...
+  tshirtSize: ClothingSize
+  #...
+}
+#...
+----
+
+When using an enumerated type, it is considered a validation error when the client enters a value that is not included
+in the enumerated type.
