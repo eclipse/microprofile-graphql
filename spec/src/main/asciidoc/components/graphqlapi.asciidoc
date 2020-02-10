@@ -14,26 +14,13 @@
 // limitations under the License.
 //
 
-[[api]]
+=== Component Definition
 
+[[api]]
 ==== API Annotation
 GraphQL endpoints must be annotated with the `@GraphQLApi` annotation.
 
-The `@GraphQLApi` annotation is defined in the API:
-
-.GraphQLApiAnnotation
-[source,java,numbered]
-----
-package org.eclipse.microprofile.graphql;
-
-//...
-
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface GraphQLApi {
-}
-----
+The `@GraphQLApi` annotation is a marker annotation that identifies a CDI Bean as a GraphQL Endpoint
 
 ==== Basic Example
 

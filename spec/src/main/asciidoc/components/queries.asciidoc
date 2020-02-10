@@ -14,30 +14,16 @@
 // limitations under the License.
 //
 
-[[queries]]
+=== Queries
 
-Queries allows a user to ask for all or specific fields on an object.
+[[queries]]
+Queries allows a user to ask for all or specific fields on an object or list/array of objects.
 
 ==== API Annotation
 For classes that are annotated with `@GraphQLApi`, implementations must create a query in the schema for every method
 that is annotated with `@Query`.
 
-The `@Query` annotation is defined in the API:
-
-.QueryAnnotation
-[source,java,numbered]
-----
-package org.eclipse.microprofile.graphql;
-
-//...
-
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Query {
-    String value() default "";
-}
-----
+The `@Query` annotation have the following parameters:
 
 .Parameters
 [cols="1,1"]
@@ -65,12 +51,26 @@ but the behavior for these return types are undefined.
 In the previous example, an explicitly defined query named "superHero" returns a `SuperHero` entity. The fields on that
 entity class are also implicitly defined as queries. It is possible to define fields as queries explicitly by using the
 `@Source` annotation on a parameter to the query method. More information on this is available in the
-<<entities.asciidoc#fields,Entity Fields>> section. 
+<<fields>> section. 
+
+==== Name
+
+The name of a query in the schema is obtained using the following order:
+
+* if the method is annotated with a `@Query` annotation containing a non-empty String for it's value, that String value
+is used as the query name.
+* if the method is annotated with a `@Name` annotation containing a non-empty String for it's value, that String value
+is used as the query name.
+* if the method is annotated with a `@JsonbProperty` annotation containing a non-empty String for it's value, that String
+value is used as the query name.
+* if no other name can be determined, the Java method name is used as the query name. (with the get/is removed if this is a getter)
+
+Note that it is considered a deployment error if more than one query method has the same name with the same arguments.
 
 ==== Description
 
-Queries may be documented as comments in the schema by adding a `@Description` annotation with documentation text as the
-annoation value to the query method. For example:
+Queries may be documented with descriptions in the schema by adding a `@Description` annotation with documentation text as the
+annotation value to the query method. For example:
 
 .DescriptionExample
 [source,java,numbered]
@@ -126,17 +126,3 @@ By it's very nature, query methods must return some value, thus it is considered
 `void` return type to be annotated with `@Query`. If a void method is annotated with the `@Query` annotation, the
 implementation must prevent the application from starting and should provide a log message indicating that this is not
 allowed.
-
-==== Query Names
-
-The name of a query in the schema is obtained using the following order:
-
-* if the method is annotated with a `@Query` annotation containing a non-empty String for it's value, that String value
-is used as the query name.
-* if the method is annotated with a `@Name` annotation containing a non-empty String for it's value, that String value
-is used as the query name.
-* if the method is annotated with a `@JsonbProperty` annotation containing a non-empty String for it's value, that String
-value is used as the query name.
-* if no other name can be determined, the Java method name is used as the query name.
-
-Note that it is considered a deployment error if more than one query method has the same name with the same arguments.

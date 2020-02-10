@@ -1,0 +1,82 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[arguments]]
+=== Arguments
+
+Arguments can exist for both queries and mutations and are generally represented as method parameters in Java code.
+
+For example:
+
+.Basic Argument Example
+[source,java,numbered]
+----
+@Query
+public List<SuperHero> getHeroesAt(@Name("location") String location) { //...
+----
+
+In this example, `location` is an argument that the client must provide when invoking the `getHeroesAt` query.
+
+Note that abstract classes, interfaces or generic types other than subtypes of `java.util.Collection` (such as
+`java.util.List` or `java.util.Set`) are not allowed to be specified as arguments. Implementations may allow additional
+types (such as `java.util.Map`), but the behavior for these types of arguments are undefined.
+
+==== Default Values
+
+It is possible to specify a default value for query or mutation arguments so that the client does not need to specify a
+value. This is done via the `@DefaultValue` annotation and it is placed on the method parameter for the query/mutation
+method. The value of the annotation is used as the default value. For scalars, the value is taken as-is (i.e. a value of
+"foo" for a String would be "foo", a value of "25" for an Int would be 25, etc.).  For complex types, the value of the
+annotation must represent the object as JSON.
+
+.DefaultValue Example
+[source,java,numbered]
+----
+@Query
+public Collection<SuperHero> allHeroesIn(
+    @DefaultValue("New York, NY") @Name("city") String city) {
+
+    return allHeroesByFilter(hero -> {
+        return city.equals(hero.getPrimaryLocation());});
+    }
+}
+
+public final static String CAPE =
+        "{" +
+        "   \"id\": 1000," +
+        "   \"name\": \"Cape\","+
+        "   \"powerLevel\": 3," +
+        "   \"height\": 1.2," +
+        "   \"weight\": 0.3," +
+        "   \"supernatural\": false" +
+        "}";
+
+@Mutation
+public SuperHero provisionHero(@Name("hero") String heroName,
+                               @DefaultValue(CAPE) @Name("item") Item item) 
+                               throws UnknownHeroException {
+
+        SuperHero hero = heroDB.getHero(heroName);
+        if (hero == null) {
+            throw new UnknownHeroException(heroName);
+        }
+        hero.getEquipment().add(item);
+        return hero;
+    }
+----
+
+The `@DefaultValue` annotation may also be placed on fields and setters on entity classes to specify the default for
+GraphQL fields.
