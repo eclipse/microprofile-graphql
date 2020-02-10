@@ -60,6 +60,7 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.UnknownCharacterException;
 import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.NumberFormat;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Token;
 
 @GraphQLApi
 public class HeroFinder {
@@ -577,16 +578,16 @@ public class HeroFinder {
     }
 
     @Name("secretToken")
-    public String generateSecretToken(@Source SuperHero hero,
+    public Token generateSecretToken(@Source SuperHero hero,
                                       @DefaultValue("true") 
                                       @Name("maskFirstPart") boolean maskFirstPart) throws GraphQLException {
         LOG.log(Level.INFO, "generateSecretToken invoked [{0}],[{1}]", new Object[]{hero,maskFirstPart});
         
         String uuid = UUID.randomUUID().toString();
         if(maskFirstPart){
-            return uuid.substring(0,uuid.length()-4).replaceAll("[A-Za-z0-9]", "*") + uuid.substring(uuid.length()-4,uuid.length());
+            return new Token(uuid.substring(0,uuid.length()-4).replaceAll("[A-Za-z0-9]", "*") + uuid.substring(uuid.length()-4,uuid.length()));
         }else{
-            return uuid;
+            return new Token(uuid);
         }
     }
     
