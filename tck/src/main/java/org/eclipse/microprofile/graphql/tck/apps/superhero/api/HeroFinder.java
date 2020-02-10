@@ -278,7 +278,7 @@ public class HeroFinder {
     @Mutation
     @Description("Update a hero's bank account in South African Rand") 
     public SuperHero updateBankBalanceInZAR(@Name("name") String name,
-                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA") 
+                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en-ZA") 
                                      @Name("bankBalance") Double bankBalance) throws UnknownHeroException {
         LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, bankBalance});
         SuperHero superHero = heroDB.getHero(name);
@@ -329,7 +329,7 @@ public class HeroFinder {
     @Mutation
     @Description("Update a hero's back account in USD") 
     public SuperHero updateNetWorthInUSD(@Name("name") String name,
-                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_US") 
+                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en-US") 
                                      @Name("netWorth") BigDecimal netWorth) throws UnknownHeroException {
         LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, netWorth});
         SuperHero superHero = heroDB.getHero(name);

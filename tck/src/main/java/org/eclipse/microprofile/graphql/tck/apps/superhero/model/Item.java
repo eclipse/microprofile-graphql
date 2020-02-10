@@ -44,10 +44,10 @@ public class Item {
     private Collection<SuperHero> canWield;
     private boolean artificialIntelligenceRating;
 
-    @JsonbDateFormat(value = "dd MMMM yyyy 'at' HH:mm 'in' VV",locale = "en_ZA")
+    @JsonbDateFormat(value = "dd MMMM yyyy 'at' HH:mm 'in' VV",locale = "en-ZA")
     private ZonedDateTime dateCreated;
     
-    @JsonbDateFormat(value = "dd MMM yyyy 'at' HH:mm 'in zone' Z",locale = "en_ZA")
+    @JsonbDateFormat(value = "dd MMM yyyy 'at' HH:mm 'in zone' Z",locale = "en-ZA")
     private OffsetDateTime dateLastUsed;
     
     public final static String CAPE =

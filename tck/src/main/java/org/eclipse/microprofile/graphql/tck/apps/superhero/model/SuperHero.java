@@ -62,10 +62,10 @@ public class SuperHero implements Character {
     @JsonbNumberFormat("0000,0000")
     private Long idNumber;
 
-    @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA")
+    @JsonbNumberFormat(value = "¤ 000.00",locale = "en-ZA")
     private Double bankBalance;
     
-    @JsonbNumberFormat(value = "¤ 000.00",locale = "en_US")
+    @JsonbNumberFormat(value = "¤ 000.00",locale = "en-US")
     private BigDecimal netWorth;
     
     @JsonbNumberFormat(value = "000.00 'ml'")

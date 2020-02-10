@@ -56,7 +56,7 @@ When formatting is added to a number type, the formatted result will be of type 
 Example:
 [source,java,numbered]
 ----
-@JsonbNumberFormat(value = "¤000",locale = "en_ZA")
+@JsonbNumberFormat(value = "¤000",locale = "en-ZA")
 private Short formattedShortObject;
 ----
 
