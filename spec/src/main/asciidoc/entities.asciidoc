@@ -21,7 +21,7 @@ Entities are the objects used in GraphQL. They can be:
 
 - <<scalars>>, or simple objects ("scalars" in GraphQL terminology), 
 - <<enums>> (similar to Java Enum), 
-- <<complexobjects>> that are composed of scalars and/or enums and/or other complex objects and/or lists/arrays of these.
+- <<complexobjects>> that are composed of scalars and/or enums and/or other complex objects and/or collections of these.
 
 include::entities/scalars.asciidoc[]
 

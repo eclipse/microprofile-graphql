@@ -23,8 +23,8 @@ the schema.
 
 If the `@Ignore` annotation is placed on the field itself, then the field will be excluded from both the input and 
 output types in the generated schema.  If the annotation is only placed on the "getter" method, then it will only be
-excluded from the input type.  If the annotation is only placed on the "setter" method, then it will only be excluded
-from the output type.
+excluded from the output type.  If the annotation is only placed on the "setter" method, then it will only be excluded
+from the input type.
 
 Similarly, the `@JsonbTransient` annotation (from Json-B API) can be used to ignore certain fields from the type or input type in the 
 schema. The same rules apply: if the annotation is on the getter, then the field is ignored in the type; if the

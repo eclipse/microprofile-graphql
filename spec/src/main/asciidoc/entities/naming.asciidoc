@@ -17,7 +17,9 @@
 ===== Naming
 
 Users can use the `@Name` annotation (or `@JsonbProperty` from JsonB API) to specify a different field name for the field in the GraphQL
-schema. For example:
+schema. In all cases, the `@Name` annotation will take precedence over the `@JsonbProperty` annotation, if they are both specified.
+
+For example:
 
 .Name Java Code Example
 [source,java,numbered]

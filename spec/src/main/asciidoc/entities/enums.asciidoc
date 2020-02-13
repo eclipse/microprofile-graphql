@@ -24,8 +24,8 @@ In order for an enum to be defined in the GraphQL schema, it must meet the follo
 
 Optionally it can also:
  
-- Be annotated with `@Enum` with a value to name the field
-- Be annotated with `@Name` with a value to name the field
+- Be annotated with `@Enum` with a value to name the type
+- Be annotated with `@Name` with a value to name the type
 
 The implementation will produce the GraphQL `enum` type in
 the schema. For example:

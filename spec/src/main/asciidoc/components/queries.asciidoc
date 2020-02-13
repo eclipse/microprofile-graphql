@@ -17,19 +17,13 @@
 === Queries
 
 [[queries]]
-Queries allows a user to ask for all or specific fields on an object or list/array of objects.
+Queries allows a user to ask for all or specific fields on an object or collection of objects.
 
 ==== API Annotation
 For classes that are annotated with `@GraphQLApi`, implementations must create a query in the schema for every method
 that is annotated with `@Query`.
 
-The `@Query` annotation have the following parameters:
-
-.Parameters
-[cols="1,1"]
-|===
-|*value*|Overrides the field name in the resulting schema, default will be the method name
-|===
+The query's name can be specified in the value parameter of the `@Query` annotation, or is generated from the method name if no annotation value is provided.
 
 ==== Basic POJO Example
 

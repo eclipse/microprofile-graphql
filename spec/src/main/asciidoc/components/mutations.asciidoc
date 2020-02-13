@@ -22,13 +22,8 @@ entities or update or delete existing entities.
 ==== API Annotation
 Like queries, mutation methods must be in a class annotated with the `@GraphQLApi` annotation.
 
-The `@Mutation` annotation have the following parameters:
-
-.Parameters
-[cols="1,1"]
-|===
-|*value*|Overrides the mutation name in the resulting schema, default will be the method name
-|===
+Mutation methods are annotated with `@Mutation`.  
+The name of the mutation is specified in the value of the annotation or is generated from the method name if no annotation value is provided.
 
 Mutations generally require arguments (parameters) in order to determine which entity to modify/delete or the data
 necessary to create a new entity, etc. These arguments are the parameters of the mutation method and should (not mandatory) be annotated

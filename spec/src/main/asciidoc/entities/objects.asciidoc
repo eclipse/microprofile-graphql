@@ -37,7 +37,7 @@ JSON-B annotations can be used to help determine schema information as well as d
 cases, annotations in the `org.eclipse.microprofile.graphql` package will trump JSON-B annotations if there is a
 conflict.
 
-If the entity cannot be serialized, the implementation must return in an internal server error to the client.
+If the entity cannot be serialized, the implementation must return in a server error to the client.
 
 [[types]]
 ==== Types vs Input
@@ -119,7 +119,7 @@ type Villain implements Character {
 
 ===== Limitations
 
-At the moment the spec does not support interfaces on input. 
+At the moment the spec does not support interfaces on input types. 
 
 [[fields]]
 ==== Fields
@@ -162,7 +162,7 @@ part of the `SuperHero` Java class, but _is_ part of the GraphQL entity.  This a
 `currentLocation` field in the query. This is a useful way to prevent looking up data on the server that the client is
 not interested in.
 
-Above will add a field to the SuperHero type in the Schema:
+The Java code example above will add a field to the SuperHero type in the schema:
 
 [source,graphql,numbered]
 ----

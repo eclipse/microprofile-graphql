@@ -17,7 +17,7 @@
 [[non-nullable_fields]]
 ===== Non-nullable fields
 
-The GraphQL specification states that fields may be marked as non-nullable - usually the field's type is marked with an
+The GraphQL specification states that fields may be marked as non-nullable - the field's type is marked with an
 exclamation point to indicate that null values are not allowed.  Non-nullable fields may be present on types and input
 types, providing the client with the proper expectations for providing an input type and that they can expect a non-null
 value on the return type. If the client sends a null value for a required (non-nullable) field or sends an entity with
@@ -71,7 +71,7 @@ public class SuperHero {
 }
 ----
 
-This indicated that superPowers can be null, but if it's not, then it must only contain non-null entries.
+This indicates that superPowers can be null, but if it's not, then it must only contain non-null entries.
 
 The code above will result in a schema entry like this:
 
@@ -88,7 +88,6 @@ input SuperHeroInput {
 }
 ----
 
-Adding this only on the setter will only mark the input as non null and on the getter the type.
 Placing a `@NonNull` on the List can also makes the actual list non null. 
 
 The implementation should ignore a `@NonNull` annotation when it is on the same field or setter method that also
