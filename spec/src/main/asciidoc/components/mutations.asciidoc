@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-
 [[mutations]]
+=== Mutations
 
 While queries are intended for clients to read data, mutations are intended to modify data. Mutations may create new
 entities or update or delete existing entities. 
@@ -22,34 +22,14 @@ entities or update or delete existing entities.
 ==== API Annotation
 Like queries, mutation methods must be in a class annotated with the `@GraphQLApi` annotation.
 
-The `@Mutation` annotation is defined in the API:
-
-.Mutation Annotation
-[source,java,numbered]
-----
-package org.eclipse.microprofile.graphql;
-
-//...
-
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-public @interface Mutation {
-    String value() default "";
-}
-----
-
-.Parameters
-[cols="1,1"]
-|===
-|*value*|Overrides the mutation name in the resulting schema, default will be the method name
-|===
+Mutation methods are annotated with `@Mutation`.  
+The name of the mutation is specified in the value of the annotation or is generated from the method name if no annotation value is provided.
 
 Mutations generally require arguments (parameters) in order to determine which entity to modify/delete or the data
-necessary to create a new entity, etc. These arguments are the parameters of the mutation method and should be annotated
+necessary to create a new entity, etc. These arguments are the parameters of the mutation method and should (not mandatory) be annotated
 with `@Name`.  The `@Name` annotation's value is used to specify the name of the argument. The argument name
-will be used in the generated schema. Arguments can be GraphQL scalars or more complex input types (for more information
-on input types, see <<entities.asciidoc#types,Entities, Types vs Input>>).
+will be used in the generated schema. Arguments can be GraphQL scalars, enums or more complex input types (for more information
+on input types, see <<types>>).
 
 ==== Basic POJO Examples
 
@@ -101,14 +81,7 @@ Note that generic types other than subtypes of `java.util.Collection` (such as `
 not allowed to be specified as mutation return types. Implementations may allow additional types (such as
 `java.util.Map`), but the behavior for these return types are undefined.
 
-==== Void Mutations
-
-Like query methods, mutation methods are expected to return some value, thus it is considered a deployment error for a
-method with a `void` return type to be annotated with `@Mutation`. If a void method is annotated with the `@Mutation`
-annotation, the implementation must prevent the application from starting and should provide a log message indicating
-that this is not allowed.
-
-==== Mutation Names
+==== Names
 
 The name of a mutation in the schema is obtained using the following order:
 
@@ -118,7 +91,19 @@ value is used as the mutation name.
 is used as the mutation name.
 * if the method is annotated with a `@JsonbProperty` annotation containing a non-empty String for it's value, that
 String value is used as the mutation name.
-* if no other name can be determined, the Java method name is used as the mutation name.
+* if no other name can be determined, the Java method name is used as the mutation name. (with the set removed if this is a setter)
 
 Note that it is considered a deployment error if more than one mutation method has the same name with the same
 arguments.
+
+==== Description
+
+As with Queries, Mutations may be documented with descriptions in the schema by adding a `@Description` annotation with documentation text as the
+annotation value to the mutation method. See the example in the Query section for more details.
+
+==== Void Mutations
+
+Like query methods, mutation methods are expected to return some value, thus it is considered a deployment error for a
+method with a `void` return type to be annotated with `@Mutation`. If a void method is annotated with the `@Mutation`
+annotation, the implementation must prevent the application from starting and should provide a log message indicating
+that this is not allowed.

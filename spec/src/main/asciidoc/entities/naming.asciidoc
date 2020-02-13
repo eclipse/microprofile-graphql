@@ -1,0 +1,317 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+[[naming]]
+===== Naming
+
+Users can use the `@Name` annotation (or `@JsonbProperty` from JsonB API) to specify a different field name for the field in the GraphQL
+schema. In all cases, the `@Name` annotation will take precedence over the `@JsonbProperty` annotation, if they are both specified.
+
+For example:
+
+.Name Java Code Example
+[source,java,numbered]
+----
+public class Widget {
+    @Name("widgetName")
+    private String name;
+    private double weight;
+    private int quantity;
+    //...
+
+    @JsonbProperty("shippingWeight")
+    public double getWeight() {
+        return weight;
+    }
+    //...
+
+    @Name("qty")
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+}
+----
+
+That would create a schema like this:
+
+.Name Schema Example
+[source,graphql,numbered]
+----
+type Widget {
+    widgetName: String
+    quantity: Int!
+    shippingWeight: Double!
+}
+
+input WidgetInput {
+    widgetName: String
+    qty: Int!
+    weight: Double!
+}
+----
+
+By putting the `@Name` (or `JsonbProperty`) annotation on the `getter` method, rather than the field, the name will only apply to the `Type`, eg:
+
+[source,java,numbered]
+----
+public class Widget {
+
+    private float price;
+    
+    @Name("cost")
+    public float getPrice(){
+        return this.price;
+    }
+
+    public void setPrice(float price){
+        this.price = price;
+    }
+}
+----
+
+This would result in a schema that looks something like:
+
+[source,graphql,numbered]
+----
+type Widget {
+    cost: Float!
+}
+input WidgetInput {
+    price: Float!
+}
+----
+
+The input type keeps the default field name. Similarly, when the `@Name` (or `JsonbProperty`) annotation is only placed on the `setter` method, the name will only apply to the `Input`, eg:
+
+[source,java,numbered]
+----
+public class Widget {
+
+    private float price;
+    
+    public float getPrice(){
+        return this.price;
+    }
+
+    @Name("cost")
+    public void setPrice(float price){
+        this.price = price;
+    }
+}
+----
+
+This would result in a schema that looks something like:
+
+[source,graphql,numbered]
+----
+type Widget {
+    price: Float!
+}
+input WidgetInput {
+    cost: Float!
+}
+----
+
+When the default name is used, i.e, there is no annotation specifying the name, the field name will always be used, and not the method name. 
+
+The same applies to `Query` and `Mutation` methods. If that method starts with `get`, `set` or `is`, that will be removed when determining the name. Eg:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+
+    @Query
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+This would result in a schema that looks something like this:
+ 
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+  #...
+  currentLocation(arg0: SuperHeroInput): String
+  #...
+}
+----
+
+Note that the `get` is removed from the name in the schema.
+
+Even though `@Name` is not required on an input argument for a `@Query` or `@Mutation`, it is strongly recommended
+as it is the only guaranteed portable way to ensure the argument names.
+
+If no name is provided using the `@Name` annotation and the user compiled the application class with the `-parameters` option, 
+then the implementation should use the Java parameter names as the schema argument names.
+
+Example recommended argument usage (with annotation):
+
+[source,java,numbered]
+----
+@Query
+public SuperHero superHero(@Name("name") String name) {
+    return heroDB.getHero(name);
+}
+----
+
+Above will result in:
+
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+  # ...
+  superHero(name: String): SuperHero
+  # ...
+----
+
+If the `@Name` annotation is not present, and the user did not compile with the `-parameters` option, 
+the generated schema will use generic argument names like `arg0`, `arg1` and so on.
+
+Example argument usage (with no annotation):
+
+[source,java,numbered]
+----
+@Query
+public SuperHero superHero(String name) {
+    return heroDB.getHero(name);
+}
+----
+
+Above will result in:
+
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+  # ...
+  superHero(arg0: String): SuperHero
+  # ...
+----
+
+When adding a `@Name` to a `@Source` method, you can name the field that should be added to the type, eg:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+
+    @Name("heroLocation")
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+Above will result in the schema like this:
+
+[source,graphql,numbered]
+----
+type SuperHero {
+    #...
+    heroLocation: String
+    #...
+}
+----
+
+Also making this a `Query` by adding the `@Query` annotation:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+    
+    @Query
+    @Name("heroLocation")
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+    #...
+    heroLocation(arg0: SuperHeroInput): String
+    #...
+}
+----
+
+If you want the field name generated in `SuperHero` and the query name to be different, you can name the Query like this:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+    
+    @Query("locationQuery")
+    @Name("heroLocation")
+    public Location getCurrentLocation(@Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+    #...
+    locationQuery(arg0: SuperHeroInput): String
+    #...
+}
+
+type SuperHero {
+    #...
+    heroLocation: String
+    #...
+}
+----
+
+As with any argument, you can also name the argument in the above scenario:
+
+[source,java,numbered]
+----
+@GraphQLApi
+public class MyQueries {
+    
+    @Query("locationQuery")
+    public Location getCurrentLocation(@Name("heroInput") @Source SuperHero hero) {
+        // ...
+    }
+}
+----
+
+will result in:
+
+[source,graphql,numbered]
+----
+"Query root"
+type Query {
+    #...
+    locationQuery(heroInput: SuperHeroInput): String
+    #...
+}
+----

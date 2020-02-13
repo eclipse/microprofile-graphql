@@ -36,21 +36,21 @@ public class ScalarHolder {
     // Short
     private short shortPrimitive;
     private Short shortObject;
-    @JsonbNumberFormat(value = "¤000",locale = "en_ZA")
+    @JsonbNumberFormat(value = "¤000",locale = "en-ZA")
     private Short formattedShortObject;
 
     // Integer
     private int intPrimitive;
     private Integer intObject;
-    @JsonbNumberFormat(locale = "en_US")
+    @JsonbNumberFormat(locale = "en-US")
     private Integer formattedIntObject;
     
     // Long
     private long longPrimitive;
-    @JsonbNumberFormat(locale = "de_CH")
+    @JsonbNumberFormat(locale = "de-CH")
     private long formattedLongPrimitive;
     private Long longObject;
-    @JsonbNumberFormat(locale = "de_CH")
+    @JsonbNumberFormat(locale = "de-CH")
     private Long formattedLongObject;
 
     // Float
@@ -69,12 +69,12 @@ public class ScalarHolder {
     // Byte
     private byte bytePrimitive;
     private Byte byteObject;
-    @JsonbNumberFormat(value = "¤00",locale = "de_CH")
+    @JsonbNumberFormat(value = "¤00",locale = "de-CH")
     private Byte formattedByteObject;
     
     // BigInteger
     private BigInteger bigIntegerObject;
-    @JsonbNumberFormat(value = "¤000", locale = "en_US")
+    @JsonbNumberFormat(value = "¤000", locale = "en-US")
     private BigInteger formattedBigIntegerObject;
     
     // BigDecimal

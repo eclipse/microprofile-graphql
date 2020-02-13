@@ -1,0 +1,102 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[scalars]]
+=== Scalars
+
+According to the https://graphql.github.io/graphql-spec/draft/#sec-Scalars[GraphQL documentation] a scalar has no
+sub-fields, and all GraphQL implementations are expected to handle the following scalar types:
+
+- `Int` - which maps to a Java `int`/`Integer`.
+- `Float` - which maps to a Java `float`/`Float` or `double`/`Double`.
+- `String` - which maps to a Java `String`.
+- `Boolean` - which maps to a Java `boolean`/`Boolean`.
+- `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
+
+Note that an ID scalar must map to a Java `String`, numerical primitive `long` and `int` or their
+object equivalents (`Long`, `Integer`), or a `java.util.UUID` - anything else is considered a
+deployment error.
+
+GraphQL allows implementations to define additional scalars. MicroProfile GraphQL implementations are required to
+handle the following additional scalar types:
+
+- `Short` - which maps to a Java `short`/`Short`.
+- `Long` - which maps to a Java `long`/`Long`.
+- `Char` - which maps to a Java `char`,`Character`.
+- `Byte` - which maps to a Java `byte`/`Byte`.
+- `BigInteger` - which maps to a Java `BigInteger`.
+- `BigDecimal` - which maps to a Java BigDecimal`.
+- `Date` - which maps to a Java `java.time.LocalDate`.
+- `Time` - which maps to a Java `java.time.LocalTime` or `java.time.OffsetTime`.
+- `DateTime` - which maps to a Java `java.time.LocalDateTime`, `java.time.OffsetDateTime` or `java.time.ZonedDateTime`.
+
+Implementations may define additional custom scalars beyond those listed above.
+
+==== Numbers
+All number scalars (Int, Double, Float, Short, Long, Byte, BigInteger and BigDecimal) can be formatted
+using the `@NumberFormat` or alternatively the JSON-B annotation `@JsonbNumberFormat` (except that `@JsonbNumberFormat` is not valid on `TYPE_USE`)
+
+In the case that a property has both `@NumberFormat` and `@JsonbNumberFormat`, the GraphQL annotation (`@NumberFormat`) takes priority.
+
+When formatting is added to a number type, the formatted result will be of type String.
+
+Example:
+[source,java,numbered]
+----
+@JsonbNumberFormat(value = "¤000",locale = "en-ZA")
+private Short formattedShortObject;
+----
+
+will result in a formatted amount (South African Rand) in the result:
+[source,json,numbered]
+----
+{
+    "data": {
+        "testScalarsInPojo": {        
+            "formattedShortObject": "R123"
+        }
+    }
+}
+----
+
+List example:
+[source,java,numbered]
+----
+@Mutation
+public SuperHero trackHeroLongLat(@Name("name") String name,
+                                 @Name("coordinates") List<List<@NumberFormat("00.0000000 'longlat'") BigDecimal>> coordinates) throws UnknownHeroException {
+    // Here add the tracking
+    return superHero;
+}
+----
+
+==== Dates
+By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
+
+- `yyyy-MM-dd\'T\'HH:mm:ss` for DateTime
+- `yyyy-MM-dd\'T\'HH:mm:ssZ` for OffsetDateTime
+- `yyyy-MM-dd\'T\'HH:mm:ssZ'['VV']'` for ZonedDateTime
+- `yyyy-MM-dd` for Date
+- `HH:mm:ss` for Time 
+- `HH:mm:ssZ` for OffsetTime 
+
+By adding the `@DateFormat` annotation, or alternatively JSON-B annotation `@JsonbDateFormat`, a user can change the format. However, `@JsonbDateFormat` does not 
+support usage on `TYPE_USE`.
+
+In the case that a property has both `@DateFormat` and `@JsonbDateFormat`, the GraphQL annotation (`@DateFormat`) takes priority.
+
+// ==== Custom user defined scalars (v1.1)
+// @TODO: Define how to create your own scalar.

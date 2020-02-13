@@ -60,6 +60,7 @@ import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.UnknownCharacterException;
 import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.NumberFormat;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Token;
 
 @GraphQLApi
 public class HeroFinder {
@@ -277,7 +278,7 @@ public class HeroFinder {
     @Mutation
     @Description("Update a hero's bank account in South African Rand") 
     public SuperHero updateBankBalanceInZAR(@Name("name") String name,
-                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_ZA") 
+                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en-ZA") 
                                      @Name("bankBalance") Double bankBalance) throws UnknownHeroException {
         LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, bankBalance});
         SuperHero superHero = heroDB.getHero(name);
@@ -328,7 +329,7 @@ public class HeroFinder {
     @Mutation
     @Description("Update a hero's back account in USD") 
     public SuperHero updateNetWorthInUSD(@Name("name") String name,
-                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en_US") 
+                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en-US") 
                                      @Name("netWorth") BigDecimal netWorth) throws UnknownHeroException {
         LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, netWorth});
         SuperHero superHero = heroDB.getHero(name);
@@ -577,16 +578,16 @@ public class HeroFinder {
     }
 
     @Name("secretToken")
-    public String generateSecretToken(@Source SuperHero hero,
+    public Token generateSecretToken(@Source SuperHero hero,
                                       @DefaultValue("true") 
                                       @Name("maskFirstPart") boolean maskFirstPart) throws GraphQLException {
         LOG.log(Level.INFO, "generateSecretToken invoked [{0}],[{1}]", new Object[]{hero,maskFirstPart});
         
         String uuid = UUID.randomUUID().toString();
         if(maskFirstPart){
-            return uuid.substring(0,uuid.length()-4).replaceAll("[A-Za-z0-9]", "*") + uuid.substring(uuid.length()-4,uuid.length());
+            return new Token(uuid.substring(0,uuid.length()-4).replaceAll("[A-Za-z0-9]", "*") + uuid.substring(uuid.length()-4,uuid.length()));
         }else{
-            return uuid;
+            return new Token(uuid);
         }
     }
     

@@ -28,7 +28,7 @@ public class Team {
     private List<SuperHero> members;
     private Team rivalTeam;
 
-    @JsonbDateFormat(value = "HH:mm 'offset' Z", locale = "en_ZA")
+    @JsonbDateFormat(value = "HH:mm 'offset' Z", locale = "en-ZA")
     private OffsetTime dailyStandupMeeting;
     
     public Team(){

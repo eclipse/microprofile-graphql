@@ -14,18 +14,10 @@
 // limitations under the License.
 //
 
-[[components]]
-  
-== GraphQL Components
+[[lifecycle]]
+=== Lifecycle
 
-include::components/graphqlapi.asciidoc[]
-
-include::components/queries.asciidoc[]
-
-include::components/mutations.asciidoc[]
-
-include::components/generated_schema.asciidoc[]
-
-include::components/arguments.asciidoc[]
-
-include::components/lifecycle.asciidoc[]
+MicroProfile GraphQL components (POJOs annotated with `@GraphQLApi`) are CDI beans. As such, their lifecycle is managed
+by CDI. Request-scoped components should be constructed per-request, and application-scoped components should exist for
+the lifetime of the application.  One exception to the normal scoping is `@Dependent` - this scope is treated as if it
+were a singleton.

@@ -17,6 +17,7 @@
 // limitations under the License.
 //
 image:https://github.com/eclipse/microprofile-graphql/workflows/Build/badge.svg[link="https://github.com/eclipse/microprofile-graphql/actions"]
+image:https://javadoc.io/badge2/org.eclipse.microprofile.graphql/microprofile-graphql-api/javadoc.svg[link="https://javadoc.io/doc/org.eclipse.microprofile.graphql/microprofile-graphql-api"] 
 image:https://badges.gitter.im/eclipse/microprofile-graphql.svg[link="https://gitter.im/eclipse/microprofile-graphql"]
 
 = Microprofile GraphQL Specification

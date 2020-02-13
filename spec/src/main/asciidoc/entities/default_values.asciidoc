@@ -1,0 +1,64 @@
+//
+// Copyright (c) 2020 Contributors to the Eclipse Foundation
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+[[default_values]]
+===== Default Values
+
+The `@DefaultValue` annotation may be used to specify a value in an input type to be used if the client did not specify
+a value. Default values may only be specified on input types and method parameters (including method parameter for the query/mutation) and will have no
+effect if specified on output types.  The value specified in this annotation may be plain text for Java primitives and 
+`String` types or JSON for complex types.
+
+example:
+
+.DefaultValue Example
+[source,java,numbered]
+----
+@Query
+public Collection<SuperHero> allHeroesIn(
+    @DefaultValue("New York, NY") @Name("city") String city) {
+
+    return allHeroesByFilter(hero -> {
+        return city.equals(hero.getPrimaryLocation());});
+    }
+}
+
+public final static String CAPE =
+        "{" +
+        "   \"id\": 1000," +
+        "   \"name\": \"Cape\","+
+        "   \"powerLevel\": 3," +
+        "   \"height\": 1.2," +
+        "   \"weight\": 0.3," +
+        "   \"supernatural\": false" +
+        "}";
+
+@Mutation
+public SuperHero provisionHero(@Name("hero") String heroName,
+                               @DefaultValue(CAPE) @Name("item") Item item) 
+                               throws UnknownHeroException {
+
+        SuperHero hero = heroDB.getHero(heroName);
+        if (hero == null) {
+            throw new UnknownHeroException(heroName);
+        }
+        hero.getEquipment().add(item);
+        return hero;
+    }
+----
+
+The `@DefaultValue` annotation may also be placed on fields and setters on entity classes to specify the default for
+GraphQL fields.
