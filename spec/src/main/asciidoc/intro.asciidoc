@@ -142,5 +142,5 @@ quickly develop portable GraphQL-based applications in Java.
 There are 2 main requirements for all implementations of this specification, namely:
 
 * Generate and make the GraphQL Schema available. This is done by looking at the annotations in the users code, 
-and must include all GraphQL Queries and Mutations as well as all entities as defined either explicitly by annotations or implicitly as the response type or argument(s) of Queries and Mutations.
+and must include all GraphQL Queries and Mutations as well as all entities as defined implicitly via the response type or argument(s) of Queries and Mutations.
 * Execute GraphQL requests. This will be in the form of either a Query or a Mutation. As a minimum the specification must support executing these requests via HTTP.

@@ -29,7 +29,7 @@ sub-fields, and all GraphQL implementations are expected to handle the following
 ** `double`/`Double`
 * `String` - which maps to a Java:
 ** `String`
-** `char`,`Character`
+** `char`/`Character`
 * `Boolean` - which maps to a Java:
 ** `boolean`/`Boolean`
 * `ID` - which is a specialized type serialized like a `String`. Usually, ID types are not intended to be human-readable.
@@ -39,9 +39,7 @@ object equivalents (`Long`, `Integer`), or a `java.util.UUID` - anything else is
 deployment error.
 
 WARNING: Primitive types are marked as not null (!) in the schema by default. This might not be what you want. 
-We suggest to prefer the Object counterparts or to be a very conscious when using primitives.
-
-Nullable should always be the default for fields, even for primitives. Making a field non nullable has quite a few consequences and should always be a very conscious and explicit decision.
+We suggest to prefer the Object equivalents or to be a very conscious when using primitives.
 
 GraphQL allows implementations to define additional scalars. MicroProfile GraphQL implementations are required to
 handle the following additional scalar types:

@@ -29,5 +29,5 @@ http://download.eclipse.org/microprofile/microprofile-graphql-1.0/apidocs/[Micro
 
 Key features:
 
-- Code-first approach to GraphQL schema generation.
+- Code-first approach to GraphQL schema generation and execution.
 
