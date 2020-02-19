@@ -47,7 +47,7 @@ GraphQL is used by many large and small customers including Atlassian, Coursera,
 
 * More info: https://en.wikipedia.org/wiki/GraphQL
 * Home page: https://graphql.org/
-* Specification: https://facebook.github.io/graphql/draft/
+* Specification: https://github.com/graphql/graphql-spec and https://facebook.github.io/graphql/draft/
 
 == Why GraphQL
 The main reasons developers might want to use GraphQL are:
