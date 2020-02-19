@@ -1,0 +1,7 @@
+query exportToCSVFile {
+  exportToCSVFile(name:"Phillip") {
+    name
+    realName
+    superPowers
+  }
+}
