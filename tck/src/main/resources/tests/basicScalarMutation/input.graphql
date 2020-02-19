@@ -1,0 +1,51 @@
+mutation scalarHolderMutation {
+  scalarHolder (scalarHolder:{
+    intPrimitive:1
+    intObject:2
+    shortPrimitive:3
+    shortObject:4
+    bytePrimitive:5
+    byteObject:6
+    booleanPrimitive:true
+    booleanObject:false
+    intPrimitiveId:7
+    integerObjectId:8
+    floatPrimitive:9
+    floatObject:10
+    charPrimitive:"h"
+    charObject:"e"
+    charArray:["h","e","l","l","o"]
+    longPrimitive:11
+    longObject:12
+    longPrimitiveId:13
+    longObjectId:14
+    formattedLongPrimitive:15
+    formattedLongObject:16
+    doublePrimitive:17
+    doubleObject:18
+  }) {
+    intPrimitive
+    intObject
+    shortPrimitive
+    shortObject
+    bytePrimitive
+    byteObject
+    booleanPrimitive
+    booleanObject
+    intPrimitiveId
+    integerObjectId
+    floatPrimitive
+    floatObject
+    charPrimitive
+    charObject
+    charArray
+    longPrimitive
+    longObject
+    longPrimitiveId
+    longObjectId
+    formattedLongPrimitive
+    formattedLongObject
+    doublePrimitive
+    doubleObject
+  }
+}
