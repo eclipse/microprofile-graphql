@@ -104,6 +104,10 @@ Example:
 
 (Note: By default all checked exceptions is on the `whitelist` and all unchecked exception on the `blacklist`)
 
+Also note that this configuration will indicate all instances of exceptions of the exception class, transitively. 
+
+Example, if you have an exception that extends the above mentioned `WeaknessNotFoundException`, the whitelist will still apply to that specialization.
+
 ==== Checked exceptions
 
 By default checked exceptions must include the exception message in the `message` field of the error, and where possible also include the `locations` and `path`.
@@ -113,6 +117,10 @@ Implementations must support the ability to 'hide' this message for checked exce
 Example:
 
 `mp.graphql.exceptionsBlackList=java.io.IOException,java.util.concurrent.TimeoutException`
+
+Also note that this configuration will indicate all instances of exceptions of the exception class, transitively. 
+
+Example, if you have an exception that extends the above mentioned `IOException`, the blacklist will still apply to that specialization.
 
 === Partial Results
 
