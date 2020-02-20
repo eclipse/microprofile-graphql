@@ -1,0 +1,19 @@
+{
+    "errors": [
+        {
+            "message": "Superhero has no flaw",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "path": [
+                "findFlaw"
+            ]
+        }
+    ],
+    "data": {
+        "findFlaw": null
+    }
+}

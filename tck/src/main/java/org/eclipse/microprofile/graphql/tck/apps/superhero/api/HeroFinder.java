@@ -104,6 +104,12 @@ public class HeroFinder {
         throw new IOException("No you can not do this.");
     }
 
+    @Query @Description("Testing the blacklist of transitive Checked Exceptions")
+    public SuperHero exportToCSVFile(@Name("name") @Description("Super hero name, not real name") String name) throws CsvIOException {
+        LOG.log(Level.INFO, "exportToCSVFile invoked [{0}]", name);
+        throw new CsvIOException("No you can not do this.");
+    }
+    
     @Query @Description("Testing the default blacklist for Runtime Exceptions")
     public SuperHero villian(@Name("name") @Description("Super hero name, not real name") String name) {
         LOG.log(Level.INFO, "villian invoked [{0}]", name);
@@ -116,6 +122,12 @@ public class HeroFinder {
         throw new WeaknessNotFoundException("Superhero has no weakness");
     }
 
+    @Query @Description("Testing the whitelist for transitive Runtime Exceptions")
+    public SuperHero findFlaw(@Name("name") @Description("Super hero name, not real name") String name) {
+        LOG.log(Level.INFO, "findFlaw invoked [{0}]", name);
+        throw new FlawNotFoundException("Superhero has no flaw");
+    }
+    
     @Query @Description("Testing Errors, as in Java Error")
     public SuperHero wreakHavoc(@Name("name") @Description("Super hero name, not real name") String name) {
         LOG.log(Level.INFO, "wreakHavoc invoked [{0}]", name);

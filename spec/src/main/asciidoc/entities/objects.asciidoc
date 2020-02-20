@@ -24,10 +24,10 @@ In order for an entity class to be defined in the GraphQL schema, it must meet t
 
 Optionally it can also:
 
-- Be annotated with `@Type` (for return objects) to name the field,
-- Be annotated with `@Input` (for input parameter) to name the field,
-- Be annotated with `@Interface` (for interfaces) to name the field,
-- Be annotated with `@Name` to name the field,
+- Be annotated with `@Type` (for return objects) to name the entity,
+- Be annotated with `@Input` (for input parameter) to name the entity,
+- Be annotated with `@Interface` (for interfaces) to name the entity,
+- Be annotated with `@Name` to name the entity.
 
 Any Plain Old Java Object (POJO) can be an entity.  No special annotations are required. Implementations of MicroProfile
 GraphQL should interpret JSON-B annotations when serializing and deserializing entities to JSON, so it is possible to further define entities
@@ -167,7 +167,9 @@ The Java code example above will add a field to the SuperHero type in the schema
 [source,graphql,numbered]
 ----
 type SuperHero {
-    #...
+    name: String
+    realName: String
+    superPowers: [String]
     currentLocation: String
     #...
 }
