@@ -1,0 +1,6 @@
+mutation cleanupABattle {
+  battle(name:"Starlord", dateTime:"2019-08-26T05:17:33") {
+    name
+    timeOfLastBattle
+  }
+}

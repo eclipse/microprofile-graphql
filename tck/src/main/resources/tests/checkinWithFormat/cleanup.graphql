@@ -1,0 +1,6 @@
+mutation checkInHero {
+  checkIn(name:"Starlord", date:"2019-08-27") {
+    name
+    dateOfLastCheckin
+  }
+}
