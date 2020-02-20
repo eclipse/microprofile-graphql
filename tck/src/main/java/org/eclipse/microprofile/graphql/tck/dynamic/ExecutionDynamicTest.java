@@ -96,6 +96,7 @@ public class ExecutionDynamicTest extends Arquillian {
 
     private void runTest(TestData testData){
         if(testData!=null && isValidInput(testData.getInput())) {
+            LOG.info("Running test [" + testData.getName() + "]");
             this.currentTestData = testData;
             Map<String, String> httpHeaders = new HashMap<>();
             if(testData.getHttpHeaders()!=null && !testData.getHttpHeaders().isEmpty()){
