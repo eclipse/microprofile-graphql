@@ -63,7 +63,7 @@ Implementations may define additional custom scalars / mappings beyond those lis
 
 WARNING: Custom scalars might be very Java specific and clients/tooling might not be able to deal with them in any meaningful way.
 
-NOTE: A possible future feature of the GraphQL Specification (see https://github.com/graphql/graphql-spec/issues/635) will solve above concern and 
+NOTE: A possible future feature of the GraphQL Specification (see https://github.com/graphql/graphql-spec/issues/635) will solve the above concern and 
 provide a way to specify custom scalars in a standard way.
 
 ==== Numbers
@@ -105,7 +105,7 @@ public SuperHero trackHeroLongLat(@Name("name") String name,
 ----
 
 ==== Dates
-By default the date related scalars (DateTime, Date, and Time) will use a ISO format.
+By default the date related scalars (DateTime, Date, and Time) will use an ISO format.
 
 - `yyyy-MM-dd\'T\'HH:mm:ss` for DateTime
 - `yyyy-MM-dd\'T\'HH:mm:ssZ` for OffsetDateTime

@@ -103,7 +103,7 @@ and mutations) exposed. This schema acts as a contract between the server and it
 explicit answer to the API discovery problem where REST relies on the ability of developers to properly use other
 mechanisms such as HATEOS and/or OpenAPI,
 * *single HTTP endpoint*: a typical GraphQL API is made of a single endpoint and access to data and operations is
-achieved through the query language. In a HTTP context, the endpoint is defined as a URL and the query can be
+achieved through the query language. In an HTTP context, the endpoint is defined as a URL and the query can be
 transported as a query string (GET request) or in the request body (POST request),
 * *flexible data retrieval*: by construction the query language enables the client to select the expected data in the
 response with a fine level of granularity, thus avoiding over- or under-fetching data,
@@ -130,13 +130,13 @@ GraphQL is about data query and manipulation but it is not a database technology
 * It is database and storage agnostic,
 * It can be used in front of any kind of backend, with or without a database.
 
-One of GraphQL's strength is its multi-datasource capability enabling a single endpoint to aggregate data from various
+One of GraphQL's strengths is its multi-datasource capability enabling a single endpoint to aggregate data from various
 sources with a single API.
 
 [[microprofile_graphql]]
 === MicroProfile GraphQL
 
-The intent of the MicroProfile GraphQL specification is provide a "code-first" set of APIs that will enable users to
+The intent of the MicroProfile GraphQL specification is to provide a "code-first" set of APIs that will enable users to
 quickly develop portable GraphQL-based applications in Java.
 
 There are 2 main requirements for all implementations of this specification, namely:
