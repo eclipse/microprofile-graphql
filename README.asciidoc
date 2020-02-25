@@ -22,6 +22,8 @@ image:https://badges.gitter.im/eclipse/microprofile-graphql.svg[link="https://gi
 
 = Microprofile GraphQL Specification
 
+[MicroProfile GraphQL 1.0 Specification](https://download.eclipse.org/microprofile/microprofile-graphql-1.0/microprofile-graphql.html)
+
 == Generating the API and JavaDoc
 
 Just enter `mvn clean install` at the command line. Maven will generate the following artifacts.
