@@ -6,3 +6,4 @@
 .factorypath
 .idea
 .DS_Store
+**/*.iml
