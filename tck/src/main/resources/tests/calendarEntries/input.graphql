@@ -5,7 +5,7 @@ mutation createNewHero {
             superPowers: ["Top intellect"]
             primaryLocation: "Wakanda, Africa"
             teamAffiliations: [{name: "Avengers"}]
-            idNumber: "9870,1234",
+            idNumber: "ID-98701234",
             calendarEntries: ["01/01/20","03/07/20","25/12/20"]
         }) {
             name

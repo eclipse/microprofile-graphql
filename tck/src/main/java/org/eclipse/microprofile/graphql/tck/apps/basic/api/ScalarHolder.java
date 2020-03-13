@@ -47,29 +47,29 @@ public class ScalarHolder {
     
     // Long
     private long longPrimitive;
-    @JsonbNumberFormat(locale = "de-CH")
+    @JsonbNumberFormat(locale = "is-IS")
     private long formattedLongPrimitive;
     private Long longObject;
-    @JsonbNumberFormat(locale = "de-CH")
+    @JsonbNumberFormat(locale = "is-IS")
     private Long formattedLongObject;
 
     // Float
     private float floatPrimitive;
     private Float floatObject;
-    @JsonbNumberFormat("#0.0")
+    @JsonbNumberFormat(value = "#0.0", locale = "en-GB")
     private Float formattedFloatObject;
     
     // Double
     private double doublePrimitive;
     private Double doubleObject;
     @Description("This is a formatted number")
-    @JsonbNumberFormat("#0.0")
+    @JsonbNumberFormat(value= "#0.0", locale = "en-GB")
     private Double formattedDoubleObject;
     
     // Byte
     private byte bytePrimitive;
     private Byte byteObject;
-    @JsonbNumberFormat(value = "¤00",locale = "de-CH")
+    @JsonbNumberFormat(value = "¤00",locale = "en-ZA")
     private Byte formattedByteObject;
     
     // BigInteger
@@ -79,7 +79,7 @@ public class ScalarHolder {
     
     // BigDecimal
     private BigDecimal bigDecimalObject;
-    @JsonbNumberFormat("#0.00")
+    @JsonbNumberFormat(value = "#,###.##", locale = "en-GB")
     private BigDecimal formattedBigDecimalObject;
     
     // Boolean
@@ -107,7 +107,7 @@ public class ScalarHolder {
     private LocalTime timeObject;
     @Description("This is another time")
     private LocalTime anotherTimeObject;
-    @JsonbDateFormat("hh:mm a")
+    @JsonbDateFormat("hh:mm:ss")
     @Description("This is a formatted time")
     private LocalTime formattedTimeObject;
     
@@ -115,7 +115,7 @@ public class ScalarHolder {
     private LocalDateTime dateTimeObject;
     @Description("This is another datetime")
     private LocalDateTime anotherDateTimeObject;
-    @JsonbDateFormat("MM dd yyyy 'at' hh:mm a")
+    @JsonbDateFormat("MM dd yyyy 'at' hh:mm:ss")
     @Description("This is a formatted datetime")
     private LocalDateTime formattedDateTimeObject;
     
