@@ -132,7 +132,7 @@ public class SchemaTestDataProvider {
         if(containsString.contains(OR)){
             String[] containsStrings = containsString.split(OR);
             for(String oneOf:containsStrings){
-                testData.addContainsString(oneOf);
+                testData.addContainsString(oneOf.trim());
             }
         }else{
             testData.addContainsString(containsString);
