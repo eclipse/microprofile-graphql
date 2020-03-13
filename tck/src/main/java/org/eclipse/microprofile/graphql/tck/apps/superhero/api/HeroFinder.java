@@ -288,9 +288,9 @@ public class HeroFinder {
     }
     
     @Mutation
-    @Description("Update a hero's bank account in South African Rand") 
-    public SuperHero updateBankBalanceInZAR(@Name("name") String name,
-                                     @JsonbNumberFormat(value = "¤ 000.00",locale = "en-ZA") 
+    @Description("Update a hero's bank account in US Dollar") 
+    public SuperHero updateBankBalanceInUS(@Name("name") String name,
+                                     @JsonbNumberFormat(value = "¤ ###,###.##",locale = "en-US") 
                                      @Name("bankBalance") Double bankBalance) throws UnknownHeroException {
         LOG.log(Level.INFO, "updateBankBalance invoked [{0}],[{1}]", new Object[]{name, bankBalance});
         SuperHero superHero = heroDB.getHero(name);
@@ -316,7 +316,7 @@ public class HeroFinder {
     @Description("Update a hero's favourite drink size in milliliters") 
     public SuperHero favouriteDrinkSizeInML(@Name("name") String name,
                                      @JsonbNumberFormat(value = "000.00 'kl'") // This should be ignored due to NumberFormat below
-                                     @NumberFormat(value = "000.00 'ml'") 
+                                     @NumberFormat(value = "###.## 'ml'", locale = "en-GB") 
                                      @Name("size") Float size) throws UnknownHeroException {
         LOG.log(Level.INFO, "favouriteDrinkSizeInML invoked [{0}],[{1}]", new Object[]{name, size});
         SuperHero superHero = heroDB.getHero(name);
@@ -378,7 +378,7 @@ public class HeroFinder {
     @Mutation
     @Description("Log the last place the hero was seen (Long Lat)") 
     public SuperHero logLocationLongLat(@Name("name") String name,
-                                     @JsonbNumberFormat("00.0000000 'longlat'") 
+                                     @JsonbNumberFormat(value = "00.0000000 longlat", locale = "en-GB") 
                                      @Name("coordinates") List<BigDecimal> coordinates) throws UnknownHeroException {
         LOG.log(Level.INFO, "logLocationLongLat invoked [{0}],[{1}]", new Object[]{name, coordinates});
         SuperHero superHero = heroDB.getHero(name);
@@ -403,8 +403,8 @@ public class HeroFinder {
     @Mutation
     @Description("Log the last few places the hero was seen (Long Lat)") 
     public SuperHero trackHeroLongLat(@Name("name") String name,
-                                     @JsonbNumberFormat(value = "00.0000000 'latlong'") // This should be ignored due to NumberFormat below
-                                     @Name("coordinates") List<List<@NumberFormat("00.0000000 'longlat'") BigDecimal>> coordinates) 
+                        @JsonbNumberFormat(value = "00.0000000 'latlong'") // This should be ignored due to NumberFormat below
+                        @Name("coordinates") List<List<@NumberFormat(value = "00.0000000 longlat", locale = "en-GB") BigDecimal>> coordinates) 
             throws UnknownHeroException {
         LOG.log(Level.INFO, "trackHeroLongLat invoked [{0}],[{1}]", new Object[]{name, coordinates});
         SuperHero superHero = heroDB.getHero(name);
@@ -429,7 +429,7 @@ public class HeroFinder {
     @Mutation
     @Description("Log the last place the hero was seen (Long Lat) using an array") 
     public SuperHero logLocationLongLatWithArray(@Name("name") String name,
-                                     @JsonbNumberFormat("00.0000000 'longlat'") 
+                                     @JsonbNumberFormat(value = "00.0000000 longlat", locale = "en-GB") 
                                      @Name("coordinates") BigDecimal[] coordinates) throws UnknownHeroException {
         LOG.log(Level.INFO, "logLocationLongLatWithArray invoked [{0}],[{1}]", new Object[]{name, coordinates});
         SuperHero superHero = heroDB.getHero(name);
@@ -569,7 +569,7 @@ public class HeroFinder {
     @Mutation
     @Description("Set the ID Number for a hero") 
     public SuperHero idNumberWithCorrectFormat(@Name("name") String name,
-                             @JsonbNumberFormat("0000,0000") @Name("id") Long idNumber) throws UnknownHeroException {
+                             @JsonbNumberFormat("ID-00000000") @Name("id") Long idNumber) throws UnknownHeroException {
         LOG.log(Level.INFO, "idNumberWithCorrectFormat invoked [{0}],[{1}]", new Object[]{name, idNumber});
         SuperHero superHero = heroDB.getHero(name);
         if(superHero!=null){

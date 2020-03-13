@@ -54,11 +54,11 @@
 53| type ScalarHolder       |   "This is another time (HH:mm:ss)"                       |   Missing Default Time Format description (appended) on Output Type
 54| type ScalarHolder       |   "This is another date (yyyy-MM-dd)"                     |   Missing Default Date Format description (appended) on Output Type
 55| type ScalarHolder       |   "This is another datetime (yyyy-MM-dd'T'HH:mm:ss)"      |   Missing Default DateTime Format description (appended) on Output Type
-56| type ScalarHolder       |   "This is a formatted time (hh:mm a)"                    |   Missing Formatted Time Format description (appended) on Output Type
+56| type ScalarHolder       |   "This is a formatted time (hh:mm:ss)"                   |   Missing Formatted Time Format description (appended) on Output Type
 57| type ScalarHolder       |   "This is a formatted date (MM dd yyyy)"                 |   Missing Formatted Date Format description (appended) on Output Type
-58| type ScalarHolder       |   "This is a formatted datetime (MM dd yyyy 'at' hh:mm a)"|   Missing Formatted DateTime Format description (appended) on Output Type
-59| type ScalarHolder       |   "#0.00"                                                 |   Missing Default Number Format description on Output Type
-60| type ScalarHolder       |   "This is a formatted number (#0.0)"                     |   Missing Formatted Number Format description (appended) on Output Type
+58| type ScalarHolder       |   "This is a formatted datetime (MM dd yyyy 'at' hh:mm:ss)"|   Missing Formatted DateTime Format description (appended) on Output Type
+59| type ScalarHolder       |   "#0.0 en-GB"                                            |   Missing Number Format description on Output Type
+60| type ScalarHolder       |   "This is a formatted number (#0.0 en-GB)"               |   Missing Number Format description (appended) on Output Type
 61| type ScalarHolder       |   longPrimitiveId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, long
 62| type ScalarHolder       |   intPrimitiveId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, int
 63| type ScalarHolder       |   longObjectId: ID                                        |   Expecting a ID Scalar Type in type ScalarHolder, long

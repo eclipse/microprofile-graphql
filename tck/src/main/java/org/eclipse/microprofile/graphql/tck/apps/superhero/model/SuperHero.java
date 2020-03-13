@@ -59,16 +59,16 @@ public class SuperHero implements Character {
 
     private List<String> namesOfKnownEnemies; //TODO: consider adding a Villain or Enemy class
 
-    @JsonbNumberFormat("0000,0000")
+    @JsonbNumberFormat("ID-########")
     private Long idNumber;
 
-    @JsonbNumberFormat(value = "¤ 000.00",locale = "en-ZA")
+    @JsonbNumberFormat(value = "¤ ###,###.##",locale = "en-US")
     private Double bankBalance;
     
     @JsonbNumberFormat(value = "¤ 000.00",locale = "en-US")
     private BigDecimal netWorth;
     
-    @JsonbNumberFormat(value = "000.00 'ml'")
+    @JsonbNumberFormat(value = "###.## 'ml'", locale = "en-GB")
     private Float favouriteDrinkSize;
     
     private List<BigDecimal> lastKnownCoordinates;
