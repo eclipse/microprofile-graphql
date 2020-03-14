@@ -1,5 +1,5 @@
 mutation setHeroIdNumber {
-  idNumberWithCorrectFormat(name:"Starlord", id:"8888,8888") {
+  idNumberWithCorrectFormat(name:"Starlord", id:"ID-88888888") {
     name
     idNumber
   }
