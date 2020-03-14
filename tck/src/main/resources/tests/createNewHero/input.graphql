@@ -5,7 +5,7 @@ mutation createNewHero {
             superPowers: ["Super strength", "Vibranium Shield"]
             primaryLocation: "New York, NY"
             teamAffiliations: [{name: "Avengers"}]
-            idNumber: "6578,4312"
+            idNumber: "ID-65784312"
         }) {
             name
             primaryLocation
