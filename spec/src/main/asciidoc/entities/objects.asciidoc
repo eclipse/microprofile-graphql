@@ -29,6 +29,12 @@ Optionally it can also:
 - Be annotated with `@Interface` (for interfaces) to name the entity,
 - Be annotated with `@Name` to name the entity.
 
+The name of the `type`, `input` or `interface` will be determined as follows:
+
+- If the value of the `@Type` / `@Input` / `@Interface` annotation is present and not empty, use that as the name, else
+- If the value of the `@Name` annotation is present and not empty, use that as the name, else
+- Use the Java class name (without the package prefix).
+
 Any Plain Old Java Object (POJO) can be an entity.  No special annotations are required. Implementations of MicroProfile
 GraphQL should interpret JSON-B annotations when serializing and deserializing entities to JSON, so it is possible to further define entities
 using JSON-B annotations.
