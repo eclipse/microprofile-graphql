@@ -32,8 +32,7 @@ import java.lang.annotation.Target;
  *     {@literal @}Query("searchByName")
  *     public List{@literal <}Character{@literal >} getByName(
  *                      {@literal @}Name("name")
-                      {@literal @}DefaultValue("Han Solo")
- *                      {@literal @}Description("Name to search for") String characterName) {
+ *                      {@literal @}DefaultValue("Han Solo") {
  *         //...
  *     }
  * }
@@ -43,8 +42,6 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * type Query {
- *         # Search characters by name
- *         # name: Name to search for. Default value: Han Solo.
  *         searchByName(name: String = "Han Solo"): [Character]
  *     }
  * </pre>
@@ -57,7 +54,7 @@ import java.lang.annotation.Target;
  * {@literal @}Description("A starship in Star Wars")
  * public class Starship {
  *     {@literal @}Name("uuid")
-     {@literal @}Description("uuid of a new Starship")
+ *     {@literal @}Description("uuid of a new Starship")
  *     private String id;
  *     private String name;
  *     private float length;
@@ -69,9 +66,9 @@ import java.lang.annotation.Target;
  * Schema generation of this would result in a stanza such as:
  * 
  * <pre>
- * # A starship in Star Wars
+ * "A starship in Star Wars"
  * input Starship {
- *   # uuid of a new Starship
+ *   "uuid of a new Starship"
  *   uuid: String
  *   name: String
  *   length: Float

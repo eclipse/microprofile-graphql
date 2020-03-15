@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * Schema generation of this would result in a stanza such as:
  * 
  * <pre>
- * # A starship in Star Wars
+ * "A starship in Star Wars"
  * type Starship {
  *   id: String
  *   name: String

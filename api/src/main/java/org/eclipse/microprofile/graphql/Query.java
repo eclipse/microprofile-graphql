@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * type Query {
- *    # Returns all the friends of a character
+ *    "Returns all the friends of a character"
  *    friendsOf(character: CharacterInput): [Character]
  * }
  * </pre>

@@ -31,10 +31,8 @@ import java.lang.annotation.Target;
  * <pre>
  * public class CharacterService {
  *     {@literal @}Query("searchByName"),
- *     {@literal @}Description("Search characters by name")
  *     public List{@literal <}Character{@literal >} getByName(
- *                       {@literal @}Argument("name")
- *                       {@literal @}Description("Name to search for")
+ *                       {@literal @}Name("name")
  *                       {@literal @}DefaultValue("Han Solo")
  *                       String name) {
  *         //...
@@ -46,10 +44,8 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * type Query {
- *         # Search characters by name
- *         # name: Name to search for. Default value: Han Solo.
- *         searchByName(name: String = "Han Solo"): [Character]
- *     }
+ *     searchByName(name: String = "Han Solo"): [Character]
+ * }
  * </pre>
  */
 @Target({ElementType.PARAMETER,ElementType.FIELD,ElementType.METHOD})

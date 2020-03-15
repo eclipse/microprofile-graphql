@@ -33,7 +33,7 @@ import java.lang.annotation.Target;
  * public class Starship {
  *     private String id;
  *     private float length;
- *     {@literal @}Description("Name of a particular starship, not it's class - i.e. \"Millenium Falcon\"")
+ *     {@literal @}Description("Name of a particular starship, not it's class - i.e. 'Millenium Falcon'")
  *     private String name;
  *
  *     // getters/setters...
@@ -43,11 +43,11 @@ import java.lang.annotation.Target;
  * Schema generation of this would result in a stanza such as:
  * 
  * <pre>
- * {@literal #}Vehicle for traveling between star systems
+ * "Vehicle for traveling between star systems"
  * type Starship {
  *   id: String
  *   length: Float
- *   {@literal #}Name of a particular starship, not it's class - i.e. "Millenium Falcon"
+ *   "Name of a particular starship, not it's class - i.e. 'Millenium Falcon'"
  *   name: String
  * }
  * </pre>
