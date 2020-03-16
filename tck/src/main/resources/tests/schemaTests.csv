@@ -93,3 +93,7 @@
 # testGetAndSetNotGetterAndSetter
 49|type Query          |   getaway: String                                         |   Expecting a getaway query where the get is not removed
 50|type Mutation       |   settlement: String                                      |   Expecting a settlement mutation where the set is not removed
+
+# testDescription
+51|type Query          |   "Testing the blacklist of Checked Exceptions"           |   Expecting a description for the exportToFile query
+52|type Query          |   "Super hero name, not real name"                        |   Expecting a description for the name parameter on the exportToFile query

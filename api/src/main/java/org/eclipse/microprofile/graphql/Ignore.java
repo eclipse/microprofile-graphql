@@ -68,14 +68,14 @@ import java.lang.annotation.Target;
  * Schema generation of this would result in a stanza such as:
  * 
  * <pre>
- * # A starship in Star Wars
+ * "A starship in Star Wars"
  * type Starship {
  *   id: String
  *   length: Float
  *   name: String
  * }
  *
- * # A starship in Star Wars
+ * "A starship in Star Wars"
  * input StarshipInput {
  *   id: String
  *   mass: Float

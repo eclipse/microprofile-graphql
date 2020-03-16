@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * type Mutation {
- *     # Save a new character
+ *     "Save a new character"
  *     addCharacter(character: CharacterInput): Character
  * }
  * </pre>

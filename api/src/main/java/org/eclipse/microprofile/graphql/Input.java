@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * {@literal @}Input("StarshipInput")
- {@literal @}Description("Input type for a starship")
+ * {@literal @}Description("Input type for a starship")
  * public class Starship {
  *     private String id;
  *     private String name;
@@ -42,7 +42,7 @@ import java.lang.annotation.Target;
  * Schema generation of this would result in a stanza such as:
  * 
  * <pre>
- * # Input type for a starship
+ * "Input type for a starship"
  * input StarshipInput {
  *   id: String
  *   name: String
