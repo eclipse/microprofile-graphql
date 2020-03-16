@@ -80,6 +80,7 @@ This would generate a schema that would include:
 
 .DescriptionSchemaExample
 [source,numbered]
+----
 type Query {
   ...
   "Returns the super hero with the specified name"
@@ -104,6 +105,7 @@ This would generate a schema that would include:
 
 .ArgumentDescriptionSchemaExample
 [source,numbered]
+----
 type Query {
   ...
   "Returns the super hero with the specified name"
