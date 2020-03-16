@@ -30,8 +30,8 @@ import java.lang.annotation.Target;
  * For example, a user might annotate a class' property as such:
  * 
  * <pre>
- * {@literal @}Type(name = "Starship", description = "A starship in StarWars")
- * {@literal @}Input(name = "StarshipInput", description = "Input type for a starship")
+ * {@literal @}Type("Starship")
+ * {@literal @}Input("StarshipInput")
  * public class Starship {
  *     private String id;
  *     {@literal @}NonNull
@@ -45,16 +45,13 @@ import java.lang.annotation.Target;
  * Schema generation of this would result in a stanza such as:
  * 
  * <pre>
- * # A starship from Starwars
  * type Starship {
  *   id: String
  *   name: String!
  *   length: Float!
  * }
  *
- * # Input type for a starship
  * input StarshipInput {
- *   # uuid of a new Starship
  *   id: String
  *   name: String!
  *   length: Float!

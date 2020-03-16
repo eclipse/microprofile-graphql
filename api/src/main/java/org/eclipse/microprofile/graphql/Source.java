@@ -49,10 +49,9 @@ import java.lang.annotation.Target;
  *      {@literal @}Inject TwitterService twitterService;
  *
  *     {@literal @}Query(value = "tweets")
- *     {@literal @}Description = "Get the last tweets for a character")
  *     public List{@literal <}Tweet{@literal >} tweets(
- *                          {@literal @}Source("tweetsForMe") {@literal @}Description("Get the last tweets for the character") Character character,
- *                          {@literal @}Argument("last") {@literal @}Description = "Number of last tweets to fetch") int last) {
+ *                          {@literal @}Source("tweetsForMe") Character character,
+ *                          {@literal @}Name("last") int last) {
  *          return twitterService.search(character.getName(), last);
  *     }
  * }
@@ -62,10 +61,7 @@ import java.lang.annotation.Target;
  * 
  * <pre>
  * type Character {
- *    # Other fields ...
- *
- *    # Get the last tweets for the character
- *    # last: Number of last tweets to fetch
+ *    # Other fields ... 
  *    tweetsForMe(last: Int): [Tweet]
  * }
  * </pre>
