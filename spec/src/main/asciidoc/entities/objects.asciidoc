@@ -155,7 +155,7 @@ consider this example:
 @GraphQLApi
 public class MyQueries {
 
-    public Location currentLocation(@Source SuperHero hero) {
+    public String currentLocation(@Source SuperHero hero) {
         return getLocationForHero(hero.getName());
     }
     // ...
