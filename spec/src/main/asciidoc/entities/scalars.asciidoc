@@ -104,6 +104,28 @@ public SuperHero trackHeroLongLat(@Name("name") String name,
 }
 ----
 
+The formatting annotations can also be placed on a `Query` or `Mutation` that returns a number, example:
+
+[source,java,numbered]
+----
+@Mutation
+@NumberFormat(value = "number #", locale = "en-GB")
+public Integer transformedNumber(Integer input){
+    return input;
+}
+----
+
+This will format the input and return the formatted result, example when executing with `345` as input number:
+
+[source,json,numbered]
+----
+{
+  "data": {
+    "transformedNumber": "number 345"
+  }
+}
+----
+
 ==== Dates
 By default the date related scalars (DateTime, Date, and Time) will use an ISO format.
 
@@ -118,6 +140,28 @@ By adding the `@DateFormat` annotation, or alternatively JSON-B annotation `@Jso
 support usage on `TYPE_USE`.
 
 In the case that a property has both `@DateFormat` and `@JsonbDateFormat`, the GraphQL annotation (`@DateFormat`) takes priority.
+
+The formatting annotations can also be placed on a `Query` or `Mutation` that returns a date-like object, example:
+
+[source,java,numbered]
+----
+@Query
+@DateFormat(value = "dd MMM yyyy")
+public LocalDate transformedDate(){
+    return LocalDate.parse("2016-08-16");
+}
+----
+
+This will format the input and return the formatted result:
+
+[source,json,numbered]
+----
+{
+  "data": {
+    "transformedDate": "16 Aug 2016"
+  }
+}
+----
 
 // ==== Custom user defined scalars (v1.1)
 // @TODO: Define how to create your own scalar.

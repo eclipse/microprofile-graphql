@@ -21,10 +21,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import javax.json.bind.annotation.JsonbProperty;
+import org.eclipse.microprofile.graphql.DateFormat;
+import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Id;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.NumberFormat;
 import org.eclipse.microprofile.graphql.Query;
 
 /**
@@ -274,5 +277,20 @@ public class ScalarTestApi {
     @Mutation
     public String settlement(){
         return "Just testing a name that starts with set but is not a setter";
+    }
+    
+    @Query
+    @Description("Testing transformed date as a response")
+    @DateFormat(value = "dd MMM yyyy")
+    public LocalDate transformedDate(){
+        String date = "2016-08-16";
+        return LocalDate.parse(date);
+    }
+    
+    @Mutation
+    @Description("Testing transformed number as a response")
+    @NumberFormat(value = "number #", locale = "en-GB")
+    public Integer transformedNumber(Integer input){
+        return input;
     }
 }
