@@ -16,33 +16,32 @@
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.eclipse.microprofile.graphql</groupId>
-        <artifactId>microprofile-graphql-parent</artifactId>
+        <artifactId>microprofile-graphql-server</artifactId>
         <version>1.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
-
-    <artifactId>microprofile-graphql-tck</artifactId>
-    <name>MicroProfile GraphQL :: TCK</name>
-    <description>Code-first GraphQL APIs for MicroProfile :: TCK</description>
+    
+    <artifactId>microprofile-graphql-server-tck</artifactId>
+    <name>MicroProfile GraphQL Server :: TCK</name>
+    <description>Server-side code-first GraphQL APIs for MicroProfile :: TCK</description>
 
     <properties>
-        <jsonp-api.version>1.1.6</jsonp-api.version>
-        <jsonb-api.version>1.0.2</jsonb-api.version>
         <commons-io.version>2.6</commons-io.version>
         <jsonassert.version>1.5.0</jsonassert.version>
     </properties>
 
     <dependencies>
+        <!-- Our own API -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>microprofile-graphql-api</artifactId>
+            <artifactId>microprofile-graphql-server-api</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
 
+        <!-- MicroProfile Platform -->
         <dependency>
             <groupId>jakarta.enterprise</groupId>
             <artifactId>jakarta.enterprise.cdi-api</artifactId>
@@ -51,45 +50,39 @@
         <dependency>
             <groupId>jakarta.json.bind</groupId>
             <artifactId>jakarta.json.bind-api</artifactId>
-            <version>${jsonb-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.json</groupId>
             <artifactId>jakarta.json-api</artifactId>
-            <version>${jsonp-api.version}</version>
             <scope>provided</scope>
         </dependency>
 
+        <!-- Testing -->
         <dependency>
             <groupId>org.jboss.arquillian.testng</groupId>
             <artifactId>arquillian-testng-container</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.arquillian.container</groupId>
             <artifactId>arquillian-container-test-spi</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>org.jboss.shrinkwrap</groupId>
             <artifactId>shrinkwrap-api</artifactId>
             <scope>compile</scope>
         </dependency>
-
         <!-- Needed for dynamic -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
@@ -109,18 +102,7 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -156,5 +138,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>

@@ -18,26 +18,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.eclipse.microprofile.graphql</groupId>
-        <artifactId>microprofile-graphql-parent</artifactId>
+        <artifactId>microprofile-graphql-server</artifactId>
         <version>1.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
-
-    <artifactId>microprofile-graphql-spec</artifactId>
+    
+    <artifactId>microprofile-graphql-server-spec</artifactId>
     <packaging>pom</packaging>
     
-    <name>MicroProfile GraphQL :: Specification</name>
-    <description>Code-first GraphQL APIs for MicroProfile :: Specification</description>
-    
-    <properties>
-        <asciidoctor-maven.version>1.6.0</asciidoctor-maven.version>
-        <asciidoctorj-pdf.version>1.5.0</asciidoctorj-pdf.version>
-        
-        <license>Apache License v 2.0</license>
-        <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
-        <revisiondate>${maven.build.timestamp}</revisiondate>
-        
-    </properties>
+    <name>MicroProfile GraphQL Server :: Specification</name>
+    <description>Server-side code-first GraphQL APIs for MicroProfile :: Specification</description>
     
     <build>
         <defaultGoal>clean package</defaultGoal>
@@ -46,25 +36,7 @@
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-                <version>${asciidoctor-maven.version}</version>
                 
-                <configuration>
-                    <sourceDirectory>src/main/asciidoc</sourceDirectory>
-                    <sourceDocumentName>microprofile-graphql.asciidoc</sourceDocumentName>
-                    <sourceHighlighter>coderay</sourceHighlighter>
-                    <headerFooter>true</headerFooter>
-                    <attributes>
-                        <license>${license}</license>
-                    </attributes>
-                </configuration>
-                
-                <dependencies>
-                    <dependency>
-                        <groupId>org.asciidoctor</groupId>
-                        <artifactId>asciidoctorj-pdf</artifactId>
-                        <version>${asciidoctorj-pdf.version}</version>
-                    </dependency>
-                </dependencies>
                 <executions>
                     <execution>
                         <id>generate-pdf-doc</id>
@@ -74,11 +46,6 @@
                         </goals>
                         <configuration>
                             <backend>pdf</backend>
-                            <attributes>
-                                <revnumber>${project.version}</revnumber>
-                                <revremark>${revremark}</revremark>
-                                <revdate>${revisiondate}</revdate>
-                            </attributes>
                         </configuration>
                     </execution>
                     <execution>
@@ -89,11 +56,6 @@
                         </goals>
                         <configuration>
                             <backend>html5</backend>
-                            <attributes>
-                                <revnumber>${project.version}</revnumber>
-                                <revremark>${revremark}</revremark>
-                                <revdate>${revisiondate}</revdate>
-                            </attributes>
                         </configuration>
                     </execution>
                 </executions>
@@ -102,6 +64,4 @@
             
         </plugins>
     </build>
-
 </project>
-

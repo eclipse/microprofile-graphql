@@ -32,12 +32,23 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
+        <!-- Platform version -->
+        <microprofile.platform>4.0</microprofile.platform>
         <cdi-api.version>2.0.2</cdi-api.version>
-
-        <testng.version>7.0.0</testng.version>
+        <jsonp-api.version>1.1.6</jsonp-api.version>
+        <jsonb-api.version>1.0.2</jsonb-api.version>
+        
+        <!-- Testing -->
+        <testng.version>7.1.0</testng.version>
         <arquillian.version>1.6.0.Final</arquillian.version>
 
+        <!-- Spec document -->
+        <asciidoctor-maven.version>1.6.0</asciidoctor-maven.version>
+        <asciidoctorj-pdf.version>1.5.0</asciidoctorj-pdf.version>
+        <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
+        <revisiondate>${maven.build.timestamp}</revisiondate>
         <revremark>Draft</revremark>
+        <license>Apache License v 2.0</license>
     </properties>
 
     <licenses>
@@ -90,13 +101,23 @@
     </developers>
 
     <modules>
-        <module>spec</module>
-        <module>api</module>
-        <module>tck</module>
+        <module>server</module>
+        <module>client</module>
+        <module>full</module>
     </modules>
 
     <dependencyManagement>
+
         <dependencies>
+<!--            <dependency>
+                <groupId>org.eclipse.microprofile</groupId>
+                <artifactId>microprofile</artifactId>
+                <version>${microprofile.platform}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>-->
+        
+            <!-- We can remove below (and uncomment above) once MP Platform (4.0) update to Jakarta -->
             <dependency>
                 <groupId>jakarta.enterprise</groupId>
                 <artifactId>jakarta.enterprise.cdi-api</artifactId>
@@ -108,6 +129,18 @@
                         <artifactId>jakarta.el-api</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.json.bind</groupId>
+                <artifactId>jakarta.json.bind-api</artifactId>
+                <version>${jsonb-api.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.json</groupId>
+                <artifactId>jakarta.json-api</artifactId>
+                <version>${jsonp-api.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!-- Testing -->
@@ -172,9 +205,58 @@
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.6</version>
                 </plugin>
+                <plugin>
+                    <groupId>biz.aQute.bnd</groupId>
+                    <artifactId>bnd-maven-plugin</artifactId>
+                    <version>4.3.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${asciidoctor-maven.version}</version>
+                
+                    <configuration>
+                        <sourceDirectory>src/main/asciidoc</sourceDirectory>
+                        <sourceDocumentName>index.asciidoc</sourceDocumentName>
+                        <sourceHighlighter>coderay</sourceHighlighter>
+                        <headerFooter>true</headerFooter>
+                        <attributes>
+                            <license>${license}</license>
+                        </attributes>
+                        
+                        <attributes>
+                            <revnumber>${project.version}</revnumber>
+                            <revremark>${revremark}</revremark>
+                            <revdate>${revisiondate}</revdate>
+                        </attributes>
+                    </configuration>
+                
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.asciidoctor</groupId>
+                            <artifactId>asciidoctorj-pdf</artifactId>
+                            <version>${asciidoctorj-pdf.version}</version>
+                        </dependency>
+                    </dependencies>
+                
+                </plugin>
             </plugins>
         </pluginManagement>
+        
         <plugins>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
