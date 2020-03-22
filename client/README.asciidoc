@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= Microprofile GraphQL Server Specification
+= Microprofile GraphQL Client Specification
 
 == Generating the API and JavaDoc
 
