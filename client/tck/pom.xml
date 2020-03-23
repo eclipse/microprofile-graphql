@@ -16,69 +16,40 @@
   -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.eclipse.microprofile.graphql</groupId>
-        <artifactId>microprofile-graphql-parent</artifactId>
+        <artifactId>microprofile-graphql-client</artifactId>
         <version>1.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
     
-    <artifactId>microprofile-graphql-api</artifactId>
-    <name>MicroProfile GraphQL :: API</name>
-    <description>Code-first GraphQL APIs for MicroProfile :: API</description>
-    
+    <artifactId>microprofile-graphql-client-tck</artifactId>
+    <name>MicroProfile GraphQL Client :: TCK</name>
+    <description>Client-side code-first GraphQL APIs for MicroProfile :: TCK</description>
+
     <dependencies>
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.annotation.versioning</artifactId>
-            <version>1.1.0</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>microprofile-graphql-client-api</artifactId>
+            <version>${project.version}</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
+                <artifactId>maven-source-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>attach-javadocs</id>
+                        <id>attach-sources</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            
-            <plugin>
-                <groupId>biz.aQute.bnd</groupId>
-                <artifactId>bnd-maven-plugin</artifactId>
-                <version>4.3.1</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>bnd-process</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <Bundle-SymbolicName>org.eclipse.microprofile.graphql</Bundle-SymbolicName>
-                    <Bundle-Name>MicroProfile GraphQL bundle</Bundle-Name>
-                    <archive>
-                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
-                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -103,5 +74,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
