@@ -32,9 +32,9 @@ This project consist of 3 parts:
 * link:client/README.asciidoc[Client] - The client-side of MicroProfile GraphQL.
 * link:full/README.asciidoc[Full] - The combination of Server and Client.
 
-Implementations can decide to implement only the Server, or only the Client, or both
+Implementations can decide to implement only the Server, or only the Client, or both.
 
-== Use this in your project
+== Use this in your project to depend on both the server and client API:
 
 [source,xml,numbered]
 ----
