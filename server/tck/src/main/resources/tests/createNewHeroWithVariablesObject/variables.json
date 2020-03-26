@@ -1,0 +1,8 @@
+{
+    "hero": {
+        "name": "Batman",
+        "realName": "Bruce Wayne",
+        "primaryLocation": "Gotham City",
+        "superPowers": ["Genius-level intellect"]
+    }
+}
