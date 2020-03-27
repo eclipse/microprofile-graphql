@@ -124,7 +124,7 @@ public class SchemaDynamicValidityTest extends Arquillian {
             connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("GET");
-            connection.setRequestProperty("Content-Type", "plain/text");
+            connection.setRequestProperty("Content-Type", "text/plain");
 
             // Check the response code
             int responseCode = connection.getResponseCode();
