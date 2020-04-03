@@ -16,7 +16,9 @@
 package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
 
-import org.eclipse.microprofile.graphql.*;
+import org.eclipse.microprofile.graphql.Description;
+import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.NonNull;
 
 public class ParentType extends GrandParentType {
 
