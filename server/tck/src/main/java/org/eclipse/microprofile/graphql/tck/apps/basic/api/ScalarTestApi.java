@@ -293,4 +293,10 @@ public class ScalarTestApi {
     public Integer transformedNumber(Integer input){
         return input;
     }
+
+    @Mutation
+    public Widget addWidget(Widget widget) {
+        return widget;
+    }
+
 }

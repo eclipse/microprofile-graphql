@@ -1,0 +1,9 @@
+# Basic Scalar Types
+1|  type Widget      |   widgetName: String                 |   Expecting field widgetName on type Widget
+2|  input Widget     |   widgetName: String                 |   Expecting field widgetName on input WidgetInput
+3|  type Widget      |   shippingWeight: Float!             |   Expecting field shippingWeight on type Widget
+4|  input Widget     |   weight: Float!                     |   Expecting field weight on input WidgetInput
+5|  type Widget      |   quantity: Int!                     |   Expecting field quantity on type Widget
+6|  input Widget     |   qty: Int!                          |   Expecting field qty on input WidgetInput
+7|  type Widget      |   cost: Float!                       |   Expecting field cost on type Widget
+8|  input Widget     |   price: Float!                      |   Expecting field price on input WidgetInput
