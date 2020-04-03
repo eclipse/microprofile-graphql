@@ -91,7 +91,8 @@ value is used as the mutation name.
 is used as the mutation name.
 * if the method is annotated with a `@JsonbProperty` annotation containing a non-empty String for it's value, that
 String value is used as the mutation name.
-* if no other name can be determined, the Java method name is used as the mutation name. (with the set removed if this is a setter)
+* if no other name can be determined, the Java method name is used as the mutation name. (with the set removed if the method
+name matches the rules for a setter. e.g. `^set[A-Z].*`)
 
 Note that it is considered a deployment error if more than one mutation method has the same name with the same
 arguments.

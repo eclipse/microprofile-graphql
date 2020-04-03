@@ -57,7 +57,8 @@ is used as the query name.
 is used as the query name.
 * if the method is annotated with a `@JsonbProperty` annotation containing a non-empty String for it's value, that String
 value is used as the query name.
-* if no other name can be determined, the Java method name is used as the query name. (with the get/is removed if this is a getter)
+* if no other name can be determined, the Java method name is used as the query name. (with the get/is removed if the method
+name matches the rules for a getter. e.g. `^get[A-Z].\*` or `^is[A-Z].*`)
 
 Note that it is considered a deployment error if more than one query method has the same name with the same arguments.
 
