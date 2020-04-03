@@ -16,12 +16,16 @@
 package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
 
-import org.eclipse.microprofile.graphql.Description;
+import org.eclipse.microprofile.graphql.*;
 
 public class ParentType extends GrandParentType {
 
     @Description("Field from parent")
     private String parentTypeField;
+
+    @NonNull
+    @Name("nonNullParentField")
+    private String nonNullParentTypeField;
 
     public String getParentTypeField() {
         return parentTypeField;
@@ -29,5 +33,13 @@ public class ParentType extends GrandParentType {
 
     public void setParentTypeField(final String parentTypeField) {
         this.parentTypeField = parentTypeField;
+    }
+
+    public String getNonNullParentTypeField() {
+        return nonNullParentTypeField;
+    }
+
+    public void setNonNullParentTypeField(final String nonNullParentTypeField) {
+        this.nonNullParentTypeField = nonNullParentTypeField;
     }
 }
