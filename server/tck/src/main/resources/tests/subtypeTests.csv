@@ -5,3 +5,5 @@
 4| input SubTypeInput      |   subTypeField: String                                    |   Expecting fields from type in InputType
 5| input SubTypeInput      |   parentTypeField: String                                 |   Expecting fields from parent in InputType
 6| input SubTypeInput      |   grandParentTypeField: String                            |   Expecting fields from grand-parent in InputType
+7| type SubType            |   "Field from parent"                                     |   Missing description on field from parent
+8| type SubType             |   "Field from grand-parent"                               |   Missing description on field from grand-parent

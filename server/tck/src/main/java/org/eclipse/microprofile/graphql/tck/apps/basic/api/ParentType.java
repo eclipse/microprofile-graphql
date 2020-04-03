@@ -16,8 +16,11 @@
 package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
 
+import org.eclipse.microprofile.graphql.Description;
+
 public class ParentType extends GrandParentType {
 
+    @Description("Field from parent")
     private String parentTypeField;
 
     public String getParentTypeField() {
