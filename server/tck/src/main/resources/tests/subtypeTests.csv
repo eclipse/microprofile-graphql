@@ -1,0 +1,7 @@
+# SubTypes
+1| type SubType            |   subTypeField: String                                    |   Expecting fields from type in OutputType
+2| type SubType            |   parentTypeField: String                                 |   Expecting fields from parent in OutputType
+3| type SubType            |   grandParentTypeField: String                            |   Expecting fields from grand-parent in OutputType
+4| input SubTypeInput      |   subTypeField: String                                    |   Expecting fields from type in InputType
+5| input SubTypeInput      |   parentTypeField: String                                 |   Expecting fields from parent in InputType
+6| input SubTypeInput      |   grandParentTypeField: String                            |   Expecting fields from grand-parent in InputType
