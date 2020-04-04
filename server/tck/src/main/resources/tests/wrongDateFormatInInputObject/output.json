@@ -1,0 +1,24 @@
+{
+    "errors": [
+        {
+            "message": "Validation error of type WrongType: argument 'dateOfBirth' with value 'StringValue{value='An unparseable date'}' is not a valid 'Date' @ 'createNewHero'",
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 5
+                }
+            ],
+            "extensions": {
+                "description": "argument 'dateOfBirth' with value 'StringValue{value='An unparseable date'}' is not a valid 'Date'",
+                "validationErrorType": "WrongType",
+                "queryPath": [
+                    "createNewHero"
+                ],
+                "classification": "ValidationError"
+            }
+        }
+    ],
+    "data": {
+        "createNewHero": null
+    }
+}
