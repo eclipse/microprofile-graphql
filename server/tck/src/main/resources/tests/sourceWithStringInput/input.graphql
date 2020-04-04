@@ -1,0 +1,5 @@
+query testSourceWithStringInput {
+	source {
+		stringInput(input: "Hello World!")
+	}
+}
