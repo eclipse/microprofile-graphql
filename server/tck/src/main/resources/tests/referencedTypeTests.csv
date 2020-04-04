@@ -1,0 +1,7 @@
+# Referenced Type Tests
+1| type ReferencingType         |   referencedType: ReferencedType                  |   Expecting field referencedType in type ReferencingType
+2| type ReferencingType         |   nonNullReferencedType: ReferencedType!          |   Expecting field nonNullReferencedType in type ReferencingType
+3| type ReferencedType          |   value: String                                   |   Expecting field value in type ReferencedType
+4| input ReferencingTypeInput   |   referencedType: ReferencedTypeInput             |   Expecting field referencedType in input ReferencingTypeInput
+5| input ReferencingTypeInput   |   nonNullReferencedType: ReferencedTypeInput!     |   Expecting field nonNullReferencedType in input ReferencingTypeInput
+6| input ReferencedTypeInput    |   value: String                                   |   Expecting field value in input ReferencingTypeInput
