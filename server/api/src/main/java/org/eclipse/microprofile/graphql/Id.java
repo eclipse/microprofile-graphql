@@ -24,11 +24,12 @@ import java.lang.annotation.Target;
 /**
  * Marks a field as a ID Scalar Type.
  * <br>
- * Note that this annotation may only be placed on <code>String</code> fields/getters/setters/parameters. A deployment
- * error should result if it is placed on a field/getter/setter/parameter of a different type.
- * 
+ * Note that this annotation may only be placed on <code>String</code>, numerical primitive {@code long} and {@code int},
+ * their object equivalents ({@link Long}, {@link Integer}), and {@link java.util.UUID} fields/getters/setters/parameters.
+ * A deployment error should result if it is placed on a field/getter/setter/parameter of a different type.
+ *
  * <br><br>
- * For example, a user might annotate a method's parameter as such:
+ * For example, a user might annotate a field as such:
  * <pre>
  * public class Person {
  *      {@literal @}Id
