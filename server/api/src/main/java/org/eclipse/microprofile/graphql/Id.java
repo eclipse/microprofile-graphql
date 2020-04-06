@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * A deployment error should result if it is placed on a field/getter/setter/parameter of a different type.
  *
  * <br><br>
- * For example, a user might annotate a method's parameter as such:
+ * For example, a user might annotate a field as such:
  * <pre>
  * public class Person {
  *      {@literal @}Id
