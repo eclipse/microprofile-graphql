@@ -17,6 +17,389 @@
 // limitations under the License.
 //
 
-= MicroProfile GraphQL Client
+= GraphQL Client for MicroProfile 
 
-Here add the client spec.
+== Rationale
+
+MicroProfile GraphQL 1.0 has been focused on the server-side enabling to develop and expose GraphQL endpoints. The purpose of this specification is to define a so-called "low level" client API. Low level means close to the GraphQL semantic, including for instance errors and partial results. We can compare with what JAX-RS client API is for REST.
+
+A "high level" client API, similar to MicroProfile RestClient, will be proposed later.
+
+== Goals
+
+1. **Provides full control over the GraphQL capabilities**: operations, arguments, variables, input types, scalars, interface, union, partial results, errors ...
+2. **HTTP support**: while the GraphQL specification is independent from the transport layer, we believe that in practice it is relevant to support HTTP features such as timeouts and headers
+3. **Consistency with MicroProfile**:
+
+    * No dependency outside MicroProfile core 
+    * Configuration exclusively based on MicroProfile Config
+    * Support of JSON-B format directives
+    * As consistent as possible to JAX-RS client API 
+4. Baseline for a "high level" API
+5. Open to *reactive programming*
+
+
+== Non goals
+
+This specification doesn't aim at defining a high level GraphQL client API. However, it is intended to be used "behind the scene" by it.
+
+== Focus of release 1.1
+
+A first version of the client API is planned with MicroProfile GraphQL 1.1. For this first step, we propose to focus on the following core features.
+
+==== GraphQL support
+
+* Operations: queries and mutations
+* Partial results
+* Errors
+* Arguments
+* Variables
+
+==== HTTP supports
+
+* Headers: reading and writing
+* Connection timeout
+* Read timeout
+
+==== JSON-B support
+
+* Format directives on fields: dates...
+
+==== MicroProfile config
+
+Configuration exclusivelly based on MicroProfile config.
+
+==== Synchronous client API
+
+We propose a synchronous-only API for this first release.
+
+==== Java 8 support
+
+Java 8 is still widely used in the industry and we propose to stick to it for a broader adoption.
+
+== Next steps
+
+To be studied for next releases:
+
+* GraphQL subscription, union, interface
+* Reactive and asynchronous API
+* https://spec.graphql.org/draft/#sec-Document[Multiple operations inside a GraphQL document]
+
+== API building-blocks
+
+All classes described in this document are part of the package __org.eclipse.microprofile.graphql.client__.
+
+The API is based on 5 main classes:
+
+* **Builder**: prepares and builds GraphQL operations
+* **Request**: represents a read-to-run GraphQL operation
+* **Client**: executes operations against a GraphQL server endpoint, reusable and thread-safe 
+* **Response**: a holder for the GraphQL response including both data (which can be partial) and GraphQL errors if any
+* **InputType**: enables to build complex input objects.
+
+== Code examples
+
+=== Building a basic query
+
+In this example, we want to get the name of all heroes. The GraphQL query that fits that needs is:
+[source,json]
+----
+allHeroes {
+	name
+}
+----
+The way to build this query with the API is:
+[source,java]
+----
+Builder builder = new Builder(Operation.Type.QUERY)
+  .addRootField(new Field("allHeroes", 
+    new ArrayList<>(asList(new Field("name")))));
+----
+To be more concise and expressive, we also propose a lighter syntax based on predefined static methods:
+[source,java]
+----
+Builder builderWithSugar = new Builder(Operation.Type.QUERY)
+       .addRootField("allHeroes", fields(field("name")));
+----
+
+The static methods to obtain this lighter syntax are described in the appendix.
+
+=== Buildling  a more complex query
+
+In this example, we want to get all heroes from a given city, including the name of the teams they belong to.
+The GraphQL query that fits this need is:
+
+[source,json]
+----
+query {
+  allHeroesIn(city: "New York, NY") {
+	name
+	currentLocation
+	teamAffiliations {
+  		name
+	}
+  }
+----
+The way to build this query with the API is:
+[source,java]
+----
+Builder builder = new Builder(Operation.Type.QUERY)
+       .addRootField(new Field("allHeroesIn",
+               new HashSet<Argument>(asList(
+                       new Argument("city", "New York, NY")
+               )),
+               new ArrayList<>(asList(
+                       new Field("name"),
+                       new Field("currentLocation"),
+                       new Field("teamAffiliations", new ArrayList<>(asList(
+                               new Field("name")))
+                       )))));
+----
+The same query with the ligth syntax:
+[source,java]
+----
+Builder builderWithSugar = new Builder(Operation.Type.QUERY)
+       .addRootField("allHeroesIn",
+               args(
+                       arg("city", "New York, NY")
+               ),
+               fields(
+                       field("name"),
+                       field("currentLocation"),
+                       field("teamAffiliations",
+                               fields(
+                                       field("name")
+                               )
+                       )
+               )
+       );
+----
+
+=== Adding attributes to fields
+
+In the previous example, there is just one argument at the root level. What if we want to set arguments to fields?
+Let’s imagine we want to add 2 arguments to the “currentLocation” field:
+[source, java]
+----
+Builder builder = new Builder(Operation.Type.QUERY)
+       .addRootField("allHeroesIn",
+               new HashSet<Argument>(asList(
+                       new Argument("city", "New York, NY")
+               )),
+               new HashSet<Field>(asList(
+                       new Field("name"),
+                       new Field("currentLocation", new HashSet<Argument>(asList(
+                               new Argument("foo", "bar"),
+                               new Argument("zoo", 123)
+                       ))),
+                       new Field("teamAffiliations", new HashSet<Field>(asList(
+                               new Field("name")))
+                       ))))
+       .addRootField("allHeroes", new HashSet<Field>(asList(new Field("name"))));
+
+----
+
+With the light API:
+[source,java]
+----
+Builder builderWithSugar = new Builder(Operation.Type.QUERY)
+       .addRootField("allHeroesIn",
+               asSet(
+                       arg("city", "New York, NY")
+               ),
+               asSet(
+                       field("name"),
+                       field("currentLocation", asSet(
+                               arg("foo", "bar"),
+                               arg("zoo", 123)
+                       )),
+                       field("teamAffiliations",
+                               asSet(
+                                       field("name")
+                               )
+                       )
+               )
+       )
+       .addRootField("allHeroes", asSet(field("name")));
+----
+
+== Building a mutation
+In this example, we want to add a hero to a team, more specifically Wolverine to the Avengers.
+
+The GraphQL mutation that responds to this need is:
+[source,json]
+----
+mutation {
+  addHeroToTeam(hero: "Wolverine", team: "Avengers") {
+         name
+         rivalTeam {
+             name
+	         members {
+		       costumeColor
+             }
+         }
+  }
+}
+----
+Note that there are 2 arguments on the addHeroToTeam field. The way to run it using the proposed API is:
+[source,java]
+----
+Builder builder = new Builder(Operation.Type.MUTATION)
+       .addRootField("addHeroToTeam",
+               asSet(
+                       arg("hero", "Wolverine"),
+                       arg("team", "Avengers")
+               ),
+               asSet(
+                       field("name"),
+                       field("rivalTeam",
+                               asSet(
+                                       field("name"),
+                                       field("members",
+                                               asSet(
+                                                       field("costumeColor")
+                                               )
+                                       )
+                               )
+                       )
+               )
+       )
+
+----
+
+== Managing input objects
+
+In that case, we want to create a hero from scratch:
+[source,json]
+----
+mutation {
+  createNewHero(hero: {
+	name: "Green Lantern",
+    	costumeColor: "green",
+    	dateOfLastCheckin: "2020-03-25",
+    	equipment: null,
+    	knownEnemies: [“Wolverine, “Starlord”, Iron Man”],
+	idNumber: 456) {
+    realName
+  }
+}
+----
+We can observe that we have a multi-valued argument and we need a specific API construct for that: the InputObject.For instance:
+[source,java]
+----
+Builder builder = new Builder(Operation.Type.MUTATION)
+       .addRootField(field("createNewHero",
+               args(
+                       arg("hero", inputObject(
+                                   inputField("costumeColor", "green"),
+                                   inputField("dateOfLastCheckin", LocalDate.now()),
+                                   inputField("equipment", null),
+                                   inputField("idNumber", 456),
+                                   inputField("knownEnemies", asList("Wolverine", "Starlord", "Iron Man")),
+                                   inputField("name", "Green Lantern")
+                       ))
+               ),
+               fields(
+                       field("name"),
+                       field("nameOfKnownEnemies")
+               )
+       ));
+----
+
+== Running operations
+
+Once the operation is built (a mutation or a query), it is ready to be run against an endpoint. Let's see how to do that.
+
+There are two options depending on the way to get the data result.
+
+To get raw JSON data:
+[source,Java]
+----
+// Build the request
+Request request = builder.build();
+
+// Initialize the GraphQL client
+Client client = ClientBuilder.newClient();
+
+// Get the GraphQL response
+Response response = client.target(“http://localhost:8080/graphql”).execute(request);
+
+// Check GraphQL errors if any
+if ( response.hasError ) {
+     System.err.println(“Sorry, got some GraphQL errors =” + response.getErrors());
+     // Process error and partial data here
+    }
+    
+// Get the raw JSON data
+JsonValue rawJson = response.getData();
+----
+
+To get the same data using an expected application class:
+[source,java]
+----
+// Build the request
+Request request = builder.build();
+
+// Initialize the GraphQL client
+Client client = ClientBuilder.newClient();
+
+// Get the GraphQL response
+Response<ApplicationClass> response = client.target(“http://localhost:8080/graphql”).dataType(ApplicationClass.class).execute(request);
+
+// Check GraphQL errors if any
+if ( response.hasError ) {
+     System.err.println(“Sorry, got some GraphQL errors =” + response.getErrors());
+     // Process error and partial data here
+    }
+    
+// Get the ApplicationClass
+ApplicationClass appClass = response.getData();
+----
+
+== HTTP support
+
+
+=== Timeout
+We propose a similar approach to JAX-RS with HTTP timeouts set when initializing a Client:
+[source,java]
+----
+Client client = ClientBuilder
+  .connectTimeout(6,TimeUnit.MILLISECONDS)
+  .readTimeout(5, TimeUnit.MILLISECONDS)
+  .build() ;
+----
+
+
+=== Headers
+
+We propose a similar approach to JAX-RS with HTTP headers set when sending the GraphQL operation:
+[source,java]
+----
+// Send a request with an Authentication HTTP header
+Response<ExpectedData> response = client
+  .target(“http://localhost:8080/graphql”)
+  .header(("Authentication", "Bearer: 123456")
+  .execute(response); 
+----
+
+
+== Appendix: static methods for the light API
+[source,java]
+----
+@SafeVarargs
+public static <Field> List<Field> fields(Field... f) {
+   return asList(f);
+}
+public static Field field(String name) {
+   return new Field(name);
+}
+
+@SafeVarargs
+public static <Argument> Set<Argument> args(Argument... a) {
+   return asSet(a);
+}
+public static Argument arg(String name, Object value) {
+   return new Argument(name, value);
+}
+
+----
