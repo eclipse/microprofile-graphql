@@ -1,0 +1,18 @@
+mutation createNewHero {
+    createNewHero(hero:{
+            name: "Black Panther"
+            realName: "T'Challa"
+            superPowers: ["Top intellect"]
+            primaryLocation: "Wakanda, Africa"
+            teamAffiliations: [{name: "Avengers"}]
+            idNumber: "ID-98701234",
+            dateOfBirth: "An unparseable date"
+        }) {
+            name
+            primaryLocation
+            superPowers
+            realName
+            idNumber
+            birthday
+        }
+}
