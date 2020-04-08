@@ -1,0 +1,14 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type WrongType: argument 'input' with value 'NullValue{}' must not be null @ 'nonNullStringInput'",
+      "locations": [
+        {
+          "line": 3,
+          "column": 9
+        }
+      ]
+    }
+  ]
+}
