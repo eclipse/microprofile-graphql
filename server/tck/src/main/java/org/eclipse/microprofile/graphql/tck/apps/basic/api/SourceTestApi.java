@@ -21,6 +21,7 @@ import java.time.format.DateTimeFormatter;
 import org.eclipse.microprofile.graphql.DateFormat;
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.NonNull;
 import org.eclipse.microprofile.graphql.Query;
 import org.eclipse.microprofile.graphql.Source;
@@ -41,6 +42,10 @@ public class SourceTestApi {
     }
 
     public String nonNullStringInput(@Source SourceType source, @NonNull String input) {
+        return "Input was: " + input;
+    }
+
+    public String namedStringInput(@Source SourceType source, @Name("in") String input) {
         return "Input was: " + input;
     }
 
