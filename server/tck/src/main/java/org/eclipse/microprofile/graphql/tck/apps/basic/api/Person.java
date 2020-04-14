@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import org.eclipse.microprofile.graphql.Name;
 
 /**
- * Type to test {@code @Name} on field, getter & setter.
+ * Type to test {@code @Name} on field, getter and setter.
  */
 public class Person {
 
