@@ -1,7 +1,14 @@
-# Tests for @Name
+# Tests for @Name & @JsonbProperty
 1|  type Person     |   lastName: String               |   Expecting field lastName on type Person
 2|  input Person    |   lastName: String               |   Expecting field lastName on input PersonInput
 3|  type Person     |   firstName: String              |   Expecting field firstName on type Person
 4|  input Person    |   forename: String               |   Expecting field forename on input PersonInput
 5|  type Person     |   birth: Date                    |   Expecting field birth on type Person
 6|  input Person    |   birthDay: Date                 |   Expecting field birthDay on input PersonInput
+
+7|  type JsonbPerson    |   lastName: String           |   Expecting field lastName on type JsonbPerson
+8|  input JsonbPerson   |   lastName: String           |   Expecting field lastName on input JsonbPersonInput
+9|  type JsonbPerson    |   firstName: String          |   Expecting field firstName on type JsonbPerson
+10|  input JsonbPerson  |   forename: String           |   Expecting field forename on input JsonbPersonInput
+11|  type JsonbPerson   |   birth: Date                |   Expecting field birth on type JsonbPerson
+12|  input JsonbPerson  |   birthDay: Date             |   Expecting field birthDay on input JsonbPersonInput

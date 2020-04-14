@@ -20,7 +20,9 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+
 import javax.json.bind.annotation.JsonbProperty;
+
 import org.eclipse.microprofile.graphql.DateFormat;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
@@ -40,94 +42,94 @@ public class ScalarTestApi {
     @Query("testScalarsInPojo")
     public ScalarHolder getScalarHolder() {
         ScalarHolder sh = new ScalarHolder();
-        
+
         // Short
         short s = 123;
         sh.setShortObject(new Short(s));
         sh.setFormattedShortObject(new Short(s));
         sh.setShortPrimitive(s);
-        
+
         // Integer
         int i = 123456789;
         sh.setIntObject(new Integer(i));
         sh.setFormattedIntObject(new Integer(i));
         sh.setIntPrimitive(i);
-        
+
         // Long
         long l = 123456789L;
         sh.setLongObject(new Long(l));
         sh.setFormattedLongObject(new Long(l));
         sh.setLongPrimitive(l);
         sh.setFormattedLongPrimitive(l);
-        
+
         // Float
         float f = 123456.789F;
         sh.setFloatObject(new Float(f));
         sh.setFormattedFloatObject(new Float(f));
         sh.setFloatPrimitive(f);
-        
+
         // Double
         double d = 123456.789;
         sh.setDoubleObject(new Double(d));
         sh.setFormattedDoubleObject(new Double(d));
         sh.setDoublePrimitive(d);
-        
+
         // Byte
         byte b = 123;
         sh.setByteObject(new Byte("123"));
         sh.setFormattedByteObject(new Byte("123"));
         sh.setBytePrimitive(b);
-        
+
         // BigInteger
         sh.setBigIntegerObject(BigInteger.valueOf(123456789));
         sh.setFormattedBigIntegerObject(BigInteger.valueOf(123456789));
-        
+
         // BigDecimal
         sh.setBigDecimalObject(BigDecimal.valueOf(123456.789));
         sh.setFormattedBigDecimalObject(BigDecimal.valueOf(123456.789));
-        
+
         // Boolean
         sh.setBooleanObject(Boolean.valueOf(false));
         sh.setBooleanPrimitive(false);
-        
+
         // Character
         char c = "c".charAt(0);
         sh.setCharObject(new Character(c));
         sh.setCharPrimitive(c);
-        
+
         // String
         sh.setStringObject("123456789");
         sh.setCharArray("123456789".toCharArray());
-        
+
         // LocalDate
         LocalDate localDate = LocalDate.parse("2019-10-23");
         sh.setDateObject(localDate);
         sh.setAnotherDateObject(localDate);
         sh.setFormattedDateObject(localDate);
-            
+
         // LocalTime
         LocalTime localTime = LocalTime.parse("11:46:34.263");
         sh.setTimeObject(localTime);
         sh.setAnotherTimeObject(localTime);
         sh.setFormattedTimeObject(localTime);
-        
+
         // LocalDateTime
         LocalDateTime localDateTime = LocalDateTime.parse("2019-10-23T11:46:34.263");
         sh.setDateTimeObject(localDateTime);
         sh.setAnotherDateTimeObject(localDateTime);
         sh.setFormattedDateTimeObject(localDateTime);
-            
+
         // ID
         sh.setId("123456789");
-        
+
         return sh;
     }
- 
+
     @Mutation
     public ScalarHolder setScalarHolder(ScalarHolder scalarHolder) {
         return scalarHolder;
     }
-    
+
     @Query
     public short getShortPrimitive(){
         return getScalarHolder().getShortPrimitive();
@@ -142,7 +144,7 @@ public class ScalarTestApi {
     public int intPrimitive(){
         return getScalarHolder().getIntPrimitive();
     }
-    
+
     @Query
     @Name("testIntObject")
     public Integer intObject(){
@@ -154,7 +156,7 @@ public class ScalarTestApi {
     public long longPrimitive(){
         return getScalarHolder().getLongPrimitive();
     }
-    
+
     @Query
     @Name("testLongObject")
     public Long longObject(){
@@ -166,7 +168,7 @@ public class ScalarTestApi {
     public float floatPrimitive(){
         return getScalarHolder().getFloatPrimitive();
     }
-    
+
     @Query
     @Name("testFloatObject")
     public Float floatObject(){
@@ -178,7 +180,7 @@ public class ScalarTestApi {
     public double doublePrimitive(){
         return getScalarHolder().getDoublePrimitive();
     }
-    
+
     @Query
     @Name("testDoubleObject")
     public Double doubleObject(){
@@ -199,7 +201,7 @@ public class ScalarTestApi {
     public char charPrimitive(){
         return getScalarHolder().getCharPrimitive();
     }
-    
+
     @Query
     @Name("testCharObject")
     public Character charObject(){
@@ -233,7 +235,7 @@ public class ScalarTestApi {
     public BigInteger bigIntegerObject(){
         return getScalarHolder().getBigIntegerObject();
     }
-    
+
     @Query
     @Name("testBigDecimalObject")
     public BigDecimal bigDecimalObject(){
@@ -245,13 +247,13 @@ public class ScalarTestApi {
     public LocalDate dateObject(){
         return getScalarHolder().getDateObject();
     }
-    
+
     @Query
     @Name("testTimeObject")
     public LocalTime timeObject(){
         return getScalarHolder().getTimeObject();
     }
-    
+
     @Query
     @JsonbProperty("testDateTimeObject")
     public LocalDateTime dateTimeObject(){
@@ -262,23 +264,23 @@ public class ScalarTestApi {
     @Name("testId")
     public String id(){
         return getScalarHolder().getId();
-    }  
+    }
 
     @Query
     public BasicInterface basicMessageEcho(@Name("input") BasicInput input) {
         return new BasicType(input.getMessage());
     }
-    
+
     @Query
     public String getaway(){
         return "Just testing a name that starts with get but is not a getter";
     }
-    
+
     @Mutation
     public String settlement(){
         return "Just testing a name that starts with set but is not a setter";
     }
-    
+
     @Query
     @Description("Testing transformed date as a response")
     @DateFormat(value = "dd MMM yyyy")
@@ -286,7 +288,7 @@ public class ScalarTestApi {
         String date = "2016-08-16";
         return LocalDate.parse(date);
     }
-    
+
     @Mutation
     @Description("Testing transformed number as a response")
     @NumberFormat(value = "number #", locale = "en-GB")
@@ -296,6 +298,11 @@ public class ScalarTestApi {
 
     @Mutation
     public Person addPerson(Person person) {
+        return person;
+    }
+
+    @Mutation
+    public JsonbPerson addJsonbPerson(JsonbPerson person) {
         return person;
     }
 
