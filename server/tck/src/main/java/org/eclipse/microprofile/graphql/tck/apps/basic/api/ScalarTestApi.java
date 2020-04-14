@@ -295,8 +295,8 @@ public class ScalarTestApi {
     }
 
     @Mutation
-    public Widget addWidget(Widget widget) {
-        return widget;
+    public Person addPerson(Person person) {
+        return person;
     }
 
 }
