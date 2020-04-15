@@ -1,0 +1,5 @@
+query testSourceWithNullDateInput {
+	source {
+		dateInput
+	}
+}

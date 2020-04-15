@@ -1,0 +1,5 @@
+query testSourceWithDateInput {
+	source {
+		dateInput(input: "2011-12-03")
+	}
+}

@@ -1,0 +1,23 @@
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Validation error of type MissingFieldArgument: Missing field argument input @ 'source/nonNullStringInput'",
+      "locations": [
+        {
+          "line": 3,
+          "column": 3
+        }
+      ],
+      "extensions": {
+        "description": "Missing field argument input",
+        "validationErrorType": "MissingFieldArgument",
+        "queryPath": [
+          "source",
+          "nonNullStringInput"
+        ],
+        "classification": "ValidationError"
+      }
+    }
+  ]
+}

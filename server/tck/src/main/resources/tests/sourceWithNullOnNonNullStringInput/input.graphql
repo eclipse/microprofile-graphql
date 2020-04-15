@@ -1,0 +1,5 @@
+query testSourceWithNullOnNonNullStringInput {
+	source {
+		nonNullStringInput
+	}
+}

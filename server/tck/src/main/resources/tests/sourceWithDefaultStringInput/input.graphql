@@ -1,0 +1,5 @@
+query testSourceWithDefaultStringInput {
+	source {
+		defaultStringInput
+	}
+}
