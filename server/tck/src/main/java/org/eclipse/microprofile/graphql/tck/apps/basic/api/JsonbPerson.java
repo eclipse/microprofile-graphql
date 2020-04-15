@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import javax.json.bind.annotation.JsonbProperty;
 
 /**
- * Type to test {@code @JsonbProperty} on field, getter & setter.
+ * Type to test {@code @JsonbProperty} on field, getter and setter.
  */
 public class JsonbPerson {
 
