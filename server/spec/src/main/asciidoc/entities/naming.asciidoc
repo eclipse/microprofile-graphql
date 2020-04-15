@@ -24,23 +24,17 @@ For example:
 .Name Java Code Example
 [source,java,numbered]
 ----
-public class Widget {
-    @Name("widgetName")
-    private String name;
-    private double weight;
-    private int quantity;
-    //...
+public class Person {
 
-    @JsonbProperty("shippingWeight")
-    public double getWeight() {
-        return weight;
-    }
-    //...
+    @Name("lastName")
+    private String surname;
 
-    @Name("qty")
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+    @JsonbProperty("firstName")
+    private String forename;
+
+    private LocalDate birth;
+
+    //...
 }
 ----
 
@@ -49,16 +43,16 @@ That would create a schema like this:
 .Name Schema Example
 [source,graphql,numbered]
 ----
-type Widget {
-    widgetName: String
-    quantity: Int!
-    shippingWeight: Double!
+type Person {
+    lastName: String
+    firstName: String
+    birth: Date
 }
 
-input WidgetInput {
-    widgetName: String
-    qty: Int!
-    weight: Double!
+input PersonInput {
+    lastName: String
+    firstName: String
+    birth: Date
 }
 ----
 
@@ -66,18 +60,19 @@ By putting the `@Name` (or `JsonbProperty`) annotation on the `getter` method, r
 
 [source,java,numbered]
 ----
-public class Widget {
+public class Person {
 
-    private float price;
-    
-    @Name("cost")
-    public float getPrice(){
-        return this.price;
+    private LocalDate birth;
+
+    @Name("birthday")
+    public LocalDate getBirth() {
+        return this.birth;
     }
 
-    public void setPrice(float price){
-        this.price = price;
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
     }
+
 }
 ----
 
@@ -85,11 +80,11 @@ This would result in a schema that looks something like:
 
 [source,graphql,numbered]
 ----
-type Widget {
-    cost: Float!
+type Person {
+    birthday: Date
 }
-input WidgetInput {
-    price: Float!
+input PersonInput {
+    birth: Date
 }
 ----
 
@@ -97,18 +92,19 @@ The input type keeps the default field name. Similarly, when the `@Name` (or `Js
 
 [source,java,numbered]
 ----
-public class Widget {
+public class Person {
 
-    private float price;
-    
-    public float getPrice(){
-        return this.price;
+    private LocalDate birth;
+
+    public LocalDate getBirth() {
+        return this.birth;
     }
 
-    @Name("cost")
-    public void setPrice(float price){
-        this.price = price;
+    @Name("birthday")
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
     }
+
 }
 ----
 
@@ -116,11 +112,11 @@ This would result in a schema that looks something like:
 
 [source,graphql,numbered]
 ----
-type Widget {
-    price: Float!
+type Person {
+    birth: Date
 }
-input WidgetInput {
-    cost: Float!
+input PersonInput {
+    birthday: Date
 }
 ----
 
