@@ -27,7 +27,7 @@ A "high level" client API, similar to MicroProfile RestClient, will be proposed 
 
 == Goals
 
-1. **Provides full control over the GraphQL capabilities**: operations, arguments, variables, input types, scalars, interface, union, partial results, errors ...
+1. **Provides full control over the MicroProfile GraphQL capabilities**: operations, arguments, variables, input types, scalars, interface, partial results, errors ...
 2. **HTTP support**: while the GraphQL specification is independent from the transport layer, we believe that in practice it is relevant to support HTTP features such as timeouts and headers
 3. **Consistency with MicroProfile**:
 
@@ -54,6 +54,7 @@ A first version of the client API is planned with MicroProfile GraphQL 1.1. For 
 * Errors
 * Arguments
 * Variables
+* Interface
 
 ==== HTTP supports
 
@@ -65,13 +66,15 @@ A first version of the client API is planned with MicroProfile GraphQL 1.1. For 
 
 * Format directives on fields: dates...
 
-==== MicroProfile config
+==== MicroProfile Config
 
-Configuration exclusivelly based on MicroProfile config.
+Configuration exclusively based on MicroProfile Config.
 
 ==== Synchronous client API
 
-We propose a synchronous-only API for this first release.
+We propose a synchronous-only API for this first release. 
+
+A reactive API, similar to JAX-RS client API (see chapter 5.7) will be studied for a next release.
 
 ==== Java 8 support
 
@@ -81,8 +84,8 @@ Java 8 is still widely used in the industry and we propose to stick to it for a 
 
 To be studied for next releases:
 
-* GraphQL subscription, union, interface
-* Reactive and asynchronous API
+* GraphQL subscription, union
+* Reactive API
 * https://spec.graphql.org/draft/#sec-Document[Multiple operations inside a GraphQL document]
 
 == API building-blocks
@@ -122,9 +125,9 @@ Builder builderWithSugar = new Builder(Operation.Type.QUERY)
        .addRootField("allHeroes", fields(field("name")));
 ----
 
-The static methods to obtain this lighter syntax are described in the appendix.
+The static methods to obtain this lighter syntax are described in the <<appendix_static_methods>>.
 
-=== Buildling  a more complex query
+=== Building a more complex query
 
 In this example, we want to get all heroes from a given city, including the name of the teams they belong to.
 The GraphQL query that fits this need is:
@@ -155,7 +158,7 @@ Builder builder = new Builder(Operation.Type.QUERY)
                                new Field("name")))
                        )))));
 ----
-The same query with the ligth syntax:
+The same query with the ligther syntax:
 [source,java]
 ----
 Builder builderWithSugar = new Builder(Operation.Type.QUERY)
@@ -313,7 +316,7 @@ Once the operation is built (a mutation or a query), it is ready to be run again
 There are two options depending on the way to get the data result.
 
 To get raw JSON data:
-[source,Java]
+[source,java]
 ----
 // Build the request
 Request request = builder.build();
