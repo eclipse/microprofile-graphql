@@ -83,7 +83,7 @@ why the client request was invalid.
 
 If the client request is valid, then the implementation must invoke the correct query or mutation method in the user
 application. The user application can indicate that an error has occurred by throwing an exception (checked or
-unchecked).  When the user application throws and exception, the implementation must send back a response that includes
+unchecked).  When the user application throws an exception, the implementation must send back a response that includes
 an error message.
 
 ==== Unchecked exceptions
@@ -102,7 +102,7 @@ Example:
 
 `mp.graphql.exceptionsWhiteList=org.eclipse.microprofile.graphql.tck.apps.superhero.api.WeaknessNotFoundException`
 
-NOTE: By default all unchecked exceptions is on the `blacklist`.
+NOTE: By default all unchecked exceptions are on the `blacklist`.
 
 IMPORTANT: Configurations will indicate all instances of the exception class, transitively. Example:
 If you have an exception that extends the above mentioned `WeaknessNotFoundException`, the whitelist will still apply to that specialization.
