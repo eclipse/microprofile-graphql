@@ -27,6 +27,27 @@ import org.testng.annotations.Test;
 public class CsvParserTest {
 
     @Test
+    public void shouldHandleDoubleEscape() throws IOException {
+        String content = "1| union X | ´´ | Should Handle DoubleEscape\n";
+
+        final List<TestData> testDate = CsvParser.parse("shouldHandleDoubleEscape", new StringReader(content));
+
+        Assert.assertEquals(testDate.size(), 1);
+        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "´");
+
+    }
+    @Test
+    public void shouldHandleTripleEscape() throws IOException {
+        String content = "1| union X | ´Test ´´´ | Should Handle TripleEscape\n";
+
+        final List<TestData> testDate = CsvParser.parse("shouldHandleTripleEscape", new StringReader(content));
+
+        Assert.assertEquals(testDate.size(), 1);
+        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "Test ´");
+
+    }
+
+    @Test
     public void shouldHandleEscaping() throws IOException {
         String content = "1| union X | ´Y | Z´ | Should Handle Escaping\n";
 

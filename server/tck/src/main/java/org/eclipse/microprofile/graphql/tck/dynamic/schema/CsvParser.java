@@ -65,7 +65,9 @@ public class CsvParser {
                 escaped = !escaped;
                 if (last == ESCAPE) {
                     //double-escape
-                    stringBuilder.appendCodePoint('\'');
+                    stringBuilder.appendCodePoint(ESCAPE);
+                    last = -1;
+                    continue;
                 }
             } else if (c == HEADER && last == '\n' && !escaped) {
                 //start of header, can only happen on new line
