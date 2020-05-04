@@ -72,7 +72,8 @@ using the `@NumberFormat` or alternatively the JSON-B annotation `@JsonbNumberFo
 
 In the case that a property has both `@NumberFormat` and `@JsonbNumberFormat`, the GraphQL annotation (`@NumberFormat`) takes priority.
 
-When formatting is added to a number type, the formatted result will be of type String.
+When formatting is added to a number type, the formatted result will be of type String. The type in the schema could be defined as String or another Custom Scalar to
+indicate the formatting.
 
 Example:
 [source,java,numbered]
@@ -127,7 +128,7 @@ This will format the input and return the formatted result, example when executi
 ----
 
 ==== Dates
-By default the date related scalars (DateTime, Date, and Time) will use an ISO format.
+By default the date related scalars (DateTime, Date, and Time) will use an ISO-8601 format.
 
 - `yyyy-MM-dd\'T\'HH:mm:ss` for DateTime
 - `yyyy-MM-dd\'T\'HH:mm:ssZ` for OffsetDateTime
@@ -140,6 +141,9 @@ By adding the `@DateFormat` annotation, or alternatively JSON-B annotation `@Jso
 support usage on `TYPE_USE`.
 
 In the case that a property has both `@DateFormat` and `@JsonbDateFormat`, the GraphQL annotation (`@DateFormat`) takes priority.
+
+When formatting is added to a date type, the formatted result will be of type String. The type in the schema could be defined as String or another Custom Scalar to
+indicate the formatting.
 
 The formatting annotations can also be placed on a `Query` or `Mutation` that returns a date-like object, example:
 
