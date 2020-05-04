@@ -90,7 +90,7 @@
 49|type Query          |   allHeroesInTeam(team: String): [SuperHero]              |   Missing argument on Query
 
 # testSourceFieldInType
-50|type SuperHero      |   currentLocation: 24|input SuperHeroInput|   !patrolStartTime: Time                                  |   Transformed Time Scalar type in "SuperHeroInput" field "patrolStartTime" should not be TimeString                                 |   Expecting a currentLocation field in SuperHero due to Source annotation
+50|type SuperHero      |   currentLocation: String                                 |   Expecting a currentLocation field in SuperHero due to Source annotation
 51|type Query          |   currentLocation(superHero: SuperHeroInput): String      |   Expecting a currentLocation query in Query to Source annotation
 52|type SuperHero      |   secretToken(maskFirstPart: Boolean = true): TopSecretToken      |   Expecting a secretToken field with a boolean argument in SuperHero due to Source annotation
 53|type Query          |   !secretToken(maskFirstPart: Boolean = true): TopSecretToken     |   Not expecting a secretToken query in Query
