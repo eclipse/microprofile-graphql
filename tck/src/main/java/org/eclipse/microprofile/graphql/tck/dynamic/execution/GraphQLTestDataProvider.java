@@ -59,7 +59,10 @@ public class GraphQLTestDataProvider {
 
     @DataProvider(name="specification")
     public static Object[][] getSpecificationTestData(){
-        return getTestData(DataFrom.specification);
+        if(!disableSpecificationTests()){
+            return getTestData(DataFrom.specification);
+        }
+        return toObjectArray(Collections.EMPTY_LIST);
     }
 
     @DataProvider(name="implementation")
@@ -235,5 +238,9 @@ public class GraphQLTestDataProvider {
         try (JsonReader jsonReader = Json.createReader(new StringReader(jsonString))) {
             return jsonReader.readObject();
         }
+    }
+    
+    private static boolean disableSpecificationTests(){
+        return Boolean.valueOf(System.getProperty("disableSpecificationTests", "false"));
     }
 }

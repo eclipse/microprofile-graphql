@@ -58,15 +58,21 @@ public class SchemaTestDataProvider {
 
     private static List<Path> getDataFiles() {
         List<Path> f = new ArrayList<>();
+        
+        // Implementation specific tests
         try {
             f.addAll(toListOfPaths(DynamicPaths.getDataForImplementation()));
         } catch (IOException ex) {
             LOG.log(Level.INFO, "No implementation specific tests found [{0}]", ex.getMessage());
         }
-        try {
-            f.addAll(toListOfPaths(DynamicPaths.getDataForSpecification()));
-        } catch (Exception ex) {
-            LOG.log(Level.WARNING, "No specification tests found [{0}]", ex.getMessage());
+        
+        // Specification test
+        if(!disableSpecificationTests()){
+            try {
+                f.addAll(toListOfPaths(DynamicPaths.getDataForSpecification()));
+            } catch (Exception ex) {
+                LOG.log(Level.WARNING, "No specification tests found [{0}]", ex.getMessage());
+            }
         }
 
         return f;
@@ -150,6 +156,10 @@ public class SchemaTestDataProvider {
         return line.trim().startsWith(COMMENT);
     }
 
+    private static boolean disableSpecificationTests(){
+        return Boolean.valueOf(System.getProperty("disableSpecificationTests", "false"));
+    }
+    
     private static final String PIPE = "|";
     private static final String DELIMITER = "\\" + PIPE;
     private static final String COMMENT = "#";
