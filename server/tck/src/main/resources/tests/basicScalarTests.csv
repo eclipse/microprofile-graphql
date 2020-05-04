@@ -1,71 +1,71 @@
 # Basic Scalar Types
-1|  type ScalarHolder       |   bigDecimalObject: BigDecimal                            |   Expecting a BigDecimal Scalar Type in type ScalarHolder
-2|  type ScalarHolder       |   bigIntegerObject: BigInteger                            |   Expecting a BigInteger Scalar Type in type ScalarHolder
-3|  type ScalarHolder       |   booleanObject: Boolean                                  |   Expecting a Boolean Scalar Type in type ScalarHolder
-4|  type ScalarHolder       |   booleanPrimitive: Boolean!                              |   Expecting a non null Boolean Scalar Type in type ScalarHolder
-5|  type ScalarHolder       |   byteObject: Int                                         |   Expecting a Int Scalar Type (for Byte Java Type) in type ScalarHolder
-6|  type ScalarHolder       |   bytePrimitive: Int!                                     |   Expecting a non null Int Scalar Type (for byte Java Type) in type ScalarHolder
-7|  type ScalarHolder       |   charObject: String                                      |   Expecting a String Scalar (for Java Char) Type in type ScalarHolder
-8|  type ScalarHolder       |   charPrimitive: String!                                  |   Expecting a non null String Scalar (for Java char) Type in type ScalarHolder
-9|  type ScalarHolder       |   dateObject: Date                                        |   Expecting a Date Scalar Type in type ScalarHolder
-10| type ScalarHolder       |   dateTimeObject: DateTime                                |   Expecting a DateTime Scalar Type in type ScalarHolder
-11| type ScalarHolder       |   doubleObject: Float                                     |   Expecting a Float Scalar Type in type ScalarHolder
-12| type ScalarHolder       |   doublePrimitive: Float!                                 |   Expecting a non null Float Scalar Type in type ScalarHolder
-13| type ScalarHolder       |   floatObject: Float                                      |   Expecting a Float Scalar Type in type ScalarHolder
-14| type ScalarHolder       |   floatPrimitive: Float!                                  |   Expecting a non null Float Scalar Type in type ScalarHolder
-15| type ScalarHolder       |   id: ID                                                  |   Expecting a ID Scalar Type in type ScalarHolder
-16| type ScalarHolder       |   intObject: Int                                          |   Expecting a Int Scalar Type in type ScalarHolder
-17| type ScalarHolder       |   intPrimitive: Int!                                      |   Expecting a non null Int Scalar Type in type ScalarHolder
-18| type ScalarHolder       |   longObject: BigInteger                                  |   Expecting a BigInteger Scalar (for Java Long) Type in type ScalarHolder
-19| type ScalarHolder       |   longPrimitive: BigInteger!                              |   Expecting a non null BigInteger (for Java long) Scalar Type in type ScalarHolder
-20| type ScalarHolder       |   shortObject: Int                                        |   Expecting a Int Scalar Type (for Short Java Type) in type ScalarHolder
-21| type ScalarHolder       |   shortPrimitive: Int!                                    |   Expecting a non null Int Scalar Type (for short Java Type) in type ScalarHolder
-22| type ScalarHolder       |   stringObject: String                                    |   Expecting a String Scalar Type in type ScalarHolder
-23| type ScalarHolder       |   charArray: [String]                                     |   Expecting a String Array Scalar (for Java Char[]) Type in type ScalarHolder
-24| type ScalarHolder       |   timeObject: Time                                        |   Expecting a Time Scalar Type in type ScalarHolder
-25| type Query              |   testBigDecimalObject: BigDecimal                        |   Expecting a BigDecimal Scalar Type in type Query
-26| type Query              |   testBigIntegerObject: BigInteger                        |   Expecting a BigInteger Scalar Type in type Query
-27| type Query              |   booleanObject: Boolean                                  |   Expecting a Boolean Scalar Type in type Query, with the is removed from the name
-28| type Query              |   booleanPrimitive: Boolean!                              |   Expecting a non null Boolean Scalar Type in type Query, with the is removed from the name
-29| type Query              |   testByteObject: Int                                     |   Expecting a Int Scalar Type (for Byte Java Type) in type Query
-30| type Query              |   testBytePrimitive: Int!                                 |   Expecting a non null Int Scalar Type (for byte Java Type) in type Query
-31| type Query              |   testCharObject: String                                  |   Expecting a String Scalar (for Java Char) Type in type Query
-32| type Query              |   testCharPrimitive: String!                              |   Expecting a non null String Scalar (for Java char) Type in type Query
-33| type Query              |   testDateObject: Date                                    |   Expecting a Date Scalar Type in type Query
-34| type Query              |   testDateTimeObject: DateTime                            |   Expecting a DateTime Scalar Type in type Query
-35| type Query              |   testDoubleObject: Float                                 |   Expecting a Float Scalar Type in type Query
-36| type Query              |   testDoublePrimitive: Float!                             |   Expecting a non null Float Scalar Type in type Query
-37| type Query              |   testFloatObject: Float                                  |   Expecting a Float Scalar Type in type Query
-38| type Query              |   testFloatPrimitive: Float!                              |   Expecting a non null Float Scalar Type in type Query
-39| type Query              |   testId: ID                                              |   Expecting a ID Scalar Type in type Query
-40| type Query              |   testIntObject: Int                                      |   Expecting a Int Scalar Type in type Query
-41| type Query              |   testIntPrimitive: Int!                                  |   Expecting a non null Int Scalar Type in type Query
-42| type Query              |   testLongObject: BigInteger                              |   Expecting a BigInteger Scalar (for Java Long) Type in type Query
-43| type Query              |   testLongPrimitive: BigInteger!                          |   Expecting a non null BigInteger Scalar (for Java long) Type in type Query
-44| type Query              |   shortObject: Int                                        |   Expecting a Int Scalar Type (for Short Java type) in type Query, with the get removed from the name
-45| type Query              |   shortPrimitive: Int!                                    |   Expecting a non null Int Scalar Type (for short Java type) in type Query, with the get removed from the name
-46| type Query              |   testStringObject: String                                |   Expecting a String Scalar Type in type Query
-47| type Query              |   testCharArray: [String]                                 |   Expecting a non null Stirng Array (for Java Char[]) Scalar Type in type Query
-48| type Query              |   testTimeObject: Time                                    |   Expecting a Time Scalar Type in type Query
-49| type Mutation           |   scalarHolder(arg0: ScalarHolderInput): ScalarHolder 'OR' scalarHolder(scalarHolder: ScalarHolderInput): ScalarHolder   |   Expecting a Mutation with the set removed from the name, scalarHolder.
-50| type ScalarHolder       |   "HH:mm:ss"                                              |   Missing Default Time Format description on Output Type
-51| type ScalarHolder       |   "yyyy-MM-dd"                                            |   Missing Default Date Format description on Output Type
-52| type ScalarHolder       |   "yyyy-MM-dd'T'HH:mm:ss"                                 |   Missing Default DateTime Format description on Output Type
-53| type ScalarHolder       |   "This is another time (HH:mm:ss)"                       |   Missing Default Time Format description (appended) on Output Type
-54| type ScalarHolder       |   "This is another date (yyyy-MM-dd)"                     |   Missing Default Date Format description (appended) on Output Type
-55| type ScalarHolder       |   "This is another datetime (yyyy-MM-dd'T'HH:mm:ss)"      |   Missing Default DateTime Format description (appended) on Output Type
-56| type ScalarHolder       |   "This is a formatted time (hh:mm:ss)"                   |   Missing Formatted Time Format description (appended) on Output Type
-57| type ScalarHolder       |   "This is a formatted date (MM dd yyyy)"                 |   Missing Formatted Date Format description (appended) on Output Type
-58| type ScalarHolder       |   "This is a formatted datetime (MM dd yyyy 'at' hh:mm:ss)"|   Missing Formatted DateTime Format description (appended) on Output Type
-59| type ScalarHolder       |   "#0.0 en-GB"                                            |   Missing Number Format description on Output Type
-60| type ScalarHolder       |   "This is a formatted number (#0.0 en-GB)"               |   Missing Number Format description (appended) on Output Type
-61| type ScalarHolder       |   longPrimitiveId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, long
-62| type ScalarHolder       |   intPrimitiveId: ID                                      |   Expecting a ID Scalar Type in type ScalarHolder, int
-63| type ScalarHolder       |   longObjectId: ID                                        |   Expecting a ID Scalar Type in type ScalarHolder, long
-64| type ScalarHolder       |   integerObjectId: ID                                     |   Expecting a ID Scalar Type in type ScalarHolder, Integer
-65| type ScalarHolder       |   uuidId: ID                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
-66| input BasicMessageInput |   message: String                                         |   Expecting a BasicMessageInput from @Input
-67| input BasicMessageInput |   countdownPlace: CountDown                               |   Expecting a BasicMessageInput from @Input
-68| type BasicMessage       |   message: String                                         |   Expecting a BasicMessage from @Type
-69| enum CountDown          |   THREE                                                   |   Expecting a CountDown from @Enum
-70| interface Basic         |   message: String                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface
+1|  type ScalarHolder       |   bigDecimalObject: BigDecimal                                                                                            |   Expecting a BigDecimal Scalar Type in type ScalarHolder
+2|  type ScalarHolder       |   bigIntegerObject: BigInteger                                                                                            |   Expecting a BigInteger Scalar Type in type ScalarHolder
+3|  type ScalarHolder       |   booleanObject: Boolean                                                                                                  |   Expecting a Boolean Scalar Type in type ScalarHolder
+4|  type ScalarHolder       |   booleanPrimitive: Boolean!                                                                                              |   Expecting a non null Boolean Scalar Type in type ScalarHolder
+5|  type ScalarHolder       |   byteObject: Int                                                                                                         |   Expecting a Int Scalar Type (for Byte Java Type) in type ScalarHolder
+6|  type ScalarHolder       |   bytePrimitive: Int!                                                                                                     |   Expecting a non null Int Scalar Type (for byte Java Type) in type ScalarHolder
+7|  type ScalarHolder       |   charObject: String                                                                                                      |   Expecting a String Scalar (for Java Char) Type in type ScalarHolder
+8|  type ScalarHolder       |   charPrimitive: String!                                                                                                  |   Expecting a non null String Scalar (for Java char) Type in type ScalarHolder
+9|  type ScalarHolder       |   dateObject: Date                                                                                                        |   Expecting a Date Scalar Type in type ScalarHolder
+10| type ScalarHolder       |   dateTimeObject: DateTime                                                                                                |   Expecting a DateTime Scalar Type in type ScalarHolder
+11| type ScalarHolder       |   doubleObject: Float                                                                                                     |   Expecting a Float Scalar Type in type ScalarHolder
+12| type ScalarHolder       |   doublePrimitive: Float!                                                                                                 |   Expecting a non null Float Scalar Type in type ScalarHolder
+13| type ScalarHolder       |   floatObject: Float                                                                                                      |   Expecting a Float Scalar Type in type ScalarHolder
+14| type ScalarHolder       |   floatPrimitive: Float!                                                                                                  |   Expecting a non null Float Scalar Type in type ScalarHolder
+15| type ScalarHolder       |   id: ID                                                                                                                  |   Expecting a ID Scalar Type in type ScalarHolder
+16| type ScalarHolder       |   intObject: Int                                                                                                          |   Expecting a Int Scalar Type in type ScalarHolder
+17| type ScalarHolder       |   intPrimitive: Int!                                                                                                      |   Expecting a non null Int Scalar Type in type ScalarHolder
+18| type ScalarHolder       |   longObject: BigInteger                                                                                                  |   Expecting a BigInteger Scalar (for Java Long) Type in type ScalarHolder
+19| type ScalarHolder       |   longPrimitive: BigInteger!                                                                                              |   Expecting a non null BigInteger (for Java long) Scalar Type in type ScalarHolder
+20| type ScalarHolder       |   shortObject: Int                                                                                                        |   Expecting a Int Scalar Type (for Short Java Type) in type ScalarHolder
+21| type ScalarHolder       |   shortPrimitive: Int!                                                                                                    |   Expecting a non null Int Scalar Type (for short Java Type) in type ScalarHolder
+22| type ScalarHolder       |   stringObject: String                                                                                                    |   Expecting a String Scalar Type in type ScalarHolder
+23| type ScalarHolder       |   charArray: [String]                                                                                                     |   Expecting a String Array Scalar (for Java Char[]) Type in type ScalarHolder
+24| type ScalarHolder       |   timeObject: Time                                                                                                        |   Expecting a Time Scalar Type in type ScalarHolder
+25| type Query              |   testBigDecimalObject: BigDecimal                                                                                        |   Expecting a BigDecimal Scalar Type in type Query
+26| type Query              |   testBigIntegerObject: BigInteger                                                                                        |   Expecting a BigInteger Scalar Type in type Query
+27| type Query              |   booleanObject: Boolean                                                                                                  |   Expecting a Boolean Scalar Type in type Query, with the is removed from the name
+28| type Query              |   booleanPrimitive: Boolean!                                                                                              |   Expecting a non null Boolean Scalar Type in type Query, with the is removed from the name
+29| type Query              |   testByteObject: Int                                                                                                     |   Expecting a Int Scalar Type (for Byte Java Type) in type Query
+30| type Query              |   testBytePrimitive: Int!                                                                                                 |   Expecting a non null Int Scalar Type (for byte Java Type) in type Query
+31| type Query              |   testCharObject: String                                                                                                  |   Expecting a String Scalar (for Java Char) Type in type Query
+32| type Query              |   testCharPrimitive: String!                                                                                              |   Expecting a non null String Scalar (for Java char) Type in type Query
+33| type Query              |   testDateObject: Date                                                                                                    |   Expecting a Date Scalar Type in type Query
+34| type Query              |   testDateTimeObject: DateTime                                                                                            |   Expecting a DateTime Scalar Type in type Query
+35| type Query              |   testDoubleObject: Float                                                                                                 |   Expecting a Float Scalar Type in type Query
+36| type Query              |   testDoublePrimitive: Float!                                                                                             |   Expecting a non null Float Scalar Type in type Query
+37| type Query              |   testFloatObject: Float                                                                                                  |   Expecting a Float Scalar Type in type Query
+38| type Query              |   testFloatPrimitive: Float!                                                                                              |   Expecting a non null Float Scalar Type in type Query
+39| type Query              |   testId: ID                                                                                                              |   Expecting a ID Scalar Type in type Query
+40| type Query              |   testIntObject: Int                                                                                                      |   Expecting a Int Scalar Type in type Query
+41| type Query              |   testIntPrimitive: Int!                                                                                                  |   Expecting a non null Int Scalar Type in type Query
+42| type Query              |   testLongObject: BigInteger                                                                                              |   Expecting a BigInteger Scalar (for Java Long) Type in type Query
+43| type Query              |   testLongPrimitive: BigInteger!                                                                                          |   Expecting a non null BigInteger Scalar (for Java long) Type in type Query
+44| type Query              |   shortObject: Int                                                                                                        |   Expecting a Int Scalar Type (for Short Java type) in type Query, with the get removed from the name
+45| type Query              |   shortPrimitive: Int!                                                                                                    |   Expecting a non null Int Scalar Type (for short Java type) in type Query, with the get removed from the name
+46| type Query              |   testStringObject: String                                                                                                |   Expecting a String Scalar Type in type Query
+47| type Query              |   testCharArray: [String]                                                                                                 |   Expecting a non null Stirng Array (for Java Char[]) Scalar Type in type Query
+48| type Query              |   testTimeObject: Time                                                                                                    |   Expecting a Time Scalar Type in type Query
+49| type Mutation           |   scalarHolder(arg0: ScalarHolderInput): ScalarHolder 'OR' scalarHolder(scalarHolder: ScalarHolderInput): ScalarHolder    |   Expecting a Mutation with the set removed from the name, scalarHolder.
+50| type ScalarHolder       |   "HH:mm:ss" 'OR' "ISO-8601"                                                                                              |   Missing Default Time Format description on Output Type
+51| type ScalarHolder       |   "yyyy-MM-dd" 'OR' "ISO-8601"                                                                                            |   Missing Default Date Format description on Output Type
+52| type ScalarHolder       |   "yyyy-MM-dd'T'HH:mm:ss" 'OR' "ISO-8601"                                                                                 |   Missing Default DateTime Format description on Output Type
+53| type ScalarHolder       |   "This is another time (HH:mm:ss)" 'OR' "This is another time (ISO-8601)"                                                |   Missing Default Time Format description (appended) on Output Type
+54| type ScalarHolder       |   "This is another date (yyyy-MM-dd)" 'OR' "This is another date (ISO-8601)"                                              |   Missing Default Date Format description (appended) on Output Type
+55| type ScalarHolder       |   "This is another datetime (yyyy-MM-dd'T'HH:mm:ss)" 'OR' "This is another datetime (ISO-8601)"                           |   Missing Default DateTime Format description (appended) on Output Type
+56| type ScalarHolder       |   "This is a formatted time (hh:mm:ss)"                                                                                   |   Missing Formatted Time Format description (appended) on Output Type
+57| type ScalarHolder       |   "This is a formatted date (MM dd yyyy)"                                                                                 |   Missing Formatted Date Format description (appended) on Output Type
+58| type ScalarHolder       |   "This is a formatted datetime (MM dd yyyy 'at' hh:mm:ss)"                                                               |   Missing Formatted DateTime Format description (appended) on Output Type
+59| type ScalarHolder       |   "#0.0 en-GB"                                                                                                            |   Missing Number Format description on Output Type
+60| type ScalarHolder       |   "This is a formatted number (#0.0 en-GB)"                                                                               |   Missing Number Format description (appended) on Output Type
+61| type ScalarHolder       |   longPrimitiveId: ID                                                                                                     |   Expecting a ID Scalar Type in type ScalarHolder, long
+62| type ScalarHolder       |   intPrimitiveId: ID                                                                                                      |   Expecting a ID Scalar Type in type ScalarHolder, int
+63| type ScalarHolder       |   longObjectId: ID                                                                                                        |   Expecting a ID Scalar Type in type ScalarHolder, long
+64| type ScalarHolder       |   integerObjectId: ID                                                                                                     |   Expecting a ID Scalar Type in type ScalarHolder, Integer
+65| type ScalarHolder       |   uuidId: ID                                                                                                              |   Expecting a ID Scalar Type in type ScalarHolder, UUID
+66| input BasicMessageInput |   message: String                                                                                                         |   Expecting a BasicMessageInput from @Input
+67| input BasicMessageInput |   countdownPlace: CountDown                                                                                               |   Expecting a BasicMessageInput from @Input
+68| type BasicMessage       |   message: String                                                                                                         |   Expecting a BasicMessage from @Type
+69| enum CountDown          |   THREE                                                                                                                   |   Expecting a CountDown from @Enum
+70| interface Basic         |   message: String                                                                                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface
