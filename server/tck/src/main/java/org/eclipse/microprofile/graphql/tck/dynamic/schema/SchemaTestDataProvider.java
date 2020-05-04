@@ -96,63 +96,8 @@ public class SchemaTestDataProvider {
     }
 
     private static List<TestData> toTestData(Path testFile) throws IOException{
-        List<TestData> testDataList = new LinkedList<>();
-        List<String> content = Files.readAllLines(testFile);
-        String currentHeader = "";
-        for(String line:content){
-            if(validLine(line)){
-                String[] parts = line.split(DELIMITER);
-                if(parts.length==4){
-                    TestData testData = createTestData(currentHeader,testFile.getFileName().toString(),parts);
-                    testDataList.add(testData);
-                }else{
-                    LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", 
-                        new Object[]{testFile.getFileName().toString(), "Does not contain 3 parts [" + parts.length +"]"});
-                }
-            }else if (isHeader(line)){
-                currentHeader = line.substring(line.indexOf(COMMENT)+1).trim();
-            }
-        }
-        return testDataList;
+        return CsvParser.parse(testFile);
     }
 
-    private static TestData createTestData(String header, String filename,String[] parts){
-        TestData testData = new TestData();
-        testData.setCount(Integer.valueOf(parts[0]));
-        testData.setHeader(header);
-        testData.setName(filename);
-        String count = parts[0].trim();
-        String snippet = parts[1].trim();
-        if(snippet == null || snippet.isEmpty()){
-            snippet = null;
-        }
-        testData.setSnippetSearchTerm(snippet);
-        
-        String containsString = parts[2].trim();
-        if(containsString.contains(OR)){
-            String[] containsStrings = containsString.split(OR);
-            for(String oneOf:containsStrings){
-                testData.addContainsString(oneOf.trim());
-            }
-        }else{
-            testData.addContainsString(containsString);
-        }
-        testData.setErrorMessage("(" + count + ") - " + parts[3].trim());
-
-        return testData;
-    }
-
-    private static boolean validLine(String line){
-        return !line.isEmpty() && line.trim().contains(PIPE) && !isHeader(line);
-    }
-
-    private static boolean isHeader(String line){
-        return line.trim().startsWith(COMMENT);
-    }
-
-    private static final String PIPE = "|";
-    private static final String DELIMITER = "\\" + PIPE;
-    private static final String COMMENT = "#";
     private static final String FILE_TYPE = ".csv";
-    private static final String OR = "'OR'";
 }
