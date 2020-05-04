@@ -48,10 +48,10 @@ type Query {
 Formatting annotations like `@NumberFormat` and `@DateFormat` ( or `@JsonbDateFormat` and `@JsonbNumberFormat` from JsonB) can be used to transform data at runtime (see <<scalars>>) 
 
 If no `@Description` annotation is provided for a date or number field, the format string specified in the relative annotation (`@NumberFormat` or `@DateFormat` or `@JsonbDateFormat` or `@JsonbNumberFormat`) 
-will be used as the field's description, or, for dates only, the default date format in the case there is no `@DateFormat` or `@JsonbDateFormat` annotation.
+will be used as the field's description, or, for dates only, the default date format, or just the text `ISO-8601`, in the case there is no `@DateFormat` or `@JsonbDateFormat` annotation.
 
 If a `@Description` annotation is provided for a date or number field, the format string specified in the relative annotation (`@NumberFormat` or `@DateFormat` or `@JsonbDateFormat` or `@JsonbNumberFormat`)
-will be appended to the given description in brackets `(...)`, or, for dates only, the default date format in the case there is no `@DateFormat` or `@JsonbDateFormat` annotation. 
+will be appended to the given description in brackets `(...)`, or, for dates only, the default date format, or just the text `ISO-8601`, in the case there is no `@DateFormat` or `@JsonbDateFormat` annotation. 
 
 Example:
 
@@ -80,10 +80,10 @@ will result in:
 [source,graphql,numbered]
 ----
 type ScalarHolder {
-  "yyyy-MM-dd"
+  "ISO-8601"
   dateObject: Date
 
-  "This is another date (yyyy-MM-dd)"
+  "This is another date (ISO-8601)"
   anotherDateObject: Date
   
   "This is a formatted date (MM dd yyyy)"
