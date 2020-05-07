@@ -5,6 +5,6 @@
 4| type SourceType         |   defaultStringInput(input: String = "Default value"): String      |   Expecting field defaultStringInput with parameter input in SourceType
 5| type SourceType         |   ´dateInput(
     "yyyy-MM-dd"
-    input: Date
+    input: String
   ): String´                                  |   Expecting field dateInput with parameter input in SourceType
 6| type SourceType         |   namedStringInput(in: String): String                             |   Expecting field defaultStringInput with parameter `in` in SourceType
