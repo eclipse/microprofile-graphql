@@ -1,0 +1,7 @@
+{
+  charHolder {
+    charPrimitiveInput(c: "a")
+    charObjectInput(c: "ab")
+    charArrayInput(cs: ["a", "b"])
+  }
+}

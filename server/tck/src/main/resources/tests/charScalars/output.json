@@ -1,0 +1,12 @@
+{
+  "data": {
+    "charHolder": {
+      "charPrimitiveInput": "a",
+      "charObjectInput": "a",
+      "charArrayInput": [
+        "a",
+        "b"
+      ]
+    }
+  }
+}
