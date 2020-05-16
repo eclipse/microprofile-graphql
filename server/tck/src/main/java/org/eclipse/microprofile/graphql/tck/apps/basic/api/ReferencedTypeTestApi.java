@@ -23,7 +23,7 @@ import org.eclipse.microprofile.graphql.Query;
 public class ReferencedTypeTestApi {
 
     @Query
-    ReferencingType referencingType() {
+    public ReferencingType referencingType() {
         ReferencedType referencedType = new ReferencedType();
         referencedType.setValue("value");
         ReferencingType referencingType = new ReferencingType();
@@ -33,7 +33,7 @@ public class ReferencedTypeTestApi {
     }
 
     @Mutation
-    ReferencingType addReferencingType(ReferencingType referencingType) {
+    public ReferencingType addReferencingType(ReferencingType referencingType) {
         return referencingType;
     }
 
