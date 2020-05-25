@@ -1,0 +1,40 @@
+{
+  "data": {
+    "arraysHolder": {
+      "intObject": [
+        1,
+        2,
+        3
+      ],
+      "intPrimitive": [
+        1,
+        2,
+        3
+      ],
+      "intObjectList": [
+        1,
+        2,
+        3
+      ],
+      "formattedIntObject": [
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "formattedIntPrimitive": [
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "formattedIntObjectList": [
+        "R01",
+        "R02",
+        "R03"
+      ],
+      "date": ["2006-02-01", "2007-03-02"],
+      "dateList": ["2006-02-01", "2007-03-02"],
+      "formattedDate": ["01.02.2006", "02.03.2007"],
+      "formattedDateList": ["01.02.2006", "02.03.2007"]
+    }
+  }
+}

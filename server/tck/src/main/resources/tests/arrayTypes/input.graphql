@@ -1,0 +1,16 @@
+{
+  arraysHolder {
+    intObject
+    intPrimitive
+    intObjectList
+
+    formattedIntObject
+    formattedIntPrimitive
+    formattedIntObjectList
+
+    date
+    dateList
+    formattedDate
+    formattedDateList
+  }
+}

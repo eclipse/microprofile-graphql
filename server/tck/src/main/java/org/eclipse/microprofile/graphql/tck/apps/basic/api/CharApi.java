@@ -16,26 +16,34 @@
 package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
 import org.eclipse.microprofile.graphql.GraphQLApi;
-import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
+import org.eclipse.microprofile.graphql.Source;
 
 @GraphQLApi
-public class ReferencedTypeTestApi {
+public class CharApi {
 
     @Query
-    public ReferencingType referencingType() {
-        ReferencedType referencedType = new ReferencedType();
-        referencedType.setValue("value");
-        ReferencingType referencingType = new ReferencingType();
-        referencingType.setReferencedType(referencedType);
-        referencingType.setNonNullReferencedType(referencedType);
-        return referencingType;
+    public CharHolder charHolder() {
+        return new CharHolder();
     }
 
-    @Mutation
-    public ReferencingType addReferencingType(ReferencingType referencingType) {
-        return referencingType;
+    public char charPrimitiveInput(@Source CharHolder charHolder, char c) {
+        return c;
     }
 
+    public char[] charArrayInput(@Source CharHolder charHolder, char[] cs) {
+        return cs;
+    }
+
+    public Character charObjectInput(@Source CharHolder charHolder, Character c) {
+        return c;
+    }
+
+    /*
+     * Used to have a "namespace".
+     */
+    public static class CharHolder {
+
+    }
 
 }

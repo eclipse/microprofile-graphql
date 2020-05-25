@@ -16,26 +16,14 @@
 package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
 import org.eclipse.microprofile.graphql.GraphQLApi;
-import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Query;
 
 @GraphQLApi
-public class ReferencedTypeTestApi {
+public class ArraysApi {
 
     @Query
-    public ReferencingType referencingType() {
-        ReferencedType referencedType = new ReferencedType();
-        referencedType.setValue("value");
-        ReferencingType referencingType = new ReferencingType();
-        referencingType.setReferencedType(referencedType);
-        referencingType.setNonNullReferencedType(referencedType);
-        return referencingType;
+    public ArraysHolder arraysHolder() {
+        return new ArraysHolder();
     }
-
-    @Mutation
-    public ReferencingType addReferencingType(ReferencingType referencingType) {
-        return referencingType;
-    }
-
 
 }
