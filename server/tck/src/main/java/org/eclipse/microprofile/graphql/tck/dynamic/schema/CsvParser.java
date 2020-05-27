@@ -119,11 +119,21 @@ public class CsvParser {
         testData.setSnippetSearchTerm(snippet);
 
         String containsString = parts[2].trim();
+        if (containsString.contains(OR) && containsString.contains(AND)){
+            throw new RuntimeException("Test string can not contain both 'OR' and 'AND'");
+        }
         if (containsString.contains(OR)) {
             String[] containsStrings = containsString.split(OR);
             for (String oneOf : containsStrings) {
                 testData.addContainsString(oneOf.trim());
             }
+            testData.setCondition(TestData.Condition.OR);
+        } else if (containsString.contains(AND)) {
+            String[] containsStrings = containsString.split(AND);
+            for (String oneOf : containsStrings) {
+                testData.addContainsString(oneOf.trim());
+            }
+            testData.setCondition(TestData.Condition.AND);
         } else {
             testData.addContainsString(containsString);
         }
@@ -137,5 +147,5 @@ public class CsvParser {
     private static final char SEPARATOR = '|';
     private static final char NEWLINE = '\n';
     private static final String OR = "'OR'";
-
+    private static final String AND = "'AND'";
 }

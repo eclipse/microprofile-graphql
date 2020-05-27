@@ -33,7 +33,7 @@ public class CsvParserTest {
         final List<TestData> testDate = CsvParser.parse("shouldHandleDoubleEscape", new StringReader(content));
 
         Assert.assertEquals(testDate.size(), 1);
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "´");
+        Assert.assertEquals(testDate.get(0).getContainsString().get(0), "´");
 
     }
     @Test
@@ -43,7 +43,7 @@ public class CsvParserTest {
         final List<TestData> testDate = CsvParser.parse("shouldHandleTripleEscape", new StringReader(content));
 
         Assert.assertEquals(testDate.size(), 1);
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "Test ´");
+        Assert.assertEquals(testDate.get(0).getContainsString().get(0), "Test ´");
 
     }
 
@@ -54,7 +54,7 @@ public class CsvParserTest {
         final List<TestData> testDate = CsvParser.parse("shouldHandleEscaping", new StringReader(content));
 
         Assert.assertEquals(testDate.size(), 1);
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "Y | Z");
+        Assert.assertEquals(testDate.get(0).getContainsString().get(0), "Y | Z");
         Assert.assertEquals(testDate.get(0).getErrorMessage(), "(1) - Should Handle Escaping");
     }
 
@@ -67,9 +67,9 @@ public class CsvParserTest {
         final List<TestData> testDate = CsvParser.parse("shouldHandleEscaping", new StringReader(content));
 
         Assert.assertEquals(testDate.size(), 1);
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().size(), 2);
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "scalarHolder(arg0: ScalarHolderInput): ScalarHolder");
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(1), "scalarHolder(scalarHolder: ScalarHolderInput): ScalarHolder");
+        Assert.assertEquals(testDate.get(0).getContainsString().size(), 2);
+        Assert.assertEquals(testDate.get(0).getContainsString().get(0), "scalarHolder(arg0: ScalarHolderInput): ScalarHolder");
+        Assert.assertEquals(testDate.get(0).getContainsString().get(1), "scalarHolder(scalarHolder: ScalarHolderInput): ScalarHolder");
     }
 
     @Test
@@ -82,7 +82,7 @@ public class CsvParserTest {
         final List<TestData> testDate = CsvParser.parse("shouldHandleEscaping", new StringReader(content));
 
         Assert.assertEquals(testDate.size(), 1);
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "dateInput(\n"
+        Assert.assertEquals(testDate.get(0).getContainsString().get(0), "dateInput(\n"
                 + "    \"yyyy-MM-dd\"\n"
                 + "    input: Date\n"
                 + "  ): String");
@@ -95,7 +95,7 @@ public class CsvParserTest {
         final List<TestData> testDate = CsvParser.parse("shouldIgnoreCommentsInLine", new StringReader(content));
 
         Assert.assertEquals(testDate.size(), 1);
-        Assert.assertEquals(testDate.get(0).getContainsAnyOfString().get(0), "\"#0.0 en-GB\"");
+        Assert.assertEquals(testDate.get(0).getContainsString().get(0), "\"#0.0 en-GB\"");
     }
 
     @Test

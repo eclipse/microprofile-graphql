@@ -105,4 +105,4 @@
 58|type Query          |   "Super hero name, not real name"                        |   Expecting a description for the name parameter on the exportToFile query
 
 # testJsonDefault
-59|type Query          |   provisionHero(hero: String, item: ItemInput = { id: 1000, name: "Cape", powerLevel: 3, height: 1.2, weight: 0.3, supernatural: false, dateCreated: "19 February 1900 at 12:00 in Africa/Johannesburg", dateLastUsed: "29 Jan 2020 at 09:45 in zone +0200"} | Expecting a default value for item for provisionHero
+59|type Mutation       |   id : 1000 'AND' name : "Cape" 'AND' powerLevel : 3 'AND' height : 1.2 'AND' weight : 0.3 'AND' supernatural : false | Expecting a default value for item for provisionHero
