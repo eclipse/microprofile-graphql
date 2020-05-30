@@ -29,7 +29,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.microprofile.graphql.tck.dynamic.schema.SchemaTestDataProvider;
@@ -84,24 +83,39 @@ public class SchemaDynamicValidityTest extends Arquillian {
             snippet = getSchemaSnippet(schema, input.getSnippetSearchTerm());
         }
         
-        Assert.assertTrue(matchAtLeastOneOfTheSnippets(input,snippet), "[" + input.getHeader() + "] " + input.getErrorMessage());    
+        Assert.assertTrue(matchCondition(input,snippet), "[" + input.getHeader() + "] " + input.getErrorMessage());    
     }
     
-    private boolean matchAtLeastOneOfTheSnippets(TestData input,String snippet){
-        List<String> containsAnyOfString = input.getContainsAnyOfString();
-        for(String contains:containsAnyOfString){
-            if(contains.startsWith("!")){
-                contains = contains.substring(1);
-                if(!snippet.contains(contains)){
-                    return true;
+    private boolean matchCondition(TestData input,String snippet){
+        
+        if(input.hasCondition()){
+            if(input.getCondition().equals(TestData.Condition.OR)){
+                for(String contains:input.getContainsString()){
+                    if(matchSingle(contains,snippet)){
+                        return true;
+                    }
                 }
-            }else{
-                if(snippet.contains(contains)){
-                    return true;
+                return false;
+            } else if (input.getCondition().equals(TestData.Condition.AND)){
+                for(String contains:input.getContainsString()){
+                    if(!matchSingle(contains,snippet)){
+                        return false;
+                    }
                 }
+                return true;
             }
+        } 
+        
+        return matchSingle(input.getContainsString().get(0), snippet);
+    }
+    
+    private boolean matchSingle(String single,String snippet){
+        if(single.startsWith("!")){
+            single = single.substring(1);
+            return !snippet.contains(single);
+        }else{
+            return snippet.contains(single);
         }
-        return false;
     }
     
     private void saveSchemaFile(){

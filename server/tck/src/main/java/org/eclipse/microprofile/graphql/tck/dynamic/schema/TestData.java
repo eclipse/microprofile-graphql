@@ -27,7 +27,8 @@ public class TestData {
     private String header;
     private String name;
     private String snippetSearchTerm;
-    private List<String> containsAnyOfString = new ArrayList<>();
+    private List<String> containsString = new ArrayList<>();
+    private Condition condition = null;
     private String errorMessage;
     
     public TestData() {
@@ -65,16 +66,12 @@ public class TestData {
         this.snippetSearchTerm = snippetSearchTerm;
     }
 
-    public List<String> getContainsAnyOfString() {
-        return containsAnyOfString;
-    }
-
-    public void setContainsAnyOfString(List<String> containsAnyOfString) {
-        this.containsAnyOfString = containsAnyOfString;
+    public List<String> getContainsString() {
+        return containsString;
     }
 
     public void addContainsString(String containsString) {
-        this.containsAnyOfString.add(containsString);
+        this.containsString.add(containsString);
     }
     
     public String getErrorMessage() {
@@ -83,6 +80,23 @@ public class TestData {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+    
+    public boolean hasCondition(){
+        return this.condition!=null;
+    }
+    
+    public void setCondition(Condition condition){
+        this.condition = condition;
+    }
+    
+    public Condition getCondition(){
+        return this.condition;
+    }
+    
+    public enum Condition {
+        AND,
+        OR
     }
     
 }

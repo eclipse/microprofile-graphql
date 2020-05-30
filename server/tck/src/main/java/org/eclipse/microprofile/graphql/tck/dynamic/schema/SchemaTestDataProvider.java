@@ -109,8 +109,5 @@ public class SchemaTestDataProvider {
         return Boolean.valueOf(System.getProperty("disableSpecificationTests", "false"));
     }
     
-    private static final String PIPE = "|";
-    private static final String DELIMITER = "\\" + PIPE;
-    private static final String COMMENT = "#";
     private static final String FILE_TYPE = ".csv";
 }
