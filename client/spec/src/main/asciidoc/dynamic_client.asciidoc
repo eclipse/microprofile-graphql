@@ -333,15 +333,17 @@ GraphQLRequest graphQLRequest = new graphQLClientBuilder.newRequest(document.toS
 Optional GraphQL variables can be provided:
 [source,Java]
 ----
-graphQLRequest.addVariable("surname", "James");
-graphQLRequest.addVariable("personId", 1);
+graphQLRequest
+    .addVariable("surname", "James")
+    .addVariable("personId", 1);
 ----
 In order to make it reuseable for other executions, variables can also be reset:
 [source,Java]
 ----
-graphQLRequest.resetVariables();
-graphQLRequest.addVariable("surname", "Roux");
-graphQLRequest.addVariable("personId", 2);
+graphQLRequest
+    .resetVariables()
+    .addVariable("surname", "Roux")
+    .addVariable("personId", 2);
 ----
 With this approach, a GraphQLRequest object is immutable regarding the GraphQL request to run and mutable regarding the variables. It is the responsibility of the caller to assign the consistency between the request and the variables.  
 
@@ -363,7 +365,7 @@ Client client = clientBuilder.build();
 
 Response response = client
         .target("http://localhost:8080/graphql")
-        .request("application/json")
+        .request(MediaType.APPLICATION_JSON)
         .post(json(graphQLRequest));
 ----
 A registered JAX-RS MessageBodyWriter is needed to automatically turn a GraphQLRequest object into a JSON structure. This is the responsibility of the implementation to provide it.
