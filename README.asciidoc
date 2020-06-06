@@ -82,6 +82,16 @@ MicroProfile is the optimal place to host that standard as it is open, ideally s
 This specification will focus on making it easy for developers to create a GraphQL Service/Endpoint and publish it as an API. 
 Where the data comes from (NoSQL, Relational DB, another service, etc.) is not the concern of this Proposed Specification. 
 
+== Implementations
+
+* SmallRye GraphQL - https://github.com/smallrye/smallrye-graphql (standalone implementation)
+* Open Liberty 20.0.0.6 - https://openliberty.io/blog/2020/06/05/graphql-open-liberty-20006.html
+* Quarkus 1.5 - https://quarkus.io/blog/quarkus-1-5-final-released/
+
+== Acknowledgements
+
+This API and specification would not be possible without the enormous assistance from the https://github.com/leangen/graphql-spqr[GraphQL SPQR project].
+
 == Contributing
 
 Do you want to contribute to this project? link:CONTRIBUTING.adoc[Find out how you can help here].
