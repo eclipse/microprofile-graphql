@@ -37,6 +37,7 @@ import java.util.logging.Logger;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonPatchBuilder;
 import javax.json.JsonReader;
 import org.jboss.shrinkwrap.api.Archive;
@@ -95,7 +96,7 @@ public class ExecutionDynamicTest extends Arquillian {
     }
 
     private void runTest(TestData testData){
-        if(testData!=null && isValidInput(testData.getInput())) {
+        if(testData!=null && (isValidInput(testData.getInput()) || testData.getHttpQuery() != null)) {
             LOG.info("Running test [" + testData.getName() + "]");
             this.currentTestData = testData;
             Map<String, String> httpHeaders = new HashMap<>();
@@ -107,11 +108,12 @@ public class ExecutionDynamicTest extends Arquillian {
 
             // Prepare if needed
             if(isValidInput(testData.getPrepare())){
-                postHTTPRequest(testData.getPrepare(),testData.getVariables(),httpHeaders);
+                executeHttpRequest("POST",null,testData.getPrepare(),testData.getVariables(),httpHeaders);
             }
 
             // Run the actual test and get the response
-            HttpResponse httpResponse = postHTTPRequest(testData.getInput(),testData.getVariables(),httpHeaders);
+            HttpResponse httpResponse = executeHttpRequest(testData.getHttpMethod(),testData.getHttpQuery(),
+                testData.getInput(),testData.getVariables(),httpHeaders);
             if(httpResponse.isSuccessful()){
                 this.currentOutput = httpResponse.getContent();
                 
@@ -120,7 +122,7 @@ public class ExecutionDynamicTest extends Arquillian {
                 
                 // Cleanup if needed
                 if(isValidInput(testData.getCleanup())){
-                    postHTTPRequest(testData.getCleanup(),testData.getVariables(),httpHeaders);
+                    executeHttpRequest("POST",null,testData.getCleanup(),testData.getVariables(),httpHeaders);
                 }
                 
                 // Compare to expected output
@@ -200,11 +202,11 @@ public class ExecutionDynamicTest extends Arquillian {
         return input!=null && !input.isEmpty();
     }
 
-    private HttpResponse postHTTPRequest(String graphQL, JsonObject variables, Map<String, String> httpHeaders){
+    private HttpResponse executeHttpRequest(String method, String httpQuery, String graphQL, JsonObject variables, Map<String, String> httpHeaders){
         try {
-            URL url = new URL(this.uri + PATH);
+            URL url = new URL(this.uri + PATH + ((httpQuery == null) ? "" : "?" + httpQuery));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST"); // TODO: Also test with GET and query string ? Are we allowing it ?
+            connection.setRequestMethod(method);
 
             setTimeouts(connection);
             addHeaders(connection,httpHeaders);
@@ -224,10 +226,10 @@ public class ExecutionDynamicTest extends Arquillian {
             }
 
         } catch (ProtocolException pex) {
-            LOG.log(Level.SEVERE, "Caught ProtocolException attempting to post an HTTP request", pex);
+            LOG.log(Level.SEVERE, "Caught ProtocolException attempting to "+method+" an HTTP request", pex);
             throw new RuntimeException(pex);
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Caught IOException attempting to post an HTTP request", ex);
+            LOG.log(Level.SEVERE, "Caught IOException attempting to "+method+" an HTTP request", ex);
             Assert.fail("Could not open a connection to the test server, is it running ?");
             throw new RuntimeException(ex);
         }
@@ -253,11 +255,14 @@ public class ExecutionDynamicTest extends Arquillian {
     }
 
     private JsonObject createRequestBody(String graphQL, JsonObject variables){
-        // Create the request
-        if(variables==null || variables.isEmpty()) {
-            variables = Json.createObjectBuilder().build();
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        if(graphQL!=null && !graphQL.isEmpty()) {
+            builder.add(QUERY, graphQL);
         }
-        return Json.createObjectBuilder().add(QUERY, graphQL).add(VARIABLES, variables).build();
+        if(variables!=null && !variables.isEmpty()) {
+            builder.add(VARIABLES, variables);
+        }
+        return builder.build();
     }
 
     private void postRequest(HttpURLConnection connection,JsonObject body) throws IOException{

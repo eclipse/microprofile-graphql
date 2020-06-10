@@ -90,8 +90,12 @@ public class TestData {
         return cleanup;
     }
 
-    public Properties getProperties() {
-        return properties;
+    public String getHttpMethod() {
+        return (properties == null) ? "POST" : properties.getProperty("http-method", "POST");
+    }
+
+    public String getHttpQuery() {
+        return (properties == null) ? null : properties.getProperty("http-query");
     }
 
     public void setName(String name) {
@@ -219,6 +223,4 @@ public class TestData {
         }
         return true;
     }
-    
-    
 }
