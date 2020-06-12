@@ -18,7 +18,8 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 import java.io.IOException;
 
 /**
- * Extending a IOException to test transitive blacklist
+ * Extending a IOException to test transitive hideErrorMessage list
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class CsvIOException extends IOException {
