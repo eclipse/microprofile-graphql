@@ -152,9 +152,9 @@ GraphQL source of a component.
 ----
 public interface Document extends Buildable {
 
-    List<DynaQLOperation> getOperations();
+    List<Operation> getOperations();
 
-    void setOperations(List<DynaQLOperation> operations);
+    void setOperations(List<Operation> operations);
 }
 ----
 
@@ -186,9 +186,9 @@ public interface Operation extends Buildable {
 
     void setName(String name);
 
-    List<DynaQLField> getFields();
+    List<Field> getFields();
 
-    void setFields(List<DynaQLField> fields);
+    void setFields(List<Field> fields);
 }
 ----
 
@@ -231,9 +231,9 @@ public interface Field extends Buildable {
 
     void setName(String name);
 
-    List<DynaQLArgument> getArguments();
+    List<Argument> getArguments();
 
-    void setArguments(List<DynaQLArgument> arguments);
+    void setArguments(List<Argument> arguments);
 
     List<? extends Field> getFields();
 
@@ -311,9 +311,9 @@ public static Argument arg(String name, Object value);
 ----
 public interface InputObject extends Buildable {
 
-    List<DynaQLInputObjectField> getInputObjectFields();
+    List<InputObjectField> getInputObjectFields();
 
-    void setInputObjectFields(List<DynaQLInputObjectField> inputObjectFields);
+    void setInputObjectFields(List<InputObjectField> inputObjectFields);
 }
 ----
 
