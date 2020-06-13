@@ -58,8 +58,9 @@ public class DeployableUnit {
     private static final Properties PROPERTIES = new Properties();
     static {
         PROPERTIES.put(ConfigKey.DEFAULT_ERROR_MESSAGE, "Unexpected failure in the system. Jarvis is working to fix it.");
-        PROPERTIES.put(ConfigKey.EXCEPTION_BLACK_LIST, "java.io.IOException,java.util.concurrent.TimeoutException");
-        PROPERTIES.put(ConfigKey.EXCEPTION_WHITE_LIST, "org.eclipse.microprofile.graphql.tck.apps.superhero.api.WeaknessNotFoundException");
+        PROPERTIES.put(ConfigKey.EXCEPTION_HIDE_ERROR_MESSAGE_LIST, "java.io.IOException,java.util.concurrent.TimeoutException");
+        PROPERTIES.put(ConfigKey.EXCEPTION_SHOW_ERROR_MESSAGE_LIST, 
+                       "org.eclipse.microprofile.graphql.tck.apps.superhero.api.WeaknessNotFoundException");
     }
 
 }

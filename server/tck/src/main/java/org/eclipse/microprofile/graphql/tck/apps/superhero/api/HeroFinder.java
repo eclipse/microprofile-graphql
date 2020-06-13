@@ -98,31 +98,31 @@ public class HeroFinder {
         return Optional.ofNullable(heroDB.getHero(name)).orElseThrow(() -> new UnknownHeroException(name));
     }
 
-    @Query @Description("Testing the blacklist of Checked Exceptions")
+    @Query @Description("Testing the hideErrorMessage list of Checked Exceptions")
     public SuperHero exportToFile(@Name("name") @Description("Super hero name, not real name") String name) throws IOException {
         LOG.log(Level.INFO, "exportToFile invoked [{0}]", name);
         throw new IOException("No you can not do this.");
     }
 
-    @Query @Description("Testing the blacklist of transitive Checked Exceptions")
+    @Query @Description("Testing the hideErrorMessage list of transitive Checked Exceptions")
     public SuperHero exportToCSVFile(@Name("name") @Description("Super hero name, not real name") String name) throws CsvIOException {
         LOG.log(Level.INFO, "exportToCSVFile invoked [{0}]", name);
         throw new CsvIOException("No you can not do this.");
     }
     
-    @Query @Description("Testing the default blacklist for Runtime Exceptions")
+    @Query @Description("Testing the default hideErrorMessage list for Runtime Exceptions")
     public SuperHero villian(@Name("name") @Description("Super hero name, not real name") String name) {
         LOG.log(Level.INFO, "villian invoked [{0}]", name);
         throw new RuntimeException("SuperHero can not be a villian");
     }
 
-    @Query @Description("Testing the whitelist for Runtime Exceptions")
+    @Query @Description("Testing the showErrorMessage list for Runtime Exceptions")
     public SuperHero weakness(@Name("name") @Description("Super hero name, not real name") String name) {
         LOG.log(Level.INFO, "weakness invoked [{0}]", name);
         throw new WeaknessNotFoundException("Superhero has no weakness");
     }
 
-    @Query @Description("Testing the whitelist for transitive Runtime Exceptions")
+    @Query @Description("Testing the showErrorMessage list for transitive Runtime Exceptions")
     public SuperHero findFlaw(@Name("name") @Description("Super hero name, not real name") String name) {
         LOG.log(Level.INFO, "findFlaw invoked [{0}]", name);
         throw new FlawNotFoundException("Superhero has no flaw");
