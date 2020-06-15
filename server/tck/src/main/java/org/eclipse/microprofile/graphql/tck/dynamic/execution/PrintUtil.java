@@ -21,7 +21,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,6 +35,8 @@ import javax.json.JsonWriter;
 import javax.json.JsonWriterFactory;
 import javax.json.stream.JsonGenerator;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 /**
  * Print the Test data to output
  * @author Phillip Kruger (phillip.kruger@redhat.com)
@@ -46,18 +47,18 @@ public class PrintUtil {
     private PrintUtil(){
     }
     
-    public static void toDisk(TestData testData, String output, Throwable throwable){
+    public static void toDisk(String httpMethod, TestData testData, String output, Throwable throwable){
         try{
-            String log = toString(testData, output, throwable);
-            writeTestFile(testData.getName(),log);
+            String log = toString(httpMethod, testData, output, throwable);
+            writeTestFile(httpMethod + "_" + testData.getName(),log);
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, "Could not save data to target folder - {0}", ex.getMessage());
+            LOG.log(Level.SEVERE, "Could not save " + httpMethod + " data to target folder " + testData.getName(), ex);
         }
     }
     
-    private static String toString(TestData testData,String output, Throwable throwable){
+    private static String toString(String httpMethod, TestData testData, String output, Throwable throwable){
         try(StringWriter sw = new StringWriter()){
-            sw.write("============= " + testData.getName() + " =============");
+            sw.write("============= " + httpMethod + " :: " + testData.getName() + " =============");
             sw.write("\n\n");
             if(throwable!=null){
                 sw.write("errorMessage = " + throwable.getMessage());
@@ -81,25 +82,33 @@ public class PrintUtil {
         }
     }
     
-    private static void writeTestFile(String testName, String data) throws IOException{
+    private static void writeTestFile(String fileName, String data) throws IOException{
         if(data!=null && !data.isEmpty()){
-            Path file = Paths.get("target" + FS + testName + ".log");
+            Path file = Paths.get("target" + FS + fileName + ".log");
             Path createFile = Files.createFile(file);
-            try(BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))){
+            try(BufferedWriter writer = Files.newBufferedWriter(createFile, UTF_8)){
                 writer.write(data);
             }
         }
     }
     
-    private static String prettyJson(String json) {
-        if(json!=null){
-            JsonReader jr = Json.createReader(new StringReader(json));
+    private static String prettyJson(String text) {
+        if (text == null) {
+            return null;
+        }
+        if(isJson(text)) {
+            JsonReader jr = Json.createReader(new StringReader(text));
             JsonObject jobj = jr.readObject();
             return prettyJson(jobj);
+        } else {
+            return text;
         }
-        return null;
     }
-    
+
+    private static boolean isJson(String text) {
+        return text.startsWith("{") || text.startsWith("[");
+    }
+
     private static String prettyJson(JsonObject jsonObject) {
         if(jsonObject!=null){
             StringWriter sw = new StringWriter();
