@@ -100,8 +100,10 @@ public class ExecutionDynamicTest extends Arquillian {
             this.currentTestData = testData;
             Map<String, String> httpHeaders = new HashMap<>();
             if(testData.getHttpHeaders()!=null && !testData.getHttpHeaders().isEmpty()){
-                for(Map.Entry<String, String> header:httpHeaders.entrySet()){
-                    httpHeaders.put(header.getKey(), header.getValue());
+                for(String headerName:testData.getHttpHeaders().stringPropertyNames()){
+                    String value = testData.getHttpHeaders().getProperty(headerName);
+                    LOG.info("setting header " + headerName + " to " + value);
+                    httpHeaders.put(headerName, value);
                 }
             }
 
