@@ -29,7 +29,7 @@ A "type-safe" client API, similar to MicroProfile RestClient, should also be pro
 
 == Goals
 
-. *Provides full control over the MicroProfile GraphQL capabilities*: operations, arguments, variables, input types, scalars, interface, partial results, errors ...
+. *Provides full control over the MicroProfile GraphQL capabilities*: operations, arguments, variables, scalars, input object, interface, partial results, errors...
 . *Consistency with MicroProfile GraphQL server* annotations (DateFormat, NumberFormat ...) and capabilities
 . *Consistency with MicroProfile*:
 * No dependency outside MicroProfile core
@@ -39,10 +39,10 @@ A "type-safe" client API, similar to MicroProfile RestClient, should also be pro
 
 == Non goals
 
-. *Transport layer support*: the GraphQL specification is independent of transport layer.
-We propose to stay aligned with this, leaving the final implementation free to use any client network library (JAX-RS, Apache HTTPClient ...).
-. *Serialization of custom Java classes to build requests*
-. *Deserialization of responses into custom Java classes*
+. *Transport layer support*: the GraphQL specification is transport agnostic.
+We propose to stay aligned with this approach, leaving implementations free to use any client network library (JAX-RS, Apache HTTPClient ...). However to make things more concrete, some examples using JAX-RS and HTTP are provided below.
+
+
 
 == Focus of release 1.1
 
@@ -101,7 +101,7 @@ Java 8 is still widely used in the industry and we propose to stick to it for a 
 To be studied for next releases:
 
 * GraphQL variables
-* GraphQL subscription
+* GraphQL subscription support
 * Reactive API
 * https://spec.graphql.org/draft/#sec-Document[Multiple operations inside a GraphQL document]
 
@@ -493,6 +493,128 @@ HttpPost httpPost = new HttpPost(new URI(endpoint));
 StringEntity stringEntity = new StringEntity(jsonRequest.toJson(), ContentType.APPLICATION_JSON);
 httpPost.setEntity(stringEntity);
 
+== Running a GraphQL document
+
+Once a GraphQL document has been prepared, it can be run against a server. 
+This specification proposes two abstractions for that:
+
+. **GraphQLRequest**: prepare a request execution including the request and optional variables
+. **GraphQLResponse**: a holder for a GraphQL response including optional errors and data.
+
+=== GraphQLClientBuilder
+
+A **GraphQLClientBuilder** class is defined to bootstrap a client implementation. This can be done using the Service Loader approach.
+
+==== Interface defintion
+[source,Java]
+----
+public interface GraphQLClientBuilder {
+    GraphQLRequest newRequest(String request);
+}
+----
+=== GraphQLRequest
+
+==== Interface Definition
+[source,Java]
+----
+public interface GraphQLRequest {
+    GraphQLRequest addVariable(String name, Object value);
+    GraphQLRequest resetVariables();
+    String toJson();
+}
+----
+
+==== Initialization
+ 
+A GraphQLRequest object is initialised from the builder with a GraphQL request obtained from a Document:
+[source,Java]
+----
+GraphQLRequest graphQLRequest = new graphQLClientBuilder.newRequest(document.toString());
+----
+==== Setting variables
+Optional GraphQL variables can be provided:
+[source,Java]
+----
+graphQLRequest
+    .addVariable("surname", "James")
+    .addVariable("personId", 1);
+----
+In order to make it reuseable for other executions, variables can also be reset:
+[source,Java]
+----
+graphQLRequest
+    .resetVariables()
+    .addVariable("surname", "Roux")
+    .addVariable("personId", 2);
+----
+With this approach, a GraphQLRequest object is immutable regarding the GraphQL request to run and mutable regarding the variables. It is the responsibility of the caller to assign the consistency between the request and the variables.  
+
+Once initialized with a request and optional variables, a GraphQLrequest object can be sent to a GraphQL server. As mentioned in the "non-goal" paragraph, this specification is deliberatly transport agnostic. It is the responsibility of the implementation to propose a transport layer.
+
+For instance:
+
+* JAX-RS in a Jakarta EE or MicroProfile container 
+* raw HTTP using a library such as Apache HTTP client.
+
+==== Examples of JAX-RS transport
+
+To make things more concrete, we propose some examples using JAX-RS.
+
+Suppose we a have an initialized GraphQLRequest. It can be a mutation or a query. We can send it and get the response in the following way;
+[source,Java]
+----
+Client client = clientBuilder.build();
+
+Response response = client
+        .target("http://localhost:8080/graphql")
+        .request(MediaType.APPLICATION_JSON)
+        .post(json(graphQLRequest));
+----
+A registered JAX-RS MessageBodyWriter is needed to automatically turn a GraphQLRequest object into a JSON structure. This is the responsibility of the implementation to provide it.
+
+In the previous example, a generic JAX-RS Response is returned. The GraphQLResponse (described below) can then be read as an entity:
+[source,Java]
+----
+GraphQLResponse graphQLResponse=response
+    .readEntity(GraphQLResponse.class);
+----
+
+Alternatively, we can get a GraphQLResponse directly as a typed entity:
+[source,Java]
+----
+GraphQLResponse graphQLResponse = client
+        .target("http://localhost:8080/graphql")
+        .request(MediaType.APPLICATION_JSON)
+        .post(json(graphQLRequest), GraphQLResponse.class);
+----
+A registered JAX-RS MessageBodyReader is needed to turn a JSON structure into a GraphQLResponse object. This is the responsibility of the implementation to provide it. 
+
+Using JAX-RS, we can even run a request in a reactive way:
+[source,Java]
+----
+CompletionStage<GraphQLResponse> csr = client
+        .target("http://localhost:8080/graphql")
+        .request()
+        .rx()
+        .post(json(graphQLRequest),GraphQLResponse.class);
+
+        // Do some other stuff here...
+
+        csr.thenAccept(// Async processing here });
+----
+
+==== Examples of HTTP transport
+
+Let's see how to use a HTTP transport layer with Apache HttpClient: 
+[source,Java]
+----
+// Prepare the HTTP POST
+URI endpoint = new URI("http://localhost:8080/graphql"); 
+HttpPost httpPost = new HttpPost(new URI(endpoint));
+
+StringEntity stringEntity = new StringEntity(jsonRequest.toJson(), ContentType.APPLICATION_JSON);
+httpPost.setEntity(stringEntity);
+
 // Execute the POST
 CloseableHttpClient httpClient = HttpClients.createDefault());
 CloseableHttpResponse httpResponse=httpClient.execute(httpPost);
@@ -513,26 +635,17 @@ GraphQLResponse is a holder both for data and errors.
 [source,Java]
 ----
 public interface GraphQLResponse {
-
     JsonObject getData();
-
     List<GraphQLError> getErrors();
-
     <T> List<T> getList(Class<T> dataType, String rootField);
-
     <T> T getObject(Class<T> dataType, String rootField);
-
     boolean hasData();
-
     boolean hasError();
-
+    
     public static interface GraphQLError {
         String getMessage();
-
         List<Map<String, Integer>> getLocations();
-
         Object[] getPath();
-
         Map<String, Object> getExtensions();
     }
 }
@@ -567,6 +680,7 @@ if ( graphQLResponse.hasData() )
 
 Data can be obtained in 2 ways:
 
+
 * **as a generic JsonObject**: using the getData method, it is the responsibility of the caller to turn this JsonObject into application objects.
 * *as an application object* (or a list of them): using the getObject (or getList) method. In that case, it is necessary to provide the expected data rootfield to be retrieved.
 
@@ -583,7 +697,7 @@ UserProfile userProfile = jsonb.fromJson(myData.toString(), Profile.class);
 
 // OR
 
-// Directly get a UserProfile object from graphqlReponse
+// Directly get a UserProfile object from graphqlReponse 
 UserProfile userProfile = graphQLResponse.getObject(Profile.class, "profile");
 ----
 
