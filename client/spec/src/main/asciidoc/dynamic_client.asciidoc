@@ -25,6 +25,8 @@ MicroProfile GraphQL 1.0 has been focused on the server-side enabling to develop
 
 "Dynamic" means close to the GraphQL specification semantic and structure. We can compare it with what JAX-RS client API is for REST.
 
+A "type-safe" client API, similar to MicroProfile RestClient, should also be proposed in another document.
+
 == Goals
 
 . *Provides full control over the MicroProfile GraphQL capabilities*: operations, arguments, variables, scalars, input object, interface, partial results, errors...
@@ -98,7 +100,9 @@ Java 8 is still widely used in the industry and we propose to stick to it for a 
 
 To be studied for next releases:
 
+* GraphQL variables
 * GraphQL subscription support
+* Reactive API
 * https://spec.graphql.org/draft/#sec-Document[Multiple operations inside a GraphQL document]
 
 == Workflow of the API
@@ -115,7 +119,7 @@ Document myDocument = document(
                         )));
 
 // Serialization of the document into a string, ready to be sent.
-String graphqlRequest = myDocument.toString();
+String graphqlRequest = myDocument.build();
 
 ----
 == Building a GraphQL Document
@@ -125,13 +129,35 @@ image::back2back.jpg[back2back]
 ****
 *Static factory methods over constructors*
 
-In order to make the writing of request in Java as close as possible to the original GraphQL's philosophy,
-it has been decided to make _static factory methods_ an integral part of the API.
+In order to make the writing of a GraphQL request in Java as close as possible to the original GraphQL's philosophy,
+it has been decided to make the usage of _static factory methods_ an integral part of the API.
 
 Of course, constructors can still be used but at the cost of clarity and
 ease of use.
 ****
+
+=== Buildable
+[source,Java]
+----
+public interface Buildable {
+    String build();
+}
+----
+
+The _build_ method is expected to return the corresponding
+GraphQL source of a component.
+
 === Document
+[source,Java]
+----
+public interface Document extends Buildable {
+
+    List<Operation> getOperations();
+
+    void setOperations(List<Operation> operations);
+}
+----
+
 ==== Static factory methods
 [source,Java]
 ----
@@ -141,13 +167,31 @@ public static Document document(Operation... operations);
 public static Document document(List<Operation> operations);
 ----
 
-==== Constructors
+=== Operation
 [source,Java]
 ----
-public Document(List<Operation> operations);
+public interface Operation extends Buildable {
+
+    enum Type {
+        QUERY,
+        MUTATION,
+        SUBSCRIPTION
+    }
+
+    Type getType();
+
+    void setType(Type type);
+
+    String getName();
+
+    void setName(String name);
+
+    List<Field> getFields();
+
+    void setFields(List<Field> fields);
+}
 ----
 
-=== Operation
 ==== Static factory methods
 [source,Java]
 ----
@@ -176,13 +220,27 @@ When omitted,
 * *type* parameter will default to _QUERY_
 * *name* parameter will default to an _empty string_
 ****
-==== Constructors
-[source,Java]
-----
-public Operation(Type type, String name, List<Field> fields);
-----
 
 === Field
+
+[source,Java]
+----
+public interface Field extends Buildable {
+
+    String getName();
+
+    void setName(String name);
+
+    List<Argument> getArguments();
+
+    void setArguments(List<Argument> arguments);
+
+    List<? extends Field> getFields();
+
+    void setFields(List<? extends Field> fields);
+}
+----
+
 ==== Static factory methods
 [source,Java]
 ----
@@ -221,16 +279,24 @@ public static Field field(String name, List<Field> fields);
 ****
 
 ****
-When omitted, *args* and *fields* parameters will default to an _empty list_.
+When omitted, *args* and *fields* parameters will default to an _empty list_
 ****
 
-==== Constructors
+=== Argument
 [source,Java]
 ----
-public Field(String name, List<Argument> args, List<Field> fields);
+public interface Argument extends Buildable {
+
+    String getName();
+
+    void setName(String name);
+
+    Object getValue();
+
+    void setValue(Object value);
+}
 ----
 
-=== Argument
 ==== Static factory methods
 [source,Java]
 ----
@@ -240,26 +306,17 @@ public static List<Argument> args(Argument... args);
 public static Argument arg(String name, Object value);
 ----
 
-==== Constructors
-[source,Java]
-----
-public Argument(String name, Object value);
-----
-
-=== Enum
-==== Static factory methods
-[source,Java]
-----
-public static GraphQLEnum gqlEnum(String value);
-----
-
-==== Constructors
-[source,Java]
-----
-public GraphQLEnum(String value);
-----
-
 === Input Object
+[source,Java]
+----
+public interface InputObject extends Buildable {
+
+    List<InputObjectField> getInputObjectFields();
+
+    void setInputObjectFields(List<InputObjectField> inputObjectFields);
+}
+----
+
 ==== Static factory methods
 [source,Java]
 ----
@@ -268,13 +325,20 @@ public static InputObject object(InputObjectField... inputObjectFields);
 public static InputObject object(List<InputObjectField> inputObjectFields);
 ----
 
-==== Constructors
+=== Input Object Field
 [source,Java]
 ----
-public InputObject(List<InputObjectField> inputObjectFields);
+public interface InputObjectField extends Buildable {
+String getName();
+
+    void setName(String name);
+
+    Object getValue();
+
+    void setValue(Object value);
+}
 ----
 
-=== Input Object Field
 ==== Static factory methods
 [source,Java]
 ----
@@ -285,11 +349,149 @@ The keyword *prop* (as in _an object's property_) has been chosen instead of *fi
 to avoid confusion with the notion of _field of a selection set_.
 ****
 
-==== Constructors
+=== Enum
 [source,Java]
 ----
-public InputObjectField(String name, Object value);
+public interface GraphQLEnum {
+
+    String getValue();
+
+    void setValue(String value);
+}
 ----
+
+==== Static factory methods
+[source,Java]
+----
+public static GraphQLEnum gqlEnum(String value);
+----
+
+****
+Due to Java's reserved keyword _enum_, the prefixes _GraphQL_ and _gql_ have been added.
+****
+
+== Running a GraphQL document
+
+Once a GraphQL document has been prepared, it can be run against a server.
+This specification proposes two abstractions for that:
+
+. **GraphQLRequest**: prepare a request execution including the request and optional variables.
+. **GraphQLResponse**: a holder for a GraphQL response including optional errors and data.
+
+=== GraphQLClientBuilder
+
+A **GraphQLClientBuilder** class is defined to bootstrap a client implementation. This can be done using the Service Loader approach.
+
+==== Interface defintion
+[source,Java]
+----
+public interface GraphQLClientBuilder {
+    GraphQLRequest newRequest(String request);
+}
+----
+=== GraphQLRequest
+
+==== Interface Definition
+[source,Java]
+----
+public interface GraphQLRequest {
+    GraphQLRequest addVariable(String name, Object value);
+    GraphQLRequest resetVariables();
+    String toJson();
+}
+----
+
+==== Initialization
+
+A GraphQLRequest object is initialised from the builder with a GraphQL request obtained from a Document:
+[source,Java]
+----
+GraphQLRequest graphQLRequest = new graphQLClientBuilder.newRequest(document.build());
+----
+==== Setting variables
+Optional GraphQL variables can be provided in a fluent manner:
+[source,Java]
+----
+graphQLRequest
+    .addVariable("surname", "James")
+    .addVariable("personId", 1);
+----
+In order to make it reuseable for other executions, variables can also be reset:
+[source,Java]
+----
+graphQLRequest
+    .resetVariables()
+    .addVariable("surname", "Roux")
+    .addVariable("personId", 2);
+----
+With this approach, a GraphQLRequest object is immutable regarding the GraphQL request to run and mutable regarding the variables.
+It is the responsibility of the caller to ensure the consistency between the request and the variables.
+
+Once initialized with a request and optional variables, a GraphQLrequest object can be sent to a GraphQL server. As mentioned in the "non-goal" paragraph, this specification is deliberatly transport agnostic. It is the responsibility of the implementation to propose a transport layer.
+
+For instance:
+
+* JAX-RS in a Jakarta EE or MicroProfile container
+* raw HTTP using a library such as Apache HTTP client.
+
+==== Examples of JAX-RS transport
+
+To make things more concrete, we propose some examples using JAX-RS.
+
+Suppose we a have an initialized GraphQLRequest. It can be a mutation or a query. We can send it and get the response in the following way;
+[source,Java]
+----
+Client client = clientBuilder.build();
+
+Response response = client
+        .target("http://localhost:8080/graphql")
+        .request(MediaType.APPLICATION_JSON)
+        .post(json(graphQLRequest));
+----
+A registered JAX-RS MessageBodyWriter is needed to automatically turn a GraphQLRequest object into a JSON structure. This is the responsibility of the implementation to provide it.
+
+In the previous example, a generic JAX-RS Response is returned. The GraphQLResponse (described below) can then be read as an entity:
+[source,Java]
+----
+GraphQLResponse graphQLResponse=response
+    .readEntity(GraphQLResponse.class);
+----
+
+Alternatively, we can get a GraphQLResponse directly as a typed entity:
+[source,Java]
+----
+GraphQLResponse graphQLResponse = client
+        .target("http://localhost:8080/graphql")
+        .request(MediaType.APPLICATION_JSON)
+        .post(json(graphQLRequest), GraphQLResponse.class);
+----
+A registered JAX-RS MessageBodyReader is needed to turn a JSON structure into a GraphQLResponse object. This is the responsibility of the implementation to provide it.
+
+Using JAX-RS, we can even run a request in a reactive way:
+[source,Java]
+----
+CompletionStage<GraphQLResponse> csr = client
+        .target("http://localhost:8080/graphql")
+        .request()
+        .rx()
+        .post(json(graphQLRequest),GraphQLResponse.class);
+
+        // Do some other stuff here...
+
+        csr.thenAccept(// Async processing here });
+----
+
+==== Examples of HTTP transport
+
+Let's see how to use a HTTP transport layer with Apache HttpClient:
+[source,Java]
+----
+// Prepare the HTTP POST
+URI endpoint = new URI("http://localhost:8080/graphql");
+HttpPost httpPost = new HttpPost(new URI(endpoint));
+
+StringEntity stringEntity = new StringEntity(jsonRequest.toJson(), ContentType.APPLICATION_JSON);
+httpPost.setEntity(stringEntity);
 
 == Running a GraphQL document
 
@@ -446,7 +648,6 @@ public interface GraphQLResponse {
         Object[] getPath();
         Map<String, Object> getExtensions();
     }
-    
 }
 ----
 
@@ -479,7 +680,8 @@ if ( graphQLResponse.hasData() )
 
 Data can be obtained in 2 ways:
 
-* **as a generic JsonObject**: using the getData method, it is the responsibility of the caller to turn this JsonObject into application objects
+
+* **as a generic JsonObject**: using the getData method, it is the responsibility of the caller to turn this JsonObject into application objects.
 * *as an application object* (or a list of them): using the getObject (or getList) method. In that case, it is necessary to provide the expected data rootfield to be retrieved.
 
 For instance, with a UserProfile application class:
