@@ -62,6 +62,10 @@ public class TestData {
         this.properties = properties;
     }
 
+    public boolean isMutation(){
+        return input.contains("mutation") || input.contains("Mutation");
+    }
+    
     public String getName() {
         return name;
     }
