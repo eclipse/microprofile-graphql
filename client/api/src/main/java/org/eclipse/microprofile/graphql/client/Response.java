@@ -16,13 +16,18 @@
 
 package org.eclipse.microprofile.graphql.client;
 
+import javax.json.JsonObject;
+import java.util.List;
 
-public interface GraphQLRequest {
+public interface Response {
 
-    GraphQLRequest addVariable(String name, Object value);
+    JsonObject getData();
+    List<Error> getErrors();
 
-    GraphQLRequest resetVariables();
+    <T> List<T> getList(Class<T> dataType, String rootField);
+    <T> T getObject(Class<T> dataType, String rootField);
 
-    String toJson();
-    
+    boolean hasData();
+
+    boolean hasError();
 }

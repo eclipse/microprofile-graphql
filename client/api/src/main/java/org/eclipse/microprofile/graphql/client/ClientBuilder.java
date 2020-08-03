@@ -16,6 +16,6 @@
 
 package org.eclipse.microprofile.graphql.client;
 
-public interface GraphQLClientBuilder {
-    GraphQLRequest newRequest(String request);
+public interface ClientBuilder {
+    Request newRequest(String request);
 }
