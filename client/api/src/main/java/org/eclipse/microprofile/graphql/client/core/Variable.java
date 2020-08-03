@@ -16,10 +16,14 @@
 
 package org.eclipse.microprofile.graphql.client.core;
 
-public interface Argument extends Buildable {
+public interface Variable extends Buildable {
+
     String getName();
     void setName(String name);
 
-    Object getValue();
-    void setValue(Object value);
+    VariableType getType();
+    void setType(VariableType value);
+
+    Object getDefaultValue();
+    void setDefaultValue(Object value);
 }

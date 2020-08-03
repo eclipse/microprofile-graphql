@@ -16,10 +16,20 @@
 
 package org.eclipse.microprofile.graphql.client.core;
 
-public interface Argument extends Buildable {
-    String getName();
-    void setName(String name);
+public enum ScalarType {
+    GQL_INT("Int"),
+    GQL_FLOAT("Float"),
+    GQL_STRING("String"),
+    GQL_BOOL("Boolean"),
+    GQL_ID("ID");
 
-    Object getValue();
-    void setValue(Object value);
+    private String type;
+
+    ScalarType(String type) {
+        this.type = type;
+    }
+
+    public String toString() {
+        return type;
+    }
 }
