@@ -19,6 +19,7 @@ package org.eclipse.microprofile.graphql.client.core;
 import java.util.List;
 
 public interface Document extends Buildable {
-    List<Operation> getOperations();
-    void setOperations(List<Operation> operations);
+
+    List<? extends Operation> getOperations();
+    void setOperations(List<? extends Operation> operations);
 }

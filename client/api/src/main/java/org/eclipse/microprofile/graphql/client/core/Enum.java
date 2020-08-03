@@ -16,9 +16,8 @@
 
 package org.eclipse.microprofile.graphql.client.core;
 
-public interface GraphQLEnum {
+public interface Enum {
 
     String getValue();
-
     void setValue(String value);
 }
