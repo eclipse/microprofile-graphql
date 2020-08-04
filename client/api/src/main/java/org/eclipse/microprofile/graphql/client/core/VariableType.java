@@ -16,10 +16,20 @@
 
 package org.eclipse.microprofile.graphql.client.core;
 
-public interface Argument extends Buildable {
+public interface VariableType extends Buildable {
     String getName();
+
     void setName(String name);
 
-    Object getValue();
-    void setValue(Object value);
+    boolean isNonNull();
+
+    void setNonNull(boolean nonNull);
+
+    VariableType getChild();
+
+    void setChild(VariableType child);
+
+    default boolean isList() {
+        return getChild() != null;
+    }
 }

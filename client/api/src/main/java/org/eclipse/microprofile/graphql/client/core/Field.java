@@ -19,15 +19,13 @@ package org.eclipse.microprofile.graphql.client.core;
 import java.util.List;
 
 public interface Field extends Buildable {
-    String getName();
 
+    String getName();
     void setName(String name);
 
-    List<Argument> getArguments();
-
-    void setArguments(List<Argument> arguments);
+    List<? extends Argument> getArguments();
+    void setArguments(List<? extends Argument> arguments);
 
     List<? extends Field> getFields();
-
     void setFields(List<? extends Field> fields);
 }

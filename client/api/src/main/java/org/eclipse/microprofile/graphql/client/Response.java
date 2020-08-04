@@ -14,11 +14,20 @@
  * limitations under the License.
  */
 
-package org.eclipse.microprofile.graphql.client.core;
+package org.eclipse.microprofile.graphql.client;
 
-public interface GraphQLEnum {
+import javax.json.JsonObject;
+import java.util.List;
 
-    String getValue();
+public interface Response {
 
-    void setValue(String value);
+    JsonObject getData();
+    List<Error> getErrors();
+
+    <T> List<T> getList(Class<T> dataType, String rootField);
+    <T> T getObject(Class<T> dataType, String rootField);
+
+    boolean hasData();
+
+    boolean hasError();
 }

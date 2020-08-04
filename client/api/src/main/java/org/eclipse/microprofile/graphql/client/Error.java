@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package org.eclipse.microprofile.graphql.client.core;
+package org.eclipse.microprofile.graphql.client;
 
-public interface Argument extends Buildable {
-    String getName();
-    void setName(String name);
+import java.util.List;
+import java.util.Map;
 
-    Object getValue();
-    void setValue(Object value);
+public interface Error {
+
+    String getMessage();
+    List<Map<String, Integer>> getLocations();
+
+    Object[] getPath();
+    Map<String, Object> getExtensions();
 }

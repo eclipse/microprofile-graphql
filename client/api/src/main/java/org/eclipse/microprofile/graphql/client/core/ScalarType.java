@@ -13,36 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.client;
 
-import javax.json.JsonObject;
-import java.util.List;
-import java.util.Map;
+package org.eclipse.microprofile.graphql.client.core;
 
-public interface GraphQLResponse {
+public enum ScalarType {
+    GQL_INT("Int"),
+    GQL_FLOAT("Float"),
+    GQL_STRING("String"),
+    GQL_BOOL("Boolean"),
+    GQL_ID("ID");
 
-    JsonObject getData();
+    private String type;
 
-    List<GraphQLError> getErrors();
-
-    <T> List<T> getList(Class<T> dataType, String rootField);
-
-    <T> T getObject(Class<T> dataType, String rootField);
-
-    boolean hasData();
-
-    boolean hasError();
-    
-    public static interface GraphQLError {
-        
-        String getMessage();
-
-        List<Map<String, Integer>> getLocations();
-      
-        Object[] getPath();
-
-        Map<String, Object> getExtensions();
-        
+    ScalarType(String type) {
+        this.type = type;
     }
-    
+
+    public String toString() {
+        return type;
+    }
 }

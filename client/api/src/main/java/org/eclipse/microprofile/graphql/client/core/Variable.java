@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package org.eclipse.microprofile.graphql.client;
+package org.eclipse.microprofile.graphql.client.core;
 
+public interface Variable extends Buildable {
 
-public interface GraphQLRequest {
+    String getName();
+    void setName(String name);
 
-    GraphQLRequest addVariable(String name, Object value);
+    VariableType getType();
+    void setType(VariableType value);
 
-    GraphQLRequest resetVariables();
-
-    String toJson();
-    
+    Object getDefaultValue();
+    void setDefaultValue(Object value);
 }

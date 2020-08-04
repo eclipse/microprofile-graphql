@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package org.eclipse.microprofile.graphql.client;
+package org.eclipse.microprofile.graphql.client.core;
 
-public interface GraphQLClientBuilder {
-    GraphQLRequest newRequest(String request);
+public interface Enum {
+
+    String getValue();
+    void setValue(String value);
 }

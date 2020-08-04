@@ -17,11 +17,10 @@
 package org.eclipse.microprofile.graphql.client.core;
 
 public interface InputObjectField extends Buildable {
-    String getName();
 
+    String getName();
     void setName(String name);
 
     Object getValue();
-
     void setValue(Object value);
 }

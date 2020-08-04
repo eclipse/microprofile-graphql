@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package org.eclipse.microprofile.graphql.client.core;
+package org.eclipse.microprofile.graphql.client;
 
-public interface Argument extends Buildable {
-    String getName();
-    void setName(String name);
+public interface Request {
 
-    Object getValue();
-    void setValue(Object value);
+    Request addVariable(String name, Object value);
+
+    Request resetVariables();
+
+    String toJson();
 }

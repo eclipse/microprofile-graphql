@@ -19,7 +19,7 @@ package org.eclipse.microprofile.graphql.client.core;
 import java.util.List;
 
 public interface InputObject extends Buildable {
-    List<InputObjectField> getInputObjectFields();
 
-    void setInputObjectFields(List<InputObjectField> inputObjectFields);
+    List<? extends InputObjectField> getInputObjectFields();
+    void setInputObjectFields(List<? extends InputObjectField> inputObjectFields);
 }

@@ -19,6 +19,7 @@ package org.eclipse.microprofile.graphql.client.core;
 import java.util.List;
 
 public interface Operation extends Buildable {
+
     enum Type {
         QUERY,
         MUTATION,
@@ -26,14 +27,14 @@ public interface Operation extends Buildable {
     }
 
     Type getType();
-
     void setType(Type type);
 
     String getName();
-
     void setName(String name);
 
-    List<Field> getFields();
+    List<? extends Variable> getVariables();
+    void setVariables(List<? extends Variable> vars);
 
-    void setFields(List<Field> fields);
+    List<? extends Field> getFields();
+    void setFields(List<? extends Field> fields);
 }
