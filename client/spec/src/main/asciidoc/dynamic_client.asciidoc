@@ -75,7 +75,7 @@ blank: not yet supported components.
 **** *_Field_*
 ***** Alias
 ***** *Name*
-***** *_Arguments_*
+***** *Arguments*
 ****** *Variable*
 ****** *Int value*
 ****** *Float value*
@@ -100,8 +100,7 @@ Java 8 is still widely used in the industry and we propose to stick to it for a 
 
 To be studied for next releases:
 
-* GraphQL variables
-* GraphQL subscription
+* Fragments, subscriptions and directives
 * Reactive API
 * https://spec.graphql.org/draft/#sec-Document[Multiple operations inside a GraphQL document]
 
@@ -119,7 +118,7 @@ Document myDocument = document(
                         )));
 
 // Serialization of the document into a string, ready to be sent.
-String graphqlRequest = myDocument.build();
+String request = myDocument.build();
 
 ----
 == Building a GraphQL Document
@@ -151,9 +150,8 @@ GraphQL source of a component.
 [source,Java]
 ----
 public interface Document extends Buildable {
-
-    List<? extends Operation> getOperations();
-    void setOperations(List<? extends Operation> operations);
+    List<Operation> getOperations();
+    void setOperations(List<Operation> operations);
 }
 ----
 

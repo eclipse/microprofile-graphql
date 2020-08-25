@@ -13,22 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.client.core;
+package org.eclipse.microprofile.graphql.client.core.exceptions;
 
-public enum ScalarType {
-    GQL_INT("Int"),
-    GQL_FLOAT("Float"),
-    GQL_STRING("String"),
-    GQL_BOOL("Boolean"),
-    GQL_ID("ID");
-
-    private String type;
-
-    ScalarType(String type) {
-        this.type = type;
-    }
-
-    public String toString() {
-        return type;
+public class BuildException extends RuntimeException {
+    public BuildException(String msg) {
+        super(msg);
     }
 }

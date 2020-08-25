@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.eclipse.microprofile.graphql.client.core;
+package org.eclipse.microprofile.graphql.client.core.utils;
 
-public enum ScalarType {
-    GQL_INT("Int"),
-    GQL_FLOAT("Float"),
-    GQL_STRING("String"),
-    GQL_BOOL("Boolean"),
-    GQL_ID("ID");
+import java.util.ServiceLoader;
 
-    private String type;
+public class ServiceUtils {
+    // TODO: check if 0 or >1 instance found. Throw exception if either.
+    public static <T> T getNewInstanceOf(Class<T> clazz) {
+        ServiceLoader<T> sl = ServiceLoader.load(clazz);
+        T t = sl.iterator().next();
 
-    ScalarType(String type) {
-        this.type = type;
+        return t;
     }
 
-    public String toString() {
-        return type;
+    private ServiceUtils() {
+        // HideUtilityClassConstructor
     }
 }

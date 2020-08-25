@@ -13,13 +13,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.eclipse.microprofile.graphql.client.core;
 
+
+import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
+
 public interface Argument extends Buildable {
+    /*
+        Static factory methods
+     */
+    static List<Argument> args(Argument... args) {
+        return asList(args);
+    }
+
+    // (name, raw value)
+    static Argument arg(String name, Object value)  {
+        Argument argument = getNewInstanceOf(Argument.class);
+
+        argument.setName(name);
+        argument.setValue(value);
+
+        return argument;
+    }
+
+    // (name, inputObject)
+    static Argument arg(String name, InputObject inputObject) {
+        Argument argument = getNewInstanceOf(Argument.class);
+
+        argument.setName(name);
+        argument.setValue(inputObject);
+
+        return argument;
+    }
+
+    // (name, variable)
+    static Argument arg(String name, Variable var) {
+        Argument argument = getNewInstanceOf(Argument.class);
+
+        argument.setName(name);
+        argument.setValue(var);
+
+        return argument;
+    }
+
+    /*
+        Getter/Setter
+    */
     String getName();
-    void setName(String name);
+
+    void setName(String name1);
 
     Object getValue();
+
     void setValue(Object value);
 }

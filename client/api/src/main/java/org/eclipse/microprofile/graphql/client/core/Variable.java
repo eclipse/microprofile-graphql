@@ -13,17 +13,101 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.eclipse.microprofile.graphql.client.core;
 
-public interface Variable extends Buildable {
+import java.util.List;
+import java.util.Optional;
 
+import static java.util.Arrays.asList;
+import static org.eclipse.microprofile.graphql.client.core.VariableType.varType;
+import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
+
+public interface Variable extends Buildable {
+    /*
+        Helpers
+     */
+    static List<Variable> vars(Variable... vars) {
+        return asList(vars);
+    }
+
+    // (name, scalarType)
+    static Variable var(String name, ScalarType scalarType) {
+        Variable var = getNewInstanceOf(Variable.class);
+
+        var.setName(name);
+        var.setType(varType(scalarType));
+        var.setDefaultValue(Optional.empty());
+
+        return var;
+    }
+
+    // (name, scalarType, defaultValue)
+    static Variable var(String name, ScalarType scalarType, Object defaultValue) {
+        Variable var = getNewInstanceOf(Variable.class);
+
+        var.setName(name);
+        var.setType(varType(scalarType));
+        var.setDefaultValue(Optional.of(defaultValue));
+
+        return var;
+    }
+
+    // (name, objectType)
+    static Variable var(String name, String objectTypeName) {
+        Variable var = getNewInstanceOf(Variable.class);
+
+        var.setName(name);
+        var.setType(varType(objectTypeName));
+        var.setDefaultValue(Optional.empty());
+
+        return var;
+    }
+
+    // (name, objectType, defaultValue)
+    static Variable var(String name, String objectTypeName, Object defaultValue) {
+        Variable var = getNewInstanceOf(Variable.class);
+
+        var.setName(name);
+        var.setType(varType(objectTypeName));
+        var.setDefaultValue(Optional.of(defaultValue));
+
+        return var;
+    }
+
+    // (name, variableType)
+    static Variable var(String name, VariableType varType) {
+        Variable var = getNewInstanceOf(Variable.class);
+
+        var.setName(name);
+        var.setType(varType);
+        var.setDefaultValue(Optional.empty());
+
+        return var;
+    }
+
+    // (name, variableType, defaultValue)
+    static Variable var(String name, VariableType varType, Object defaultValue) {
+        Variable var = getNewInstanceOf(Variable.class);
+
+        var.setName(name);
+        var.setType(varType);
+        var.setDefaultValue(Optional.of(defaultValue));
+
+        return var;
+    }
+
+    /*
+        Getter/Setter
+    */
     String getName();
+
     void setName(String name);
 
     VariableType getType();
+
     void setType(VariableType value);
 
-    Object getDefaultValue();
-    void setDefaultValue(Object value);
+    Optional<Object> getDefaultValue();
+
+    void setDefaultValue(Optional<Object> value);
 }
