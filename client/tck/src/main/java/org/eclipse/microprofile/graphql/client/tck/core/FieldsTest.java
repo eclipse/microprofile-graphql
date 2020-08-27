@@ -15,10 +15,9 @@
  */
 package org.eclipse.microprofile.graphql.client.tck.core;
 
+import org.eclipse.microprofile.graphql.client.core.Document;
 import org.eclipse.microprofile.graphql.client.tck.helper.AssertGraphQL;
 import org.eclipse.microprofile.graphql.client.tck.helper.Utils;
-import org.eclipse.microprofile.graphql.client.core.Document;
-import org.eclipse.microprofile.graphql.client.core.OperationType;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -29,6 +28,7 @@ import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Document.document;
 import static org.eclipse.microprofile.graphql.client.core.Field.field;
 import static org.eclipse.microprofile.graphql.client.core.Operation.operation;
+import static org.eclipse.microprofile.graphql.client.core.OperationType.QUERY;
 
 public class FieldsTest {
 
@@ -37,7 +37,7 @@ public class FieldsTest {
         String expectedRequest = Utils.getResourceFileContent("core/fields.graphql");
 
         Document document = document(
-                operation(OperationType.QUERY,
+                operation(QUERY,
                         field("noArgNoSubField"),
                         field("noArgWithSubField",
                                 field("bool"),
@@ -56,7 +56,6 @@ public class FieldsTest {
         );
 
         String generatedRequest = document.build();
-        //System.out.println(generatedRequest);
         AssertGraphQL.assertEquivalentGraphQLRequest(expectedRequest, generatedRequest);
     }
 }

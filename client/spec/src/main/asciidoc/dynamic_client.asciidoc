@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= GraphQL dynamic Client for MicroProfile
+= MicroProfile GraphQL Dynamic Client
 
 == Rationale
 
@@ -44,13 +44,11 @@ We propose to stay aligned with this, leaving the final implementation free to u
 . *Serialization of custom Java classes to build requests*
 . *Deserialization of responses into custom Java classes*
 
-== Focus of release 1.1
+== Java 8 support
 
-A first version of the client API is planned with MicroProfile GraphQL 1.1.
+Java 8 is still widely used in the industry and we propose to stick to it for a broader adoption.
 
-For this first step, we propose to focus on the following core features.
-
-==== GraphQL components support
+== GraphQL components support
 ****
 *bold*: fully supported components.
 
@@ -92,10 +90,6 @@ blank: not yet supported components.
 ** TypeSystem definition
 ** TypeSystem extension
 
-==== Java 8 support
-
-Java 8 is still widely used in the industry and we propose to stick to it for a broader adoption.
-
 == Next steps
 
 To be studied for next releases:
@@ -106,449 +100,23 @@ To be studied for next releases:
 
 == Workflow of the API
 
-The usual workflow of the API is illustrated with the following snippet:
-[source,Java]
-----
-// Building of the graphql document.
-Document myDocument = document(
-                operation(Operation.Type.QUERY,
-                        field("people",
-                                field("id"),
-                                field("name")
-                        )));
+TODO State diagram: building -> generating -> sending
 
-// Serialization of the document into a string, ready to be sent.
-String request = myDocument.build();
+== API
 
-----
-== Building a GraphQL Document
-.A GraphQL document and how to write it in Java
-image::back2back.jpg[back2back]
+include::../resources/generated/api_class_diagram.asciidoc[]
 
 ****
-*Static factory methods over constructors*
+IMPORTANT: *Static factory methods over constructors*
 
-In order to make the writing of a GraphQL request in Java as close as possible to the original GraphQL's philosophy,
-it has been decided to make the usage of _static factory methods_ an integral part of the API.
-
-Of course, constructors can still be used but at the cost of clarity and
-ease of use.
+In order to make writing of GraphQL requests in Java as close as possible to the original GraphQL's philosophy, *static factory methods* are the recommended way to use the API.
 ****
 
-=== Buildable
-[source,Java]
-----
-public interface Buildable {
-    String build();
-}
-----
+== Building a GraphQL document
 
-The _build_ method is expected to return the corresponding
-GraphQL source of a component.
+TODO: code examples
 
-=== Document
-[source,Java]
-----
-public interface Document extends Buildable {
-    List<Operation> getOperations();
-    void setOperations(List<Operation> operations);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-@SafeVarargs
-public static Document document(Operation... operations) {
-    [...]
-}
-----
-
-=== Operation
-[source,Java]
-----
-public interface Operation extends Buildable {
-
-    enum Type {
-        QUERY,
-        MUTATION,
-        SUBSCRIPTION
-    }
-
-    Type getType();
-    void setType(Type type);
-
-    String getName();
-    void setName(String name);
-
-    List<? extends Variable> getVariables();
-    void setVariables(List<? extends Variable> vars);
-
-    List<? extends Field> getFields();
-    void setFields(List<? extends Field> fields);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-@SafeVarargs
-public static List<Operation> operations(Operation... operations) {
-    [...]
-}
-
-// (fields)
-@SafeVarargs
-public static Operation operation(Field... fields) {
-    [...]
-}
-
-// (vars, fields)
-@SafeVarargs
-public static Operation operation(List<Variable> vars, Field... fields) {
-    [...]
-}
-
-// (type, fields)
-@SafeVarargs
-public static Operation operation(Type type, Field... fields) {
-    [...]
-}
-
-// (type, vars, fields)
-@SafeVarargs
-public static Operation operation(Type type, List<Variable> vars, Field... fields) {
-    [...]
-}
-
-// (name, fields)
-@SafeVarargs
-public static Operation operation(String name, Field... fields) {
-    [...]
-}
-
-// (type, name, fields)
-@SafeVarargs
-public static Operation operation(Type type, String name, Field... fields) {
-    [...]
-}
-
-// (name, vars, fields)
-@SafeVarargs
-public static Operation operation(String name, List<Variable> vars, Field... fields) {
-    [...]
-}
-
-// (type, name, vars, fields)
-@SafeVarargs
-public static Operation operation(Type type, String name, List<Variable> vars, Field... fields) {
-    [...]
-}
-----
-****
-When omitted,
-
-* *Operation's type* parameter will default to _QUERY_.
-* *Operation's name* parameter will default to an _empty string_.
-* *Operation's vars* parameter will default to an _empty list_.
-****
-
-=== Variable
-[source,Java]
-----
-public interface Variable extends Buildable {
-
-    String getName();
-    void setName(String name);
-
-    VariableType getType();
-    void setType(VariableType value);
-
-    Object getDefaultValue();
-    void setDefaultValue(Object value);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-@SafeVarargs
-public static List<Variable> vars(Variable... vars) {
-    [...]
-}
-
-// (name, scalarType)
-public static Variable var(String name, ScalarType scalarType) {
-    [...]
-}
-
-// (name, scalarType, defaultValue)
-public static Variable var(String name, ScalarType scalarType, Object defaultValue) {
-    [...]
-}
-
-// (name, objectType)
-public static Variable var(String name, String objectType) {
-    [...]
-}
-
-// (name, objectType, defaultValue)
-public static Variable var(String name, String objectType, Object defaultValue) {
-    [...]
-}
-
-// (name, VariableType)
-public static Variable var(String name, VariableType type) {
-    [...]
-}
-
-// (name, VariableType, defaultValue)
-public static Variable var(String name, VariableType type, Object defaultValue) {
-    [...]
-}
-----
-
-=== Scalar type
-[source,Java]
-----
-public enum ScalarType {
-    GQL_INT("Int"),
-    GQL_FLOAT("Float"),
-    GQL_STRING("String"),
-    GQL_BOOL("Boolean"),
-    GQL_ID("ID");
-
-    private String type;
-
-    ScalarType(String type) {
-        this.type = type;
-    }
-
-    public String toString() {
-        return type;
-    }
-}
-----
-****
-The *ScalarType enum* is meant to represents the basic scalar types
-as described in the GraphQL spec (https://spec.graphql.org/draft/#sec-Scalars).
-****
-
-=== Variable type
-[source,Java]
-----
-public interface VariableType extends Buildable {
-
-    String getName();
-    void setName(String name);
-
-    boolean isNonNull();
-    void setNonNull(boolean nonNull);
-
-    VariableType getChild();
-    void setChild(VariableType child);
-
-    default boolean isList() {
-        return getChild() != null;
-    }
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-// (scalarType)
-public static VariableType nonNull(ScalarType scalarType) {
-    [...]
-}
-
-// (objectType)
-public static VariableType nonNull(String name) {
-    [...]
-}
-
-// (varType object)
-public static VariableType nonNull(VariableType type) {
-    [...]
-}
-
-// (scalarType)
-public static VariableType list(ScalarType scalarType) {
-    [...]
-}
-
-// (typeName)
-public static VariableType list(String name) {
-    [...]
-}
-
-// (variableType object)
-public static VariableType list(VariableType childVarType) {
-    [...]
-}
-----
-
-=== Field
-
-[source,Java]
-----
-public interface Field extends Buildable {
-
-    String getName();
-    void setName(String name);
-
-    List<? extends Argument> getArguments();
-    void setArguments(List<? extends Argument> arguments);
-
-    List<? extends Field> getFields();
-    void setFields(List<? extends Field> fields);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-@SafeVarargs
-public static List<Field> fields(Field... fields) {
-    [...]
-}
-
-// (name)
-public static Field field(String name) {
-    [...]
-}
-
-// (name, subfields)
-@SafeVarargs
-public static Field field(String name, Field... fields) {
-    [...]
-}
-
-// (name, args)
-@SafeVarargs
-public static Field field(String name, Argument... args) {
-    [...]
-}
-
-// (name, args, subfields)
-@SafeVarargs
-public static Field field(String name, List<Argument> args, Field... fields) {
-    [...]
-}
-----
-
-****
-When omitted, *args* and *fields* parameters will default to an _empty list_.
-****
-
-=== Argument
-[source,Java]
-----
-public interface Argument extends Buildable {
-
-    String getName();
-    void setName(String name);
-
-    Object getValue();
-    void setValue(Object value);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-@SafeVarargs
-public static List<Argument> args(Argument... args) {
-    [...]
-}
-
-// (name, raw value)
-public static Argument arg(String name, Object value) {
-    [...]
-}
-
-// (name, inputObject)
-public static Argument arg(String name, InputObject inputObject) {
-    [...]
-}
-
-// (name, variable)
-public static Argument arg(String name, Variable var) {
-    [...]
-}
-----
-
-=== Input Object
-[source,Java]
-----
-public interface InputObject extends Buildable {
-
-    List<? extends InputObjectField> getInputObjectFields();
-    void setInputObjectFields(List<? extends InputObjectField> inputObjectFields);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-@SafeVarargs
-public static InputObject inputObject(InputObjectField... inputObjectFields) {
-    [...]
-}
-----
-
-=== Input Object Field
-[source,Java]
-----
-public interface InputObjectField extends Buildable {
-
-    String getName();
-    void setName(String name);
-
-    Object getValue();
-    void setValue(Object value);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-// (name, value)
-public static InputObjectField prop(String name, Object value) {
-    [...]
-}
-
-// (name, variable)
-public static InputObjectField prop(String name, Variable var) {
-    [...]
-}
-----
-****
-The keyword *prop* (as in _an object's property_) has been chosen instead of *field*
-to avoid confusion with the notion of _field of a selection set_.
-****
-
-=== Enum
-[source,Java]
-----
-public interface Enum {
-
-    String getValue();
-    void setValue(String value);
-}
-----
-
-==== Static factory methods
-[source,Java]
-----
-public static Enum gqlEnum(String value);
-----
-
-****
-Due to Java's reserved keyword _enum_, the prefixe _gql_ have been added for the static factory method.
-****
-
-== Running a GraphQL document
+== Sending a GraphQL document
 
 Once a GraphQL document has been prepared, it can be run against a server.
 This specification proposes two abstractions for that:

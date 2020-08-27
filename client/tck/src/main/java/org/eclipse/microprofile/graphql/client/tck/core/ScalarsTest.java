@@ -16,10 +16,9 @@
 package org.eclipse.microprofile.graphql.client.tck.core;
 
 
+import org.eclipse.microprofile.graphql.client.core.Document;
 import org.eclipse.microprofile.graphql.client.tck.helper.AssertGraphQL;
 import org.eclipse.microprofile.graphql.client.tck.helper.Utils;
-import org.eclipse.microprofile.graphql.client.core.Document;
-import org.eclipse.microprofile.graphql.client.core.OperationType;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -27,13 +26,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
 
+import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
+import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Document.document;
 import static org.eclipse.microprofile.graphql.client.core.Field.field;
 import static org.eclipse.microprofile.graphql.client.core.InputObject.inputObject;
 import static org.eclipse.microprofile.graphql.client.core.InputObjectField.prop;
-import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
-import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Operation.operation;
+import static org.eclipse.microprofile.graphql.client.core.OperationType.MUTATION;
 
 public class ScalarsTest {
 
@@ -42,7 +42,7 @@ public class ScalarsTest {
         String expectedRequest = Utils.getResourceFileContent("core/scalars.graphql");
 
         Document document = document(
-                operation(OperationType.MUTATION, "scalarHolderMutation",
+                operation(MUTATION, "scalarHolderMutation",
                         field("scalarHolder",
                                 args(
                                         arg("scalarHolder", inputObject(
@@ -108,7 +108,6 @@ public class ScalarsTest {
         );
 
         String generatedRequest = document.build();
-        //System.out.println(generatedRequest);
         AssertGraphQL.assertEquivalentGraphQLRequest(expectedRequest, generatedRequest);
     }
 }

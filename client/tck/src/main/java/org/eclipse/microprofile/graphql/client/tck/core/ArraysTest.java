@@ -15,10 +15,9 @@
  */
 package org.eclipse.microprofile.graphql.client.tck.core;
 
+import org.eclipse.microprofile.graphql.client.core.Document;
 import org.eclipse.microprofile.graphql.client.tck.helper.AssertGraphQL;
 import org.eclipse.microprofile.graphql.client.tck.helper.Utils;
-import org.eclipse.microprofile.graphql.client.core.Document;
-import org.eclipse.microprofile.graphql.client.core.OperationType;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -26,13 +25,14 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
 
+import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
+import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Document.document;
 import static org.eclipse.microprofile.graphql.client.core.Field.field;
 import static org.eclipse.microprofile.graphql.client.core.InputObject.inputObject;
 import static org.eclipse.microprofile.graphql.client.core.InputObjectField.prop;
-import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
-import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Operation.operation;
+import static org.eclipse.microprofile.graphql.client.core.OperationType.QUERY;
 
 public class ArraysTest {
 
@@ -41,7 +41,7 @@ public class ArraysTest {
         String expectedRequest = Utils.getResourceFileContent("core/arrays.graphql");
 
         Document document = document(
-                operation(OperationType.QUERY, "arrayHolderQuery",
+                operation(QUERY, "arrayHolderQuery",
                         field("arrayHolder",
                                 args(
                                         arg("arrayHolder", inputObject(
@@ -107,7 +107,6 @@ public class ArraysTest {
         );
 
         String generatedRequest = document.build();
-        //System.out.println(generatedRequest);
         AssertGraphQL.assertEquivalentGraphQLRequest(expectedRequest, generatedRequest);
     }
 }

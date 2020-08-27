@@ -16,24 +16,24 @@
 package org.eclipse.microprofile.graphql.client.tck.core;
 
 
-import org.eclipse.microprofile.graphql.client.tck.helper.AssertGraphQL;
-import org.eclipse.microprofile.graphql.client.tck.helper.Utils;
 import org.eclipse.microprofile.graphql.client.core.Document;
 import org.eclipse.microprofile.graphql.client.core.InputObject;
-import org.eclipse.microprofile.graphql.client.core.OperationType;
+import org.eclipse.microprofile.graphql.client.tck.helper.AssertGraphQL;
+import org.eclipse.microprofile.graphql.client.tck.helper.Utils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
+import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Document.document;
 import static org.eclipse.microprofile.graphql.client.core.Field.field;
 import static org.eclipse.microprofile.graphql.client.core.InputObject.inputObject;
 import static org.eclipse.microprofile.graphql.client.core.InputObjectField.prop;
-import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
-import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Operation.operation;
+import static org.eclipse.microprofile.graphql.client.core.OperationType.MUTATION;
 
 public class NestedObjectsTest {
 
@@ -86,7 +86,7 @@ public class NestedObjectsTest {
         object0.getInputObjectFields().add(prop("nestedObject", object1));
 
         Document document = document(
-                operation(OperationType.MUTATION, "nestedObjects",
+                operation(MUTATION, "nestedObjects",
                         field("nestedObjectHolder", args(
                                 arg("nestedObjectHolder", object0)),
                                 field("level"),

@@ -16,23 +16,24 @@
 package org.eclipse.microprofile.graphql.client.tck.core;
 
 
+import org.eclipse.microprofile.graphql.client.core.Document;
+import org.eclipse.microprofile.graphql.client.core.Variable;
 import org.eclipse.microprofile.graphql.client.tck.helper.AssertGraphQL;
 import org.eclipse.microprofile.graphql.client.tck.helper.Utils;
-import org.eclipse.microprofile.graphql.client.core.Document;
-import org.eclipse.microprofile.graphql.client.core.OperationType;
-import org.eclipse.microprofile.graphql.client.core.Variable;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
+import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Document.document;
 import static org.eclipse.microprofile.graphql.client.core.Field.field;
 import static org.eclipse.microprofile.graphql.client.core.InputObject.inputObject;
 import static org.eclipse.microprofile.graphql.client.core.InputObjectField.prop;
-import static org.eclipse.microprofile.graphql.client.core.Argument.arg;
-import static org.eclipse.microprofile.graphql.client.core.Argument.args;
 import static org.eclipse.microprofile.graphql.client.core.Operation.operation;
+import static org.eclipse.microprofile.graphql.client.core.OperationType.MUTATION;
+import static org.eclipse.microprofile.graphql.client.core.OperationType.QUERY;
 import static org.eclipse.microprofile.graphql.client.core.ScalarType.GQL_BOOL;
 import static org.eclipse.microprofile.graphql.client.core.ScalarType.GQL_FLOAT;
 import static org.eclipse.microprofile.graphql.client.core.ScalarType.GQL_ID;
@@ -52,14 +53,13 @@ public class VariablesTest {
         Variable varName = var("name", GQL_STRING, "Lee Byron");
 
         Document document = document(
-                operation(OperationType.QUERY,
+                operation(QUERY,
                         vars(varName),
                         field("helloYou", arg("name", varName))
                 )
         );
 
         String generatedRequest = document.build();
-        //System.out.println(generatedRequest);
         AssertGraphQL.assertEquivalentGraphQLRequest(expectedRequest, generatedRequest);
     }
 
@@ -72,7 +72,7 @@ public class VariablesTest {
         Variable varString = var("varString", nonNull(GQL_STRING));
 
         Document document = document(
-                operation(OperationType.QUERY,
+                operation(QUERY,
                         vars(
                                 varBool,
                                 varDouble,
@@ -91,7 +91,6 @@ public class VariablesTest {
         );
 
         String generatedRequest = document.build();
-        //System.out.println(generatedRequest);
         AssertGraphQL.assertEquivalentGraphQLRequest(expectedRequest, generatedRequest);
     }
 
@@ -106,7 +105,7 @@ public class VariablesTest {
         Variable varID = var("varID", GQL_ID);
 
         Document document = document(
-                operation(OperationType.QUERY,
+                operation(QUERY,
                         vars(
                                 varBool,
                                 varInt,
@@ -167,7 +166,7 @@ public class VariablesTest {
          */
 
         Document document = document(
-                operation(OperationType.MUTATION,
+                operation(MUTATION,
                         vars(
                                 varInt1,
                                 varInt12,
@@ -199,7 +198,6 @@ public class VariablesTest {
         );
 
         String generatedRequest = document.build();
-        //System.out.println(generatedRequest);
         AssertGraphQL.assertEquivalentGraphQLRequest(expectedRequest, generatedRequest);
     }
 }
