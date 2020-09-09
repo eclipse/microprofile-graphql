@@ -43,7 +43,7 @@ public class DynamicPaths {
     public static DirectoryStream<Path> getDataForSpecification() throws IOException, URISyntaxException {
         URL jar = DynamicPaths.class.getProtectionDomain().getCodeSource().getLocation();
         Path jarFile = Paths.get(jar.toURI());
-        FileSystem fs = FileSystems.newFileSystem(jarFile, null);
+        FileSystem fs = FileSystems.newFileSystem(jarFile, (ClassLoader)null);
         return Files.newDirectoryStream(fs.getPath(SPEC));
     }
 }
