@@ -37,7 +37,7 @@ import static org.eclipse.microprofile.graphql.client.core.OperationType.QUERY;
 public class ArraysTest {
 
     @Test
-    public void arrays() throws IOException, URISyntaxException {
+    public void arraysTest() throws IOException, URISyntaxException {
         String expectedRequest = Utils.getResourceFileContent("core/arrays.graphql");
 
         Document document = document(

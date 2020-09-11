@@ -38,7 +38,7 @@ import static org.eclipse.microprofile.graphql.client.core.OperationType.MUTATIO
 public class ScalarsTest {
 
     @Test
-    public void scalars() throws IOException, URISyntaxException {
+    public void scalarsTest() throws IOException, URISyntaxException {
         String expectedRequest = Utils.getResourceFileContent("core/scalars.graphql");
 
         Document document = document(

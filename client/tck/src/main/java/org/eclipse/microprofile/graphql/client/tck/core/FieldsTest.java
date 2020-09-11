@@ -33,7 +33,7 @@ import static org.eclipse.microprofile.graphql.client.core.OperationType.QUERY;
 public class FieldsTest {
 
     @Test
-    public void fieldTest() throws IOException, URISyntaxException {
+    public void fieldsTest() throws IOException, URISyntaxException {
         String expectedRequest = Utils.getResourceFileContent("core/fields.graphql");
 
         Document document = document(

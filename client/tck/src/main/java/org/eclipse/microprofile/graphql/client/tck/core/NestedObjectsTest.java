@@ -38,7 +38,7 @@ import static org.eclipse.microprofile.graphql.client.core.OperationType.MUTATIO
 public class NestedObjectsTest {
 
     @Test
-    public void nestedObjects() throws IOException, URISyntaxException {
+    public void nestedObjectsTest() throws IOException, URISyntaxException {
         String expectedRequest = Utils.getResourceFileContent("core/nestedObjects.graphql");
 
         InputObject baseObject0 = inputObject(

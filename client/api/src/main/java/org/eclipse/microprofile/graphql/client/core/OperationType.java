@@ -17,6 +17,5 @@ package org.eclipse.microprofile.graphql.client.core;
 
 public enum OperationType {
     QUERY,
-    MUTATION,
-    SUBSCRIPTION
+    MUTATION
 }

@@ -98,10 +98,6 @@ To be studied for next releases:
 * Reactive API
 * https://spec.graphql.org/draft/#sec-Document[Multiple operations inside a GraphQL document]
 
-== Workflow of the API
-
-TODO State diagram: building -> generating -> sending
-
 == API
 
 include::../resources/generated/api_class_diagram.asciidoc[]
@@ -109,12 +105,141 @@ include::../resources/generated/api_class_diagram.asciidoc[]
 ****
 IMPORTANT: *Static factory methods over constructors*
 
-In order to make writing of GraphQL requests in Java as close as possible to the original GraphQL's philosophy, *static factory methods* are the recommended way to use the API.
+In order to make writing of GraphQL requests in Java as close as possible to the original GraphQL's philosophy, *static factory methods* are the recommended way to use the API (those are the underlined methods in the diagram above).
 ****
 
-== Building a GraphQL document
+== Writing a GraphQL document
 
-TODO: code examples
+Instead of describing each GraphQL components as it is already done in the https://spec.graphql.org/draft/[GraphQL specification], we will simply expose multiple usecases of the API.
+
+Samples are inspired by https://github.com/graphql/graphql-js/[graphql-js] tests suite.
+
+=== Basic Queries
+.GraphQL
+[source,graphql,numbered]
+----
+query HeroNameQuery {
+    hero {
+        name
+    }
+}
+----
+.Java
+[source,java,numbered]
+----
+Document gqlDoc = document(
+    operation("HeroNameQuery",
+        field("hero",
+            field("name")))
+);
+----
+
+'''
+
+.GraphQL
+[source,graphql,numbered]
+----
+query HeroNameAndFriendsQuery {
+    hero {
+        id
+        name
+        friends {
+            name
+        }
+    }
+}
+----
+.Java
+[source,java,numbered]
+----
+Document gqlDoc = document(
+    operation("HeroNameAndFriendsQuery",
+        field("hero",
+            field("id"),
+            field("name"),
+            field("friends",
+                field("name"))))
+);
+----
+
+=== Nested Queries
+.GraphQL
+[source,graphql,numbered]
+----
+query NestedQuery {
+    hero {
+        name
+        friends {
+            name
+            appearsIn
+            friends {
+                name
+            }
+        }
+    }
+}
+----
+.Java
+[source,java,numbered]
+----
+Document gqlDoc = document(
+    operation("NestedQuery",
+        field("hero",
+            field("name"),
+            field("friends",
+                field("name"),
+                field("appearsIn"),
+                field("friends",
+                    field("name")))))
+);
+----
+
+=== Queries with arguments
+.GraphQL
+[source,graphql,numbered]
+----
+query FetchLukeAndC3POQuery {
+    human(id: "1000") {
+        name
+    }
+    droid(id: "2000") {
+        name
+    }
+}
+----
+.Java
+[source,java,numbered]
+----
+Document gqlDoc = document(
+    operation("FetchLukeAndC3POQuery",
+        field("human", args(arg("id", "1000")),
+            field("name")),
+        field("droid", args(arg("id", "2000")),
+            field("name")))
+);
+----
+
+=== Queries with variables
+.GraphQL
+[source,graphql,numbered]
+----
+query FetchSomeIDQuery($someId: String!) {
+    human(id: $someId) {
+        name
+    }
+}
+----
+.Java
+[source,java,numbered]
+----
+Variable someId = var("someId", nonNull(GQL_STRING));
+
+Document gqlDoc = document(
+    operation("FetchSomeIDQuery", vars(someId),
+        field("human", args(arg("id", someId)),
+            field("name"))
+);
+----
 
 == Sending a GraphQL document
 
