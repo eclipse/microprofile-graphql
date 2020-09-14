@@ -1,4 +1,4 @@
-[plantuml,api_class_diagram,png]
+[plantuml,api_core_class_diagram,png]
 ----
 @startuml
 left to right direction
@@ -90,7 +90,6 @@ interface Operation {
 enum OperationType {
 	{field} +MUTATION
 	{field} +QUERY
-	{field} +SUBSCRIPTION
 }
 
 

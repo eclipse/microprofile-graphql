@@ -100,7 +100,7 @@ To be studied for next releases:
 
 == API
 
-include::../resources/generated/api_class_diagram.asciidoc[]
+include::../resources/generated/api_core_class_diagram.asciidoc[]
 
 ****
 IMPORTANT: *Static factory methods over constructors*
@@ -110,7 +110,7 @@ In order to make writing of GraphQL requests in Java as close as possible to the
 
 == Writing a GraphQL document
 
-Instead of describing each GraphQL components as it is already done in the https://spec.graphql.org/draft/[GraphQL specification], we will simply expose multiple usecases of the API.
+Instead of describing each GraphQL components as it is already done in the https://spec.graphql.org/draft/[GraphQL specification], we will simply show multiple usecases of the API.
 
 Samples are inspired by https://github.com/graphql/graphql-js/[graphql-js] tests suite.
 
@@ -246,57 +246,41 @@ Document gqlDoc = document(
 Once a GraphQL document has been prepared, it can be run against a server.
 This specification proposes two abstractions for that:
 
-. **Request**: prepare a request execution including the request and optional variables.
-. **Response**: a holder for a GraphQL response including optional errors and data.
+. **Request**: prepare a GraphQL request execution with the possibility to set variables.
 
-=== GraphQLClientBuilder
+. **Response**: a holder for a GraphQL response including data and errors (if any).
 
-A **ClientBuilder** class is defined to bootstrap a client implementation. This can be done using the Service Loader approach.
+=== Client API
+include::../resources/generated/api_client_class_diagram.asciidoc[]
 
-==== Interface defintion
+==== Request
+===== Initialization
+
+A Request object is initialised with a GraphQL document:
 [source,Java]
 ----
-public interface ClientBuilder {
-    Request newRequest(String request);
-}
-----
-=== Request
+Document gqlDoc = document(
+                operation("HeroNameQuery",
+                        field("hero",
+                                field("name"))));
 
-==== Interface Definition
+Request request = new DynaQLRequest(gqlDoc.build());
+----
+===== Setting variables
+Optional GraphQL variables can be provided fluently:
 [source,Java]
 ----
-public interface Request {
-
-    Request addVariable(String name, Object value);
-
-    Request resetVariables();
-
-    String toJson();
-}
-----
-
-==== Initialization
-
-A Request object is initialised from the builder with a GraphQL request obtained from a Document:
-[source,Java]
-----
-Request graphQLRequest = graphQLClientBuilder.newRequest(document.build());
-----
-==== Setting variables
-Optional GraphQL variables can be provided in a fluent manner:
-[source,Java]
-----
-graphQLRequest
-    .addVariable("surname", "James")
-    .addVariable("personId", 1);
+Request request = new DynaQLRequest(document)
+            .setVariable("surname", "Mike")
+            .setVariable("personId", 1001);
 ----
 In order to make it reuseable for other executions, variables can also be reset:
 [source,Java]
 ----
-graphQLRequest
+request
     .resetVariables()
-    .addVariable("surname", "Roux")
-    .addVariable("personId", 2);
+    .setVariable("surname", "John")
+    .setVariable("personId", 2002);
 ----
 With this approach, a _Request_ object is immutable regarding the GraphQL document to send and mutable regarding the variables.
 It is the responsibility of the caller to ensure the consistency between the request and the variables.
@@ -305,124 +289,33 @@ Once initialized with a document and optional variables, a _Request_ object can 
 
 For instance:
 
-* JAX-RS in a Jakarta EE or MicroProfile container
+* JAX-RS in a Jakarta EE or MicroProfile container.
 * raw HTTP using a library such as Apache HTTP client.
 
-==== Examples of JAX-RS transport
+You can lookup https://github.com/worldline/dynaql/[DynaQL] for an implementation of both.
 
-To make things more concrete, we propose some examples using JAX-RS.
+==== Response
 
-Suppose we a have an initialized _Request_. It can be a mutation or a query. We can send it and get the response in the following way;
-[source,Java]
-----
-Client client = clientBuilder.build();
+Response is a holder both for data and errors with some handy capabilities to retrieve the data directly as POJOs.
 
-Response response = client
-        .target("http://localhost:8080/graphql")
-        .request(MediaType.APPLICATION_JSON)
-        .post(json(graphQLRequest));
-----
-A registered JAX-RS MessageBodyWriter is needed to automatically turn a GraphQLRequest object into a JSON structure. This is the responsibility of the implementation to provide it.
+****
+NOTE: *Partial results*
 
-In the previous example, a generic JAX-RS Response is returned. The GraphQLResponse (described below) can then be read as an entity:
-[source,Java]
-----
-Response graphQLResponse = response
-    .readEntity(Response.class);
-----
+In GraphQL you can have _partial results_, meaning you can get data for some fields and errors for some others in the same response.
+****
 
-Alternatively, we can get a _Response_ directly as a typed entity:
-[source,Java]
-----
-Response graphQLResponse = client
-        .target("http://localhost:8080/graphql")
-        .request(MediaType.APPLICATION_JSON)
-        .post(json(graphQLRequest), Response.class);
-----
-A registered JAX-RS MessageBodyReader is needed to turn a JSON structure into a _Response_ object. This is the responsibility of the implementation to provide it.
-
-Using JAX-RS, we can even run a request in a reactive way:
-[source,Java]
-----
-CompletionStage<Response> csr = client
-        .target("http://localhost:8080/graphql")
-        .request()
-        .rx()
-        .post(json(graphQLRequest), Response.class);
-
-        // Do some other stuff here...
-
-        csr.thenAccept(// Async processing here });
-----
-
-==== Examples of HTTP transport
-
-Let's see how to use a HTTP transport layer with Apache HttpClient:
-[source,Java]
-----
-// Prepare the HTTP POST
-URI endpoint = new URI("http://localhost:8080/graphql");
-HttpPost httpPost = new HttpPost(new URI(endpoint));
-
-StringEntity stringEntity = new StringEntity(jsonRequest.toJson(), ContentType.APPLICATION_JSON);
-httpPost.setEntity(stringEntity);
-
-// Execute the POST
-CloseableHttpClient httpClient = HttpClients.createDefault());
-CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
-
-// Read the response
-InputStream contentStream = serverResponse.getEntity().getContent();
-----
-For the sake of simplicity, this code does not take into account configuration, exception and resource management and omits the details of data conversion.
-
-=== Response
-
-In the previous examples, we have seen how to get a GraphQLResponse from a server.
-
-GraphQLResponse is a holder both for data and errors.
-
-
-==== Interface definition
-[source,Java]
-----
-public interface Response {
-
-    JsonObject getData();
-    List<Error> getErrors();
-
-    <T> List<T> getList(Class<T> dataType, String rootField);
-    <T> T getObject(Class<T> dataType, String rootField);
-
-    boolean hasData();
-
-    boolean hasError();
-}
-----
-[source,Java]
-----
-public interface Error {
-
-    String getMessage();
-    List<Map<String, Integer>> getLocations();
-
-    Object[] getPath();
-    Map<String, Object> getExtensions();
-}
-----
-
-==== Getting errors
+===== Getting errors
 We can check if there is any error and access each of them:
 [source, Java]
 ----
-if ( graphQLResponse.hasError() ) {
+if (response.hasError()) {
     log.warn("GraphQL error:");
-    graphQLResponse.getErrors().forEach( e -> log.warning(e.toString()) );
+    graphQLResponse.getErrors().forEach(e -> log.warning(e.toString()));
 }
 ----
 
 The getErrors() method returns a list of _Error_ objects.
-In accordance with the specification, a _Error_ is made of:
+In accordance with the specification, an _Error_ is made of:
 
 * a message
 * a list of locations
@@ -435,20 +328,20 @@ It is the responsibility of the client to decide how to deal with GraphQL errors
 The hasData method enables to check if there is any data:
 [source, Java]
 ----
-if (graphQLResponse.hasData())
+if (response.hasData())
     log.info("Data inside");
 ----
 
 Data can be obtained in 2 ways:
 
-* *as a generic JsonObject*: using the getData method, it is the responsibility of the caller to turn this JsonObject into application objects.
-* *as an application object* (or a list of them): using the getObject (or getList) method. In that case, it is necessary to provide the expected data rootfield to be retrieved.
+* *as a generic JsonObject*: using the getData method.
+* *as a POJO* (or a list of them): using the getObject (or getList) method. In that case, it is necessary to provide the expected data rootfield to be retrieved.
 
 For instance, with a UserProfile application class:
 [source, Java]
 ----
 // Get the data as a generic JsonObject
-JsonObject data = graphQLResponse.getData();
+JsonObject data = response.getData();
 
 // Turn it into a UserProfile object
 JsonObject myData = data.getJsonObject("profile");
@@ -457,13 +350,13 @@ UserProfile userProfile = jsonb.fromJson(myData.toString(), Profile.class);
 
 // OR
 
-// Directly get a UserProfile object from graphqlReponse
-UserProfile userProfile = graphQLResponse.getObject(Profile.class, "profile");
+// Directly get a UserProfile object from response
+UserProfile userProfile = response.getObject(Profile.class, "profile");
 ----
 
 In the same way, the getList method enables to get a list of objects:
 [source,Java]
 ----
-// Get a list of Person from a graphQLResponse
-List<Person> people = graphQLResponse.getList(Person.class, "people");
+// Get a list of Person from a response
+List<Person> people = response.getList(Person.class, "people");
 ----

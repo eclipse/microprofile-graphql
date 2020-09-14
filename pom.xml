@@ -366,7 +366,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>**/api_class_diagram.asciidoc</exclude>
+                        <exclude>**/resources/generated/*</exclude>
                         <exclude>bnd.bnd</exclude>
                         <exclude>*.log</exclude>
                         <exclude>.checkstyle</exclude>
