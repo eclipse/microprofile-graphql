@@ -1,0 +1,40 @@
+[plantuml,api_client_class_diagram,png]
+----
+@startuml
+top to bottom direction
+
+interface Error {
+	{method}  {abstract} +getExtensions () : Map
+	{method}  {abstract} +getLocations () : List
+	{method}  {abstract} +getMessage () : String
+	{method}  {abstract} +getPath () : Object[]
+}
+
+
+interface Request {
+	{method}  {abstract} +getDocument () : String
+	{method}  {abstract} +getVariable ( String ) : Object
+	{method}  {abstract} +getVariables () : Map
+	{method}  {abstract} +resetVariables () : Request
+	{method}  {abstract} +setVariable ( String , Object ) : Request
+	{method}  {abstract} +setVariables ( Map ) : void
+	{method}  {abstract} +toJson () : String
+}
+
+
+interface Response {
+	{method}  {abstract} +getData () : JsonObject
+	{method}  {abstract} +getErrors () : List
+	{method}  {abstract} +getList ( Class , String ) : List
+	{method}  {abstract} +getObject ( Class , String ) : Object
+	{method}  {abstract} +hasData () : boolean
+	{method}  {abstract} +hasError () : boolean
+}
+
+
+
+
+
+
+@enduml
+----

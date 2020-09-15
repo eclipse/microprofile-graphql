@@ -13,11 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.eclipse.microprofile.graphql.client.core;
 
-public interface Enum {
+import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
 
+public interface Enum extends Buildable {
+    /*
+        Static factory methods
+    */
+    static Enum gqlEnum(String value) {
+        Enum gqlEnum = getNewInstanceOf(Enum.class);
+
+        gqlEnum.setValue(value);
+
+        return gqlEnum;
+    }
+
+
+    /*
+        Getter/Setter
+    */
     String getValue();
+
     void setValue(String value);
 }

@@ -22,9 +22,11 @@ import java.util.List;
 public interface Response {
 
     JsonObject getData();
+
     List<Error> getErrors();
 
     <T> List<T> getList(Class<T> dataType, String rootField);
+
     <T> T getObject(Class<T> dataType, String rootField);
 
     boolean hasData();

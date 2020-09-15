@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.eclipse.microprofile.graphql.client.core.exceptions;
 
-package org.eclipse.microprofile.graphql.client;
-
-public interface ClientBuilder {
-    Request newRequest(String request);
+public class BuildException extends RuntimeException {
+    public BuildException(String msg) {
+        super(msg);
+    }
 }

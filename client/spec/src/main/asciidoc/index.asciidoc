@@ -34,4 +34,5 @@ endif::[]
 
 include::license-alv2.asciidoc[]
 
-include::client.asciidoc[]
+include::dynamic_client.asciidoc[]
+

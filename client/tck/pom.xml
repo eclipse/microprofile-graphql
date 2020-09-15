@@ -27,12 +27,31 @@
     <name>MicroProfile GraphQL Client :: TCK</name>
     <description>Client-side code-first GraphQL APIs for MicroProfile :: TCK</description>
 
+    <properties>
+        <!-- Testing -->
+        <junit.jupiter.version>5.7.0</junit.jupiter.version>
+        <graphql-java.version>15.0</graphql-java.version>
+    </properties>
+
     <dependencies>
+        <!-- Dynamic Client API -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>microprofile-graphql-client-api</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- Testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java</artifactId>
+            <version>${graphql-java.version}</version>
         </dependency>
     </dependencies>
 
