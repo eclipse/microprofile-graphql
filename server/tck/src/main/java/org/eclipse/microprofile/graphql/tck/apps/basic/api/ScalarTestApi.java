@@ -283,7 +283,7 @@ public class ScalarTestApi {
 
     @Query
     @Description("Testing transformed date as a response")
-    @DateFormat(value = "dd MMM yyyy")
+    @DateFormat(value = "dd MMM yyyy", locale = "en-GB")
     public LocalDate transformedDate(){
         String date = "2016-08-16";
         return LocalDate.parse(date);

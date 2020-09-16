@@ -22,7 +22,7 @@ image:https://badges.gitter.im/eclipse/microprofile-graphql.svg[link="https://gi
 
 = Microprofile GraphQL Specification
 
-Read the https://download.eclipse.org/microprofile/microprofile-graphql-1.0.1/microprofile-graphql.html[MicroProfile GraphQL 1.0.1] Specification
+Read the https://download.eclipse.org/microprofile/microprofile-graphql-1.0.2/microprofile-graphql.html[MicroProfile GraphQL 1.0.2] Specification
 
 == Structure
 
@@ -41,7 +41,7 @@ Implementations can decide to implement only the Server, or only the Client, or 
 <dependency>
   <groupId>org.eclipse.microprofile.graphql</groupId>
   <artifactId>microprofile-graphql-api</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
 </dependency>
 ----
 
