@@ -381,6 +381,7 @@
                         <exclude>**/.classpath</exclude>
                         <exclude>**/.project</exclude>
                         <exclude>**/.github/**</exclude>
+                        <exclude>**/resources/generated/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>

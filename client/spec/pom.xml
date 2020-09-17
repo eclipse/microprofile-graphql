@@ -14,7 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.eclipse.microprofile.graphql</groupId>
@@ -22,21 +23,51 @@
         <version>1.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
-    
+
     <artifactId>microprofile-graphql-client-spec</artifactId>
     <packaging>pom</packaging>
-    
+
     <name>MicroProfile GraphQL Client :: Specification</name>
     <description>Client-side code-first GraphQL APIs for MicroProfile :: Specification</description>
-    
+
+    <dependencies>
+        <!-- Dynamic Client API -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>microprofile-graphql-client-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Needed to generate the class diagram for the client API -->
+        <dependency>
+            <groupId>jakarta.json</groupId>
+            <artifactId>jakarta.json-api</artifactId>
+            <version>1.1.6</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
     <build>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
-            
             <plugin>
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
-                
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-diagram</artifactId>
+                        <version>2.0.2</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <requires>
+                        <require>asciidoctor-diagram</require>
+                    </requires>
+                    <attributes>
+                        <data-uri/>
+                    </attributes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>generate-pdf-doc</id>
@@ -59,9 +90,61 @@
                         </configuration>
                     </execution>
                 </executions>
-                
             </plugin>
-            
+
+<!--
+                plantuml-generator-maven-plugin(jibz-0.0.1-SNAPSHOT) not yet published.
+                If you want to generate the diagrams, please clone this repo locally
+                https://github.com/thejibz/plantuml-generator and run a "mvn install" on it.
+
+-->
+            <plugin>
+                <groupId>de.elnarion.maven</groupId>
+                <artifactId>plantuml-generator-maven-plugin</artifactId>
+                <version>jibz-0.0.1-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <id>generate-api_core-diagram</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>src/main/resources/generated</outputDirectory>
+                            <outputFilename>api_core_class_diagram.asciidoc</outputFilename>
+                            <asciidocDiagramName>api_core_class_diagram</asciidocDiagramName>
+                            <enableAsciidocWrapper>true</enableAsciidocWrapper>
+                            <simplifyDiagrams>true</simplifyDiagrams>
+                            <diagramDirection>left to right direction</diagramDirection>
+                            <scanPackages>
+                                <scanPackage>
+                                    org.eclipse.microprofile.graphql.client.core
+                                </scanPackage>
+                            </scanPackages>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>generate-api_client-diagram</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <outputDirectory>src/main/resources/generated</outputDirectory>
+                            <outputFilename>api_client_class_diagram.asciidoc</outputFilename>
+                            <asciidocDiagramName>api_client_class_diagram</asciidocDiagramName>
+                            <enableAsciidocWrapper>true</enableAsciidocWrapper>
+                            <simplifyDiagrams>true</simplifyDiagrams>
+                            <diagramDirection>top to bottom direction</diagramDirection>
+                            <scanPackages>
+                                <scanPackage>
+                                    org.eclipse.microprofile.graphql.client
+                                </scanPackage>
+                            </scanPackages>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

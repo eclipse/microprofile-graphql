@@ -13,13 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.eclipse.microprofile.graphql.client.core;
 
 import java.util.List;
 
-public interface InputObject extends Buildable {
+import static java.util.Arrays.asList;
+import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
 
-    List<? extends InputObjectField> getInputObjectFields();
-    void setInputObjectFields(List<? extends InputObjectField> inputObjectFields);
+public interface InputObject extends Buildable {
+    /*
+        Static factory methods
+    */
+    static InputObject inputObject(InputObjectField... inputObjectFields) {
+        InputObject inputObject = getNewInstanceOf(InputObject.class);
+
+        inputObject.setInputObjectFields(asList(inputObjectFields));
+
+        return inputObject;
+    }
+
+    /*
+        Getter/Setter
+     */
+    List<InputObjectField> getInputObjectFields();
+    void setInputObjectFields(List<InputObjectField> inputObjectFields);
 }

@@ -1,0 +1,155 @@
+[plantuml,api_core_class_diagram,png]
+----
+@startuml
+left to right direction
+
+interface Argument {
+	{method}  {static} +arg ( String , InputObject ) : Argument
+	{method}  {static} +arg ( String , Object ) : Argument
+	{method}  {static} +arg ( String , Variable ) : Argument
+	{method}  {static} +args ( Argument[] ) : List
+	{method}  {abstract} +getName () : String
+	{method}  {abstract} +getValue () : Object
+	{method}  {abstract} +setName ( String ) : void
+	{method}  {abstract} +setValue ( Object ) : void
+}
+
+
+interface Buildable {
+	{method}  {abstract} +build () : String
+}
+
+
+interface Document {
+	{method}  {static} +document ( Operation[] ) : Document
+	{method}  {abstract} +getOperations () : List
+	{method}  {abstract} +setOperations ( List ) : void
+}
+
+
+interface Enum {
+	{method}  {abstract} +getValue () : String
+	{method}  {static} +gqlEnum ( String ) : Enum
+	{method}  {abstract} +setValue ( String ) : void
+}
+
+
+interface Field {
+	{method}  {static} +field ( String ) : Field
+	{method}  {static} +field ( String , Argument[] ) : Field
+	{method}  {static} +field ( String , Field[] ) : Field
+	{method}  {static} +field ( String , List , Field[] ) : Field
+	{method}  {static} +fields ( Field[] ) : List
+	{method}  {abstract} +getArguments () : List
+	{method}  {abstract} +getFields () : List
+	{method}  {abstract} +getName () : String
+	{method}  {abstract} +setArguments ( List ) : void
+	{method}  {abstract} +setFields ( List ) : void
+	{method}  {abstract} +setName ( String ) : void
+}
+
+
+interface InputObject {
+	{method}  {abstract} +getInputObjectFields () : List
+	{method}  {static} +inputObject ( InputObjectField[] ) : InputObject
+	{method}  {abstract} +setInputObjectFields ( List ) : void
+}
+
+
+interface InputObjectField {
+	{method}  {abstract} +getName () : String
+	{method}  {abstract} +getValue () : Object
+	{method}  {static} +prop ( String , Object ) : InputObjectField
+	{method}  {static} +prop ( String , Variable ) : InputObjectField
+	{method}  {abstract} +setName ( String ) : void
+	{method}  {abstract} +setValue ( Object ) : void
+}
+
+
+interface Operation {
+	{method}  {abstract} +getFields () : List
+	{method}  {abstract} +getName () : String
+	{method}  {abstract} +getType () : OperationType
+	{method}  {abstract} +getVariables () : List
+	{method}  {static} +operation ( Field[] ) : Operation
+	{method}  {static} +operation ( List , Field[] ) : Operation
+	{method}  {static} +operation ( OperationType , Field[] ) : Operation
+	{method}  {static} +operation ( String , Field[] ) : Operation
+	{method}  {static} +operation ( OperationType , List , Field[] ) : Operation
+	{method}  {static} +operation ( OperationType , String , Field[] ) : Operation
+	{method}  {static} +operation ( String , List , Field[] ) : Operation
+	{method}  {static} +operation ( OperationType , String , List , Field[] ) : Operation
+	{method}  {static} +operations ( Operation[] ) : List
+	{method}  {abstract} +setFields ( List ) : void
+	{method}  {abstract} +setName ( String ) : void
+	{method}  {abstract} +setType ( OperationType ) : void
+	{method}  {abstract} +setVariables ( List ) : void
+}
+
+
+enum OperationType {
+	{field} +MUTATION
+	{field} +QUERY
+}
+
+
+enum ScalarType {
+	{field} +Boolean
+	{field} +Float
+	{field} +ID
+	{field} +Int
+	{field} +String
+}
+
+
+interface Variable {
+	{method}  {abstract} +getDefaultValue () : Optional
+	{method}  {abstract} +getName () : String
+	{method}  {abstract} +getType () : VariableType
+	{method}  {abstract} +setDefaultValue ( Optional ) : void
+	{method}  {abstract} +setName ( String ) : void
+	{method}  {abstract} +setType ( VariableType ) : void
+	{method}  {static} +var ( String , ScalarType ) : Variable
+	{method}  {static} +var ( String , String ) : Variable
+	{method}  {static} +var ( String , VariableType ) : Variable
+	{method}  {static} +var ( String , ScalarType , Object ) : Variable
+	{method}  {static} +var ( String , String , Object ) : Variable
+	{method}  {static} +var ( String , VariableType , Object ) : Variable
+	{method}  {static} +vars ( Variable[] ) : List
+}
+
+
+interface VariableType {
+	{method}  {abstract} +getChild () : VariableType
+	{method}  {abstract} +getName () : String
+	{method} +isList () : boolean
+	{method}  {abstract} +isNonNull () : boolean
+	{method}  {static} +list ( ScalarType ) : VariableType
+	{method}  {static} +list ( String ) : VariableType
+	{method}  {static} +list ( VariableType ) : VariableType
+	{method}  {static} +nonNull ( ScalarType ) : VariableType
+	{method}  {static} +nonNull ( String ) : VariableType
+	{method}  {static} +nonNull ( VariableType ) : VariableType
+	{method}  {abstract} +setChild ( VariableType ) : void
+	{method}  {abstract} +setName ( String ) : void
+	{method}  {abstract} +setNonNull ( boolean ) : void
+	{method}  {static} +varType ( ScalarType ) : VariableType
+	{method}  {static} +varType ( String ) : VariableType
+}
+
+
+
+
+Argument ..|>  Buildable
+Document ..|>  Buildable
+Enum ..|>  Buildable
+Field ..|>  Buildable
+InputObject ..|>  Buildable
+InputObjectField ..|>  Buildable
+Operation ..|>  Buildable
+Variable ..|>  Buildable
+VariableType ..|>  Buildable
+
+
+@enduml
+----
