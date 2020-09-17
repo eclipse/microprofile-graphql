@@ -98,53 +98,53 @@
                 https://github.com/thejibz/plantuml-generator and run a "mvn install" on it.
 
 -->
-            <plugin>
-                <groupId>de.elnarion.maven</groupId>
-                <artifactId>plantuml-generator-maven-plugin</artifactId>
-                <version>jibz-0.0.1-SNAPSHOT</version>
-                <executions>
-                    <execution>
-                        <id>generate-api_core-diagram</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <outputDirectory>src/main/resources/generated</outputDirectory>
-                            <outputFilename>api_core_class_diagram.asciidoc</outputFilename>
-                            <asciidocDiagramName>api_core_class_diagram</asciidocDiagramName>
-                            <enableAsciidocWrapper>true</enableAsciidocWrapper>
-                            <simplifyDiagrams>true</simplifyDiagrams>
-                            <diagramDirection>left to right direction</diagramDirection>
-                            <scanPackages>
-                                <scanPackage>
-                                    org.eclipse.microprofile.graphql.client.core
-                                </scanPackage>
-                            </scanPackages>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>generate-api_client-diagram</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <outputDirectory>src/main/resources/generated</outputDirectory>
-                            <outputFilename>api_client_class_diagram.asciidoc</outputFilename>
-                            <asciidocDiagramName>api_client_class_diagram</asciidocDiagramName>
-                            <enableAsciidocWrapper>true</enableAsciidocWrapper>
-                            <simplifyDiagrams>true</simplifyDiagrams>
-                            <diagramDirection>top to bottom direction</diagramDirection>
-                            <scanPackages>
-                                <scanPackage>
-                                    org.eclipse.microprofile.graphql.client
-                                </scanPackage>
-                            </scanPackages>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>de.elnarion.maven</groupId>-->
+<!--                <artifactId>plantuml-generator-maven-plugin</artifactId>-->
+<!--                <version>jibz-0.0.1-SNAPSHOT</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>generate-api_core-diagram</id>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>src/main/resources/generated</outputDirectory>-->
+<!--                            <outputFilename>api_core_class_diagram.asciidoc</outputFilename>-->
+<!--                            <asciidocDiagramName>api_core_class_diagram</asciidocDiagramName>-->
+<!--                            <enableAsciidocWrapper>true</enableAsciidocWrapper>-->
+<!--                            <simplifyDiagrams>true</simplifyDiagrams>-->
+<!--                            <diagramDirection>left to right direction</diagramDirection>-->
+<!--                            <scanPackages>-->
+<!--                                <scanPackage>-->
+<!--                                    org.eclipse.microprofile.graphql.client.core-->
+<!--                                </scanPackage>-->
+<!--                            </scanPackages>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>generate-api_client-diagram</id>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>generate-resources</phase>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>src/main/resources/generated</outputDirectory>-->
+<!--                            <outputFilename>api_client_class_diagram.asciidoc</outputFilename>-->
+<!--                            <asciidocDiagramName>api_client_class_diagram</asciidocDiagramName>-->
+<!--                            <enableAsciidocWrapper>true</enableAsciidocWrapper>-->
+<!--                            <simplifyDiagrams>true</simplifyDiagrams>-->
+<!--                            <diagramDirection>top to bottom direction</diagramDirection>-->
+<!--                            <scanPackages>-->
+<!--                                <scanPackage>-->
+<!--                                    org.eclipse.microprofile.graphql.client-->
+<!--                                </scanPackage>-->
+<!--                            </scanPackages>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
