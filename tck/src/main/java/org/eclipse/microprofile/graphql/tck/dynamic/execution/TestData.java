@@ -30,9 +30,9 @@ import javax.json.JsonObject;
 public class TestData {
     private String name;
     private String input;
-    private Properties  httpHeaders;
+    private Properties httpHeaders;
     private Set<String> output;
-    private JsonObject  variables;
+    private JsonObject variables;
     private String prepare;
     private String cleanup;
     private Properties properties;
