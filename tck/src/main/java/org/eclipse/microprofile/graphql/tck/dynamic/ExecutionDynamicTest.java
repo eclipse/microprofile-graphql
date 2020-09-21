@@ -133,16 +133,20 @@ public class ExecutionDynamicTest extends Arquillian {
                         JSONAssert.assertEquals(testData.getFailMessage(), output, this.currentOutput, testData.beStrict());
                         success = true;
                         break;
-                    } catch (AssertionError | JSONException ex) {
+                    } catch (AssertionError ex) {
                         // don't raise assertion failure as this is checked below
                         listExceptions.add(ex);
+                    } catch (JSONException je) {
+                        // indicates some sort of JSON formatting exception
+                        clearGlobals();
+                        Assert.fail(je.getMessage());
                     }
                 }
                 if (!success) {
                     clearGlobals();
                     StringBuilder sb = new StringBuilder();
                     listExceptions.forEach(ex -> sb.append(ex.getMessage()).append('\n'));
-                    Assert.fail(sb.toString());
+                    throw new AssertionError(sb.toString());
                 }
             } else {
                 Assert.assertEquals(httpResponse.status, testData.getExpectedHttpStatusCode(),httpResponse.getContent());
