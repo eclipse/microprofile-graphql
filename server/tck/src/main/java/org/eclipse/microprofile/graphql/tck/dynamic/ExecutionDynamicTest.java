@@ -33,6 +33,7 @@ import java.net.ProtocolException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -152,12 +153,28 @@ public class ExecutionDynamicTest extends Arquillian {
                     executeHttpRequest(httpMethod.POST,testData.getCleanup(),testData.getVariables(),httpHeaders);
                 }
 
-                // Compare to expected output
-                try{
-                    JSONAssert.assertEquals(testData.getFailMessage(),testData.getOutput(), this.currentOutput, testData.beStrict());
-                } catch (JSONException ex) {
-                    clearGlobals();
-                    Assert.fail(ex.getMessage());
+                boolean success = false;
+                ArrayList<Throwable> listExceptions = new ArrayList<>();
+
+                // Compare to expected output and pass if at least one of the output files match
+                for (String output : testData.getOutput()) {
+                    try {
+                        JSONAssert.assertEquals(testData.getFailMessage(), output, this.currentOutput, testData.beStrict());
+                        success = true;
+                        break;
+                    } catch (AssertionError ex) {
+                        // don't raise assertion failure as this is checked below
+                        listExceptions.add(ex);
+                    } catch (JSONException je) {
+                        // indicates some sort of JSON formatting exception
+                        clearGlobals();
+                        Assert.fail(je.getMessage());
+                    }
+                }
+                if (!success) {
+                    StringBuilder sb = new StringBuilder();
+                    listExceptions.forEach(ex -> sb.append(ex.getMessage()).append('\n'));
+                    Assert.fail(sb.toString());
                 }
             } else {
                 Assert.assertEquals(httpResponse.status, testData.getExpectedHttpStatusCode(),httpResponse.getContent());

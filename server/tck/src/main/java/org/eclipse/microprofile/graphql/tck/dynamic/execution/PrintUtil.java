@@ -72,7 +72,13 @@ public class PrintUtil {
             sw.write("\n\n");
             sw.write("http headers input = " + testData.getHttpHeaders());
             sw.write("\n\n");
-            sw.write("expected output = " + prettyJson(testData.getOutput()));
+
+            if (testData.getOutput().size() == 1) {
+                sw.write("expected output = " + prettyJson(testData.getOutput().iterator().next()));
+            } else {
+                sw.write("expected output was either of the following = " + String.join("\nOR\n", testData.getOutput()));
+            }
+
             sw.write("\n\n");
             sw.write("received output = " +  prettyJson(output));
             sw.write("\n\n");

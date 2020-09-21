@@ -43,11 +43,11 @@
             "dateObject": "2019-10-23",
             "anotherDateObject": "2019-10-23",
             "formattedDateObject": "10 23 2019",
-            "timeObject": "11:46:34.263",
-            "anotherTimeObject": "11:46:34.263",
+            "timeObject": "11:46:34",
+            "anotherTimeObject": "11:46:34",
             "formattedTimeObject": "11:46:34",
-            "dateTimeObject": "2019-10-23T11:46:34.263",
-            "anotherDateTimeObject": "2019-10-23T11:46:34.263",
+            "dateTimeObject": "2019-10-23T11:46:34",
+            "anotherDateTimeObject": "2019-10-23T11:46:34",
             "formattedDateTimeObject": "10 23 2019 at 11:46:34",
             "id": "123456789"
         }
