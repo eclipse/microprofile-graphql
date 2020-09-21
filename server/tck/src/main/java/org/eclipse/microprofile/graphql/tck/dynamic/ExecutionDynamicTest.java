@@ -172,11 +172,9 @@ public class ExecutionDynamicTest extends Arquillian {
                     }
                 }
                 if (!success) {
-                    clearGlobals();
                     StringBuilder sb = new StringBuilder();
                     listExceptions.forEach(ex -> sb.append(ex.getMessage()).append('\n'));
                     Assert.fail(sb.toString());
-                    throw new AssertionError(sb.toString());
                 }
             } else {
                 Assert.assertEquals(httpResponse.status, testData.getExpectedHttpStatusCode(),httpResponse.getContent());
