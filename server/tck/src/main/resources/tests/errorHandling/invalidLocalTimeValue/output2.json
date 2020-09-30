@@ -1,0 +1,19 @@
+{
+    "data": {
+        "startPatrolling": null
+    },
+    "errors": [
+        {
+            "path": [
+                "startPatrolling"
+            ],
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "message": "Exception while fetching data (/startPatrolling) : Text 'Today' could not be parsed at index 0"
+        }
+    ]
+}

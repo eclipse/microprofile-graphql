@@ -145,14 +145,14 @@ public class GraphQLTestDataProvider {
                         // If no content matches, then the test will fail.
                         String content = getFileContent(file);
                         testData.addOutput(content);
+                    } else if (filename.matches("input.*\\.graphql")){
+                        // Special case to cater for multiple input*.graphql files where the
+                        // test will pass on the first file input content which is successful.
+                        // If no content matches, then the test will fail.
+                        String content = getFileContent(file);
+                        testData.addInput(content);
                     } else {
                         switch (filename) {
-                            case "input.graphql":
-                                {
-                                    String content = getFileContent(file);
-                                    testData.setInput(content);
-                                    break;
-                                }
                             case "httpHeader.properties":
                                 {
                                     Properties properties = new Properties();

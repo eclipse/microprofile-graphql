@@ -66,7 +66,12 @@ public class PrintUtil {
                 sw.write("errorMessage = ");
             }
             sw.write("\n\n");
-            sw.write("given input = " + testData.getInput());
+            if (testData.getInput().size() == 1) {
+                sw.write("given input = " + testData.getInput().iterator().next());
+            } else {
+                sw.write("given multiple inputs = \n");
+                testData.getInput().stream().forEach(i -> sw.write(i + "\n"));
+            }
             sw.write("\n\n");
             sw.write("variables input = " + prettyJson(testData.getVariables()));
             sw.write("\n\n");

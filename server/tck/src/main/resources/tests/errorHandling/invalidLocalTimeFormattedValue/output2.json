@@ -1,0 +1,19 @@
+{
+    "data": {
+        "startPatrollingWithCorrectDateFormat": null
+    },
+    "errors": [
+        {
+            "path": [
+                "startPatrollingWithCorrectDateFormat"
+            ],
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "message": "Exception while fetching data (/startPatrollingWithCorrectDateFormat) : Text 'Today' could not be parsed at index 0"
+        }
+    ]
+} 

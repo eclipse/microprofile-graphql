@@ -1,0 +1,19 @@
+{
+    "data": {
+        "checkInWithCorrectDateFormat": null
+    },
+    "errors": [
+        {
+            "path": [
+                "checkInWithCorrectDateFormat"
+            ],
+            "locations": [
+                {
+                    "column": 3,
+                    "line": 2
+                }
+            ],
+            "message": "Exception while fetching data (/checkInWithCorrectDateFormat) : Text 'Today' could not be parsed at index 0"
+        }
+    ]
+} 

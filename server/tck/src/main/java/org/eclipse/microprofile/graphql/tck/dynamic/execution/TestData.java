@@ -17,6 +17,7 @@
  */
 package org.eclipse.microprofile.graphql.tck.dynamic.execution;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
@@ -28,7 +29,7 @@ import javax.json.JsonObject;
  */
 public class TestData {
     private String name;
-    private String input;
+    private Set<String> input;
     private Properties httpHeaders;
     private Set<String> output;
     private JsonObject variables;
@@ -42,10 +43,12 @@ public class TestData {
     
     public TestData(String name){
         this.name = name;
+        this.output = new HashSet<>();
+        this.input = new HashSet<>();
     }
 
     public TestData(String name, 
-                    String input, 
+                    Set<String> input,
                     Properties httpHeaders, 
                     Set<String> output,
                     JsonObject variables, 
@@ -71,7 +74,7 @@ public class TestData {
         return name;
     }
 
-    public String getInput() {
+    public Set<String> getInput() {
         return input;
     }
 
@@ -107,8 +110,12 @@ public class TestData {
         this.name = name;
     }
 
-    public void setInput(String input) {
+    public void setInput(Set<String> input) {
         this.input = input;
+    }
+
+    public void addInput(String input) {
+        this.input.add(input);
     }
 
     public void setHttpHeaders(Properties httpHeaders) {
