@@ -1,0 +1,19 @@
+{
+    "data": {
+        "battleWithCorrectDateFormat": null
+    },
+    "errors": [
+        {
+            "path": [
+                "battleWithCorrectDateFormat"
+            ],
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "message": "Exception while fetching data (/battleWithCorrectDateFormat) : Text 'Today' could not be parsed at index 0"
+        }
+    ]
+}

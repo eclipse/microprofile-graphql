@@ -1,0 +1,19 @@
+{
+    "data": {
+        "battle": null
+    },
+    "errors": [
+        {
+            "path": [
+                "battle"
+            ],
+            "locations": [
+                {
+                    "line": 2,
+                    "column": 3
+                }
+            ],
+            "message": "Exception while fetching data (/battle) : Text 'Today' could not be parsed at index 0"
+        }
+    ]
+}
