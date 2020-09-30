@@ -1,0 +1,3 @@
+mutation testTransformedNumber{
+    transformedNumber(arg0:345)
+}

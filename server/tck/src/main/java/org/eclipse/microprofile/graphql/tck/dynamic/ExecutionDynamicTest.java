@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.json.Json;
@@ -130,59 +131,74 @@ public class ExecutionDynamicTest extends Arquillian {
                 }
             }
 
-            // Prepare if needed
-            if(isValidInput(testData.getPrepare())){
-                executeHttpRequest(httpMethod.POST,testData.getPrepare(),testData.getVariables(),httpHeaders);
-            }
-
-            // We can only do Queries over GET
-            if(testData.isMutation()){
-                httpMethod = HttpMethod.POST;
-            }
-            
-            // Run the actual test and get the response
-            HttpResponse httpResponse = executeHttpRequest(httpMethod,testData.getInput(),testData.getVariables(),httpHeaders);
-            this.currentOutput = httpResponse.getContent();
-            if(httpResponse.isSuccessful()){
-
-                // Validate the output structure
-                validateResponseStructure();
-
-                // Cleanup if needed
-                if(isValidInput(testData.getCleanup())){
-                    executeHttpRequest(httpMethod.POST,testData.getCleanup(),testData.getVariables(),httpHeaders);
-                }
-
-                boolean success = false;
-                ArrayList<Throwable> listExceptions = new ArrayList<>();
-
-                // Compare to expected output and pass if at least one of the output files match
-                for (String output : testData.getOutput()) {
-                    try {
-                        JSONAssert.assertEquals(testData.getFailMessage(), output, this.currentOutput, testData.beStrict());
-                        success = true;
-                        break;
-                    } catch (AssertionError ex) {
-                        // don't raise assertion failure as this is checked below
-                        listExceptions.add(ex);
-                    } catch (JSONException je) {
-                        // indicates some sort of JSON formatting exception
-                        clearGlobals();
-                        Assert.fail(je.getMessage());
+            // loop through each of the input content and pass if at least one passes
+            boolean success = false;
+            ArrayList<Throwable> listExceptions = new ArrayList<>();
+            for (String input : testData.getInput()) {
+                try {
+                    // Prepare if needed
+                    if(isValidInput(testData.getPrepare())){
+                        executeHttpRequest(HttpMethod.POST, testData.getPrepare(),testData.getVariables(),httpHeaders);
                     }
+
+                    assertTest(input, testData, httpHeaders, httpMethod);
+                    success = true;
+                    break;
+                } catch (AssertionError ae) {
+                    // don't raise assertion failure as this is checked below
+                    listExceptions.add(ae);
                 }
-                if (!success) {
-                    StringBuilder sb = new StringBuilder();
-                    listExceptions.forEach(ex -> sb.append(ex.getMessage()).append('\n'));
-                    Assert.fail(sb.toString());
-                }
-            } else {
-                Assert.assertEquals(httpResponse.status, testData.getExpectedHttpStatusCode(),httpResponse.getContent());
             }
-            
+            if (!success){
+                Assert.fail(getErrorMessages(listExceptions));
+            }
         }else{
             clearGlobals();
             LOG.warning("Could not find any tests to run...");
+        }
+    }
+
+    private void assertTest(String input, TestData testData, Map<String, String> httpHeaders, HttpMethod httpMethod){
+        // We can only do Queries over GET
+        if(testData.isMutation()){
+            httpMethod = HttpMethod.POST;
+        }
+
+        // Run the actual test and get the response
+        HttpResponse httpResponse = executeHttpRequest(httpMethod, input,testData.getVariables(),httpHeaders);
+        if(httpResponse.isSuccessful()){
+            this.currentOutput = httpResponse.getContent();
+
+            // Validate the output structure
+            validateResponseStructure();
+
+            // Cleanup if needed
+            if(isValidInput(testData.getCleanup())){
+                executeHttpRequest(HttpMethod.POST, testData.getCleanup(),testData.getVariables(),httpHeaders);
+            }
+
+            boolean success = false;
+            ArrayList<Throwable> listExceptions = new ArrayList<>();
+
+            // Compare to expected output and pass if at least one of the output files match
+            for (String output : testData.getOutput()) {
+                try {
+                    JSONAssert.assertEquals(testData.getFailMessage(), output, this.currentOutput, testData.beStrict());
+                    success = true;
+                    break;
+                } catch (AssertionError ex) {
+                    // don't raise assertion failure as this is checked below
+                    listExceptions.add(ex);
+                } catch (JSONException je) {
+                    // indicates some sort of JSON formatting exception
+                    Assert.fail(je.getMessage());
+                }
+            }
+            if (!success) {
+                Assert.fail(getErrorMessages(listExceptions));
+            }
+        } else {
+            Assert.assertEquals(httpResponse.status, testData.getExpectedHttpStatusCode(),httpResponse.getContent());
         }
     }
 
@@ -246,6 +262,22 @@ public class ExecutionDynamicTest extends Arquillian {
     private boolean isValidInput(String input){
         return input!=null && !input.isEmpty();
     }
+
+    private boolean isValidInput(Set<String> setInput){
+        for (String input : setInput) {
+            if (!isValidInput(input)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String getErrorMessages(ArrayList<Throwable> listExceptions){
+        StringBuilder sb = new StringBuilder();
+        listExceptions.forEach(ex -> sb.append(ex.getMessage()).append('\n'));
+        return sb.toString();
+    }
+
 
     private HttpResponse executeHttpRequest(HttpMethod httpMethod, 
             String graphQL, 
