@@ -112,7 +112,6 @@ public class ExecutionDynamicTest extends Arquillian {
             ArrayList<Throwable> listExceptions = new ArrayList<>();
             for (String input : testData.getInput()) {
                 try {
-                    LOG.info("Testing Input = [" + input + "]");
                     // Prepare if needed
                     if(isValidInput(testData.getPrepare())){
                         postHTTPRequest(testData.getPrepare(),testData.getVariables(),httpHeaders);
