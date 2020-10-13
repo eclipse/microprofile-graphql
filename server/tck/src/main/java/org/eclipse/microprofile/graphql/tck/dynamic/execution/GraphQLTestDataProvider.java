@@ -95,7 +95,7 @@ public class GraphQLTestDataProvider {
             if(!testFolder.getFileName().toString().startsWith("META-INF")){// Ignore META-INF
                 try {
                     TestData testData = toTestData(testFolder);
-                    if(!testData.shouldIgnore()){
+                    if(!testData.shouldIgnore() && testData.getInput().size() > 0){
                         testDataList.add(testData);
                     }
                 } catch (IOException ioe) {
