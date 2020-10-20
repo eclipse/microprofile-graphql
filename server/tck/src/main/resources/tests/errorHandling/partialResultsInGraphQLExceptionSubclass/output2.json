@@ -1,0 +1,27 @@
+{
+    "data": {
+        "allHeroesWithSpecificError": [
+            {
+                "name": "Iron Man",
+                "primaryLocation": "Los Angeles, CA"
+            },
+            {
+                "name": "Wolverine",
+                "primaryLocation": "Unknown"
+            },
+            {
+                "name": "Starlord",
+                "primaryLocation": "Outer Space"
+            }
+        ]
+    },
+    "errors": [
+        {
+            "path": [
+                "allHeroesWithSpecificError"
+            ],
+            "message": "Failed to find one or more heroes"
+        }
+    ]
+}
+
