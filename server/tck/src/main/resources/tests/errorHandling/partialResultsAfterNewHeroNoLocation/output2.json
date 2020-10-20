@@ -1,23 +1,23 @@
-{
+{   
     "data": {
         "createNewHero": {
             "name": "Captain America",
             "teamAffiliations": [
-                {
+                {   
                     "members": [
-                        {
+                        {   
                             "name": "Iron Man",
                             "currentLocation": "Wachovia"
                         },
-                        {
+                        {   
                             "name": "Spider Man",
                             "currentLocation": "Brooklyn"
                         },
-                        {
+                        {   
                             "name": "Wolverine",
                             "currentLocation": "New Orleans"
                         },
-                        {
+                        {   
                             "name": "Captain America",
                             "currentLocation": null
                         }
@@ -33,18 +33,11 @@
         }
     },
     "errors": [
-        {
+        {   
             "path": [
                 "createNewHero"
-            ],
-            "locations": [
-                {
-                    "column": 17,
-                    "line": 14
-                }
             ],
             "message": "Cannot find location for Captain America"
         }
     ]
 }
-
