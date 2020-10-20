@@ -37,12 +37,6 @@
             "path": [
                 "createNewHero"
             ],
-            "locations": [
-                {
-                    "column": 17,
-                    "line": 14
-                }
-            ],
             "message": "Cannot find location for Captain America"
         }
     ]
