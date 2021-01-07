@@ -88,6 +88,7 @@ Where the data comes from (NoSQL, Relational DB, another service, etc.) is not t
 * Open Liberty 20.0.0.6 - https://openliberty.io/blog/2020/06/05/graphql-open-liberty-20006.html
 * Quarkus 1.5 - https://quarkus.io/blog/quarkus-1-5-final-released/
 * Wildfly - https://www.wildfly.org/news/2020/08/13/Introducing-the-WildFly-GraphQL-feature-pack/
+* Helidon 2.2.0 - https://medium.com/helidon/microprofile-graphql-support-now-available-in-helidon-mp-dbc7bc0b4af
 
 == Acknowledgements
 
