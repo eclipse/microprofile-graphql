@@ -27,6 +27,7 @@ import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Id;
 import org.eclipse.microprofile.graphql.Mutation;
 import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.NonNull;
 import org.eclipse.microprofile.graphql.NumberFormat;
 import org.eclipse.microprofile.graphql.Query;
 
@@ -277,6 +278,11 @@ public class ScalarTestApi {
     @Mutation
     public String settlement(){
         return "Just testing a name that starts with set but is not a setter";
+    }
+
+    @Query
+    public String testNonNullParameter(@Name("param") @NonNull String param) {
+        return param;
     }
     
     @Query

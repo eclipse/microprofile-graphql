@@ -64,7 +64,7 @@ import java.lang.annotation.Target;
  * a <code>DefaultValue</code> annotation.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE_USE, ElementType.METHOD, ElementType.FIELD})
+@Target({ElementType.TYPE_USE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
 @Documented
 public @interface NonNull {
 }
