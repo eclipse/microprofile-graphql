@@ -69,3 +69,4 @@
 68| type BasicMessage       |   message: String                                                                                                         |   Expecting a BasicMessage from @Type
 69| enum CountDown          |   THREE                                                                                                                   |   Expecting a CountDown from @Enum
 70| interface Basic         |   message: String                                                                                                         |   Expecting a String argument called "message" in @Interface("MyInterface") BasicInterface
+71| type Query              |   testNonNullParameter(param: String!)                                                                                    |   Expecting a non null String parameter
