@@ -7,6 +7,7 @@
 .idea
 .DS_Store
 **/*.iml
+/api/target/
 /client/target/
 /client/api/target/
 /client/spec/target/
@@ -19,3 +20,5 @@
 /server/api/target/
 /server/spec/target/
 /server/tck/target/
+/spec/target/
+/tck/target/
