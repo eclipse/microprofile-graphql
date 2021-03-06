@@ -23,7 +23,7 @@
 :version-label!:
 :sectanchors:
 :doctype: book
-:license: :license: Eclipse Foundation Specification License v1.0
+:license: Eclipse Foundation Specification License v1.0
 :source-highlighter: coderay
 :sectnums:
 :toc: left
