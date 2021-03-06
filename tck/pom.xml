@@ -20,7 +20,7 @@
     <parent>
         <groupId>org.eclipse.microprofile.graphql</groupId>
         <artifactId>microprofile-graphql-parent</artifactId>
-        <version>1.0.4-SNAPSHOT</version>
+        <version>1.0.4</version>
         <relativePath>../</relativePath>
     </parent>
 
