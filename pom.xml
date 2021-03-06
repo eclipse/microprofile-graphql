@@ -36,8 +36,10 @@
 
         <testng.version>7.0.0</testng.version>
         <arquillian.version>1.6.0.Final</arquillian.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 
         <revremark>Draft</revremark>
+        <inceptionYear>2019</inceptionYear>
     </properties>
 
     <licenses>
@@ -165,12 +167,17 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.2.0</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.6</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.0.0</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -205,7 +212,7 @@
                             <module name="FileTabCharacter" />
                             <module name="TreeWalker">
                                 <module name="FileContentsHolder" />
-                                <module name="ConstantName">
+                               <module name="ConstantName">
                                     <property name="format" value="^(([A-Z][A-Z0-9]*(_[A-Z0-9]+)*))$" />
                                 </module>
                                 <module name="LocalVariableName" />
@@ -283,14 +290,21 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>bnd.bnd</exclude>
+                        <exclude>.travis.yml.*</exclude>
+                        <exclude>**/bnd.bnd</exclude>
                         <exclude>*.log</exclude>
                         <exclude>.checkstyle</exclude>
                         <exclude>.factorypath</exclude>
                         <exclude>.editorconfig</exclude>
+                        <exclude>**/target/</exclude>
                         <exclude>src/test/resources/*/*.json</exclude>
                         <exclude>*.drawio</exclude>
                         <exclude>.vscode/*</exclude>
+                        <exclude>nb**.xml</exclude>
+                        <exclude>**/bin/</exclude>
+                        <exclude>**/*.iml</exclude>
+                        <exclude>**/*.idea</exclude>
+                        <exclude>**/*.ipr</exclude>
                         <exclude>**/*.json</exclude>
                         <exclude>**/*.graphql</exclude>
                         <exclude>**/*.properties</exclude>
@@ -299,8 +313,29 @@
                         <exclude>**/.classpath</exclude>
                         <exclude>**/.project</exclude>
                         <exclude>**/.github/**</exclude>
+                        <exclude>**/license.html</exclude>
+                        <exclude>**/license-efsl.adoc</exclude>
+                        <exclude>**/LICENSE*</exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>timestamp-property</id>
+                        <goals>
+                            <goal>timestamp-property</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <name>currentYear</name>
+                            <pattern>yyyy</pattern>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
@@ -348,6 +383,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>

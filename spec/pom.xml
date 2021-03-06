@@ -31,12 +31,11 @@
     
     <properties>
         <asciidoctor-maven.version>1.6.0</asciidoctor-maven.version>
-        <asciidoctorj-pdf.version>1.5.0</asciidoctorj-pdf.version>
-        
-        <license>Apache License v 2.0</license>
+        <asciidoctorj-pdf.version>1.5.0</asciidoctorj-pdf.version>        
         <maven.build.timestamp.format>MMMM dd, yyyy</maven.build.timestamp.format>
         <revisiondate>${maven.build.timestamp}</revisiondate>
-        
+        <spec.pdf>${project.build.directory}/generated-docs/${project.build.finalName}.pdf</spec.pdf>
+        <spec.html>${project.build.directory}/generated-docs/${project.build.finalName}.html</spec.html>
     </properties>
     
     <build>
@@ -47,17 +46,7 @@
                 <groupId>org.asciidoctor</groupId>
                 <artifactId>asciidoctor-maven-plugin</artifactId>
                 <version>${asciidoctor-maven.version}</version>
-                
-                <configuration>
-                    <sourceDirectory>src/main/asciidoc</sourceDirectory>
-                    <sourceDocumentName>microprofile-graphql.asciidoc</sourceDocumentName>
-                    <sourceHighlighter>coderay</sourceHighlighter>
-                    <headerFooter>true</headerFooter>
-                    <attributes>
-                        <license>${license}</license>
-                    </attributes>
-                </configuration>
-                
+                                
                 <dependencies>
                     <dependency>
                         <groupId>org.asciidoctor</groupId>
@@ -73,12 +62,8 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <outputFile>${spec.pdf}</outputFile>
                             <backend>pdf</backend>
-                            <attributes>
-                                <revnumber>${project.version}</revnumber>
-                                <revremark>${revremark}</revremark>
-                                <revdate>${revisiondate}</revdate>
-                            </attributes>
                         </configuration>
                     </execution>
                     <execution>
@@ -88,16 +73,47 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <outputFile>${spec.html}</outputFile>
                             <backend>html5</backend>
-                            <attributes>
-                                <revnumber>${project.version}</revnumber>
-                                <revremark>${revremark}</revremark>
-                                <revdate>${revisiondate}</revdate>
-                            </attributes>
                         </configuration>
                     </execution>
                 </executions>
-                
+                <configuration>
+                    <sourceDocumentName>microprofile-graphql.asciidoc</sourceDocumentName>
+                    <sourceHighlighter>coderay</sourceHighlighter>
+                    <attributes>
+                        <revnumber>${project.version}</revnumber>
+                        <revremark>${revremark}</revremark>
+                        <revdate>${revisiondate}</revdate>
+                        <currentYear>${currentYear}</currentYear>
+                        <inceptionYear>${inceptionYear}</inceptionYear>
+                    </attributes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${spec.pdf}</file>
+                                    <type>pdf</type>
+                                </artifact>
+                                <artifact>
+                                    <file>${spec.html}</file>
+                                    <type>html</type>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             
         </plugins>
