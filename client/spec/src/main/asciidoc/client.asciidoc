@@ -17,6 +17,7 @@
 // limitations under the License.
 //
 
-= MicroProfile GraphQL TypeSafe Client
+= MicroProfile GraphQL Client
 
-Here add the client spec.
+include::dynamic_client.asciidoc[]
+include::typesafe_client.asciidoc[]
