@@ -29,6 +29,11 @@
     <name>MicroProfile GraphQL Server :: Specification</name>
     <description>Server-side code-first GraphQL APIs for MicroProfile :: Specification</description>
     
+    <properties>
+        <spec.pdf>${project.build.directory}/generated-docs/${project.build.finalName}.pdf</spec.pdf>
+        <spec.html>${project.build.directory}/generated-docs/${project.build.finalName}.html</spec.html>
+    </properties>
+    
     <build>
         <defaultGoal>clean package</defaultGoal>
         <plugins>
@@ -45,6 +50,7 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <outputFile>${spec.pdf}</outputFile>
                             <backend>pdf</backend>
                         </configuration>
                     </execution>
@@ -55,13 +61,39 @@
                             <goal>process-asciidoc</goal>
                         </goals>
                         <configuration>
+                            <outputFile>${spec.html}</outputFile>
                             <backend>html5</backend>
                         </configuration>
                     </execution>
                 </executions>
                 
             </plugin>
-            
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>${spec.pdf}</file>
+                                    <type>pdf</type>
+                                </artifact>
+                                <artifact>
+                                    <file>${spec.html}</file>
+                                    <type>html</type>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 </project>

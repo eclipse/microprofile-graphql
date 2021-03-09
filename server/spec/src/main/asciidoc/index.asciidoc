@@ -23,15 +23,17 @@
 :version-label!:
 :sectanchors:
 :doctype: book
-:license: Apache License v2.0
+:license: Eclipse Foundation Specification License v1.0
 :source-highlighter: coderay
+:sectnums:
 :toc: left
 :toclevels: 4
 :sectnumlevels: 4
 ifdef::backend-pdf[]
 :pagenums:
+:numbered:
 endif::[]
 
-include::license-alv2.asciidoc[]
+include::license-efsl.asciidoc[]
 
 include::server.asciidoc[]

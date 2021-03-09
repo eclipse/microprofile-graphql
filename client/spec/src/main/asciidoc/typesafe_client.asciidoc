@@ -17,24 +17,17 @@
 // limitations under the License.
 //
 
-= MicroProfile GraphQL Client
-:authors: Jean-Francois James, Phillip Krüger, Andy McCright, Jean-Baptiste Roux, Bojan Tomic, Adam Anderson
-:email: microprofile@googlegroups.com
-:version-label!:
-:sectanchors:
-:doctype: book
-:license: Eclipse Foundation Specification License v1.0
-:source-highlighter: coderay
-:sectnums:
-:toc: left
-:toclevels: 4
-:sectnumlevels: 4
-ifdef::backend-pdf[]
-:pagenums:
-:numbered:
-endif::[]
+= MicroProfile GraphQL Typesafe Client
 
-include::license-efsl.asciidoc[]
+== Rationale
 
-include::client.asciidoc[]
+TODO
+
+== Goals
+
+TODO
+
+== Non goals
+
+TODO
 

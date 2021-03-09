@@ -105,4 +105,12 @@
 58|type Query          |   "Super hero name, not real name"                        |   Expecting a description for the name parameter on the exportToFile query
 
 # testJsonDefault
-59|type Mutation       |   provisionHero(hero: String, item: ItemInput = { id: 1000, name: "Cape", powerLevel: 3, height: 1.2, weight: 0.3, supernatural: false, dateCreated: "19 February 1900 at 12:00 in Africa/Johannesburg", dateLastUsed: "29 Jan 2020 at 09:45 in zone +0200"} 'OR' provisionHero(hero: String, item: ItemInput = {dateCreated : "19 February 1900 at 12:00 in Africa/Johannesburg", dateLastUsed : "29 Jan 2020 at 09:45 in zone +0200", height : 1.2, id : 1000, name : "Cape", powerLevel : 3, supernatural : false, weight : 0.3}) | Expecting a default value for item for provisionHero
+59|type Mutation | provisionHero(hero: String, item: ItemInput = {                  | Expecting a default value for item for provisionHero
+60|type Mutation       |   id : 1000                                                | Expecting an id in the default value for item for provisionHero
+61|type Mutation       |   name : "Cape"                                            | Expecting a name in the default value for item for provisionHero
+62|type Mutation       |   powerLevel : 3                                           | Expecting a powerLevel in the default value for item for provisionHero
+63|type Mutation       |   height : 1.2                                             | Expecting a height in the default value for item for provisionHero
+64|type Mutation       |   weight : 0.3                                             | Expecting a weight in the default value for item for provisionHero
+65|type Mutation       |   supernatural : false                                     | Expecting a supernatural in the default value for item for provisionHero
+66|type Mutation       |   dateCreated : "19 February 1900 at 12:00 in Africa/Johannesburg" | Expecting a dateCreated in the default value for item for provisionHero
+67|type Mutation       |   dateLastUsed : "29 Jan 2020 at 09:45 in zone +0200"      | Expecting a dateLastUsed in the default value for item for provisionHero
