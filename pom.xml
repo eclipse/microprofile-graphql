@@ -35,7 +35,7 @@
         <!-- Platform version -->
         <microprofile.platform>4.0</microprofile.platform>
         <cdi-api.version>2.0.2</cdi-api.version>
-        <jsonp-api.version>1.1.6</jsonp-api.version>
+        <jsonp-api.version>2.0.1</jsonp-api.version>
         <jsonb-api.version>1.0.2</jsonb-api.version>
         
         <!-- Testing -->
