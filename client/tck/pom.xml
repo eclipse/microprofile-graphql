@@ -30,7 +30,7 @@
     <properties>
         <!-- Testing -->
         <junit.jupiter.version>5.8.0</junit.jupiter.version>
-        <graphql-java.version>17.2</graphql-java.version>
+        <graphql-java.version>17.3</graphql-java.version>
     </properties>
 
     <dependencies>
