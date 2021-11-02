@@ -15,7 +15,6 @@
  */
 package org.eclipse.microprofile.graphql.client.core;
 
-
 import java.util.List;
 
 import static java.util.Arrays.asList;

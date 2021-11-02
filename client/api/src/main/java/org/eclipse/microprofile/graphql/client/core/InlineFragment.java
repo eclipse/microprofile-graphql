@@ -13,26 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.eclipse.microprofile.graphql.client.core;
 
+import java.util.List;
+
 import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
+import static java.util.Arrays.asList;
 
-public interface Enum extends Buildable {
-    /*
-        Static factory methods
-    */
-    static Enum gqlEnum(String value) {
-        Enum gqlEnum = getNewInstanceOf(Enum.class);
+/**
+ * Represents an inline fragment in a GraphQL document. This can be used
+ * anywhere where a field is expected (thus it implements `FieldOrFragment`).
+ */
+public interface InlineFragment extends FieldOrFragment {
 
-        gqlEnum.setValue(value);
+    static InlineFragment on(String type, FieldOrFragment... fields) {
+        InlineFragment fragment = getNewInstanceOf(InlineFragment.class);
 
-        return gqlEnum;
+        fragment.setType(type);
+        fragment.setFields(asList(fields));
+
+        return fragment;
     }
 
-    /*
-        Getter/Setter
-    */
-    String getValue();
+    String getType();
 
-    void setValue(String value);
+    void setType(String name);
+
+    List<FieldOrFragment> getFields();
+
+    void setFields(List<FieldOrFragment> fields);
+
 }

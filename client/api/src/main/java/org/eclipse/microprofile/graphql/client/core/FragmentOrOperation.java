@@ -13,26 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.eclipse.microprofile.graphql.client.core;
 
-import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
-
-public interface Enum extends Buildable {
-    /*
-        Static factory methods
-    */
-    static Enum gqlEnum(String value) {
-        Enum gqlEnum = getNewInstanceOf(Enum.class);
-
-        gqlEnum.setValue(value);
-
-        return gqlEnum;
-    }
-
-    /*
-        Getter/Setter
-    */
-    String getValue();
-
-    void setValue(String value);
+/**
+ * Represents a node in a GraphQL document that can contain either an operation (query/mutation/subscription),
+ * or a definition of a named fragment. On the top level, a GraphQL document basically consists of a list
+ * of these nodes.
+ */
+public interface FragmentOrOperation extends Buildable {
 }

@@ -15,24 +15,11 @@
  */
 package org.eclipse.microprofile.graphql.client.core;
 
-import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
-
-public interface Enum extends Buildable {
-    /*
-        Static factory methods
-    */
-    static Enum gqlEnum(String value) {
-        Enum gqlEnum = getNewInstanceOf(Enum.class);
-
-        gqlEnum.setValue(value);
-
-        return gqlEnum;
-    }
-
-    /*
-        Getter/Setter
-    */
-    String getValue();
-
-    void setValue(String value);
+/**
+ * Represents one of these nodes in a GraphQL document:
+ * - regular field (name), for example "color"
+ * - reference to a named fragment, for example "...comparisonFields"
+ * - an inline fragment, for example ("... on Person { name } ")
+ */
+public interface FieldOrFragment extends Buildable {
 }

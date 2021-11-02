@@ -17,8 +17,8 @@ package org.eclipse.microprofile.graphql.client.core;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
+import static java.util.Arrays.asList;
 
 public interface InputObject extends Buildable {
     /*

@@ -18,13 +18,13 @@ package org.eclipse.microprofile.graphql.client.core;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Arrays.asList;
 import static org.eclipse.microprofile.graphql.client.core.VariableType.varType;
 import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.getNewInstanceOf;
+import static java.util.Arrays.asList;
 
 public interface Variable extends Buildable {
     /*
-        Helpers
+     * Helpers
      */
     static List<Variable> vars(Variable... vars) {
         return asList(vars);

@@ -20,8 +20,8 @@ import static org.eclipse.microprofile.graphql.client.core.utils.ServiceUtils.ge
 public interface VariableType extends Buildable {
 
     /*
-       Static factory methods
-   */
+     * Static factory methods
+     */
     // (objectTypeName)
     static VariableType varType(String objectTypeName) {
         VariableType varType = getNewInstanceOf(VariableType.class);
