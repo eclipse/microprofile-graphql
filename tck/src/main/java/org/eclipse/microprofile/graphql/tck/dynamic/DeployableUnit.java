@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Contributors to the Eclipse Foundation
+ * Copyright (c) 2020, 2021 Contributors to the Eclipse Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,8 @@ import org.eclipse.microprofile.graphql.tck.apps.basic.api.ScalarTestApi;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.api.HeroFinder;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.db.HeroDatabase;
 import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
+import org.eclipse.microprofile.graphql.tck.dynamic.execution.GraphQLTestDataProvider;
+import org.eclipse.microprofile.graphql.tck.dynamic.schema.SchemaTestDataProvider;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -46,7 +48,9 @@ public class DeployableUnit {
                 .addPackage(HeroFinder.class.getPackage())
                 .addPackage(HeroDatabase.class.getPackage())
                 .addPackage(SuperHero.class.getPackage())
-                .addPackage(ScalarTestApi.class.getPackage());
+                .addPackage(ScalarTestApi.class.getPackage())
+                .addPackage(SchemaTestDataProvider.class.getPackage())
+                .addPackage(GraphQLTestDataProvider.class.getPackage());
     }
     
     private static String getPropertyAsString() throws IOException {    
