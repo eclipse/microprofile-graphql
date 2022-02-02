@@ -20,12 +20,12 @@ import org.eclipse.microprofile.graphql.Name;
 @Name("TopSecretToken")
 public class Token {
     private String value;
-    
-    public Token(){
+
+    public Token() {
         super();
     }
-    
-    public Token(String value){
+
+    public Token(String value) {
         super();
         this.value = value;
     }

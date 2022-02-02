@@ -16,13 +16,12 @@
 
 package org.eclipse.microprofile.graphql;
 
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-
+import org.testng.annotations.Test;
 
 public class DefaultValueTest {
 
@@ -40,8 +39,7 @@ public class DefaultValueTest {
 
         @Query("friendsOf")
         public List<Character> getFriendsOf(
-                @DefaultValue("Han Solo")
-                        Character character) {
+                @DefaultValue("Han Solo") Character character) {
             if (character.getName().equals("Han Solo")) {
                 return Collections.singletonList(new Character("Chewbacca"));
             }
@@ -51,7 +49,8 @@ public class DefaultValueTest {
 
     @Test
     public void testDefaultValueAnnotationOnCharacterParameter() throws Exception {
-        DefaultValue defaultValue = (DefaultValue) Character.class.getDeclaredMethod("getFriendsOf", Character.class).getParameterAnnotations()[0][0];
+        DefaultValue defaultValue = (DefaultValue) Character.class.getDeclaredMethod("getFriendsOf", Character.class)
+                .getParameterAnnotations()[0][0];
         assertEquals(defaultValue.value(), "Han Solo");
     }
 }

@@ -16,10 +16,9 @@
 
 package org.eclipse.microprofile.graphql;
 
-import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 
+import org.testng.annotations.Test;
 
 /**
  * Simple test mainly as a placeholder for now.
@@ -37,6 +36,6 @@ public class IgnoreTest {
     @Test
     public void testIgnoreAnnotationOnNameField() throws Exception {
         Ignore[] ignore = Starship.class.getDeclaredField("name").getAnnotationsByType(Ignore.class);
-        assertEquals(ignore.length,1);
+        assertEquals(ignore.length, 1);
     }
 }

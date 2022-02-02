@@ -23,18 +23,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.microprofile.graphql.DateFormat;
+import org.eclipse.microprofile.graphql.Description;
+import org.eclipse.microprofile.graphql.Name;
+import org.eclipse.microprofile.graphql.NonNull;
+import org.eclipse.microprofile.graphql.NumberFormat;
+import org.eclipse.microprofile.graphql.Query;
+
 import jakarta.json.bind.annotation.JsonbDateFormat;
 import jakarta.json.bind.annotation.JsonbNumberFormat;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbTransient;
-import org.eclipse.microprofile.graphql.DateFormat;
-
-import org.eclipse.microprofile.graphql.Description;
-import org.eclipse.microprofile.graphql.NonNull;
-import org.eclipse.microprofile.graphql.Query;
-import org.eclipse.microprofile.graphql.Name;
-import org.eclipse.microprofile.graphql.NumberFormat;
-
 
 public class SuperHero implements Character {
     private List<Team> teamAffiliations;
@@ -57,43 +56,43 @@ public class SuperHero implements Character {
     @JsonbProperty("colorOfCostume")
     private String costumeColor;
 
-    private List<String> namesOfKnownEnemies; //TODO: consider adding a Villain or Enemy class
+    private List<String> namesOfKnownEnemies; // TODO: consider adding a Villain or Enemy class
 
     @JsonbNumberFormat("ID-########")
     private Long idNumber;
 
-    @JsonbNumberFormat(value = "¤ ###,###.##",locale = "en-US")
+    @JsonbNumberFormat(value = "¤ ###,###.##", locale = "en-US")
     private Double bankBalance;
-    
-    @JsonbNumberFormat(value = "¤ 000.00",locale = "en-US")
+
+    @JsonbNumberFormat(value = "¤ 000.00", locale = "en-US")
     private BigDecimal netWorth;
-    
+
     @JsonbNumberFormat(value = "###.## 'ml'", locale = "en-GB")
     private Float favouriteDrinkSize;
-    
+
     private List<BigDecimal> lastKnownCoordinates;
-    
+
     private List<List<BigDecimal>> track;
 
     private Set<String> beenThere;
-    
+
     private ShirtSize sizeOfTShirt;
 
     private List<LocalDate> importantDates;
-    
+
     private List<Integer> kidsAges;
-    
+
     @DateFormat("dd MMMM yyyy")
     private LocalDate birthday;
-    
-    public SuperHero(){
+
+    public SuperHero() {
     }
-    
-    public SuperHero(List<Team> teamAffiliations, 
-                     List<String> superPowers, 
-                     String primaryLocation, 
-                     String name, 
-                     String realName) {
+
+    public SuperHero(List<Team> teamAffiliations,
+            List<String> superPowers,
+            String primaryLocation,
+            String name,
+            String realName) {
 
         this.teamAffiliations = teamAffiliations;
         this.superPowers = superPowers;
@@ -261,7 +260,7 @@ public class SuperHero implements Character {
     public void setBeenThere(Set<String> beenThere) {
         this.beenThere = beenThere;
     }
-    
+
     public List<@DateFormat("dd/MM") LocalDate> getImportantDates() {
         return importantDates;
     }
@@ -272,11 +271,11 @@ public class SuperHero implements Character {
     }
 
     @Name("agesOfKids")
-    public List<@NumberFormat("0 'years'")Integer> getKidsAges() {
+    public List<@NumberFormat("0 'years'") Integer> getKidsAges() {
         return kidsAges;
     }
 
-    public void setKidsAges(List<@NumberFormat("0 'years old'")Integer> kidsAges) {
+    public void setKidsAges(List<@NumberFormat("0 'years old'") Integer> kidsAges) {
         this.kidsAges = kidsAges;
     }
 
@@ -287,30 +286,25 @@ public class SuperHero implements Character {
     @Name("dateOfBirth")
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
-    }    
-    
+    }
+
     public enum ShirtSize {
-        S,
-        M,
-        L,
-        XL,
-        XXL,
-        HULK
+        S, M, L, XL, XXL, HULK
     }
 
     @Override
     public String toString() {
-        return "SuperHero{" 
-                + ", superPowers=" + superPowers 
-                + ", primaryLocation=" + primaryLocation 
-                + ", name=" + name 
-                + ", realName=" + realName 
-                + ", dateOfLastCheckin=" + dateOfLastCheckin 
-                + ", patrolStartTime=" + patrolStartTime 
-                + ", timeOfLastBattle=" + timeOfLastBattle 
-                + ", costumeColor=" + costumeColor 
-                + ", namesOfKnownEnemies=" + namesOfKnownEnemies 
-                + ", idNumber=" + idNumber 
+        return "SuperHero{"
+                + ", superPowers=" + superPowers
+                + ", primaryLocation=" + primaryLocation
+                + ", name=" + name
+                + ", realName=" + realName
+                + ", dateOfLastCheckin=" + dateOfLastCheckin
+                + ", patrolStartTime=" + patrolStartTime
+                + ", timeOfLastBattle=" + timeOfLastBattle
+                + ", costumeColor=" + costumeColor
+                + ", namesOfKnownEnemies=" + namesOfKnownEnemies
+                + ", idNumber=" + idNumber
                 + ", sizeOfTShirt=" + sizeOfTShirt + '}';
     }
 }

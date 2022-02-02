@@ -19,6 +19,7 @@ import org.eclipse.microprofile.graphql.Type;
 
 /**
  * To Test the generation of a Type even if it's not used (directly) as a return type or argument.
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 @Type("BasicMessage")
@@ -27,7 +28,7 @@ public class BasicType implements BasicInterface {
 
     public BasicType() {
     }
-    
+
     public BasicType(String message) {
         this.message = message;
     }

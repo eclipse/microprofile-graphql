@@ -26,22 +26,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.eclipse.microprofile.graphql.tck.dynamic.DynamicPaths;
 import org.testng.annotations.DataProvider;
 
 /**
- * Provide test data for GraphQL Schema. 
- * This will find and load all csv files in the test folder and use that as test data against the schema
+ * Provide test data for GraphQL Schema. This will find and load all csv files in the test folder and use that as test
+ * data against the schema
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class SchemaTestDataProvider {
     private static final Logger LOG = Logger.getLogger(SchemaTestDataProvider.class.getName());
 
-    private SchemaTestDataProvider(){
+    private SchemaTestDataProvider() {
     }
 
     @DataProvider(name = "schemaSnippets")
-    public static Object[][] getSnippetTestData(){
+    public static Object[][] getSnippetTestData() {
         List<Path> dataFiles = getDataFiles();
 
         List<TestData> testDataList = toListOfTestData(dataFiles);
@@ -58,16 +60,16 @@ public class SchemaTestDataProvider {
 
     private static List<Path> getDataFiles() {
         List<Path> f = new ArrayList<>();
-        
+
         // Implementation specific tests
         try {
             f.addAll(toListOfPaths(DynamicPaths.getDataForImplementation()));
         } catch (IOException ex) {
             LOG.log(Level.INFO, "No implementation specific tests found [{0}]", ex.getMessage());
         }
-        
+
         // Specification test
-        if(!disableSpecificationTests()){
+        if (!disableSpecificationTests()) {
             try {
                 f.addAll(toListOfPaths(DynamicPaths.getDataForSpecification()));
             } catch (Exception ex) {
@@ -77,70 +79,72 @@ public class SchemaTestDataProvider {
 
         return f;
     }
-    
-    private static List<Path> toListOfPaths(DirectoryStream<Path> directoryStream){
+
+    private static List<Path> toListOfPaths(DirectoryStream<Path> directoryStream) {
         List<Path> files = new ArrayList<>();
-        for(Path p: directoryStream){
-            if(!Files.isDirectory(p) && p.getFileName().toString().endsWith(FILE_TYPE)){
+        for (Path p : directoryStream) {
+            if (!Files.isDirectory(p) && p.getFileName().toString().endsWith(FILE_TYPE)) {
                 files.add(p);
             }
         }
         return files;
     }
-    
-    private static List<TestData> toListOfTestData(List<Path> testFolders){
+
+    private static List<TestData> toListOfTestData(List<Path> testFolders) {
         List<TestData> testDataList = new LinkedList<>();
         for (Path testFile : testFolders) {
-            try{    
+            try {
                 testDataList.addAll(toTestData(testFile));
             } catch (IOException ioe) {
-                LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", new Object[]{testFile.getFileName().toString(), ioe.getMessage()});
+                LOG.log(Level.SEVERE, "Could not add test case {0} - {1}",
+                        new Object[]{testFile.getFileName().toString(), ioe.getMessage()});
             }
-            
+
         }
         return testDataList;
     }
 
-    private static List<TestData> toTestData(Path testFile) throws IOException{
+    private static List<TestData> toTestData(Path testFile) throws IOException {
         List<TestData> testDataList = new LinkedList<>();
         List<String> content = Files.readAllLines(testFile);
         String currentHeader = "";
-        for(String line:content){
-            if(validLine(line)){
+        for (String line : content) {
+            if (validLine(line)) {
                 String[] parts = line.split(DELIMITER);
-                if(parts.length==4){
-                    TestData testData = createTestData(currentHeader,testFile.getFileName().toString(),parts);
+                if (parts.length == 4) {
+                    TestData testData = createTestData(currentHeader, testFile.getFileName().toString(), parts);
                     testDataList.add(testData);
-                }else{
-                    LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", 
-                        new Object[]{testFile.getFileName().toString(), "Does not contain 3 parts [" + parts.length +"]"});
+                } else {
+                    LOG.log(Level.SEVERE, "Could not add test case {0} - {1}",
+                            new Object[]{testFile.getFileName().toString(),
+                                    "Does not contain 3 parts [" + parts.length + "]"});
                 }
-            }else if (isHeader(line)){
-                currentHeader = line.substring(line.indexOf(COMMENT)+1).trim();
+            } else if (isHeader(line)) {
+                currentHeader = line.substring(line.indexOf(COMMENT) + 1).trim();
             }
         }
         return testDataList;
     }
 
-    private static TestData createTestData(String header, String filename,String[] parts){
+    private static TestData createTestData(String header, String filename, String[] parts) {
         TestData testData = new TestData();
         testData.setCount(Integer.valueOf(parts[0]));
         testData.setHeader(header);
         testData.setName(filename);
         String count = parts[0].trim();
         String snippet = parts[1].trim();
-        if(snippet == null || snippet.isEmpty()){
+        if (snippet == null || snippet.isEmpty()) {
             snippet = null;
         }
         testData.setSnippetSearchTerm(snippet);
-        
+
         String containsString = parts[2].trim();
-        if(containsString.contains(OR)){
+        if (containsString.contains(OR)) {
             String[] containsStrings = containsString.split(OR);
-            for(String oneOf:containsStrings){
+            for (String oneOf : containsStrings) {
                 testData.addContainsString(oneOf.trim());
             }
-        }else{
+        } else {
             testData.addContainsString(containsString);
         }
         testData.setErrorMessage("(" + count + ") - " + parts[3].trim());
@@ -148,18 +152,18 @@ public class SchemaTestDataProvider {
         return testData;
     }
 
-    private static boolean validLine(String line){
+    private static boolean validLine(String line) {
         return !line.isEmpty() && line.trim().contains(PIPE) && !isHeader(line);
     }
 
-    private static boolean isHeader(String line){
+    private static boolean isHeader(String line) {
         return line.trim().startsWith(COMMENT);
     }
 
-    private static boolean disableSpecificationTests(){
+    private static boolean disableSpecificationTests() {
         return Boolean.valueOf(System.getProperty("disableSpecificationTests", "false"));
     }
-    
+
     private static final String PIPE = "|";
     private static final String DELIMITER = "\\" + PIPE;
     private static final String COMMENT = "#";

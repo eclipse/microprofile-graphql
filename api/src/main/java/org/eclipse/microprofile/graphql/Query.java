@@ -23,8 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Specifies that the annotated method provides the implementation (ie. the
- * resolver) for a GraphQL query. <br>
+ * Specifies that the annotated method provides the implementation (ie. the resolver) for a GraphQL query. <br>
  * <br>
  * For example, a user might annotate a method as such:
  * 

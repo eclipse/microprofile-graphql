@@ -17,9 +17,10 @@ package org.eclipse.microprofile.graphql.tck.apps.basic.api;
 
 /**
  * To Test the generation of a Enum even if it's not used (directly) as a return type or argument.
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 @org.eclipse.microprofile.graphql.Enum("CountDown")
 public enum BasicEnum {
-    THREE,TWO,ONE
+    THREE, TWO, ONE
 }

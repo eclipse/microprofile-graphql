@@ -17,7 +17,7 @@
 package org.eclipse.microprofile.graphql;
 
 /**
- * A GraphQLException is used to pass error information back to the client. Instances of GraphQLException and it's 
+ * A GraphQLException is used to pass error information back to the client. Instances of GraphQLException and it's
  * subclasses will pass the <code>message</code> field back to the client. The optional <code>ExceptionType</code> may
  * also be specified.
  * 
@@ -31,7 +31,7 @@ public class GraphQLException extends Exception {
         DataFetchingException, OperationNotSupported, ExecutionAborted
     }
 
-    private ExceptionType type; 
+    private ExceptionType type;
 
     private Object partialResults;
 

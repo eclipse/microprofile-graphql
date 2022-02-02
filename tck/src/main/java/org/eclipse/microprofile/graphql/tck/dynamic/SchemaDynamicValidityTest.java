@@ -32,17 +32,16 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.eclipse.microprofile.graphql.tck.dynamic.schema.SchemaTestDataProvider;
 import org.eclipse.microprofile.graphql.tck.dynamic.schema.TestData;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
-import org.jboss.shrinkwrap.api.Archive;
-import org.testng.annotations.Test;
-
-import org.jboss.arquillian.testng.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.arquillian.testng.Arquillian;
+import org.jboss.shrinkwrap.api.Archive;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 /**
  * Tests that the schema is available at graphql/schema.graphql and that it contains the proper content.
@@ -50,15 +49,15 @@ import org.testng.Assert;
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class SchemaDynamicValidityTest extends Arquillian {
-    private static final Logger LOG = Logger.getLogger(SchemaDynamicValidityTest.class.getName()); 
+    private static final Logger LOG = Logger.getLogger(SchemaDynamicValidityTest.class.getName());
     private static final String FILENAME = "schema.graphql";
     private static final String PATH = "graphql/" + FILENAME;
-    
+
     private String schema;
-    
+
     @ArquillianResource
     private URI uri;
-    
+
     @Deployment
     public static Archive<?> getDeployment() throws Exception {
         return DeployableUnit.getDeployment("tck-schematest");
@@ -70,7 +69,7 @@ public class SchemaDynamicValidityTest extends Arquillian {
         LOG.log(Level.INFO, "Fetching schema from {0}", uri);
         this.schema = getSchemaContent();
         saveSchemaFile();
-        
+
         // Check that there is some content
         Assert.assertTrue(schema.length() > 0, "No Content in the GraphQL Schema downloaded from [" + uri + "]");
     }
@@ -80,35 +79,36 @@ public class SchemaDynamicValidityTest extends Arquillian {
     public void testPartsOfSchema(TestData input) {
         Assert.assertNotNull(schema, "No schema avalailable to test against");
         String snippet = schema; // default search against the whole schema
-        if(input.getSnippetSearchTerm()!=null){
+        if (input.getSnippetSearchTerm() != null) {
             snippet = getSchemaSnippet(schema, input.getSnippetSearchTerm());
         }
-        
-        Assert.assertTrue(matchAtLeastOneOfTheSnippets(input,snippet), "[" + input.getHeader() + "] " + input.getErrorMessage());    
+
+        Assert.assertTrue(matchAtLeastOneOfTheSnippets(input, snippet),
+                "[" + input.getHeader() + "] " + input.getErrorMessage());
     }
-    
-    private boolean matchAtLeastOneOfTheSnippets(TestData input,String snippet){
+
+    private boolean matchAtLeastOneOfTheSnippets(TestData input, String snippet) {
         List<String> containsAnyOfString = input.getContainsAnyOfString();
-        for(String contains:containsAnyOfString){
-            if(contains.startsWith("!")){
+        for (String contains : containsAnyOfString) {
+            if (contains.startsWith("!")) {
                 contains = contains.substring(1);
-                if(!snippet.contains(contains)){
+                if (!snippet.contains(contains)) {
                     return true;
                 }
-            }else{
-                if(snippet.contains(contains)){
+            } else {
+                if (snippet.contains(contains)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    
-    private void saveSchemaFile(){
-        try{
-            Path downloadedSchema = Paths.get("target" + FS  + FILENAME);
+
+    private void saveSchemaFile() {
+        try {
+            Path downloadedSchema = Paths.get("target" + FS + FILENAME);
             Path createFile = Files.createFile(downloadedSchema);
-            try(BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))){
+            try (BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))) {
                 writer.write(this.schema);
             }
             LOG.log(Level.INFO, "Schema written to {0}", createFile.toUri());
@@ -116,7 +116,7 @@ public class SchemaDynamicValidityTest extends Arquillian {
             LOG.log(Level.SEVERE, "Could not save schema file to target" + FS + FILENAME + " - {0}", ex.getMessage());
         }
     }
-    
+
     private String getSchemaContent() throws MalformedURLException, ProtocolException, IOException {
         URL url = new URL(this.uri + PATH);
         HttpURLConnection connection = null;
@@ -156,17 +156,17 @@ public class SchemaDynamicValidityTest extends Arquillian {
         return schema.substring(index, closePos);
     }
 
-    private String getContent(HttpURLConnection connection) throws IOException{
+    private String getContent(HttpURLConnection connection) throws IOException {
         try (StringWriter sw = new StringWriter();
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
             String inputLine;
-            while ((inputLine = in.readLine()) != null){
+            while ((inputLine = in.readLine()) != null) {
                 sw.write(inputLine);
                 sw.write("\n");
             }
             return sw.toString();
         }
     }
-    
+
     private static final String FS = System.getProperty("file.separator");
 }

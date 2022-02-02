@@ -27,13 +27,15 @@ import java.nio.file.Paths;
 
 /**
  * Where we look for tests in both the Spec level and the implementation level
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class DynamicPaths {
     private static final String SPEC = "/tests/";
     private static final String IMPL = "src/test/resources/tests";
 
-    private DynamicPaths(){}
+    private DynamicPaths() {
+    }
 
     public static DirectoryStream<Path> getDataForImplementation() throws IOException {
         Path folderPath = Paths.get(IMPL);
@@ -43,7 +45,7 @@ public class DynamicPaths {
     public static DirectoryStream<Path> getDataForSpecification() throws IOException, URISyntaxException {
         URL jar = DynamicPaths.class.getProtectionDomain().getCodeSource().getLocation();
         Path jarFile = Paths.get(jar.toURI());
-        FileSystem fs = FileSystems.newFileSystem(jarFile, null);
+        FileSystem fs = FileSystems.newFileSystem(jarFile, (ClassLoader) null);
         return Files.newDirectoryStream(fs.getPath(SPEC));
     }
 }

@@ -23,23 +23,22 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation provides way how to set custom number format to field or JavaBean property.
- * (or collection there of)
- * This is similar to Jsonb (JsonbNumberFormat) except that it adds support for TYPE_USE
+ * Annotation provides way how to set custom number format to field or JavaBean property. (or collection there of) This
+ * is similar to Jsonb (JsonbNumberFormat) except that it adds support for TYPE_USE
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE_USE, 
-        ElementType.ANNOTATION_TYPE, 
+@Target({ElementType.TYPE_USE,
+        ElementType.ANNOTATION_TYPE,
         ElementType.FIELD,
-        ElementType.METHOD, 
-        ElementType.TYPE, 
-        ElementType.PARAMETER, 
+        ElementType.METHOD,
+        ElementType.TYPE,
+        ElementType.PARAMETER,
         ElementType.PACKAGE})
 @Documented
 public @interface NumberFormat {
     String DEFAULT_LOCALE = "##default";
     String DEFAULT_FORMAT = "##default";
-    
+
     String value() default "";
     String locale() default DEFAULT_LOCALE;
 }

@@ -16,10 +16,9 @@
 
 package org.eclipse.microprofile.graphql;
 
-import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 
+import org.testng.annotations.Test;
 
 /**
  * Simple enum test.
@@ -28,12 +27,7 @@ public class EnumTest {
 
     @Enum("ClothingSize")
     private static enum ShirtSize {
-        S,
-        M,
-        L,
-        XL,
-        XXL,
-        HULK
+        S, M, L, XL, XXL, HULK
     }
 
     @Test

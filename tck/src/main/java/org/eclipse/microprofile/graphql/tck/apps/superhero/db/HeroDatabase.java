@@ -24,14 +24,14 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-
-import org.eclipse.microprofile.graphql.tck.apps.superhero.model.SuperHero;
-import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Team;
 
 @ApplicationScoped
 public class HeroDatabase {
@@ -44,7 +44,8 @@ public class HeroDatabase {
             Jsonb jsonb = JsonbBuilder.create();
             String mapJson = getInitalJson();
             addHeroes(jsonb.fromJson(mapJson,
-                      new ArrayList<SuperHero>(){}.getClass().getGenericSuperclass()));
+                    new ArrayList<SuperHero>() {
+                    }.getClass().getGenericSuperclass()));
             getHero("Iron Man").setNamesOfKnownEnemies(Arrays.asList("Whiplash", "Mandarin"));
             getTeam("Avengers").setDailyStandupMeeting(OffsetTime.parse("11:05:00+02:00"));
         } catch (Exception ex) {
@@ -124,7 +125,7 @@ public class HeroDatabase {
         return hero;
     }
 
-    public Team createNewTeam(String teamName, SuperHero...initialMembers) {
+    public Team createNewTeam(String teamName, SuperHero... initialMembers) {
         Team newTeam = new Team();
         newTeam.setName(teamName);
         newTeam.addMembers(initialMembers);
@@ -157,57 +158,59 @@ public class HeroDatabase {
 
     private static String getInitalJson() {
         return "[" +
-            "{" +
-             "\"name\":\"Iron Man\"," +
-             "\"realName\":\"Tony Stark\"," +
-             "\"primaryLocation\":\"Los Angeles, CA\"," +
-             "\"superPowers\":[\"wealth\",\"engineering\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
-             "\"equipment\":[{\"id\": 1001, \"name\": \"Iron Man Suit\", \"powerLevel\": 18, " +
-             "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false, \"dateCreated\": \"12 February 1967 at 11:45 in Africa/Johannesburg\"," + 
-             "\"dateLastUsed\": \"30 Jan 2020 at 17:55 in zone +0200\" }]," +
-             "\"colorOfCostume\":\"Red\"," +
-             "\"idNumber\":\"ID-12345678\"," +
-             "\"dateOfLastCheckin\":\"09/09/2019\"," +
-             "\"timeOfLastBattle\":\"08:30:01 06-09-2019\"," +
-             "\"patrolStartTime\":\"08:00\"" +
-            "}," +
-            "{" +
-             "\"name\":\"Spider Man\"," +
-             "\"realName\":\"Peter Parker\"," +
-             "\"primaryLocation\":\"New York, NY\"," +
-             "\"superPowers\":[\"Spidey Sense\",\"Wall-Crawling\",\"Super Strength\",\"Web-shooting\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
-             "\"colorOfCostume\":\"Red\"," +
-             "\"idNumber\":\"ID-78904321\"," +
-             "\"dateOfLastCheckin\":\"09/01/2019\"," +
-             "\"timeOfLastBattle\":\"11:12:45 30-08-2019\"," +
-             "\"patrolStartTime\":\"16:00\"" +
-            "}," +
-            "{" +
-             "\"name\":\"Starlord\"," +
-             "\"realName\":\"Peter Quill\"," +
-             "\"primaryLocation\":\"Outer Space\"," +
-             "\"superPowers\":[\"Ingenuity\",\"Humor\",\"Dance moves\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Guardians of the Galaxy\"}]," +
-             "\"colorOfCostume\":\"Brown\"," +
-             "\"idNumber\":\"ID-23409876\"," +
-             "\"dateOfLastCheckin\":\"08/27/2019\"," +
-             "\"timeOfLastBattle\":\"05:17:33 26-08-2019\"," +
-             "\"patrolStartTime\":\"12:30\"" +
-            "}," +
-            "{" +
-             "\"name\":\"Wolverine\"," +
-             "\"realName\":\"James Howlett, aka Logan\"," +
-             "\"primaryLocation\":\"Unknown\"," +
-             "\"superPowers\":[\"Regeneritive Healing\",\"Enhanced Reflexes\",\"Adamantium-infused skeleton\",\"Retractable claws\"]," +
-             "\"teamAffiliations\":[{\"name\":\"Avengers\"},{\"name\":\"X-Men\"}]," +
-             "\"colorOfCostume\":\"Yellow\"," +
-             "\"idNumber\":\"ID-65430987\"," +
-             "\"dateOfLastCheckin\":\"12/01/2014\"," +
-             "\"timeOfLastBattle\":\"09:43:23 21-08-2019\"," +
-             "\"patrolStartTime\":\"20:00\"" +
-            "}" +
-           "]";
+                "{" +
+                "\"name\":\"Iron Man\"," +
+                "\"realName\":\"Tony Stark\"," +
+                "\"primaryLocation\":\"Los Angeles, CA\"," +
+                "\"superPowers\":[\"wealth\",\"engineering\"]," +
+                "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
+                "\"equipment\":[{\"id\": 1001, \"name\": \"Iron Man Suit\", \"powerLevel\": 18, " +
+                "\"height\": 1.8, \"weight\": 120.7, \"supernatural\": false, \"dateCreated\": \"12 February 1967 at 11:45 in Africa/Johannesburg\","
+                +
+                "\"dateLastUsed\": \"30 Jan 2020 at 17:55 in zone +0200\" }]," +
+                "\"colorOfCostume\":\"Red\"," +
+                "\"idNumber\":\"ID-12345678\"," +
+                "\"dateOfLastCheckin\":\"09/09/2019\"," +
+                "\"timeOfLastBattle\":\"08:30:01 06-09-2019\"," +
+                "\"patrolStartTime\":\"08:00\"" +
+                "}," +
+                "{" +
+                "\"name\":\"Spider Man\"," +
+                "\"realName\":\"Peter Parker\"," +
+                "\"primaryLocation\":\"New York, NY\"," +
+                "\"superPowers\":[\"Spidey Sense\",\"Wall-Crawling\",\"Super Strength\",\"Web-shooting\"]," +
+                "\"teamAffiliations\":[{\"name\":\"Avengers\"}]," +
+                "\"colorOfCostume\":\"Red\"," +
+                "\"idNumber\":\"ID-78904321\"," +
+                "\"dateOfLastCheckin\":\"09/01/2019\"," +
+                "\"timeOfLastBattle\":\"11:12:45 30-08-2019\"," +
+                "\"patrolStartTime\":\"16:00\"" +
+                "}," +
+                "{" +
+                "\"name\":\"Starlord\"," +
+                "\"realName\":\"Peter Quill\"," +
+                "\"primaryLocation\":\"Outer Space\"," +
+                "\"superPowers\":[\"Ingenuity\",\"Humor\",\"Dance moves\"]," +
+                "\"teamAffiliations\":[{\"name\":\"Guardians of the Galaxy\"}]," +
+                "\"colorOfCostume\":\"Brown\"," +
+                "\"idNumber\":\"ID-23409876\"," +
+                "\"dateOfLastCheckin\":\"08/27/2019\"," +
+                "\"timeOfLastBattle\":\"05:17:33 26-08-2019\"," +
+                "\"patrolStartTime\":\"12:30\"" +
+                "}," +
+                "{" +
+                "\"name\":\"Wolverine\"," +
+                "\"realName\":\"James Howlett, aka Logan\"," +
+                "\"primaryLocation\":\"Unknown\"," +
+                "\"superPowers\":[\"Regeneritive Healing\",\"Enhanced Reflexes\",\"Adamantium-infused skeleton\",\"Retractable claws\"],"
+                +
+                "\"teamAffiliations\":[{\"name\":\"Avengers\"},{\"name\":\"X-Men\"}]," +
+                "\"colorOfCostume\":\"Yellow\"," +
+                "\"idNumber\":\"ID-65430987\"," +
+                "\"dateOfLastCheckin\":\"12/01/2014\"," +
+                "\"timeOfLastBattle\":\"09:43:23 21-08-2019\"," +
+                "\"patrolStartTime\":\"20:00\"" +
+                "}" +
+                "]";
     }
 }

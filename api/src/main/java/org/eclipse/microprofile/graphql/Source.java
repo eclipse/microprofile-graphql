@@ -23,22 +23,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Extends a GraphQL type by adding an externally defined field, effectively
- * enabling a graph to be assembled. <br>
+ * Extends a GraphQL type by adding an externally defined field, effectively enabling a graph to be assembled. <br>
  * <br>
- * The GraphQL type which is extended is the GraphQL type corresponding to the
- * Java type of the annotated method parameter. <br>
+ * The GraphQL type which is extended is the GraphQL type corresponding to the Java type of the annotated method
+ * parameter. <br>
  * <br>
- * The added field type can be a scalar or another GraphQL type, it's inferred
- * from the method return type. <br>
+ * The added field type can be a scalar or another GraphQL type, it's inferred from the method return type. <br>
  * <br>
- * At runtime, injects the concerned source object (which type is the extended
- * GraphQL type), thus allowing to use fields from it to resolve the added
- * field. <br>
+ * At runtime, injects the concerned source object (which type is the extended GraphQL type), thus allowing to use
+ * fields from it to resolve the added field. <br>
  * <br>
- * Optionally, specifies the name and description of the added field in the
- * extended GraphQL type. By default, the name of the added field is the name of
- * the method.
+ * Optionally, specifies the name and description of the added field in the extended GraphQL type. By default, the name
+ * of the added field is the name of the method.
  *
  * <br>
  * <br>

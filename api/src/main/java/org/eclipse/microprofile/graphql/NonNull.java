@@ -23,9 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Specifies that the GraphQL type and/or input type represented by the Java
- * field this annotation is applied to must be marked as non-null in the schema.
- * <br>
+ * Specifies that the GraphQL type and/or input type represented by the Java field this annotation is applied to must be
+ * marked as non-null in the schema. <br>
  * <br>
  * For example, a user might annotate a class' property as such:
  * 
@@ -60,8 +59,8 @@ import java.lang.annotation.Target;
  * 
  * <br>
  * <br>
- * Note that all primitive fields/properties are automatically considered non-null unless they are also annotated with
- * a <code>DefaultValue</code> annotation.
+ * Note that all primitive fields/properties are automatically considered non-null unless they are also annotated with a
+ * <code>DefaultValue</code> annotation.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE_USE, ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})

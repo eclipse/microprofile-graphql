@@ -17,6 +17,7 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.api;
 
 /**
  * To test transitive white list exceptions
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class FlawNotFoundException extends WeaknessNotFoundException {
@@ -39,5 +40,5 @@ public class FlawNotFoundException extends WeaknessNotFoundException {
     public FlawNotFoundException(String string, Throwable thrwbl, boolean bln, boolean bln1) {
         super(string, thrwbl, bln, bln1);
     }
-    
+
 }

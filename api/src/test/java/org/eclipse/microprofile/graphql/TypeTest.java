@@ -16,10 +16,9 @@
 
 package org.eclipse.microprofile.graphql;
 
-import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
 
+import org.testng.annotations.Test;
 
 /**
  * Simple test mainly as a placeholder for now.

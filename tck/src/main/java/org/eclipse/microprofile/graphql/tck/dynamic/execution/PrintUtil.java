@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReader;
@@ -38,30 +39,31 @@ import jakarta.json.stream.JsonGenerator;
 
 /**
  * Print the Test data to output
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class PrintUtil {
-    private static final Logger LOG = Logger.getLogger(PrintUtil.class.getName());   
-    
-    private PrintUtil(){
+    private static final Logger LOG = Logger.getLogger(PrintUtil.class.getName());
+
+    private PrintUtil() {
     }
-    
-    public static void toDisk(TestData testData, String output, Throwable throwable){
-        try{
+
+    public static void toDisk(TestData testData, String output, Throwable throwable) {
+        try {
             String log = toString(testData, output, throwable);
-            writeTestFile(testData.getName(),log);
+            writeTestFile(testData.getName(), log);
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, "Could not save data to target folder - {0}", ex.getMessage());
         }
     }
-    
-    private static String toString(TestData testData,String output, Throwable throwable){
-        try(StringWriter sw = new StringWriter()){
+
+    private static String toString(TestData testData, String output, Throwable throwable) {
+        try (StringWriter sw = new StringWriter()) {
             sw.write("============= " + testData.getName() + " =============");
             sw.write("\n\n");
-            if(throwable!=null){
+            if (throwable != null) {
                 sw.write("errorMessage = " + throwable.getMessage());
-            }else{
+            } else {
                 sw.write("errorMessage = ");
             }
             sw.write("\n\n");
@@ -81,39 +83,40 @@ public class PrintUtil {
             if (testData.getOutput().size() == 1) {
                 sw.write("expected output = " + prettyJson(testData.getOutput().iterator().next()));
             } else {
-                sw.write("expected output was either of the following = " + String.join("\nOR\n", testData.getOutput()));
+                sw.write(
+                        "expected output was either of the following = " + String.join("\nOR\n", testData.getOutput()));
             }
 
             sw.write("\n\n");
-            sw.write("received output = " +  prettyJson(output));
+            sw.write("received output = " + prettyJson(output));
             sw.write("\n\n");
             return sw.toString();
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
-    
-    private static void writeTestFile(String testName, String data) throws IOException{
-        if(data!=null && !data.isEmpty()){
+
+    private static void writeTestFile(String testName, String data) throws IOException {
+        if (data != null && !data.isEmpty()) {
             Path file = Paths.get("target" + FS + testName + ".log");
             Path createFile = Files.createFile(file);
-            try(BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))){
+            try (BufferedWriter writer = Files.newBufferedWriter(createFile, Charset.forName("UTF-8"))) {
                 writer.write(data);
             }
         }
     }
-    
+
     private static String prettyJson(String json) {
-        if(json!=null){
+        if (json != null) {
             JsonReader jr = Json.createReader(new StringReader(json));
             JsonObject jobj = jr.readObject();
             return prettyJson(jobj);
         }
         return null;
     }
-    
+
     private static String prettyJson(JsonObject jsonObject) {
-        if(jsonObject!=null){
+        if (jsonObject != null) {
             StringWriter sw = new StringWriter();
             Map<String, Object> properties = new HashMap<>(1);
             properties.put(JsonGenerator.PRETTY_PRINTING, true);
@@ -126,6 +129,6 @@ public class PrintUtil {
         }
         return null;
     }
-    
+
     private static final String FS = System.getProperty("file.separator");
 }

@@ -19,8 +19,8 @@ import org.eclipse.microprofile.graphql.Interface;
 import org.eclipse.microprofile.graphql.Name;
 
 /**
- * To Test the generation of a Types/Inputs/Enums even if it's not used (directly) as a return type or argument.
- * This is the interface that is used directly.
+ * To Test the generation of a Types/Inputs/Enums even if it's not used (directly) as a return type or argument. This is
+ * the interface that is used directly.
  */
 @Interface
 public interface BasicInterface {

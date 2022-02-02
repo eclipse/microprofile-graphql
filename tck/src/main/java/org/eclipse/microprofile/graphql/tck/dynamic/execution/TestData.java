@@ -21,10 +21,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
+
 import jakarta.json.JsonObject;
 
 /**
  * Simple Holder for Test Data sets
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class TestData {
@@ -36,26 +38,26 @@ public class TestData {
     private String prepare;
     private String cleanup;
     private Properties properties;
-    
-    public TestData(){
-    
+
+    public TestData() {
+
     }
-    
-    public TestData(String name){
+
+    public TestData(String name) {
         this.name = name;
         this.output = new HashSet<>();
         this.input = new HashSet<>();
     }
 
-    public TestData(String name, 
-                    Set<String> input,
-                    Properties httpHeaders, 
-                    Set<String> output,
-                    JsonObject variables, 
-                    String prepare, 
-                    String cleanup, 
-                    Properties properties) {
-        
+    public TestData(String name,
+            Set<String> input,
+            Properties httpHeaders,
+            Set<String> output,
+            JsonObject variables,
+            String prepare,
+            String cleanup,
+            Properties properties) {
+
         this.name = name;
         this.input = input;
         this.httpHeaders = httpHeaders;
@@ -137,45 +139,45 @@ public class TestData {
     public void setProperties(Properties properties) {
         this.properties = properties;
     }
-    
-    public boolean shouldIgnore(){
-        return getBooleanProperty("ignore");   
+
+    public boolean shouldIgnore() {
+        return getBooleanProperty("ignore");
     }
-    
-    public Integer getPriority(){
-        if(properties!=null && !properties.isEmpty() && properties.containsKey("priority")){
+
+    public Integer getPriority() {
+        if (properties != null && !properties.isEmpty() && properties.containsKey("priority")) {
             return Integer.valueOf(properties.getProperty("priority"));
         }
         return 999; // default
     }
 
     public int getExpectedHttpStatusCode() {
-        if(properties!=null && !properties.isEmpty() && properties.containsKey("expectedHttpStatusCode")){
+        if (properties != null && !properties.isEmpty() && properties.containsKey("expectedHttpStatusCode")) {
             return Integer.valueOf(properties.getProperty("expectedHttpStatusCode"));
         }
         return 200; // default
     }
 
-    public boolean beStrict(){
+    public boolean beStrict() {
         return getBooleanProperty("strict");
     }
 
     public String getFailMessage() {
-        if(properties!=null && !properties.isEmpty() && properties.containsKey("failMessage")){
+        if (properties != null && !properties.isEmpty() && properties.containsKey("failMessage")) {
             return properties.getProperty("failMessage");
         }
         return getName() + " failed"; // default
     }
 
-    private boolean getBooleanProperty(String key){
+    private boolean getBooleanProperty(String key) {
 
-        if(properties!=null && !properties.isEmpty() && properties.containsKey(key)){
+        if (properties != null && !properties.isEmpty() && properties.containsKey(key)) {
             String ignore = properties.getProperty(key);
-            if(ignore!=null && !ignore.isEmpty() && ignore.equalsIgnoreCase("true")){
+            if (ignore != null && !ignore.isEmpty() && ignore.equalsIgnoreCase("true")) {
                 return true;
             }
         }
-        return false; // default   
+        return false; // default
 
     }
 
@@ -231,6 +233,5 @@ public class TestData {
         }
         return true;
     }
-    
-    
+
 }

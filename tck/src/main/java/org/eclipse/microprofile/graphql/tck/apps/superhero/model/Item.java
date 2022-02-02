@@ -18,13 +18,14 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.Collection;
-import jakarta.json.bind.annotation.JsonbDateFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.Id;
 import org.eclipse.microprofile.graphql.Ignore;
 import org.eclipse.microprofile.graphql.NonNull;
+
+import jakarta.json.bind.annotation.JsonbDateFormat;
 
 @Description("Something of use to a super hero")
 public class Item {
@@ -44,27 +45,27 @@ public class Item {
     private Collection<SuperHero> canWield;
     private boolean artificialIntelligenceRating;
 
-    @JsonbDateFormat(value = "dd MMMM yyyy 'at' HH:mm 'in' VV",locale = "en-ZA")
+    @JsonbDateFormat(value = "dd MMMM yyyy 'at' HH:mm 'in' VV", locale = "en-ZA")
     private ZonedDateTime dateCreated;
-    
-    @JsonbDateFormat(value = "dd MMM yyyy 'at' HH:mm 'in zone' Z",locale = "en-ZA")
-    private OffsetDateTime dateLastUsed;
-    
-    public final static String CAPE =
-        "{" +
-        "   \"id\": 1000," +
-        "   \"name\": \"Cape\","+
-        "   \"powerLevel\": 3," +
-        "   \"height\": 1.2," +
-        "   \"weight\": 0.3," +
-        "   \"supernatural\": false," +
-        "   \"dateCreated\": \"19 February 1900 at 12:00 in Africa/Johannesburg\"," +
-        "   \"dateLastUsed\": \"29 Jan 2020 at 09:45 in zone +0200\"" +
-        "}";
 
-    public Item(){
+    @JsonbDateFormat(value = "dd MMM yyyy 'at' HH:mm 'in zone' Z", locale = "en-ZA")
+    private OffsetDateTime dateLastUsed;
+
+    public final static String CAPE =
+            "{" +
+                    "   \"id\": 1000," +
+                    "   \"name\": \"Cape\"," +
+                    "   \"powerLevel\": 3," +
+                    "   \"height\": 1.2," +
+                    "   \"weight\": 0.3," +
+                    "   \"supernatural\": false," +
+                    "   \"dateCreated\": \"19 February 1900 at 12:00 in Africa/Johannesburg\"," +
+                    "   \"dateLastUsed\": \"29 Jan 2020 at 09:45 in zone +0200\"" +
+                    "}";
+
+    public Item() {
     }
-    
+
     public Item(long id, String name, int powerLevel, double height, float weight, boolean supernatural) {
         this.id = id;
         this.name = name;
@@ -176,16 +177,16 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" 
-                + "id=" + id 
-                + ", name=" + name 
-                + ", description=" + description 
-                + ", powerLevel=" + powerLevel 
-                + ", height=" + height 
-                + ", weight=" + weight 
-                + ", supernatural=" + supernatural 
-                + ", invisible=" + invisible 
-                + ", canWield=" + canWield 
+        return "Item{"
+                + "id=" + id
+                + ", name=" + name
+                + ", description=" + description
+                + ", powerLevel=" + powerLevel
+                + ", height=" + height
+                + ", weight=" + weight
+                + ", supernatural=" + supernatural
+                + ", invisible=" + invisible
+                + ", canWield=" + canWield
                 + ", artificialIntelligenceRating=" + artificialIntelligenceRating + '}';
     }
 }

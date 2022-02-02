@@ -21,22 +21,24 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.UUID;
-import jakarta.json.bind.annotation.JsonbDateFormat;
-import jakarta.json.bind.annotation.JsonbNumberFormat;
 
 import org.eclipse.microprofile.graphql.DefaultValue;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.Id;
 
+import jakarta.json.bind.annotation.JsonbDateFormat;
+import jakarta.json.bind.annotation.JsonbNumberFormat;
+
 /**
  * Plain POJO with scalar fields
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class ScalarHolder {
     // Short
     private short shortPrimitive;
     private Short shortObject;
-    @JsonbNumberFormat(value = "¤000",locale = "en-ZA")
+    @JsonbNumberFormat(value = "¤000", locale = "en-ZA")
     private Short formattedShortObject;
 
     // Integer
@@ -44,7 +46,7 @@ public class ScalarHolder {
     private Integer intObject;
     @JsonbNumberFormat(locale = "en-US")
     private Integer formattedIntObject;
-    
+
     // Long
     private long longPrimitive;
     @JsonbNumberFormat(locale = "is-IS")
@@ -58,30 +60,30 @@ public class ScalarHolder {
     private Float floatObject;
     @JsonbNumberFormat(value = "#0.0", locale = "en-GB")
     private Float formattedFloatObject;
-    
+
     // Double
     private double doublePrimitive;
     private Double doubleObject;
     @Description("This is a formatted number")
-    @JsonbNumberFormat(value= "#0.0", locale = "en-GB")
+    @JsonbNumberFormat(value = "#0.0", locale = "en-GB")
     private Double formattedDoubleObject;
-    
+
     // Byte
     private byte bytePrimitive;
     private Byte byteObject;
-    @JsonbNumberFormat(value = "¤00",locale = "en-ZA")
+    @JsonbNumberFormat(value = "¤00", locale = "en-ZA")
     private Byte formattedByteObject;
-    
+
     // BigInteger
     private BigInteger bigIntegerObject;
     @JsonbNumberFormat(value = "¤000", locale = "en-US")
     private BigInteger formattedBigIntegerObject;
-    
+
     // BigDecimal
     private BigDecimal bigDecimalObject;
     @JsonbNumberFormat(value = "#,###.##", locale = "en-GB")
     private BigDecimal formattedBigDecimalObject;
-    
+
     // Boolean
     private boolean booleanPrimitive;
     private Boolean booleanObject;
@@ -93,7 +95,7 @@ public class ScalarHolder {
     // String
     private char[] charArray;
     private String stringObject;
-    
+
     // LocalDate
     @DefaultValue("1978-07-03")
     private LocalDate dateObject;
@@ -102,7 +104,7 @@ public class ScalarHolder {
     @JsonbDateFormat("MM dd yyyy")
     @Description("This is a formatted date")
     private LocalDate formattedDateObject;
-    
+
     // LocalTime
     private LocalTime timeObject;
     @Description("This is another time")
@@ -110,7 +112,7 @@ public class ScalarHolder {
     @JsonbDateFormat("hh:mm:ss")
     @Description("This is a formatted time")
     private LocalTime formattedTimeObject;
-    
+
     // LocalDateTime
     private LocalDateTime dateTimeObject;
     @Description("This is another datetime")
@@ -118,7 +120,7 @@ public class ScalarHolder {
     @JsonbDateFormat("MM dd yyyy 'at' hh:mm:ss")
     @Description("This is a formatted datetime")
     private LocalDateTime formattedDateTimeObject;
-    
+
     // ID
     @Id
     private String id;
@@ -200,7 +202,7 @@ public class ScalarHolder {
     public void setFormattedLongPrimitive(long formattedLongPrimitive) {
         this.formattedLongPrimitive = formattedLongPrimitive;
     }
-    
+
     public Long getLongObject() {
         return longObject;
     }
@@ -392,7 +394,7 @@ public class ScalarHolder {
     public void setFormattedDateObject(LocalDate formattedDateObject) {
         this.formattedDateObject = formattedDateObject;
     }
-   
+
     public LocalTime getTimeObject() {
         return timeObject;
     }
@@ -416,7 +418,7 @@ public class ScalarHolder {
     public void setFormattedTimeObject(LocalTime formattedTimeObject) {
         this.formattedTimeObject = formattedTimeObject;
     }
-    
+
     public LocalDateTime getDateTimeObject() {
         return dateTimeObject;
     }
@@ -440,7 +442,7 @@ public class ScalarHolder {
     public void setFormattedDateTimeObject(LocalDateTime formattedDateTimeObject) {
         this.formattedDateTimeObject = formattedDateTimeObject;
     }
-    
+
     public String getId() {
         return id;
     }

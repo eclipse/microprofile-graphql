@@ -23,8 +23,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Sets the description in the GraphQL schema for the target field, type,
- * parameter, etc. <br>
+ * Sets the description in the GraphQL schema for the target field, type, parameter, etc. <br>
  * <br>
  * For example, a user might annotate a type and field as such:
  * 
@@ -52,7 +51,7 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  */
-@Target({ElementType.PARAMETER,ElementType.METHOD,ElementType.FIELD, ElementType.TYPE})
+@Target({ElementType.PARAMETER, ElementType.METHOD, ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Description {
