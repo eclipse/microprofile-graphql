@@ -23,21 +23,18 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Excludes an otherwise mapped element. Mostly useful to e.g. mark a field as
- * excluded in the GraphQL input type only. <br>
+ * Excludes an otherwise mapped element. Mostly useful to e.g. mark a field as excluded in the GraphQL input type only.
  * <br>
- * The behavior is different depending on where <b>@Ignore</b> annotation is
- * placed:
+ * <br>
+ * The behavior is different depending on where <b>@Ignore</b> annotation is placed:
  * <ul>
- * <li><b>On field</b>: Field is ignored in both graphql type and input
- * type.</li>
+ * <li><b>On field</b>: Field is ignored in both graphql type and input type.</li>
  * <li><b>On getter</b>: Field is ignored in the graphql type.</li>
  * <li><b>On setter</b>: Field is ignored in the graphql input type.</li>
  * </ul>
  * <br>
  * <br>
- * For example, a user might annotate a class' properties and/or getters/setters
- * as such:
+ * For example, a user might annotate a class' properties and/or getters/setters as such:
  * 
  * <pre>
  * {@literal @}Type("Starship")

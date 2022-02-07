@@ -23,8 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Controls the mapping of a method's parameter to an argument of a GraphQL
- * operation (query/mutation/subscription). <br>
+ * Controls the mapping of a method's parameter to an argument of a GraphQL operation (query/mutation/subscription).
+ * <br>
  * <br>
  * For example, a user might annotate a method's parameter as such:
  * 
@@ -48,7 +48,7 @@ import java.lang.annotation.Target;
  * }
  * </pre>
  */
-@Target({ElementType.PARAMETER,ElementType.FIELD,ElementType.METHOD})
+@Target({ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DefaultValue {

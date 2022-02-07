@@ -16,12 +16,12 @@
 
 package org.eclipse.microprofile.graphql;
 
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
 
 /**
  * Simple test mainly as a placeholder for now.
@@ -29,14 +29,14 @@ import static org.testng.Assert.assertEquals;
 public class NameTest {
 
     private static class Character {
-        
+
         @Name("theName")
         private String name;
 
         public Character(String name) {
             this.name = name;
         }
-        
+
         public String getName() {
             return name;
         }
@@ -44,8 +44,7 @@ public class NameTest {
         @Query("friendsOf")
         @Description("Returns all the friends of a character")
         public List<Character> getFriendsOf(
-                @Name("whomFriends")
-                @Description("Whom friends to fetch") Character character) {
+                @Name("whomFriends") @Description("Whom friends to fetch") Character character) {
             if (character.getName().equals("Han Solo")) {
                 return Collections.singletonList(new Character("Chewbacca"));
             }
@@ -55,17 +54,17 @@ public class NameTest {
 
     @Test
     public void testSchemaNameAnnotationOnCharacterParameter() throws Exception {
-        Name argument = (Name)Character.class.getDeclaredMethod("getFriendsOf", Character.class)
-                                                     .getParameterAnnotations()[0][0];
+        Name argument = (Name) Character.class.getDeclaredMethod("getFriendsOf", Character.class)
+                .getParameterAnnotations()[0][0];
         Description description = (Description) Character.class.getDeclaredMethod("getFriendsOf", Character.class)
-                                                               .getParameterAnnotations()[0][1];
+                .getParameterAnnotations()[0][1];
         assertEquals(argument.value(), "whomFriends");
         assertEquals(description.value(), "Whom friends to fetch");
     }
-    
+
     @Test
     public void testSchemaNameAnnotationOnNameField() throws Exception {
         Name inputField = NameTest.Character.class.getDeclaredField("name").getAnnotationsByType(Name.class)[0];
-        assertEquals(inputField.value(),"theName");
+        assertEquals(inputField.value(), "theName");
     }
 }

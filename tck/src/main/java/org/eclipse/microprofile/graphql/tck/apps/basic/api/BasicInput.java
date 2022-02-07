@@ -19,6 +19,7 @@ import org.eclipse.microprofile.graphql.Input;
 
 /**
  * To Test the generation of a Input even if it's not used (directly) as an argument.
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 @Input("BasicMessageInput")
@@ -28,7 +29,7 @@ public class BasicInput implements BasicInterface {
 
     public BasicInput() {
     }
-    
+
     public BasicInput(String message) {
         this.message = message;
     }

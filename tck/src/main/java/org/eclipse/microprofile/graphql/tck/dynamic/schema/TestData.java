@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * Simple Holder for Test Data sets
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class TestData {
@@ -29,7 +30,7 @@ public class TestData {
     private String snippetSearchTerm;
     private List<String> containsAnyOfString = new ArrayList<>();
     private String errorMessage;
-    
+
     public TestData() {
     }
 
@@ -56,7 +57,7 @@ public class TestData {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getSnippetSearchTerm() {
         return snippetSearchTerm;
     }
@@ -76,7 +77,7 @@ public class TestData {
     public void addContainsString(String containsString) {
         this.containsAnyOfString.add(containsString);
     }
-    
+
     public String getErrorMessage() {
         return errorMessage;
     }
@@ -84,5 +85,5 @@ public class TestData {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-    
+
 }

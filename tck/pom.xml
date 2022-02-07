@@ -21,7 +21,6 @@
         <groupId>org.eclipse.microprofile.graphql</groupId>
         <artifactId>microprofile-graphql-parent</artifactId>
         <version>2.0-SNAPSHOT</version>
-        <relativePath>../</relativePath>
     </parent>
 
     <artifactId>microprofile-graphql-tck</artifactId>
@@ -29,8 +28,6 @@
     <description>Code-first GraphQL APIs for MicroProfile :: TCK</description>
 
     <properties>
-        <jsonp-api.version>2.0.1</jsonp-api.version>
-        <jsonb-api.version>2.0.0</jsonb-api.version>
         <commons-io.version>2.11.0</commons-io.version>
         <jsonassert.version>1.5.0</jsonassert.version>
     </properties>
@@ -51,13 +48,11 @@
         <dependency>
             <groupId>jakarta.json.bind</groupId>
             <artifactId>jakarta.json.bind-api</artifactId>
-            <version>${jsonb-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>jakarta.json</groupId>
             <artifactId>jakarta.json-api</artifactId>
-            <version>${jsonp-api.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -106,93 +101,5 @@
         </dependency>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-licenses</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/classes/META-INF/</outputDirectory>
-                            <overwrite>true</overwrite>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/licenses/${revremark}/</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-    <profiles>
-        <profile>
-            <id>eclipse-jarsigner</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.eclipse.cbi.maven.plugins</groupId>
-                        <artifactId>eclipse-jarsigner-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

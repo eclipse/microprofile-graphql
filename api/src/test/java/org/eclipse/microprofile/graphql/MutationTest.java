@@ -16,9 +16,9 @@
 
 package org.eclipse.microprofile.graphql;
 
-import org.testng.annotations.Test;
-
 import static org.testng.Assert.assertEquals;
+
+import org.testng.annotations.Test;
 
 /**
  * Simple test mainly as a placeholder for now.
@@ -35,7 +35,7 @@ public class MutationTest {
 
         public String getName() {
             return name;
-        }    
+        }
 
         @Mutation("save")
         @Description("Save a character")
@@ -47,10 +47,11 @@ public class MutationTest {
 
     @Test
     public void testMutationAnnotationOnCharacterMethod() throws Exception {
-        Mutation mutation = Character.class.getDeclaredMethod("saveCharacter", Character.class).getAnnotation(Mutation.class);
+        Mutation mutation =
+                Character.class.getDeclaredMethod("saveCharacter", Character.class).getAnnotation(Mutation.class);
         assertEquals(mutation.value(), "save");
         Description description = Character.class.getDeclaredMethod("saveCharacter", Character.class)
-                                                 .getAnnotation(Description.class);
+                .getAnnotation(Description.class);
         assertEquals(description.value(), "Save a character");
     }
 }

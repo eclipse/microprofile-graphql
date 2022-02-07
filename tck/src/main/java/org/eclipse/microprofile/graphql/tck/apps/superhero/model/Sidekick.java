@@ -39,8 +39,8 @@ public class Sidekick implements Character {
 
     @Override
     public String toString() {
-        return "Sidekick{" 
-                + "name=" + name 
+        return "Sidekick{"
+                + "name=" + name
                 + ", superHeroSidekicked=" + superHeroSidekicked + '}';
     }
 }

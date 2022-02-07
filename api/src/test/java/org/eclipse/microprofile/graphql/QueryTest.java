@@ -16,12 +16,13 @@
 
 package org.eclipse.microprofile.graphql;
 
-import org.testng.annotations.Test;
+import static org.testng.Assert.assertEquals;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
+
 /**
  * Simple test mainly as a placeholder for now.
  */
@@ -37,7 +38,7 @@ public class QueryTest {
 
         public String getName() {
             return name;
-        }    
+        }
 
         @Query("friendsOf")
         @Description("Returns all the friends of a character")
@@ -54,7 +55,7 @@ public class QueryTest {
         Query query = Character.class.getDeclaredMethod("getFriendsOf", Character.class).getAnnotation(Query.class);
         assertEquals(query.value(), "friendsOf");
         Description description = Character.class.getDeclaredMethod("getFriendsOf", Character.class)
-                                                 .getAnnotation(Description.class);
+                .getAnnotation(Description.class);
         assertEquals(description.value(), "Returns all the friends of a character");
     }
 }

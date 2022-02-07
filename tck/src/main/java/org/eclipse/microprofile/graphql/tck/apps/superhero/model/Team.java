@@ -18,9 +18,10 @@ package org.eclipse.microprofile.graphql.tck.apps.superhero.model;
 import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.json.bind.annotation.JsonbDateFormat;
 
 import org.eclipse.microprofile.graphql.NonNull;
+
+import jakarta.json.bind.annotation.JsonbDateFormat;
 
 public class Team {
 
@@ -30,11 +31,11 @@ public class Team {
 
     @JsonbDateFormat(value = "HH:mm 'offset' Z", locale = "en-ZA")
     private OffsetTime dailyStandupMeeting;
-    
-    public Team(){
-    
+
+    public Team() {
+
     }
-    
+
     public Team(String name, List<SuperHero> members) {
         this.name = name;
         this.members = members;
@@ -57,7 +58,7 @@ public class Team {
         this.members = members;
     }
 
-    public Team addMembers(SuperHero...heroes) {
+    public Team addMembers(SuperHero... heroes) {
         if (members == null) {
             members = new ArrayList<>();
         }
@@ -66,7 +67,7 @@ public class Team {
         }
         return this;
     }
-    public Team removeMembers(SuperHero...heroes) {
+    public Team removeMembers(SuperHero... heroes) {
         if (members != null) {
             for (SuperHero hero : heroes) {
                 members.remove(hero);
@@ -90,11 +91,11 @@ public class Team {
     public void setDailyStandupMeeting(OffsetTime dailyStandupMeeting) {
         this.dailyStandupMeeting = dailyStandupMeeting;
     }
-    
+
     @Override
     public String toString() {
-        return "Team{" 
-                + "name=" + name 
+        return "Team{"
+                + "name=" + name
                 + ", members=" + members;
     }
 }

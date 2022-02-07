@@ -36,46 +36,49 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonReader;
+
 import org.eclipse.microprofile.graphql.tck.dynamic.DynamicPaths;
 import org.testng.annotations.DataProvider;
 
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+
 /**
- * Provide test data for GraphQL Endpoint from the implementation's /src/test/resources/tests directory
- * and the specification's jar file (in /tests)
+ * Provide test data for GraphQL Endpoint from the implementation's /src/test/resources/tests directory and the
+ * specification's jar file (in /tests)
+ * 
  * @author Phillip Kruger (phillip.kruger@redhat.com)
  */
 public class GraphQLTestDataProvider {
     private static final Logger LOG = Logger.getLogger(GraphQLTestDataProvider.class.getName());
 
     private static enum DataFrom {
-        implementation,specification
+        implementation, specification
     }
 
-    private GraphQLTestDataProvider(){
+    private GraphQLTestDataProvider() {
     }
 
-    @DataProvider(name="specification")
-    public static Object[][] getSpecificationTestData(){
-        if(!disableSpecificationTests()){
+    @DataProvider(name = "specification")
+    public static Object[][] getSpecificationTestData() {
+        if (!disableSpecificationTests()) {
             return getTestData(DataFrom.specification);
         }
         return toObjectArray(Collections.EMPTY_LIST);
     }
 
-    @DataProvider(name="implementation")
-    public static Object[][] getImplementationTestData(){
+    @DataProvider(name = "implementation")
+    public static Object[][] getImplementationTestData() {
         return getTestData(DataFrom.implementation);
     }
 
-    private static Object[][] getTestData(DataFrom dataFrom){
+    private static Object[][] getTestData(DataFrom dataFrom) {
         try {
             DirectoryStream<Path> directoryStream = null;
-            if(dataFrom.equals(DataFrom.specification)){
+            if (dataFrom.equals(DataFrom.specification)) {
                 directoryStream = DynamicPaths.getDataForSpecification();
-            }else{
+            } else {
                 directoryStream = DynamicPaths.getDataForImplementation();
             }
 
@@ -88,29 +91,30 @@ public class GraphQLTestDataProvider {
             return new Object[][]{};
         }
     }
-    
-    private static List<TestData> toListOfTestData(Set<Path> testFolders){
+
+    private static List<TestData> toListOfTestData(Set<Path> testFolders) {
         List<TestData> testDataList = new ArrayList<>();
         for (Path testFolder : testFolders) {
-            if(!testFolder.getFileName().toString().startsWith("META-INF")){// Ignore META-INF
+            if (!testFolder.getFileName().toString().startsWith("META-INF")) {// Ignore META-INF
                 try {
                     TestData testData = toTestData(testFolder);
-                    if(!testData.shouldIgnore() && testData.getInput().size() > 0){
+                    if (!testData.shouldIgnore() && testData.getInput().size() > 0) {
                         testDataList.add(testData);
                     }
                 } catch (IOException ioe) {
-                    LOG.log(Level.SEVERE, "Could not add test case {0} - {1}", new Object[]{testFolder.getFileName().toString(), ioe.getMessage()});
+                    LOG.log(Level.SEVERE, "Could not add test case {0} - {1}",
+                            new Object[]{testFolder.getFileName().toString(), ioe.getMessage()});
                 }
             }
         }
         return testDataList;
     }
 
-    private static Object[][] toObjectArray(List<TestData> testDataList){
+    private static Object[][] toObjectArray(List<TestData> testDataList) {
         Object[][] testParameters = new Object[testDataList.size()][1];
         for (int row = 0; row < testDataList.size(); row++) {
             TestData testData = testDataList.get(row);
-            if(!testData.shouldIgnore()){
+            if (!testData.shouldIgnore()) {
                 testParameters[row][0] = testData;
             } else {
                 LOG.log(Level.SEVERE, "Ignoring test [{0}]", testData.getName());
@@ -119,7 +123,7 @@ public class GraphQLTestDataProvider {
         return testParameters;
     }
 
-    private static void sort(List<TestData> testDataList){
+    private static void sort(List<TestData> testDataList) {
         Collections.sort(testDataList, new Comparator<TestData>() {
             @Override
             public int compare(TestData u1, TestData u2) {
@@ -130,22 +134,22 @@ public class GraphQLTestDataProvider {
 
     private static TestData toTestData(Path folder) throws IOException {
         TestData testData = new TestData(folder.getFileName().toString().replace("/", ""));
-        Files.walkFileTree(folder,new HashSet<>(), 1, new FileVisitor<Path>() {
+        Files.walkFileTree(folder, new HashSet<>(), 1, new FileVisitor<Path>() {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
                     throws IOException {
 
-                if(!Files.isDirectory(file)){
+                if (!Files.isDirectory(file)) {
                     String filename = file.getFileName().toString();
 
-                    if (filename.matches("output.*\\.json")){
+                    if (filename.matches("output.*\\.json")) {
                         // Special case to cater for multiple output*.json files where the
                         // test will pass on the first file content that matches.
                         // If no content matches, then the test will fail.
                         String content = getFileContent(file);
                         testData.addOutput(content);
-                    } else if (filename.matches("input.*\\.graphql")){
+                    } else if (filename.matches("input.*\\.graphql")) {
                         // Special case to cater for multiple input*.graphql files where the
                         // test will pass on the first file input content which is successful.
                         // If no content matches, then the test will fail.
@@ -153,39 +157,34 @@ public class GraphQLTestDataProvider {
                         testData.addInput(content);
                     } else {
                         switch (filename) {
-                            case "httpHeader.properties":
-                                {
-                                    Properties properties = new Properties();
-                                    properties.load(Files.newInputStream(file));
-                                    testData.setHttpHeaders(properties);
-                                    break;
-                                }
-                            case "variables.json":
-                                {
-                                    String content = getFileContent(file);
-                                    testData.setVariables(toJsonObject(content));
-                                    break;
-                                }
-                            case "test.properties":
-                                {
-                                    Properties properties = new Properties();
-                                    properties.load(Files.newInputStream(file));
-                                    testData.setProperties(properties);
-                                    break;
-                                }
-                            case "cleanup.graphql":
-                                {
-                                    String content = getFileContent(file);
-                                    testData.setCleanup(content);
-                                    break;
-                                }
-                            case "prepare.graphql":
-                                {
-                                    String content = getFileContent(file);
-                                    testData.setPrepare(content);
-                                    break;
-                                }
-                            default:
+                            case "httpHeader.properties" : {
+                                Properties properties = new Properties();
+                                properties.load(Files.newInputStream(file));
+                                testData.setHttpHeaders(properties);
+                                break;
+                            }
+                            case "variables.json" : {
+                                String content = getFileContent(file);
+                                testData.setVariables(toJsonObject(content));
+                                break;
+                            }
+                            case "test.properties" : {
+                                Properties properties = new Properties();
+                                properties.load(Files.newInputStream(file));
+                                testData.setProperties(properties);
+                                break;
+                            }
+                            case "cleanup.graphql" : {
+                                String content = getFileContent(file);
+                                testData.setCleanup(content);
+                                break;
+                            }
+                            case "prepare.graphql" : {
+                                String content = getFileContent(file);
+                                testData.setPrepare(content);
+                                break;
+                            }
+                            default :
                                 LOG.log(Level.WARNING, "Ignoring unknown file {0}", filename);
                                 break;
                         }
@@ -219,30 +218,31 @@ public class GraphQLTestDataProvider {
         return new String(Files.readAllBytes(file));
     }
 
-    private static Set<Path> toListOfPaths(DirectoryStream<Path> directoryStream){
+    private static Set<Path> toListOfPaths(DirectoryStream<Path> directoryStream) {
         Set<Path> directories = new HashSet<>();
-        for(Path p: directoryStream){
+        for (Path p : directoryStream) {
             try (Stream<Path> paths = Files.walk(p)) {
-                                Set<Path> tree = paths.filter(Files::isDirectory)
+                Set<Path> tree = paths.filter(Files::isDirectory)
                         .collect(Collectors.toSet());
-                                directories.addAll(tree);
-            }catch (IOException ex) {
-                LOG.log(Level.SEVERE, "Ignoring directory [{0}] - {1}", new Object[]{p.getFileName().toString(), ex.getMessage()});
+                directories.addAll(tree);
+            } catch (IOException ex) {
+                LOG.log(Level.SEVERE, "Ignoring directory [{0}] - {1}",
+                        new Object[]{p.getFileName().toString(), ex.getMessage()});
             }
         }
         return directories;
     }
 
-    private static JsonObject toJsonObject(String jsonString){
-        if(jsonString==null || jsonString.isEmpty()) {
+    private static JsonObject toJsonObject(String jsonString) {
+        if (jsonString == null || jsonString.isEmpty()) {
             return null;
         }
         try (JsonReader jsonReader = Json.createReader(new StringReader(jsonString))) {
             return jsonReader.readObject();
         }
     }
-    
-    private static boolean disableSpecificationTests(){
+
+    private static boolean disableSpecificationTests() {
         return Boolean.valueOf(System.getProperty("disableSpecificationTests", "false"));
     }
 }

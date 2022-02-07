@@ -22,13 +22,14 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a field as a ID Scalar Type.
- * <br>
+ * Marks a field as a ID Scalar Type. <br>
  * Note that this annotation may only be placed on <code>String</code> fields/getters/setters/parameters. A deployment
  * error should result if it is placed on a field/getter/setter/parameter of a different type.
  * 
- * <br><br>
+ * <br>
+ * <br>
  * For example, a user might annotate a method's parameter as such:
+ * 
  * <pre>
  * public class Person {
  *      {@literal @}Id
@@ -43,5 +44,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.PARAMETER, ElementType.FIELD, ElementType.METHOD})
 public @interface Id {
-    
+
 }

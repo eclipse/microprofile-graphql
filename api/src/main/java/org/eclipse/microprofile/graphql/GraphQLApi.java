@@ -23,10 +23,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marks a class as a GraphQL Endpoint. 
+ * Marks a class as a GraphQL Endpoint.
  * 
- * <br><br>
+ * <br>
+ * <br>
  * For example:
+ * 
  * <pre>
  * {@literal @}GraphQLApi
  * {@literal @}RequestScoped

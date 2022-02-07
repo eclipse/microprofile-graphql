@@ -20,14 +20,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Sidekick;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Initialized;
 import jakarta.enterprise.event.Observes;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
-
-import org.eclipse.microprofile.graphql.tck.apps.superhero.model.Sidekick;
 
 @ApplicationScoped
 public class SidekickDatabase {
@@ -39,7 +39,8 @@ public class SidekickDatabase {
             Jsonb jsonb = JsonbBuilder.create();
             String mapJson = getInitalJson();
             addSidekicks(jsonb.fromJson(mapJson,
-                      new ArrayList<Sidekick>(){}.getClass().getGenericSuperclass()));
+                    new ArrayList<Sidekick>() {
+                    }.getClass().getGenericSuperclass()));
         } catch (JsonbException ex) {
             throw new RuntimeException(ex);
         }
@@ -87,20 +88,20 @@ public class SidekickDatabase {
 
     private static String getInitalJson() {
         return "[" +
-            "{" +
-             "\"superHeroSidekicked\":" +
                 "{" +
-                    "\"name\":\"Iron Man\"" +
+                "\"superHeroSidekicked\":" +
+                "{" +
+                "\"name\":\"Iron Man\"" +
                 "}," +
-             "\"name\":\"James Rhodes\"" +
-            "}," +
-            "{" +
-             "\"superHeroSidekicked\":" +
+                "\"name\":\"James Rhodes\"" +
+                "}," +
+                "{" +
+                "\"superHeroSidekicked\":" +
                 "{" +
                 "\"name\":\"Spider Man\"" +
                 "}," +
-             "\"name\":\"Andy Maguire\"" +
-            "}" +
-           "]";
+                "\"name\":\"Andy Maguire\"" +
+                "}" +
+                "]";
     }
 }
