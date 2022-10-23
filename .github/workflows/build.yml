@@ -18,8 +18,9 @@ jobs:
       - uses: actions/setup-java@v3.5.1
         name: set up jdk ${{matrix.java}}
         with:
-          distribution: 'adopt'
+          distribution: 'temurin'
           java-version: ${{matrix.java}}
+          cache: 'maven'
 
       - name: build with maven
         run: mvn -B verify javadoc:javadoc --file pom.xml
