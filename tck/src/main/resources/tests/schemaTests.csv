@@ -93,24 +93,25 @@
 50|type SuperHero      |   currentLocation: String                                 |   Expecting a currentLocation field in SuperHero due to Source annotation
 51|type Query          |   currentLocation(superHero: SuperHeroInput): String      |   Expecting a currentLocation query in Query to Source annotation
 52|type SuperHero      |   secretToken(maskFirstPart: Boolean = true): TopSecretToken      |   Expecting a secretToken field with a boolean argument in SuperHero due to Source annotation
-53|type Query          |   !secretToken(maskFirstPart: Boolean = true): TopSecretToken     |   Not expecting a secretToken query in Query
-54|type TopSecretToken |   value: String                                           |   Expecting a TopSecretToken type, with a String value field 
+53|type SuperHero      |   superSecretToken(maskFirstPart: Boolean = true): TopSecretToken      |   Expecting a superSecretToken field with a boolean argument in SuperHero due to Source annotation
+54|type Query          |   !secretToken(maskFirstPart: Boolean = true): TopSecretToken     |   Not expecting a secretToken query in Query
+55|type TopSecretToken |   value: String                                           |   Expecting a TopSecretToken type, with a String value field
 
 # testGetAndSetNotGetterAndSetter
-55|type Query          |   getaway: String                                         |   Expecting a getaway query where the get is not removed
-56|type Mutation       |   settlement: String                                      |   Expecting a settlement mutation where the set is not removed
+56|type Query          |   getaway: String                                         |   Expecting a getaway query where the get is not removed
+57|type Mutation       |   settlement: String                                      |   Expecting a settlement mutation where the set is not removed
 
 # testDescription
-57|type Query          |   "Testing the blacklist of Checked Exceptions"           |   Expecting a description for the exportToFile query
-58|type Query          |   "Super hero name, not real name"                        |   Expecting a description for the name parameter on the exportToFile query
+58|type Query          |   "Testing the blacklist of Checked Exceptions"           |   Expecting a description for the exportToFile query
+59|type Query          |   "Super hero name, not real name"                        |   Expecting a description for the name parameter on the exportToFile query
 
 # testJsonDefault
-59|type Mutation       |   provisionHero(hero: String, item: ItemInput = {         | Expecting a default value for item for provisionHero
-60|type Mutation       |   id : 1000                                                | Expecting an id in the default value for item for provisionHero
-61|type Mutation       |   name : "Cape"                                            | Expecting a name in the default value for item for provisionHero
-62|type Mutation       |   powerLevel : 3                                           | Expecting a powerLevel in the default value for item for provisionHero
-63|type Mutation       |   height : 1.2                                             | Expecting a height in the default value for item for provisionHero
-64|type Mutation       |   weight : 0.3                                             | Expecting a weight in the default value for item for provisionHero
-65|type Mutation       |   supernatural : false                                     | Expecting a supernatural in the default value for item for provisionHero
-66|type Mutation       |   dateCreated : "19 February 1900 at 12:00 in Africa/Johannesburg" | Expecting a dateCreated in the default value for item for provisionHero
-67|type Mutation       |   dateLastUsed : "29 Jan 2020 at 09:45 in zone +0200"      | Expecting a dateLastUsed in the default value for item for provisionHero
+60|type Mutation       |   provisionHero(hero: String, item: ItemInput = {         | Expecting a default value for item for provisionHero
+61|type Mutation       |   id : 1000                                                | Expecting an id in the default value for item for provisionHero
+62|type Mutation       |   name : "Cape"                                            | Expecting a name in the default value for item for provisionHero
+63|type Mutation       |   powerLevel : 3                                           | Expecting a powerLevel in the default value for item for provisionHero
+64|type Mutation       |   height : 1.2                                             | Expecting a height in the default value for item for provisionHero
+65|type Mutation       |   weight : 0.3                                             | Expecting a weight in the default value for item for provisionHero
+66|type Mutation       |   supernatural : false                                     | Expecting a supernatural in the default value for item for provisionHero
+67|type Mutation       |   dateCreated : "19 February 1900 at 12:00 in Africa/Johannesburg" | Expecting a dateCreated in the default value for item for provisionHero
+68|type Mutation       |   dateLastUsed : "29 Jan 2020 at 09:45 in zone +0200"      | Expecting a dateLastUsed in the default value for item for provisionHero

@@ -616,6 +616,19 @@ public class HeroFinder {
         }
     }
 
+    public Token generateSuperSecretToken(@Source("superSecretToken") SuperHero hero,
+            @DefaultValue("true") @Name("maskFirstPart") boolean maskFirstPart) throws GraphQLException {
+        LOG.log(Level.INFO, "generateSuperSecretToken invoked [{0}],[{1}]", new Object[]{hero, maskFirstPart});
+
+        String uuid = UUID.randomUUID().toString();
+        if (maskFirstPart) {
+            return new Token(uuid.substring(0, uuid.length() - 4).replaceAll("[A-Za-z0-9]", "*")
+                    + uuid.substring(uuid.length() - 4, uuid.length()));
+        } else {
+            return new Token(uuid);
+        }
+    }
+
     @Mutation("setRivalTeam")
     public Team setRivalTeam(@Name("teamName") String teamName, @Name("rivalTeam") Team rivalTeam)
             throws UnknownTeamException {

@@ -33,8 +33,8 @@ import java.lang.annotation.Target;
  * At runtime, injects the concerned source object (which type is the extended GraphQL type), thus allowing to use
  * fields from it to resolve the added field. <br>
  * <br>
- * Optionally, specifies the name and description of the added field in the extended GraphQL type. By default, the name
- * of the added field is the name of the method.
+ * Optionally, specifies the name of the added field in the extended GraphQL type. By default, the name of the added
+ * field is the name of the method.
  *
  * <br>
  * <br>
@@ -68,6 +68,13 @@ import java.lang.annotation.Target;
 public @interface Source {
     /**
      * @return the name of the added type in the extended GraphQL type.
+     * @deprecated use `value` instead
      */
+    @Deprecated
     String name() default "";
+
+    /**
+     * @return the name of the added type in the extended GraphQL type.
+     */
+    String value() default "";
 }
