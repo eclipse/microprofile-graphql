@@ -153,34 +153,29 @@ public class GraphQLTestDataProvider {
                         testData.addInput(content);
                     } else {
                         switch (filename) {
-                            case "httpHeader.properties":
-                                {
+                            case "httpHeader.properties": {
                                     Properties properties = new Properties();
                                     properties.load(Files.newInputStream(file));
                                     testData.setHttpHeaders(properties);
                                     break;
                                 }
-                            case "variables.json":
-                                {
+                            case "variables.json": {
                                     String content = getFileContent(file);
                                     testData.setVariables(toJsonObject(content));
                                     break;
                                 }
-                            case "test.properties":
-                                {
+                            case "test.properties": {
                                     Properties properties = new Properties();
                                     properties.load(Files.newInputStream(file));
                                     testData.setProperties(properties);
                                     break;
                                 }
-                            case "cleanup.graphql":
-                                {
+                            case "cleanup.graphql": {
                                     String content = getFileContent(file);
                                     testData.setCleanup(content);
                                     break;
                                 }
-                            case "prepare.graphql":
-                                {
+                            case "prepare.graphql": {
                                     String content = getFileContent(file);
                                     testData.setPrepare(content);
                                     break;
