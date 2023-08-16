@@ -40,7 +40,7 @@
         
         <!-- Testing -->
         <testng.version>7.5.1</testng.version>
-        <arquillian.version>1.7.0.Final</arquillian.version>
+        <arquillian.version>1.7.1.Final</arquillian.version>
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
 
         <!-- Spec document -->
