@@ -41,7 +41,7 @@
         <!-- Testing -->
         <testng.version>7.5.1</testng.version>
         <arquillian.version>1.8.0.Final</arquillian.version>
-        <maven-compiler-plugin.version>3.12.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
 
         <!-- Spec document -->
         <asciidoctor-maven.version>2.2.4</asciidoctor-maven.version>
